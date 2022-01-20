@@ -1,5 +1,6 @@
 import { ServerRoute } from "@hapi/hapi";
 import { getUserByName } from "../controller/users-controller";
+import { UserModel } from "../types/user-model";
 
 const authRoutes: ServerRoute[] = [];
 
