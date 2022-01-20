@@ -1,11 +1,9 @@
-import { Server, ServerRoute } from "@hapi/hapi";
+import { Server } from "@hapi/hapi";
 
-const usersPlugin = {
+export const usersPlugin = {
   name: "app/users",
   dependencies: ["prisma"],
   register: async function (server: Server) {
     server.route([]);
   },
 };
-
-export default usersPlugin;

@@ -1,9 +1,9 @@
 import Hapi from "@hapi/hapi";
 import hapiAuthCookie from "@hapi/cookie";
-import prisma from "./plugins/prisma";
-import users from "./plugins/users";
-import auth from "./plugins/auth";
-import authRoutes from "./router/auth-route";
+import { prismaPlugin } from "./plugins/prisma";
+import { usersPlugin } from "./plugins/users";
+import { authPlugin } from "./plugins/auth";
+import { authRoutes } from "./router/auth-route";
 
 const server: Hapi.Server = Hapi.server({
   port: process.env.PORT || 3000,
@@ -11,7 +11,12 @@ const server: Hapi.Server = Hapi.server({
 });
 
 export async function start(): Promise<Hapi.Server> {
-  await server.register([prisma, users, hapiAuthCookie, auth]);
+  await server.register([
+    prismaPlugin,
+    usersPlugin,
+    hapiAuthCookie,
+    authPlugin,
+  ]);
 
   server.route(authRoutes);
 

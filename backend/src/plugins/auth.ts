@@ -1,8 +1,7 @@
-import { Plugin, Server, Request,  } from "@hapi/hapi";
+import { Plugin, Server } from "@hapi/hapi";
+import { alreadyLog } from "../controller/auth-controller";
 
-import { getUserById } from "../controller/users-controller";
-
-const authPlugin: Plugin<null> = {
+export const authPlugin: Plugin<null> = {
   name: "auth",
   register: async function (server: Server) {
     server.auth.strategy("session", "cookie", {
@@ -12,18 +11,8 @@ const authPlugin: Plugin<null> = {
         isSecure: false,
       },
       redirectTo: "/login",
-      validateFunc: async (request: Request, session:any) => {
-        const account = await getUserById(request, session.id);
-
-        if (!account) {
-          return { valid: false };
-        }
-
-        return { valid: true, credentials: account };
-      },
+      validateFunc: alreadyLog,
     });
     server.auth.default("session");
   },
 };
-
-export default authPlugin;

@@ -1,8 +1,8 @@
 import { ServerRoute } from "@hapi/hapi";
-import { getUserByName } from "../controller/users-controller";
-import { UserModel } from "../types/user-model";
 
-const authRoutes: ServerRoute[] = [];
+import { validateLogin } from "../controller/auth-controller";
+
+export const authRoutes: ServerRoute[] = [];
 
 authRoutes.push({
   method: "GET",
@@ -37,21 +37,10 @@ authRoutes.push({
 authRoutes.push({
   method: "POST",
   path: "/login",
-  handler: async (request, h) => {
-    const payload = request.payload as UserModel;
-    const account = await getUserByName(request, payload.username);
-    if (account && account.password === payload.password) {
-      request.cookieAuth.set({ id: account.id });
-      return h.redirect("/");
-    } else {
-      return h.redirect("/login");
-    }
-  },
+  handler: validateLogin,
   options: {
     auth: {
       mode: "try",
     },
   },
 });
-
-export default authRoutes;
