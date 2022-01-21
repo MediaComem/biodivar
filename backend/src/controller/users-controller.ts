@@ -1,10 +1,10 @@
 import { Request } from "@hapi/hapi";
+import { PrismaClient } from "@prisma/client";
 
 export const getUserById = async (
-  request: Request,
+  prisma: PrismaClient,
   id: number
 ) => {
-  const { prisma } = request.server.app;
   const user = await prisma.user.findFirst({
     where: {
       id: id
@@ -14,10 +14,9 @@ export const getUserById = async (
 };
 
 export const getUserByName = async (
-  request: Request,
+  prisma: PrismaClient,
   username: string
 ) => {
-  const { prisma } = request.server.app;
   const user = await prisma.user.findFirst({
     where: {
       username: username

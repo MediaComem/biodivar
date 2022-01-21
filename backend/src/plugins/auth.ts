@@ -1,5 +1,5 @@
 import { Plugin, Server } from "@hapi/hapi";
-import { alreadyLog } from "../controller/auth-controller";
+import { alreadyLogged } from "../controller/auth-controller";
 import 'dotenv/config';
 
 export const authPlugin: Plugin<null> = {
@@ -12,7 +12,7 @@ export const authPlugin: Plugin<null> = {
         isSecure: process.env.COOKIE_SECURE,
       },
       redirectTo: "/login",
-      validateFunc: alreadyLog,
+      validateFunc: alreadyLogged,
     });
     server.auth.default("session");
   },

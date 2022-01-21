@@ -6,7 +6,7 @@ import { UserModel } from "../types/user-model";
 
 export const validateLogin = async (request: Request, h: ResponseToolkit) => {
   const payload = request.payload as UserModel;
-  const account = await getUserByName(request, payload.username);
+  const account = await getUserByName(request.server.app.prisma, payload.username);
   if (account && await Bcrypt.compare(payload.password, account.password)) {
     request.cookieAuth.set({ id: account.id });
     return h.redirect("/");
@@ -15,8 +15,8 @@ export const validateLogin = async (request: Request, h: ResponseToolkit) => {
   }
 };
 
-export const alreadyLog = async (request: Request, session: any) => {
-  const account = await getUserById(request, session.id);
+export const alreadyLogged = async (request: Request, session: any) => {
+  const account = await getUserById(request.server.app.prisma, session.id);
 
   if (!account) {
     return { valid: false };

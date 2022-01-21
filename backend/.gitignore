@@ -3,3 +3,5 @@ node_modules
 .env
 script
 prisma/dev.db
+prisma/test.db
+prisma/test.db-journal
