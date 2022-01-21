@@ -6,7 +6,7 @@
   "author": "MEI",
   "license": "ISC",
   "scripts": {
-    "test": "jest"
+    "test": "jest --detectOpenHandles"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
