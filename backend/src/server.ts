@@ -3,6 +3,7 @@ import hapiAuthCookie from "@hapi/cookie";
 import { prismaPlugin } from "./plugins/prisma";
 import { authPlugin } from "./plugins/auth";
 import { authRoutes } from "./router/auth-route";
+import { bioversRoutes } from "./router/biovers-route";
 
 const server: Hapi.Server = Hapi.server({
   port: process.env.PORT || 3000,
@@ -17,6 +18,7 @@ export async function init(): Promise<Hapi.Server> {
   ]);
 
   server.route(authRoutes);
+  server.route(bioversRoutes);
   
   return server;
 }

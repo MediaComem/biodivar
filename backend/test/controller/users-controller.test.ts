@@ -6,7 +6,7 @@ import {
   getUserById,
   getUserByName,
 } from "../../src/controller/users-controller";
-import { setupUsers, dropUsers } from "../config/users";
+import { setupUsers, dropUsers } from "../data/model/users";
 
 describe("Test users controller", () => {
   let server: Server;

@@ -2,7 +2,7 @@ import { Server } from "@hapi/hapi";
 
 import { init } from "../../src/server";
 import { setupConfig } from "../config/config";
-import { setupUsers, dropUsers } from "../config/users";
+import { setupUsers, dropUsers } from "../data/model/users";
 
 describe("Test server initialialization", () => {
   let server: Server;
