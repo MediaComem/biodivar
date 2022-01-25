@@ -44,3 +44,14 @@ authRoutes.push({
     },
   },
 });
+
+authRoutes.push({
+  method: "GET",
+  path: "/logout",
+  options: {
+    handler: (request, h) => {
+      request.cookieAuth.clear();
+      return h.redirect("/");
+    },
+  },
+});

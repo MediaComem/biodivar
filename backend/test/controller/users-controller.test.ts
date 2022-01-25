@@ -5,8 +5,13 @@ import { setupConfig } from "../config/config";
 import {
   getUserById,
   getUserByName,
+  createUser,
+  reactivateUser,
+  updateUser,
+  deleteUser,
 } from "../../src/controller/users-controller";
 import { setupUsers, dropUsers } from "../data/model/users";
+import { UserModel } from "../../src/types/user-model";
 
 describe("Test users controller", () => {
   let server: Server;
@@ -31,9 +36,63 @@ describe("Test users controller", () => {
   });
 
   it("Find user by username", async () => {
-    const existingUser = await getUserByName(server.app.prisma, "Rach");
+    const existingUser = await getUserByName(server.app.prisma, "Rich");
     const notExistingUser = await getUserByName(server.app.prisma, "TEST");
-    expect(existingUser?.id).toEqual(2);
+    expect(existingUser?.id).toEqual(1);
     expect(notExistingUser).toBeNull();
+  });
+
+  it("Create new user", async () => {
+    const user: UserModel = {
+      username: "test",
+      email: "test@test.test",
+      password: "test",
+      creation_date: new Date("2021-01-25T03:24:00"),
+    };
+    const newUser = await createUser(server.app.prisma, user);
+    if (newUser) {
+      expect(newUser.id).toBeGreaterThan(0);
+      expect(newUser.username).toEqual(user.username);
+      expect(newUser.email).toEqual(user.email);
+      expect(newUser.password).toEqual(user.password);
+      expect(newUser.creation_date).toBeDefined();
+      expect(newUser.update_date).toBeNull();
+      expect(newUser.deleted_date).toBeNull();
+    }
+    else {
+      fail();
+    }
+  });
+
+  it("Update user", async () => {
+    const user = await getUserById(server.app.prisma, 2);
+    if (user) {
+      user.username = "Update";
+      const update_user = await updateUser(server.app.prisma, user as UserModel);
+      if (update_user) {
+        expect(update_user.username).toEqual("Update");
+        expect(update_user.id).toEqual(2);
+        expect(update_user.update_date).toBeDefined();
+      } 
+      else {
+        fail();
+      }
+    } else {
+      fail();
+    }
+  });
+
+  it("Reactivate user", async () => {
+    const user = await getUserByName(server.app.prisma, "Roch");
+    expect(user).toBeNull();
+    await reactivateUser(server.app.prisma, "Roch");
+    const reactivate_user = await getUserByName(server.app.prisma, "Roch");
+    expect(reactivate_user).toBeDefined();
+  });
+
+  it("Delete user", async () => {
+    await deleteUser(server.app.prisma, 1);
+    const deleted_user = await getUserById(server.app.prisma, 1);
+    expect(deleted_user).toBeNull();
   });
 });
