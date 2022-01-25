@@ -8,7 +8,7 @@ import {
 } from "../../src/controller/users-controller";
 import { UserModel } from "../../src/types/user-model";
 
-describe("Test server initialialization", () => {
+describe("Test User Routes", () => {
   let server: Server;
 
   beforeAll(async () => {
@@ -45,7 +45,7 @@ describe("Test server initialialization", () => {
   it("Update a user", async () => {
     const res = await server.inject({
       method: "POST",
-      url: `/user/update?user={"id": "2", "username": "ddd", "email": "bbb", "password": "c"}`,
+      url: `/user/update?user={"id": 2, "username": "ddd", "email": "bbb", "password": "c"}`,
       auth: {
         strategy: "default",
         credentials: {
@@ -61,7 +61,7 @@ describe("Test server initialialization", () => {
     expect(updated_user?.update_date).toBeDefined();
   });
 
-  it("Update a user", async () => {
+  it("Delete a user", async () => {
     const res = await server.inject({
       method: "POST",
       url: `/user/delete?id=1`,

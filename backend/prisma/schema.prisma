@@ -18,5 +18,16 @@ model User {
   creation_date           DateTime
   update_date             DateTime?
   deleted_date            DateTime?
+  biovers                 Biovers[]
 }
 
+model Biovers {
+  id                      Int         @id @default(autoincrement())
+  name                    String
+  owner                   Int
+  creation_date           DateTime
+  update_date             DateTime?
+  deleted_date            DateTime?
+  is_public               Boolean     @default(true)
+  User                    User?       @relation(fields: [owner], references: [id])
+}

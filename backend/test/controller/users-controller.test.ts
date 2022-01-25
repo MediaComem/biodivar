@@ -60,7 +60,7 @@ describe("Test users controller", () => {
       expect(newUser.deleted_date).toBeNull();
     }
     else {
-      fail();
+      throw new Error("User is not created")
     }
   });
 
@@ -75,10 +75,10 @@ describe("Test users controller", () => {
         expect(update_user.update_date).toBeDefined();
       } 
       else {
-        fail();
+        throw new Error('User is not updated')
       }
     } else {
-      fail();
+      throw new Error('No user to update')
     }
   });
 
