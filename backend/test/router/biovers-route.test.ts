@@ -5,7 +5,7 @@ import { setupConfig } from "../config/config";
 import { setupUsers, dropUsers } from "../data/model/users";
 import { setupBiovers, dropBiovers } from "../data/model/biovers";
 import { BioversModel, BioversModels } from "../../src/types/biovers-model";
-import { getBioversByUser } from "../../src/controller/biovers-controller";
+import { setupPoi, dropPoi } from "../data/model/poi";
 
 describe("Test Biovers Routes", () => {
   let server: Server;
@@ -13,13 +13,16 @@ describe("Test Biovers Routes", () => {
   beforeAll(async () => {
     setupConfig();
     server = await init();
+    await dropPoi(server.app.prisma);
     await dropBiovers(server.app.prisma);
     await dropUsers(server.app.prisma);
     await setupUsers(server.app.prisma);
     await setupBiovers(server.app.prisma);
+    await setupPoi(server.app.prisma);
   });
 
   afterAll(async () => {
+    await dropPoi(server.app.prisma);
     await dropBiovers(server.app.prisma);
     await dropUsers(server.app.prisma);
     await server.stop();
@@ -41,7 +44,9 @@ describe("Test Biovers Routes", () => {
     if (biovers && biovers.length > 0) {
       expect(biovers.length).toEqual(2);
       expect(biovers[0].name).toEqual("Biovers 1");
+      expect(biovers[0].Poi?.length).toEqual(2);
       expect(biovers[1].name).toEqual("Biovers 2");
+      expect(biovers[1].Poi?.length).toEqual(0);
     } else {
       throw new Error("No Biovers found where it should be");
     }
@@ -63,7 +68,9 @@ describe("Test Biovers Routes", () => {
     if (biovers && biovers.length > 0) {
       expect(biovers.length).toEqual(2);
       expect(biovers[0].name).toEqual("Biovers 1");
+      expect(biovers[0].Poi?.length).toEqual(2);
       expect(biovers[1].name).toEqual("Biovers 3");
+      expect(biovers[1].Poi?.length).toEqual(0);
     } else {
       throw new Error("No Biovers found where it should be");
     }

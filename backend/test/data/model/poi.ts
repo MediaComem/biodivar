@@ -6,6 +6,9 @@ export const setupPoi = async (prisma: PrismaClient) => {
   await prisma.poi.create({
     data: test_poi,
   });
+  await prisma.poi.create({
+    data: test_poi,
+  });
 };
 
 export const dropPoi = async (prisma: PrismaClient) => {

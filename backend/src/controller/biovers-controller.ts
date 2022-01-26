@@ -13,6 +13,9 @@ export const getBioversByUser = async (
     orderBy: {
       id: "asc",
     },
+    include: {
+      Poi: true,
+    },
   });
 };
 
@@ -24,6 +27,9 @@ export const getPublicBiovers = async (prisma: PrismaClient) => {
     },
     orderBy: {
       id: "asc",
+    },
+    include: {
+      Poi: true,
     },
   });
 };

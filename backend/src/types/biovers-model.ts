@@ -1,3 +1,5 @@
+import { PoiModels } from "./poi-model";
+
 export interface BioversModel {
   id?: number;
   name: string;
@@ -6,6 +8,7 @@ export interface BioversModel {
   update_date?: Date;
   deleted_date?: Date;
   is_public?: boolean;
+  Poi?: PoiModels;
 }
 
 export interface BioversModels extends Array<BioversModel> {}

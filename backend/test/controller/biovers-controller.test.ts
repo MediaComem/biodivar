@@ -5,7 +5,7 @@ import { setupConfig } from "../config/config";
 
 import { setupBiovers, dropBiovers } from "../data/model/biovers";
 import { setupUsers, dropUsers } from "../data/model/users";
-import { dropPoi } from "../data/model/poi";
+import { dropPoi, setupPoi } from "../data/model/poi";
 
 import {
   createBiovers,
@@ -27,6 +27,7 @@ describe("Test biovers controller", () => {
     await dropUsers(server.app.prisma);
     await setupUsers(server.app.prisma);
     await setupBiovers(server.app.prisma);
+    await setupPoi(server.app.prisma);
   });
 
   afterAll(async () => {
@@ -40,7 +41,9 @@ describe("Test biovers controller", () => {
     const biovers = await getBioversByUser(server.app.prisma, 1);
     expect(biovers.length).toEqual(2);
     expect(biovers[0].name).toEqual("Biovers 1");
+    expect(biovers[0].Poi.length).toEqual(2);
     expect(biovers[1].name).toEqual("Biovers 3");
+    expect(biovers[1].Poi.length).toEqual(0);
   });
 
   it("Get all biovers for a dedicated user that has no biovers", async () => {
@@ -52,7 +55,9 @@ describe("Test biovers controller", () => {
     const biovers = await getPublicBiovers(server.app.prisma);
     expect(biovers.length).toEqual(2);
     expect(biovers[0].name).toEqual("Biovers 1");
+    expect(biovers[0].Poi.length).toEqual(2);
     expect(biovers[1].name).toEqual("Biovers 2");
+    expect(biovers[1].Poi.length).toEqual(0);
   });
 
   it("Create a biovers", async () => {
