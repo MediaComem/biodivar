@@ -19,6 +19,8 @@ model User {
   update_date             DateTime?
   deleted_date            DateTime?
   biovers                 Biovers[]
+  autor_poi               Poi[]       @relation(name: "poi_autor")
+  last_contrubutor_poi    Poi[]       @relation(name: "poi_last_contributor")
 }
 
 model Biovers {
@@ -30,4 +32,36 @@ model Biovers {
   deleted_date            DateTime?
   is_public               Boolean     @default(true)
   User                    User?       @relation(fields: [owner], references: [id])
+  Poi                     Poi[]
+}
+
+model Poi {
+  id                      Int         @id @default(autoincrement())
+  title                   String?
+  title_is_visible        Boolean?    @default(false)
+  subtitle                String?
+  subtitle_is_visible     Boolean?    @default(false)
+  autor                   Int
+  creation_date           DateTime
+  update_data             DateTime?
+  deleted_date            DateTime?
+  last_contributor        Int?
+  is_public               Boolean     @default(true)
+  is_editable             Boolean     @default(false)
+  biovers                 Int
+  radius                  Float
+  style_type              String
+  style_stroke            Boolean
+  style_stroke_width      Float
+  style_fill              Boolean
+  style_elevation         Float
+  style_elevation_ground  Float
+  style_noise             Float
+  style_is_visible        Boolean
+  visible_from            Float
+  trigger_mode            String
+  metadata                String?
+  biovers_fk              Biovers     @relation(fields: [biovers], references: [id])
+  User                    User        @relation(name: "poi_autor", fields: [autor], references: [id])
+  last_contributor_fk     User?       @relation(name: "poi_last_contributor", fields: [last_contributor], references: [id])
 }

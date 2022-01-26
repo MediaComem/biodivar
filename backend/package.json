@@ -6,6 +6,7 @@
   "author": "MEI",
   "license": "ISC",
   "scripts": {
+    "migrate": "prisma migrate deploy && prisma generate",
     "test": "jest --detectOpenHandles"
   },
   "devDependencies": {

@@ -5,6 +5,7 @@ import { setupConfig } from "../config/config";
 
 import { setupBiovers, dropBiovers } from "../data/model/biovers";
 import { setupUsers, dropUsers } from "../data/model/users";
+import { dropPoi } from "../data/model/poi";
 
 import {
   createBiovers,
@@ -21,6 +22,7 @@ describe("Test biovers controller", () => {
   beforeAll(async () => {
     setupConfig();
     server = await init();
+    await dropPoi(server.app.prisma);
     await dropBiovers(server.app.prisma);
     await dropUsers(server.app.prisma);
     await setupUsers(server.app.prisma);
@@ -28,6 +30,7 @@ describe("Test biovers controller", () => {
   });
 
   afterAll(async () => {
+    await dropPoi(server.app.prisma);
     await dropBiovers(server.app.prisma);
     await dropUsers(server.app.prisma);
     await server.stop();

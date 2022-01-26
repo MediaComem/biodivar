@@ -5,6 +5,7 @@ import { authPlugin } from "./plugins/auth";
 import { authRoutes } from "./router/auth-route";
 import { userRoutes } from "./router/user-route";
 import { bioversRoutes } from "./router/biovers-route";
+import { poiRoutes } from "./router/poi-route";
 
 const server: Hapi.Server = Hapi.server({
   port: process.env.PORT || 3000,
@@ -21,6 +22,7 @@ export async function init(): Promise<Hapi.Server> {
   server.route(authRoutes);
   server.route(userRoutes);
   server.route(bioversRoutes);
+  server.route(poiRoutes);
   
   return server;
 }
