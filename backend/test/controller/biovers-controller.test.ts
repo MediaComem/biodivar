@@ -66,7 +66,11 @@ describe("Test biovers controller", () => {
       owner: 2,
       creation_date: new Date(),
     };
-    const newBiovers = await createBiovers(server.app.prisma, biovers);
+    const newBiovers = await createBiovers(
+      server.app.prisma,
+      biovers,
+      server.app.logger
+    );
     if (newBiovers) {
       expect(newBiovers.name).toEqual(biovers.name);
       expect(newBiovers.is_public).toBeTruthy();
@@ -86,7 +90,11 @@ describe("Test biovers controller", () => {
       owner: 2,
       creation_date: new Date(),
     };
-    const updated_biovers = await updateBiovers(server.app.prisma, biovers);
+    const updated_biovers = await updateBiovers(
+      server.app.prisma,
+      biovers,
+      server.app.logger
+    );
     if (updated_biovers) {
       expect(updated_biovers.name).toEqual(biovers.name);
       expect(updated_biovers.is_public).toBeTruthy();
@@ -99,7 +107,11 @@ describe("Test biovers controller", () => {
   });
 
   it("Delete a biovers", async () => {
-    const deleted_biovers = await deleteBiovers(server.app.prisma, 1);
+    const deleted_biovers = await deleteBiovers(
+      server.app.prisma,
+      1,
+      server.app.logger
+    );
     if (deleted_biovers) {
       expect(deleted_biovers.deleted_date).toBeDefined();
     } else {

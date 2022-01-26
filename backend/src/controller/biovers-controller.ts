@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import winston from "winston";
 import { BioversModel } from "../types/biovers-model";
 
 export const getBioversByUser = async (
@@ -44,21 +45,24 @@ export const getPublicBiovers = async (prisma: PrismaClient) => {
 
 export const createBiovers = async (
   prisma: PrismaClient,
-  biovers: BioversModel
+  biovers: BioversModel,
+  logger: winston.Logger
 ) => {
   try {
     biovers.creation_date = new Date();
     return await prisma.biovers.create({
       data: biovers,
     });
-  } catch {
+  } catch (error) {
+    logger.error(error);
     return undefined;
   }
 };
 
 export const updateBiovers = async (
   prisma: PrismaClient,
-  biovers: BioversModel
+  biovers: BioversModel,
+  logger: winston.Logger
 ) => {
   try {
     return await prisma.biovers.update({
@@ -70,14 +74,16 @@ export const updateBiovers = async (
         update_date: new Date(),
       },
     });
-  } catch {
+  } catch (error) {
+    logger.error(error);
     return undefined;
   }
 };
 
 export const deleteBiovers = async (
   prisma: PrismaClient,
-  biovers_id: number
+  biovers_id: number,
+  logger: winston.Logger
 ) => {
   try {
     return await prisma.biovers.update({
@@ -88,7 +94,8 @@ export const deleteBiovers = async (
         deleted_date: new Date(),
       },
     });
-  } catch {
+  } catch (error) {
+    logger.error(error);
     return undefined;
   }
 };

@@ -6,6 +6,7 @@ import { authRoutes } from "./router/auth-route";
 import { userRoutes } from "./router/user-route";
 import { bioversRoutes } from "./router/biovers-route";
 import { poiRoutes } from "./router/poi-route";
+import { winstonPlugin } from "./plugins/winston";
 
 const server: Hapi.Server = Hapi.server({
   port: process.env.PORT || 3000,
@@ -14,6 +15,7 @@ const server: Hapi.Server = Hapi.server({
 
 export async function init(): Promise<Hapi.Server> {
   await server.register([
+    winstonPlugin,
     prismaPlugin,
     hapiAuthCookie,
     authPlugin,
@@ -23,17 +25,17 @@ export async function init(): Promise<Hapi.Server> {
   server.route(userRoutes);
   server.route(bioversRoutes);
   server.route(poiRoutes);
-  
+
   return server;
 }
 
 process.on("unhandledRejection", async (err) => {
   await server.app.prisma.$disconnect();
-  console.log(err);
+  server.app.logger.error(err);
   process.exit(1);
 });
 
 export const start = async function (): Promise<void> {
-    console.log(`Server ready at: ${server.info.uri}`);
-    return server.start();
+  server.app.logger.info(`Server ready at: ${server.info.uri}`);
+  return server.start();
 };

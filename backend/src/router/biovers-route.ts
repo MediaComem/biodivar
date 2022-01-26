@@ -32,7 +32,8 @@ bioversRoutes.push({
   handler: function (request, h) {
     return createBiovers(
       request.server.app.prisma,
-      JSON.parse(request.query.biovers)
+      JSON.parse(request.query.biovers),
+      request.server.app.logger
     );
   },
 });
@@ -43,7 +44,8 @@ bioversRoutes.push({
   handler: function (request, h) {
     return updateBiovers(
       request.server.app.prisma,
-      JSON.parse(request.query.biovers)
+      JSON.parse(request.query.biovers),
+      request.server.app.logger
     );
   },
 });
@@ -52,6 +54,10 @@ bioversRoutes.push({
   method: "POST",
   path: "/biovers/delete",
   handler: function (request, h) {
-    return deleteBiovers(request.server.app.prisma, +request.query.id);
+    return deleteBiovers(
+      request.server.app.prisma,
+      +request.query.id,
+      request.server.app.logger
+    );
   },
 });

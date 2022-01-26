@@ -1,7 +1,12 @@
 import { Poi, PrismaClient } from "@prisma/client";
+import winston from "winston";
 import { PoiModel } from "../types/poi-model";
 
-export const createPoi = async (prisma: PrismaClient, poi: PoiModel) => {
+export const createPoi = async (
+  prisma: PrismaClient,
+  poi: PoiModel,
+  logger: winston.Logger
+) => {
   try {
     return await prisma.poi.create({
       data: {
@@ -42,7 +47,7 @@ export const createPoi = async (prisma: PrismaClient, poi: PoiModel) => {
       },
     });
   } catch (error) {
-    console.log(error);
+    logger.error(error);
     return undefined;
   }
 };
@@ -58,7 +63,11 @@ export const getPoiByTitle = async (prisma: PrismaClient, name: string) => {
   });
 };
 
-export const updatePoi = async (prisma: PrismaClient, poi: PoiModel) => {
+export const updatePoi = async (
+  prisma: PrismaClient,
+  poi: PoiModel,
+  logger: winston.Logger
+) => {
   try {
     poi.update_date = new Date();
     if (poi.coordinate === null) {
@@ -113,16 +122,20 @@ export const updatePoi = async (prisma: PrismaClient, poi: PoiModel) => {
           : undefined,
       },
       include: {
-          coordinate: true,
-      }
+        coordinate: true,
+      },
     });
   } catch (error) {
-    console.log(error);
+    logger.error(error);
     return undefined;
   }
 };
 
-export const deletePoi = async (prisma: PrismaClient, poi_id: number) => {
+export const deletePoi = async (
+  prisma: PrismaClient,
+  poi_id: number,
+  logger: winston.Logger
+) => {
   try {
     return await prisma.poi.update({
       where: {
@@ -133,7 +146,7 @@ export const deletePoi = async (prisma: PrismaClient, poi_id: number) => {
       },
     });
   } catch (error) {
-    console.log(error);
+    logger.error(error);
     return undefined;
   }
 };

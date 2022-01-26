@@ -49,7 +49,11 @@ describe("Test users controller", () => {
       password: "test",
       creation_date: new Date("2021-01-25T03:24:00"),
     };
-    const newUser = await createUser(server.app.prisma, user);
+    const newUser = await createUser(
+      server.app.prisma,
+      user,
+      server.app.logger
+    );
     if (newUser) {
       expect(newUser.id).toBeGreaterThan(0);
       expect(newUser.username).toEqual(user.username);
@@ -58,9 +62,8 @@ describe("Test users controller", () => {
       expect(newUser.creation_date).toBeDefined();
       expect(newUser.update_date).toBeNull();
       expect(newUser.deleted_date).toBeNull();
-    }
-    else {
-      throw new Error("User is not created")
+    } else {
+      throw new Error("User is not created");
     }
   });
 
@@ -68,30 +71,33 @@ describe("Test users controller", () => {
     const user = await getUserById(server.app.prisma, 2);
     if (user) {
       user.username = "Update";
-      const update_user = await updateUser(server.app.prisma, user as UserModel);
+      const update_user = await updateUser(
+        server.app.prisma,
+        user as UserModel,
+        server.app.logger
+      );
       if (update_user) {
         expect(update_user.username).toEqual("Update");
         expect(update_user.id).toEqual(2);
         expect(update_user.update_date).toBeDefined();
-      } 
-      else {
-        throw new Error('User is not updated')
+      } else {
+        throw new Error("User is not updated");
       }
     } else {
-      throw new Error('No user to update')
+      throw new Error("No user to update");
     }
   });
 
   it("Reactivate user", async () => {
     const user = await getUserByName(server.app.prisma, "Roch");
     expect(user).toBeNull();
-    await reactivateUser(server.app.prisma, "Roch");
+    await reactivateUser(server.app.prisma, "Roch", server.app.logger);
     const reactivate_user = await getUserByName(server.app.prisma, "Roch");
     expect(reactivate_user).toBeDefined();
   });
 
   it("Delete user", async () => {
-    await deleteUser(server.app.prisma, 1);
+    await deleteUser(server.app.prisma, 1, server.app.logger);
     const deleted_user = await getUserById(server.app.prisma, 1);
     expect(deleted_user).toBeNull();
   });

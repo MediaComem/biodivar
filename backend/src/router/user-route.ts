@@ -15,7 +15,8 @@ userRoutes.push({
   handler: function (request, h) {
     return createUser(
       request.server.app.prisma,
-      JSON.parse(request.query.user) as UserModel
+      JSON.parse(request.query.user) as UserModel,
+      request.server.app.logger
     );
   },
 });
@@ -26,7 +27,8 @@ userRoutes.push({
   handler: function (request, h) {
     return updateUser(
       request.server.app.prisma,
-      JSON.parse(request.query.user) as UserModel
+      JSON.parse(request.query.user) as UserModel,
+      request.server.app.logger
     );
   },
 });
@@ -35,6 +37,10 @@ userRoutes.push({
   method: "POST",
   path: "/user/delete",
   handler: function (request, h) {
-    return deleteUser(request.server.app.prisma, +request.query.id);
+    return deleteUser(
+      request.server.app.prisma,
+      +request.query.id,
+      request.server.app.logger
+    );
   },
 });

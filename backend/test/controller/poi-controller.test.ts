@@ -40,7 +40,11 @@ describe("Test poi controller", () => {
   });
 
   it("Create poi", async () => {
-    const new_poi = await createPoi(server.app.prisma, test_poi);
+    const new_poi = await createPoi(
+      server.app.prisma,
+      test_poi,
+      server.app.logger
+    );
     expect(new_poi).toBeDefined();
     expect(new_poi?.title).toEqual("POI 1");
     expect(new_poi?.last_contributor).toEqual(1);
@@ -49,7 +53,11 @@ describe("Test poi controller", () => {
   it("Create poi with coordinate", async () => {
     const poi = test_poi;
     poi.coordinate = coordinate_test;
-    const new_poi = await createPoi(server.app.prisma, test_poi);
+    const new_poi = await createPoi(
+      server.app.prisma,
+      test_poi,
+      server.app.logger
+    );
     expect(new_poi).toBeDefined();
     expect(new_poi?.title).toEqual("POI 1");
     expect(new_poi?.last_contributor).toEqual(1);
@@ -60,7 +68,11 @@ describe("Test poi controller", () => {
     if (poi) {
       poi.title = "Update POI";
       poi.style_stroke_width = 255.5;
-      const update_poi = await updatePoi(server.app.prisma, poi as PoiModel);
+      const update_poi = await updatePoi(
+        server.app.prisma,
+        poi as PoiModel,
+        server.app.logger
+      );
       expect(update_poi).toBeDefined();
       expect(update_poi?.id).toEqual(poi.id);
       expect(update_poi?.title).toEqual("Update POI");
@@ -82,7 +94,11 @@ describe("Test poi controller", () => {
         long: 44.4,
         alt: 55.5,
       };
-      const update_poi = await updatePoi(server.app.prisma, poi);
+      const update_poi = await updatePoi(
+        server.app.prisma,
+        poi,
+        server.app.logger
+      );
       expect(update_poi).toBeDefined();
       expect(update_poi?.id).toEqual(poi.id);
       expect(update_poi?.title).toEqual("Update POI");
@@ -105,7 +121,11 @@ describe("Test poi controller", () => {
         long: 44.4,
         alt: 55.5,
       };
-      const update_poi = await updatePoi(server.app.prisma, poi);
+      const update_poi = await updatePoi(
+        server.app.prisma,
+        poi,
+        server.app.logger
+      );
       expect(update_poi).toBeDefined();
       expect(update_poi?.id).toEqual(poi.id);
       expect(update_poi?.title).toEqual("Update POI");
@@ -120,7 +140,11 @@ describe("Test poi controller", () => {
   it("Delete poi", async () => {
     const poi = await getPoiByTitle(server.app.prisma, "POI 1");
     if (poi) {
-      const deleted_poi = await deletePoi(server.app.prisma, poi.id);
+      const deleted_poi = await deletePoi(
+        server.app.prisma,
+        poi.id,
+        server.app.logger
+      );
       expect(deleted_poi).toBeDefined();
       expect(deleted_poi?.title).toEqual("POI 1");
       expect(deleted_poi?.deleted_date).toBeDefined();

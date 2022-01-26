@@ -1,4 +1,4 @@
-import { ServerRoute } from "@hapi/hapi";
+import { server, ServerRoute } from "@hapi/hapi";
 
 import { createPoi, deletePoi, updatePoi } from "../controller/poi-controller";
 import { PoiModel } from "../types/poi-model";
@@ -11,7 +11,8 @@ poiRoutes.push({
   handler: function (request, h) {
     return createPoi(
       request.server.app.prisma,
-      JSON.parse(request.query.poi) as PoiModel
+      JSON.parse(request.query.poi) as PoiModel,
+      request.server.app.logger
     );
   },
 });
@@ -22,7 +23,8 @@ poiRoutes.push({
   handler: function (request, h) {
     return updatePoi(
       request.server.app.prisma,
-      JSON.parse(request.query.poi) as PoiModel
+      JSON.parse(request.query.poi) as PoiModel,
+      request.server.app.logger
     );
   },
 });
@@ -31,6 +33,10 @@ poiRoutes.push({
   method: "POST",
   path: "/poi/delete",
   handler: function (request, h) {
-    return deletePoi(request.server.app.prisma, +request.query.id);
+    return deletePoi(
+      request.server.app.prisma,
+      +request.query.id,
+      request.server.app.logger
+    );
   },
 });

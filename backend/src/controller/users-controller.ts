@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { UserModel } from "../types/user-model";
 import Bcrypt from "bcrypt";
+import winston from "winston";
 
 export const getUserById = async (prisma: PrismaClient, id: number) => {
   return await prisma.user.findFirst({
@@ -20,7 +21,11 @@ export const getUserByName = async (prisma: PrismaClient, username: string) => {
   });
 };
 
-export const createUser = async (prisma: PrismaClient, user: UserModel) => {
+export const createUser = async (
+  prisma: PrismaClient,
+  user: UserModel,
+  logger: winston.Logger
+) => {
   user.creation_date = new Date();
   const password = await Bcrypt.hash(user.password, 10);
   user.password = password;
@@ -28,14 +33,16 @@ export const createUser = async (prisma: PrismaClient, user: UserModel) => {
     return await prisma.user.create({
       data: user,
     });
-  } catch {
+  } catch (error) {
+    logger.error(error);
     return undefined;
   }
 };
 
 export const reactivateUser = async (
   prisma: PrismaClient,
-  username: string
+  username: string,
+  logger: winston.Logger
 ) => {
   try {
     return await prisma.user.update({
@@ -46,12 +53,17 @@ export const reactivateUser = async (
         deleted_date: null,
       },
     });
-  } catch {
+  } catch (error) {
+    logger.error(error);
     return undefined;
   }
 };
 
-export const updateUser = async (prisma: PrismaClient, user: UserModel) => {
+export const updateUser = async (
+  prisma: PrismaClient,
+  user: UserModel,
+  logger: winston.Logger
+) => {
   if (user && user.id) {
     try {
       return await prisma.user.update({
@@ -65,13 +77,18 @@ export const updateUser = async (prisma: PrismaClient, user: UserModel) => {
           update_date: new Date().toISOString(),
         },
       });
-    } catch {
+    } catch (error) {
+      logger.error(error);
       return undefined;
     }
   }
 };
 
-export const deleteUser = async (prisma: PrismaClient, id: number) => {
+export const deleteUser = async (
+  prisma: PrismaClient,
+  id: number,
+  logger: winston.Logger
+) => {
   try {
     return await prisma.user.update({
       where: {
@@ -81,7 +98,8 @@ export const deleteUser = async (prisma: PrismaClient, id: number) => {
         deleted_date: new Date().toISOString(),
       },
     });
-  } catch {
+  } catch (error) {
+    logger.error(error);
     return undefined;
   }
 };
