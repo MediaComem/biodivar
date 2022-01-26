@@ -26,7 +26,7 @@ export const getPoiByTitle = async (prisma: PrismaClient, name: string) => {
 
 export const updatePoi = async (prisma: PrismaClient, poi: PoiModel) => {
   try {
-    poi.update_data = new Date();
+    poi.update_date = new Date();
     return await prisma.poi.update({
       where: {
         id: poi.id,

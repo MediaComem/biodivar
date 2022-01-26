@@ -6,7 +6,7 @@ export interface PoiModel {
   subtitle_is_visible?: boolean;
   autor: number;
   creation_date: Date;
-  update_data?: Date;
+  update_date?: Date;
   deleted_date?: Date;
   last_contributor?: number;
   is_public?: boolean;

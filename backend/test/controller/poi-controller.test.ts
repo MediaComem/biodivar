@@ -51,7 +51,7 @@ describe("Test poi controller", () => {
       expect(update_poi?.id).toEqual(poi.id);
       expect(update_poi?.title).toEqual("Update POI");
       expect(update_poi?.style_stroke_width).toEqual(255.5);
-      expect(update_poi?.update_data).toBeDefined();
+      expect(update_poi?.update_date).toBeDefined();
     } else {
       throw new Error("Cannot find POI to update");
     }

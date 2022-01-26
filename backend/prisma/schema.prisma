@@ -43,7 +43,7 @@ model Poi {
   subtitle_is_visible     Boolean?    @default(false)
   autor                   Int
   creation_date           DateTime
-  update_data             DateTime?
+  update_date             DateTime?
   deleted_date            DateTime?
   last_contributor        Int?
   is_public               Boolean     @default(true)

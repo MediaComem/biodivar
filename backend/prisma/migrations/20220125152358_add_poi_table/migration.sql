@@ -7,7 +7,7 @@ CREATE TABLE "Poi" (
     "subtitle_is_visible" BOOLEAN DEFAULT false,
     "autor" INTEGER NOT NULL,
     "creation_date" DATETIME NOT NULL,
-    "update_data" DATETIME,
+    "update_date" DATETIME,
     "deleted_date" DATETIME,
     "last_contributor" INTEGER,
     "is_public" BOOLEAN NOT NULL DEFAULT true,

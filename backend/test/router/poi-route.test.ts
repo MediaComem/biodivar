@@ -53,7 +53,7 @@ describe("Test Poi Routes", () => {
   it("Update a biovers", async () => {
     const store_poi = await getPoiByTitle(server.app.prisma, "POI 1");
     if (store_poi) {
-      expect(store_poi?.update_data).toBeNull();
+      expect(store_poi?.update_date).toBeNull();
       store_poi.title = "Update POI";
       store_poi.style_stroke_width = 255.5;
       const res = await server.inject({
@@ -72,7 +72,7 @@ describe("Test Poi Routes", () => {
       expect(poi?.id).toEqual(poi.id);
       expect(poi?.title).toEqual("Update POI");
       expect(poi?.style_stroke_width).toEqual(255.5);
-      expect(poi?.update_data).toBeDefined();
+      expect(poi?.update_date).toBeDefined();
     } else {
       throw new Error("Cannot find POI to update");
     }
