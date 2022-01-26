@@ -61,7 +61,20 @@ model Poi {
   visible_from            Float
   trigger_mode            String
   metadata                String?
+  coordinate              Coordinate?
   biovers_fk              Biovers     @relation(fields: [biovers], references: [id])
   User                    User        @relation(name: "poi_autor", fields: [autor], references: [id])
   last_contributor_fk     User?       @relation(name: "poi_last_contributor", fields: [last_contributor], references: [id])
+}
+
+model Coordinate {
+  id                      Int         @id @default(autoincrement())
+  long                    Float
+  lat                     Float
+  alt                     Float
+  creation_date           DateTime
+  update_date             DateTime?
+  deleted_date            DateTime?
+  poi_id                  Int?
+  poi                     Poi?         @relation(fields: [poi_id], references: [id])
 }

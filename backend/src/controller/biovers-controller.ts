@@ -14,7 +14,11 @@ export const getBioversByUser = async (
       id: "asc",
     },
     include: {
-      Poi: true,
+      Poi: {
+        include: {
+          coordinate: true,
+        },
+      },
     },
   });
 };
@@ -29,7 +33,11 @@ export const getPublicBiovers = async (prisma: PrismaClient) => {
       id: "asc",
     },
     include: {
-      Poi: true,
+      Poi: {
+        include: {
+          coordinate: true,
+        },
+      },
     },
   });
 };

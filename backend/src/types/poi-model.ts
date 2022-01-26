@@ -1,3 +1,5 @@
+import { CoordinateModel } from "./coordinate-model";
+
 export interface PoiModel {
   id?: number;
   title?: string;
@@ -24,6 +26,7 @@ export interface PoiModel {
   visible_from: number;
   trigger_mode: string;
   metadata?: string;
+  coordinate?: CoordinateModel;
 }
 
 export interface PoiModels extends Array<PoiModel> {}

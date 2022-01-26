@@ -1,8 +1,12 @@
 import { PrismaClient } from "@prisma/client";
+import { CoordinateModel } from "../../../src/types/coordinate-model";
 
 import { PoiModel } from "../../../src/types/poi-model";
 
 export const setupPoi = async (prisma: PrismaClient) => {
+  if (test_poi.coordinate) {
+    test_poi.coordinate = undefined;
+  }
   await prisma.poi.create({
     data: test_poi,
   });
@@ -13,6 +17,13 @@ export const setupPoi = async (prisma: PrismaClient) => {
 
 export const dropPoi = async (prisma: PrismaClient) => {
   await prisma.poi.deleteMany({});
+};
+
+export const coordinate_test: CoordinateModel = {
+  long: 12.2,
+  lat: 13.3,
+  alt: 14.4,
+  creation_date: new Date(),
 };
 
 export const test_poi: PoiModel = {
