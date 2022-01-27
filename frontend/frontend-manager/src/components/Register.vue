@@ -1,10 +1,11 @@
 <template>
   <div class="layout">
     <h3>BiodivAR</h3>
-    <input id="username" class="input-size" v-model="username" placeholder="Login" />
+    <input id="username" class="input-size" v-model="username" placeholder="Username" />
+    <input id="email" class="input-size" v-model="email" placeholder="Email" />
     <input type="password" class="input-size"
     id="password" v-model="password" placeholder="Password" />
-    <el-button type="primary" class="button-size" v-on:click="authenticate">Submit</el-button>
+    <el-button type="primary" class="button-size" @click="createUser">Submit</el-button>
   </div>
 </template>
 
@@ -13,10 +14,11 @@ import axios from 'axios';
 
 export default {
   methods: {
-    async authenticate() {
+    async createUser() {
       try {
-        await axios.post('http://localhost:3000/login', {
+        await axios.post('http://localhost:3000/user/create', {
           username: this.username,
+          email: this.email,
           password: this.password,
         }, { withCredentials: true });
         this.$store.dispatch('authenticate', {
@@ -37,6 +39,7 @@ export default {
   data() {
     return {
       username: '',
+      email: '',
       password: '',
     };
   },

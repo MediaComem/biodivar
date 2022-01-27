@@ -1,10 +1,18 @@
 <template>
-  <router-view v-slot="{ Component }">
-    <keep-alive>
-      <component :is="Component" />
-    </keep-alive>
-  </router-view>
+  <Layout />
 </template>
+
+<script>
+// @ is an alias to /src
+import Layout from '@/views/Layout.vue';
+
+export default {
+  name: 'Home',
+  components: {
+    Layout,
+  },
+};
+</script>
 
 <style>
 #app {
@@ -13,6 +21,10 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+#body {
+  margin: 0;
 }
 
 #nav {
