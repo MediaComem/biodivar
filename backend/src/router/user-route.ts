@@ -15,9 +15,14 @@ userRoutes.push({
   handler: function (request, h) {
     return createUser(
       request.server.app.prisma,
-      JSON.parse(request.query.user) as UserModel,
+      request.payload as UserModel,
       request.server.app.logger
     );
+  },
+  options: {
+    auth: {
+      mode: "try",
+    },
   },
 });
 

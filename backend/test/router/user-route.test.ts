@@ -26,13 +26,11 @@ describe("Test User Routes", () => {
   it("Create a user", async () => {
     const res = await server.inject({
       method: "POST",
-      url: '/user/create?user={"username": "a", "email": "b", "password": "c"}',
-      auth: {
-        strategy: "default",
-        credentials: {
-          id: 1,
-          password: "test",
-        },
+      url: '/user/create',
+      payload: {
+        username: "a",
+        email: "b",
+        password: "c",
       },
     });
     const user = res.result as UserModel;

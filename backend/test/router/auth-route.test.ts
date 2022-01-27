@@ -19,15 +19,6 @@ describe("Test Auth Routes", () => {
     await server.stop();
   });
 
-  it("Redirect to login page when not authenticate", async () => {
-    const res = await server.inject({
-      method: "GET",
-      url: "/",
-    });
-    expect(res.statusCode).toEqual(302);
-    expect(res.headers.location).toEqual("/login");
-  });
-
   it("Login test failed", async () => {
     const res = await server.inject({
       method: "POST",
@@ -37,8 +28,7 @@ describe("Test Auth Routes", () => {
         password: "badPassword",
       },
     });
-    expect(res.statusCode).toEqual(302);
-    expect(res.headers.location).toEqual("/login");
+    expect(res.statusCode).toEqual(401);
   });
 
   it("Login test success", async () => {
@@ -49,22 +39,6 @@ describe("Test Auth Routes", () => {
         username: "Rich",
         password: "test",
       },
-    });
-    expect(res.statusCode).toEqual(302);
-    expect(res.headers.location).toEqual("/");
-  });
-
-  it("Test access restricted page", async () => {
-    const res = await server.inject({
-      method: "GET",
-      url: "/",
-      auth: {
-        strategy: 'default',
-        credentials: {
-          id: 1,
-          password: "test"
-        }
-      }
     });
     expect(res.statusCode).toEqual(200);
   });

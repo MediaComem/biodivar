@@ -13,7 +13,8 @@ const server: Hapi.Server = Hapi.server({
   host: process.env.HOST || "localhost",
   routes: {
     cors: {
-      origin: ["*"],
+      origin: ['*'],
+      credentials: true,
     },
   }
 });

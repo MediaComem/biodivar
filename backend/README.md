@@ -6,8 +6,8 @@
 
 - HTTP method: POST
 - Route: /user/create
-- Query Parameter: `user={"username": "user", "email": "email", "password": "password"}`
-- Example: `/user/create?user={"username": "user", "email": "email", "password": "password"}`
+- Payload: `{"username": "user", "email": "email", "password": "password"}`
+- Example: `/user/create`
 - Return: `{"id": id, "username": "user", "email": "email", "password": "password", "creation_date": "date", "udpate_date": "null", "deleted_date": "null"}`
 
 ### User Update

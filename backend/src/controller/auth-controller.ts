@@ -6,12 +6,19 @@ import { UserModel } from "../types/user-model";
 
 export const validateLogin = async (request: Request, h: ResponseToolkit) => {
   const payload = request.payload as UserModel;
-  const account = await getUserByName(request.server.app.prisma, payload.username);
-  if (account && await Bcrypt.compare(payload.password, account.password)) {
-    request.cookieAuth.set({ id: account.id });
-    return h.redirect("/");
+  const account = await getUserByName(
+    request.server.app.prisma,
+    payload.username
+  );
+  if (account && (await Bcrypt.compare(payload.password, account.password))) {
+    request.cookieAuth.set({ id: account.id });   
+    return h.response({
+      status: "ok",
+    }).code(200);
   } else {
-    return h.redirect("/login");
+    return h.response({
+      status: "ko",
+    }).code(401);
   }
 };
 
