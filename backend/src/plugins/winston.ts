@@ -1,5 +1,6 @@
-import { Plugin, Server } from "@hapi/hapi";
-import winston from "winston";
+import { Server, Plugin } from "@hapi/hapi";
+import * as winston from "winston";
+import "winston-daily-rotate-file";
 
 declare module "@hapi/hapi" {
   interface ServerApplicationState {
@@ -22,13 +23,13 @@ const format = winston.format.combine(
   )
 );
 
-const transports = [
-  new winston.transports.File({
-    filename: "logs/error.log",
-    level: "error",
-  }),
-  new winston.transports.File({ filename: "logs/all.log" }),
-];
+const transport = new winston.transports.DailyRotateFile({
+  filename: "./logs/bioversar-%DATE%.log",
+  datePattern: "YYYY-MM-DD",
+  zippedArchive: true,
+  handleExceptions: true,
+  maxFiles: "14d",
+});
 
 export const winstonPlugin: Plugin<null> = {
   name: "winston",
@@ -36,7 +37,7 @@ export const winstonPlugin: Plugin<null> = {
     const logger = winston.createLogger({
       levels: levels,
       format: format,
-      transports: transports,
+      transports: [transport],
     });
     server.app.logger = logger;
   },
