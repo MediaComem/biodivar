@@ -40,7 +40,7 @@ export default {
   methods: {
     async authenticate() {
       try {
-        await axios.post(
+        const response = await axios.post(
           'http://localhost:3000/login',
           {
             username: this.form.username,
@@ -50,7 +50,7 @@ export default {
         );
         this.$store.dispatch('authenticate', {
           isAuthenticate: true,
-          username: this.form.username,
+          username: response.data.user,
         });
         this.$router.push('Home');
       } catch (error) {

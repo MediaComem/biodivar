@@ -17,7 +17,7 @@
 import Header from '@/views/Header.vue';
 
 export default {
-  name: 'Home',
+  name: 'Layout',
   components: {
     Header,
   },

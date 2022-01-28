@@ -3,8 +3,8 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import { authStore } from '../store/auth-store';
 
 import Home from '../views/Home.vue';
-import Authentication from '../components/Authentication.vue';
-import Register from '../components/Register.vue';
+import Authentication from '../components/login/Authentication.vue';
+import Register from '../components/login/Register.vue';
 
 const routes = [
   {
@@ -24,12 +24,6 @@ const routes = [
     name: 'Register',
     component: Register,
     meta: { isAuthenticate: false },
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import('../views/About.vue'),
-    meta: { isAuthenticate: true },
   },
   {
     path: '/:pathMatch(.*)*',

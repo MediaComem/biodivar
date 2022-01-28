@@ -52,7 +52,7 @@ export default {
   methods: {
     async createUser() {
       try {
-        await axios.post(
+        const response = await axios.post(
           'http://localhost:3000/user/create',
           {
             username: this.form.username,
@@ -63,7 +63,7 @@ export default {
         );
         this.$store.dispatch('authenticate', {
           isAuthenticate: true,
-          username: this.form.username,
+          username: response.data,
         });
         this.$router.push('Home');
       } catch (error) {
