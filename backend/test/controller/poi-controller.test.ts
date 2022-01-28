@@ -142,7 +142,7 @@ describe("Test poi controller", () => {
     if (poi) {
       const deleted_poi = await deletePoi(
         server.app.prisma,
-        poi.id,
+        poi as PoiModel,
         server.app.logger
       );
       expect(deleted_poi).toBeDefined();

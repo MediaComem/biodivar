@@ -43,13 +43,19 @@ describe("Test User Routes", () => {
   it("Update a user", async () => {
     const res = await server.inject({
       method: "POST",
-      url: `/user/update?user={"id": 2, "username": "ddd", "email": "bbb", "password": "c"}`,
+      url: `/user/update`,
       auth: {
         strategy: "default",
         credentials: {
           id: 1,
           password: "test",
         },
+      },
+      payload: {
+        id: "2",
+        username: "ddd",
+        email: "bbb",
+        password: "c",
       },
     });
     const updated_user = res.result as UserModel;
@@ -62,13 +68,19 @@ describe("Test User Routes", () => {
   it("Delete a user", async () => {
     const res = await server.inject({
       method: "POST",
-      url: `/user/delete?id=1`,
+      url: `/user/delete?`,
       auth: {
         strategy: "default",
         credentials: {
           id: 1,
           password: "test",
         },
+      },
+      payload: {
+        id: "1",
+        username: "ddd",
+        email: "bbb",
+        password: "c",
       },
     });
     const deleted_user = await getUserById(server.app.prisma, 1);

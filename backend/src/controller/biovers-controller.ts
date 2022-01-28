@@ -1,6 +1,6 @@
-import { PrismaClient } from "@prisma/client";
-import winston from "winston";
-import { BioversModel } from "../types/biovers-model";
+import { PrismaClient } from '@prisma/client';
+import winston from 'winston';
+import { BioversModel } from '../types/biovers-model';
 
 export const getBioversByUser = async (
   prisma: PrismaClient,
@@ -12,7 +12,7 @@ export const getBioversByUser = async (
       deleted_date: null,
     },
     orderBy: {
-      id: "asc",
+      id: 'asc',
     },
     include: {
       Poi: {
@@ -31,7 +31,7 @@ export const getPublicBiovers = async (prisma: PrismaClient) => {
       deleted_date: null,
     },
     orderBy: {
-      id: "asc",
+      id: 'asc',
     },
     include: {
       Poi: {
@@ -65,15 +65,20 @@ export const updateBiovers = async (
   logger: winston.Logger
 ) => {
   try {
-    return await prisma.biovers.update({
-      where: {
-        id: biovers.id,
-      },
-      data: {
-        name: biovers.name,
-        update_date: new Date(),
-      },
-    });
+    if (biovers && biovers.id) {
+      return await prisma.biovers.update({
+        where: {
+          id: +biovers.id,
+        },
+        data: {
+          name: biovers.name,
+          update_date: new Date(),
+        },
+      });
+    }
+    else {
+      return undefined;
+    }
   } catch (error) {
     logger.error(error);
     return undefined;
@@ -82,18 +87,23 @@ export const updateBiovers = async (
 
 export const deleteBiovers = async (
   prisma: PrismaClient,
-  biovers_id: number,
+  biovers: BioversModel,
   logger: winston.Logger
 ) => {
   try {
-    return await prisma.biovers.update({
-      where: {
-        id: biovers_id,
-      },
-      data: {
-        deleted_date: new Date(),
-      },
-    });
+    if (biovers && biovers.id) {
+      return await prisma.biovers.update({
+        where: {
+          id: +biovers.id,
+        },
+        data: {
+          deleted_date: new Date(),
+        },
+      });
+    }
+    else {
+      return undefined;
+    }
   } catch (error) {
     logger.error(error);
     return undefined;

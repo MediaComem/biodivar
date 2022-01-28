@@ -32,7 +32,7 @@ userRoutes.push({
   handler: function (request, h) {
     return updateUser(
       request.server.app.prisma,
-      JSON.parse(request.query.user) as UserModel,
+      request.payload as UserModel,
       request.server.app.logger
     );
   },
@@ -44,7 +44,7 @@ userRoutes.push({
   handler: function (request, h) {
     return deleteUser(
       request.server.app.prisma,
-      +request.query.id,
+      request.payload as UserModel,
       request.server.app.logger
     );
   },

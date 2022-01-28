@@ -97,8 +97,14 @@ describe("Test users controller", () => {
   });
 
   it("Delete user", async () => {
-    await deleteUser(server.app.prisma, 1, server.app.logger);
-    const deleted_user = await getUserById(server.app.prisma, 1);
-    expect(deleted_user).toBeNull();
+    const user = await getUserByName(server.app.prisma, "Roch");
+    if (user) {
+      await deleteUser(server.app.prisma, user as UserModel, server.app.logger);
+      const deleted_user = await getUserById(server.app.prisma, user.id);
+      expect(deleted_user).toBeNull();
+    }
+    else {
+      throw new Error("No user to delete");
+    }
   });
 });

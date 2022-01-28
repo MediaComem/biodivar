@@ -68,7 +68,7 @@ export const updateUser = async (
     try {
       return await prisma.user.update({
         where: {
-          id: user.id,
+          id: +user.id,
         },
         data: {
           username: user.username,
@@ -86,18 +86,21 @@ export const updateUser = async (
 
 export const deleteUser = async (
   prisma: PrismaClient,
-  id: number,
+  user: UserModel,
   logger: winston.Logger
 ) => {
   try {
-    return await prisma.user.update({
-      where: {
-        id: id,
-      },
-      data: {
-        deleted_date: new Date().toISOString(),
-      },
-    });
+    if (user && user.id) {
+      return await prisma.user.update({
+        where: {
+          id: +user.id,
+        },
+        data: {
+          deleted_date: new Date().toISOString(),
+        },
+      });
+    }
+    return undefined;
   } catch (error) {
     logger.error(error);
     return undefined;

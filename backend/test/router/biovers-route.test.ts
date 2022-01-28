@@ -79,13 +79,17 @@ describe("Test Biovers Routes", () => {
   it("Create a biovers", async () => {
     const res = await server.inject({
       method: "POST",
-      url: '/biovers/create?biovers={"name": "a", "owner": 1}',
+      url: '/biovers/create',
       auth: {
         strategy: "default",
         credentials: {
           id: 1,
           password: "test",
         },
+      },
+      payload: {
+        name: "a",
+        owner: 1,
       },
     });
     const biovers = res.result as BioversModel;
@@ -100,13 +104,18 @@ describe("Test Biovers Routes", () => {
   it("Update a biovers", async () => {
     const res = await server.inject({
       method: "POST",
-      url: '/biovers/update?biovers={"id": 1, "name": "Test", "owner": 1}',
+      url: '/biovers/update',
       auth: {
         strategy: "default",
         credentials: {
           id: 1,
           password: "test",
         },
+      },
+      payload: {
+        id: 1,
+        name: "Test",
+        owner: 1,
       },
     });
     const biovers = res.result as BioversModel;
@@ -119,9 +128,15 @@ describe("Test Biovers Routes", () => {
   });
 
   it("Delete a biovers", async () => {
+    const biovers: BioversModel = {
+      id: 1,
+      name: "Biovers 1",
+      owner: 1,
+      creation_date: new Date(),
+    }
     const res = await server.inject({
       method: "POST",
-      url: `/user/delete?id=1`,
+      url: `/biovers/delete?id=1`,
       auth: {
         strategy: "default",
         credentials: {
@@ -129,9 +144,10 @@ describe("Test Biovers Routes", () => {
           password: "test",
         },
       },
+      payload: biovers,
     });
-    const biovers = res.result as BioversModel;
-    expect(biovers).toBeDefined();
-    expect(biovers.deleted_date).toBeDefined();
+    const deleted_biovers = res.result as BioversModel;
+    expect(deleted_biovers).toBeDefined();
+    expect(deleted_biovers.deleted_date).toBeDefined();
   });
 });

@@ -11,7 +11,7 @@ poiRoutes.push({
   handler: function (request, h) {
     return createPoi(
       request.server.app.prisma,
-      JSON.parse(request.query.poi) as PoiModel,
+      request.payload as PoiModel,
       request.server.app.logger
     );
   },
@@ -23,7 +23,7 @@ poiRoutes.push({
   handler: function (request, h) {
     return updatePoi(
       request.server.app.prisma,
-      JSON.parse(request.query.poi) as PoiModel,
+      request.payload as PoiModel,
       request.server.app.logger
     );
   },
@@ -35,7 +35,7 @@ poiRoutes.push({
   handler: function (request, h) {
     return deletePoi(
       request.server.app.prisma,
-      +request.query.id,
+      request.payload as PoiModel,
       request.server.app.logger
     );
   },

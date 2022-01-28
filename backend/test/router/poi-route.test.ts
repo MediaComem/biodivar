@@ -41,7 +41,7 @@ describe("Test Poi Routes", () => {
   it("Create a poi", async () => {
     const res = await server.inject({
       method: "POST",
-      url: `/poi/create?poi=${JSON.stringify(test_poi)}`,
+      url: `/poi/create`,
       auth: {
         strategy: "default",
         credentials: {
@@ -49,6 +49,7 @@ describe("Test Poi Routes", () => {
           password: "test",
         },
       },
+      payload: test_poi,
     });
     const poi = res.result as PoiModel;
     expect(poi).toBeDefined();
@@ -61,7 +62,7 @@ describe("Test Poi Routes", () => {
     poi_to_create.coordinate = coordinate_test;
     const res = await server.inject({
       method: "POST",
-      url: `/poi/create?poi=${JSON.stringify(poi_to_create)}`,
+      url: `/poi/create`,
       auth: {
         strategy: "default",
         credentials: {
@@ -69,6 +70,7 @@ describe("Test Poi Routes", () => {
           password: "test",
         },
       },
+      payload: poi_to_create,
     });
     const poi = res.result as PoiModel;
     expect(poi).toBeDefined();
@@ -84,7 +86,7 @@ describe("Test Poi Routes", () => {
       store_poi.style_stroke_width = 255.5;
       const res = await server.inject({
         method: "POST",
-        url: `/poi/update?poi=${JSON.stringify(store_poi)}`,
+        url: `/poi/update`,
         auth: {
           strategy: "default",
           credentials: {
@@ -92,6 +94,7 @@ describe("Test Poi Routes", () => {
             password: "test",
           },
         },
+        payload: store_poi as PoiModel,
       });
       const poi = res.result as PoiModel;
       expect(poi).toBeDefined();
@@ -117,7 +120,7 @@ describe("Test Poi Routes", () => {
       } as Coordinate;
       const res = await server.inject({
         method: "POST",
-        url: `/poi/update?poi=${JSON.stringify(store_poi)}`,
+        url: `/poi/update`,
         auth: {
           strategy: "default",
           credentials: {
@@ -125,6 +128,7 @@ describe("Test Poi Routes", () => {
             password: "test",
           },
         },
+        payload: store_poi,
       });
       const poi = res.result as PoiModel;
       expect(poi).toBeDefined();
@@ -144,7 +148,7 @@ describe("Test Poi Routes", () => {
     expect(store_poi?.deleted_date).toBeNull();
     const res = await server.inject({
       method: "POST",
-      url: `/poi/delete?id=${store_poi?.id}`,
+      url: `/poi/delete`,
       auth: {
         strategy: "default",
         credentials: {
@@ -152,6 +156,7 @@ describe("Test Poi Routes", () => {
           password: "test",
         },
       },
+      payload: store_poi as PoiModel,
     });
     const poi = res.result as PoiModel;
     expect(poi).toBeDefined();

@@ -14,16 +14,16 @@
 
 - HTTP method: POST
 - Route: /user/update
-- Query Parameter: `user={"username": "user", "email": "email", "password": "password"}`
-- Example: `/user/update?user={"username": "user", "email": "email", "password": "password"}`
+- Payload `{"id: id, username": "user", "email": "email", "password": "password"}`
+- Example: `/user/update`
 - Return: `{"id": id, "username": "user", "email": "email", "password": "password", "creation_date": "date", "udpate_date": "date", "deleted_date": "null"}`
 
 ### User Deletion
 
 - HTTP method: POST
 - Route: /user/delete
-- Query Parameter: `id=1`
-- Example: `/user/delete?id=1`
+- Payload `{"id: id, username": "user", "email": "email", "password": "password"}`
+- Example: `/user/delete`
 - Return: `{"id": id, "username": "user", "email": "email", "password": "password", "creation_date": "date", "udpate_date": "date", "deleted_date": "date"}`
 
 ## Biovers
@@ -47,25 +47,25 @@
 
 - HTTP method: POST
 - Route: /biovers/create
-- Query Parameter: `biovers={"name": "a", "owner": 1}`
-- Example: `/biovers/create?biovers={"name": "a", "owner": 1}`
+- Payload: `{"name": "a", "owner": 1}`
+- Example: `/biovers/create`
 - Return: `{"id":5,"name":"a","owner":1,"creation_date":"2022-01-26T15:07:32.242Z","update_date":null,"deleted_date":null,"is_public":true}`
 
 ### Biovers Update
 
 - HTTP method: POST
 - Route: /biovers/update
-- Query Parameter: `biovers={"id": 1, "name": "Test", "owner": 1}`
-- Example: `/biovers/update?biovers={"id": 1, "name": "Test", "owner": 1}`
+- Payload: `{"id": 1, "name": "Test", "owner": 1}`
+- Example: `/biovers/update`
 - Return: `{"id":5,"name":"Test","owner":1,"creation_date":"2022-01-26T15:07:32.242Z","update_date":"2022-01-26T15:07:32.242Z","deleted_date":null,"is_public":true}`
 
 ### Biovers Deletion
 
 - HTTP method: POST
 - Route: /biovers/delete
-- Query Parameter: `id=1`
-- Example: `/user/delete?id=1`
-- Return: `{"id":5,"name":"Test","owner":1,"creation_date":"2022-01-26T15:07:32.242Z","update_date":"2022-01-26T15:07:32.242Z","deleted_date":"2022-01-26T15:07:32.242Z","is_public":true}`
+- Payload: `{"id": 1, "name": "Test", "owner": 1}`
+- Example: `/user/delete`
+- Return: `{"id":1,"name":"Test","owner":1,"creation_date":"2022-01-26T15:07:32.242Z","update_date":"2022-01-26T15:07:32.242Z","deleted_date":"2022-01-26T15:07:32.242Z","is_public":true}`
 
 ## POI
 
@@ -73,22 +73,22 @@
 
 - HTTP method: POST
 - Route: /poi/create
-- Query Parameter: `{"title":"POI 1","title_is_visible":true,"autor":1,"creation_date":"2022-01-26T15:13:20.262Z","biovers":1,"radius":15.5,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_fill":false,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"trigger_mode":"location","coordinate":{"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-26T15:13:20.262Z"}}`
-- Example: `/poi/create?poi={"title":"POI 1","title_is_visible":true,"autor":1,"creation_date":"2022-01-26T15:13:20.262Z","biovers":1,"radius":15.5,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_fill":false,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"trigger_mode":"location","coordinate":{"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-26T15:13:20.262Z"}}`
+- Payload: `{"title":"POI 1","title_is_visible":true,"autor":1,"creation_date":"2022-01-26T15:13:20.262Z","biovers":1,"radius":15.5,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_fill":false,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"trigger_mode":"location","coordinate":{"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-26T15:13:20.262Z"}}`
+- Example: `/poi/create`
 - Return: `{"id":46,"title":"POI 1","title_is_visible":true,"subtitle":null,"subtitle_is_visible":false,"autor":1,"creation_date":"2022-01-26T15:13:20.478Z","update_date":null,"deleted_date":null,"last_contributor":1,"is_public":true,"is_editable":false,"biovers":1,"radius":15.5,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_fill":false,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"trigger_mode":"location","metadata":null}`
 
 ### POI Update
 
 - HTTP method: POST
 - Route: /poi/update
-- Query Parameter: `{"title":"POI 1","title_is_visible":true,"autor":1,"creation_date":"2022-01-26T15:13:20.262Z","biovers":1,"radius":15.5,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_fill":false,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"trigger_mode":"location","coordinate":{"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-26T15:13:20.262Z"}}`
-- Example: `/poi/update?poi={"title":"POI 1","title_is_visible":true,"autor":1,"creation_date":"2022-01-26T15:13:20.262Z","biovers":1,"radius":15.5,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_fill":false,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"trigger_mode":"location","coordinate":{"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-26T15:13:20.262Z"}}`
+- Payload: `{"id":46,"title":"POI 1","title_is_visible":true,"autor":1,"creation_date":"2022-01-26T15:13:20.262Z","biovers":1,"radius":15.5,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_fill":false,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"trigger_mode":"location","coordinate":{"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-26T15:13:20.262Z"}}`
+- Example: `/poi/update`
 - Return: `{"id":46,"title":"POI 1","title_is_visible":true,"subtitle":null,"subtitle_is_visible":false,"autor":1,"creation_date":"2022-01-26T15:13:20.478Z","update_date":"2022-01-26T15:13:20.478Z","deleted_date":null,"last_contributor":1,"is_public":true,"is_editable":false,"biovers":1,"radius":15.5,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_fill":false,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"trigger_mode":"location","metadata":null}`
 
 ### POI Deletion
 
 - HTTP method: POST
 - Route: /poi/delete
-- Query Parameter: `id=1`
-- Example: `/poi/delete?id=1`
+- Payload: `{"id":1,"title":"POI 1","title_is_visible":true,"subtitle":null,"subtitle_is_visible":false,"autor":1,"creation_date":"2022-01-24T15:13:20.478Z","update_date":"2022-01-25T15:13:20.478Z","deleted_date":"2022-01-26T15:13:20.478Z","last_contributor":1,"is_public":true,"is_editable":false,"biovers":1,"radius":15.5,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_fill":false,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"trigger_mode":"location","metadata":null}`
+- Example: `/poi/delete`
 - Return: `{"id":1,"title":"POI 1","title_is_visible":true,"subtitle":null,"subtitle_is_visible":false,"autor":1,"creation_date":"2022-01-24T15:13:20.478Z","update_date":"2022-01-25T15:13:20.478Z","deleted_date":"2022-01-26T15:13:20.478Z","last_contributor":1,"is_public":true,"is_editable":false,"biovers":1,"radius":15.5,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_fill":false,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"trigger_mode":"location","metadata":null}`

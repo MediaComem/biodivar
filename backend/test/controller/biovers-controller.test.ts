@@ -107,9 +107,15 @@ describe("Test biovers controller", () => {
   });
 
   it("Delete a biovers", async () => {
+    const biovers: BioversModel = {
+      id: 1,
+      name: "Biovers 1",
+      owner: 1,
+      creation_date: new Date(),
+    }
     const deleted_biovers = await deleteBiovers(
       server.app.prisma,
-      1,
+      biovers,
       server.app.logger
     );
     if (deleted_biovers) {

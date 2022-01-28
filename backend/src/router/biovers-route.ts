@@ -7,6 +7,7 @@ import {
   getPublicBiovers,
   updateBiovers,
 } from "../controller/biovers-controller";
+import { BioversModel } from "../types/biovers-model";
 
 export const bioversRoutes: ServerRoute[] = [];
 
@@ -32,7 +33,7 @@ bioversRoutes.push({
   handler: function (request, h) {
     return createBiovers(
       request.server.app.prisma,
-      JSON.parse(request.query.biovers),
+      request.payload as BioversModel,
       request.server.app.logger
     );
   },
@@ -44,7 +45,7 @@ bioversRoutes.push({
   handler: function (request, h) {
     return updateBiovers(
       request.server.app.prisma,
-      JSON.parse(request.query.biovers),
+      request.payload as BioversModel,
       request.server.app.logger
     );
   },
@@ -56,7 +57,7 @@ bioversRoutes.push({
   handler: function (request, h) {
     return deleteBiovers(
       request.server.app.prisma,
-      +request.query.id,
+      request.payload as BioversModel,
       request.server.app.logger
     );
   },
