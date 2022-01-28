@@ -14,6 +14,7 @@ export const validateLogin = async (request: Request, h: ResponseToolkit) => {
     request.cookieAuth.set({ id: account.id });   
     return h.response({
       status: "ok",
+      user: account,
     }).code(200);
   } else {
     return h.response({

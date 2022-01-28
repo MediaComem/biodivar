@@ -1,4 +1,4 @@
-import { Poi, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import winston from 'winston';
 import { PoiModel } from '../types/poi-model';
 
