@@ -30,10 +30,10 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang=scss scoped>
 .layout {
   padding: 0;
-  background-color: RGB(205, 231, 65);
+  background-color: $green;
 }
 
 .menu-layout {

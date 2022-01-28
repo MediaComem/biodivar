@@ -5,6 +5,7 @@ const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
   modules: [
     'isAuthenticate',
+    'username',
   ],
 });
 
