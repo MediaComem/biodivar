@@ -19,9 +19,9 @@ model User {
   update_date             DateTime?
   deleted_date            DateTime?
   biovers                 Biovers[]
-  autor_poi               Poi[]       @relation(name: "poi_autor")
+  author_poi              Poi[]       @relation(name: "poi_author")
   last_contrubutor_poi    Poi[]       @relation(name: "poi_last_contributor")
-  autor_path              Path[]      @relation(name: "path_autor")
+  author_path             Path[]      @relation(name: "path_author")
   last_contrubutor_path   Path[]      @relation(name: "path_last_contributor")
 }
 
@@ -44,7 +44,7 @@ model Poi {
   title_is_visible        Boolean?    @default(false)
   subtitle                String?
   subtitle_is_visible     Boolean?    @default(false)
-  autor                   Int
+  author                  Int
   creation_date           DateTime
   update_date             DateTime?
   deleted_date            DateTime?
@@ -66,13 +66,13 @@ model Poi {
   metadata                String?
   coordinate              Coordinate?
   biovers_fk              Biovers     @relation(fields: [biovers], references: [id])
-  User                    User        @relation(name: "poi_autor", fields: [autor], references: [id])
+  User                    User        @relation(name: "poi_author", fields: [author], references: [id])
   last_contributor_fk     User?       @relation(name: "poi_last_contributor", fields: [last_contributor], references: [id])
 }
 
 model Path {
   id                      Int         @id @default(autoincrement())
-  autor                   Int
+  author                  Int
   creation_date           DateTime
   update_date             DateTime?
   deleted_date            DateTime?
@@ -91,7 +91,7 @@ model Path {
   visible_from            Float
   metadata                String?
   biovers_fk              Biovers     @relation(fields: [biovers], references: [id])
-  User                    User        @relation(name: "path_autor", fields: [autor], references: [id])
+  User                    User        @relation(name: "path_author", fields: [author], references: [id])
   last_contributor_fk     User?       @relation(name: "path_last_contributor", fields: [last_contributor], references: [id])
 }
 

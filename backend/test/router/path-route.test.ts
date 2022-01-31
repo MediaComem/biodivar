@@ -8,11 +8,9 @@ import {
   dropPath,
   setupPath,
   test_path,
-  coordinate_test,
 } from '../data/model/path';
 import { PathModel } from '../../src/types/path-model';
 import { getPathsByUser } from '../../src/controller/path-controller';
-import { Coordinate } from '@prisma/client';
 
 describe('Test Path Routes', () => {
   let server: Server;

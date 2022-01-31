@@ -16,7 +16,7 @@ export const getPathById = async (prisma: PrismaClient, path_id: number) => {
 export const getPathsByUser = async (prisma: PrismaClient, user_id: number) => {
   return await prisma.path.findMany({
     where: {
-      autor: user_id,
+      author: user_id,
     },
     include: {
       coordinate: true,
@@ -37,11 +37,11 @@ export const createPath = async (
     });
     return await prisma.path.create({
       data: {
-        autor: path.autor,
+        author: path.author,
         creation_date: new Date(),
         last_contributor: path.last_contributor
           ? path.last_contributor
-          : path.autor,
+          : path.author,
         is_public: path.is_public,
         is_editable: path.is_editable,
         biovers: path.biovers,
@@ -90,12 +90,12 @@ export const updatePath = async (
         id: path.id,
       },
       data: {
-        autor: path.autor,
+        author: path.author,
         creation_date: path.creation_date,
         update_date: new Date(),
         last_contributor: path.last_contributor
           ? path.last_contributor
-          : path.autor,
+          : path.author,
         is_public: path.is_public,
         is_editable: path.is_editable,
         biovers: path.biovers,

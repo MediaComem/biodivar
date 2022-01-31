@@ -5,7 +5,7 @@ CREATE TABLE "Poi" (
     "title_is_visible" BOOLEAN DEFAULT false,
     "subtitle" TEXT,
     "subtitle_is_visible" BOOLEAN DEFAULT false,
-    "autor" INTEGER NOT NULL,
+    "author" INTEGER NOT NULL,
     "creation_date" DATETIME NOT NULL,
     "update_date" DATETIME,
     "deleted_date" DATETIME,
@@ -26,6 +26,6 @@ CREATE TABLE "Poi" (
     "trigger_mode" TEXT NOT NULL,
     "metadata" TEXT,
     CONSTRAINT "Poi_biovers_fkey" FOREIGN KEY ("biovers") REFERENCES "Biovers" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
-    CONSTRAINT "Poi_autor_fkey" FOREIGN KEY ("autor") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "Poi_author_fkey" FOREIGN KEY ("author") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "Poi_last_contributor_fkey" FOREIGN KEY ("last_contributor") REFERENCES "User" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );

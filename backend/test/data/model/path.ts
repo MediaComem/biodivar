@@ -23,7 +23,7 @@ coordiantes.push(coordinate_test as Prisma.CoordinateCreateWithoutPathInput);
 coordiantes.push(coordinate_test as Prisma.CoordinateCreateWithoutPathInput);
 
 export const test_path: PathModel = {
-  autor: 1,
+  author: 1,
   creation_date: new Date(),
   biovers: 1,
   style_type: 'sphere',
@@ -41,7 +41,7 @@ export const setupPath = async (prisma: PrismaClient) => {
   await prisma.path.create({
     data: {
       id: 1,
-      autor: 1,
+      author: 1,
       creation_date: new Date(),
       biovers: 1,
       style_type: 'sphere',

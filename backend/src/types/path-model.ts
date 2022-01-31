@@ -2,7 +2,7 @@ import { CoordinateModel } from "./coordinate-model";
 
 export interface PathModel {
   id?: number;
-  autor: number;
+  author: number;
   creation_date: Date;
   update_date?: Date;
   deleted_date?: Date;

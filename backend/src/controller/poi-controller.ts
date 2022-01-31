@@ -14,11 +14,11 @@ export const createPoi = async (
         title_is_visible: poi.title_is_visible,
         subtitle: poi.subtitle,
         subtitle_is_visible: poi.subtitle_is_visible,
-        autor: poi.autor,
+        author: poi.author,
         creation_date: new Date(),
         last_contributor: poi.last_contributor
           ? poi.last_contributor
-          : poi.autor,
+          : poi.author,
         is_public: poi.is_public,
         is_editable: poi.is_editable,
         biovers: poi.biovers,
@@ -86,11 +86,11 @@ export const updatePoi = async (
           title_is_visible: poi.title_is_visible,
           subtitle: poi.subtitle,
           subtitle_is_visible: poi.subtitle_is_visible,
-          autor: poi.autor,
+          author: poi.author,
           update_date: new Date(),
           last_contributor: poi.last_contributor
             ? poi.last_contributor
-            : poi.autor,
+            : poi.author,
           is_public: poi.is_public,
           is_editable: poi.is_editable,
           biovers: poi.biovers,

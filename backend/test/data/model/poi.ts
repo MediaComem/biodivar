@@ -29,7 +29,7 @@ export const coordinate_test: CoordinateModel = {
 export const test_poi: PoiModel = {
   title: "POI 1",
   title_is_visible: true,
-  autor: 1,
+  author: 1,
   creation_date: new Date(),
   biovers: 1,
   radius: 15.5,

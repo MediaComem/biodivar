@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE "Path" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "autor" INTEGER NOT NULL,
+    "author" INTEGER NOT NULL,
     "creation_date" DATETIME NOT NULL,
     "update_date" DATETIME,
     "deleted_date" DATETIME,
@@ -19,7 +19,7 @@ CREATE TABLE "Path" (
     "visible_from" REAL NOT NULL,
     "metadata" TEXT,
     CONSTRAINT "Path_biovers_fkey" FOREIGN KEY ("biovers") REFERENCES "Biovers" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
-    CONSTRAINT "Path_autor_fkey" FOREIGN KEY ("autor") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "Path_author_fkey" FOREIGN KEY ("author") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "Path_last_contributor_fkey" FOREIGN KEY ("last_contributor") REFERENCES "User" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
 
