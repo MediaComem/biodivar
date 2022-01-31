@@ -8,3 +8,5 @@ export interface CoordinateModel {
   deleted_date?: Date;
   poi_id?: number;
 }
+
+export interface CoordinateModels extends Array<CoordinateModel> {}

@@ -45,6 +45,9 @@ export const createPoi = async (
             }
           : undefined,
       },
+      include: {
+        coordinate: true,
+      },
     });
   } catch (error) {
     logger.error(error);
@@ -148,6 +151,13 @@ export const deletePoi = async (
         },
         data: {
           deleted_date: new Date(),
+          coordinate: poi.coordinate
+            ? {
+                update: {
+                  deleted_date: new Date(),
+                },
+              }
+            : undefined,
         },
       });
     } else {

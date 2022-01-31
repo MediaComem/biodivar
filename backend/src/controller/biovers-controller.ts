@@ -20,6 +20,11 @@ export const getBioversByUser = async (
           coordinate: true,
         },
       },
+      Path: {
+        include: {
+          coordinate: true,
+        },
+      },
     },
   });
 };
@@ -39,6 +44,11 @@ export const getPublicBiovers = async (prisma: PrismaClient) => {
           coordinate: true,
         },
       },
+      Path: {
+        include: {
+          coordinate: true,
+        },
+      },
     },
   });
 };
@@ -52,6 +62,18 @@ export const createBiovers = async (
     biovers.creation_date = new Date();
     return await prisma.biovers.create({
       data: biovers,
+      include: {
+        Poi: {
+          include: {
+            coordinate: true,
+          },
+        },
+        Path: {
+          include: {
+            coordinate: true,
+          },
+        },
+      },
     });
   } catch (error) {
     logger.error(error);
@@ -74,9 +96,20 @@ export const updateBiovers = async (
           name: biovers.name,
           update_date: new Date(),
         },
+        include: {
+          Poi: {
+            include: {
+              coordinate: true,
+            },
+          },
+          Path: {
+            include: {
+              coordinate: true,
+            },
+          },
+        },
       });
-    }
-    else {
+    } else {
       return undefined;
     }
   } catch (error) {
@@ -100,8 +133,7 @@ export const deleteBiovers = async (
           deleted_date: new Date(),
         },
       });
-    }
-    else {
+    } else {
       return undefined;
     }
   } catch (error) {

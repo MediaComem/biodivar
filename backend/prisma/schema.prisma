@@ -21,6 +21,8 @@ model User {
   biovers                 Biovers[]
   autor_poi               Poi[]       @relation(name: "poi_autor")
   last_contrubutor_poi    Poi[]       @relation(name: "poi_last_contributor")
+  autor_path              Path[]      @relation(name: "path_autor")
+  last_contrubutor_path   Path[]      @relation(name: "path_last_contributor")
 }
 
 model Biovers {
@@ -33,6 +35,7 @@ model Biovers {
   is_public               Boolean     @default(true)
   User                    User?       @relation(fields: [owner], references: [id])
   Poi                     Poi[]
+  Path                    Path[]
 }
 
 model Poi {
@@ -67,6 +70,31 @@ model Poi {
   last_contributor_fk     User?       @relation(name: "poi_last_contributor", fields: [last_contributor], references: [id])
 }
 
+model Path {
+  id                      Int         @id @default(autoincrement())
+  autor                   Int
+  creation_date           DateTime
+  update_date             DateTime?
+  deleted_date            DateTime?
+  last_contributor        Int?
+  is_public               Boolean     @default(true)
+  is_editable             Boolean     @default(false)      
+  coordinate              Coordinate[]
+  biovers                 Int
+  style_type              String
+  style_stroke            Boolean
+  style_stroke_width      Float
+  style_elevation         Float
+  style_elevation_ground  Float
+  style_noise             Float
+  style_is_visible        Boolean
+  visible_from            Float
+  metadata                String?
+  biovers_fk              Biovers     @relation(fields: [biovers], references: [id])
+  User                    User        @relation(name: "path_autor", fields: [autor], references: [id])
+  last_contributor_fk     User?       @relation(name: "path_last_contributor", fields: [last_contributor], references: [id])
+}
+
 model Coordinate {
   id                      Int         @id @default(autoincrement())
   long                    Float
@@ -77,4 +105,6 @@ model Coordinate {
   deleted_date            DateTime?
   poi_id                  Int?
   poi                     Poi?         @relation(fields: [poi_id], references: [id])
+  path_id                 Int?
+  path                    Path?        @relation(fields: [path_id], references: [id])
 }

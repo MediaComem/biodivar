@@ -6,6 +6,7 @@ import { authRoutes } from "./router/auth-route";
 import { userRoutes } from "./router/user-route";
 import { bioversRoutes } from "./router/biovers-route";
 import { poiRoutes } from "./router/poi-route";
+import { pathRoutes } from "./router/path-route";
 import { winstonPlugin } from "./plugins/winston";
 
 const server: Hapi.Server = Hapi.server({
@@ -31,6 +32,7 @@ export async function init(): Promise<Hapi.Server> {
   server.route(userRoutes);
   server.route(bioversRoutes);
   server.route(poiRoutes);
+  server.route(pathRoutes);
 
   return server;
 }

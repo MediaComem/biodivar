@@ -1,4 +1,4 @@
-import { server, ServerRoute } from "@hapi/hapi";
+import { ServerRoute } from "@hapi/hapi";
 
 import { createPoi, deletePoi, updatePoi } from "../controller/poi-controller";
 import { PoiModel } from "../types/poi-model";
