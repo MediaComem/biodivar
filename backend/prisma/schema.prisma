@@ -65,6 +65,7 @@ model Poi {
   trigger_mode            String
   metadata                String?
   coordinate              Coordinate?
+  symbol                  Symbol?
   biovers_fk              Biovers     @relation(fields: [biovers], references: [id])
   User                    User        @relation(name: "poi_author", fields: [author], references: [id])
   last_contributor_fk     User?       @relation(name: "poi_last_contributor", fields: [last_contributor], references: [id])
@@ -107,4 +108,18 @@ model Coordinate {
   poi                     Poi?         @relation(fields: [poi_id], references: [id])
   path_id                 Int?
   path                    Path?        @relation(fields: [path_id], references: [id])
+}
+
+model Symbol {
+  id                      Int          @id @default(autoincrement())
+  media_type              String
+  url                     String
+  elevation_ground        Float
+  is_facing_user          Boolean
+  is_visible              Boolean
+  creation_date           DateTime
+  update_date             DateTime?
+  deleted_date            DateTime?
+  poi_id                  Int?
+  poi                     Poi?         @relation(fields: [poi_id], references: [id])
 }

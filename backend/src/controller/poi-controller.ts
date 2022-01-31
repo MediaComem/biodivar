@@ -44,9 +44,22 @@ export const createPoi = async (
               },
             }
           : undefined,
+        symbol: poi.symbol
+          ? {
+              create: {
+                media_type: poi.symbol.media_type,
+                url: poi.symbol.url,
+                elevation_ground: poi.symbol.elevation_ground,
+                is_facing_user: poi.symbol.is_facing_user,
+                is_visible: poi.symbol.is_visible,
+                creation_date: new Date(),
+              },
+            }
+          : undefined,
       },
       include: {
         coordinate: true,
+        symbol: true,
       },
     });
   } catch (error) {
@@ -62,6 +75,7 @@ export const getPoiByTitle = async (prisma: PrismaClient, name: string) => {
     },
     include: {
       coordinate: true,
+      symbol: true,
     },
   });
 };
@@ -124,9 +138,32 @@ export const updatePoi = async (
                 },
               }
             : undefined,
+          symbol: poi.symbol
+            ? {
+                upsert: {
+                  update: {
+                    media_type: poi.symbol.media_type,
+                    url: poi.symbol.url,
+                    elevation_ground: poi.symbol.elevation_ground,
+                    is_facing_user: poi.symbol.is_facing_user,
+                    is_visible: poi.symbol.is_visible,
+                    update_date: new Date(),
+                  },
+                  create: {
+                    media_type: poi.symbol.media_type,
+                    url: poi.symbol.url,
+                    elevation_ground: poi.symbol.elevation_ground,
+                    is_facing_user: poi.symbol.is_facing_user,
+                    is_visible: poi.symbol.is_visible,
+                    creation_date: new Date(),
+                  },
+                },
+              }
+            : undefined,
         },
         include: {
           coordinate: true,
+          symbol: true,
         },
       });
     } else {
@@ -152,6 +189,13 @@ export const deletePoi = async (
         data: {
           deleted_date: new Date(),
           coordinate: poi.coordinate
+            ? {
+                update: {
+                  deleted_date: new Date(),
+                },
+              }
+            : undefined,
+          symbol: poi.symbol
             ? {
                 update: {
                   deleted_date: new Date(),

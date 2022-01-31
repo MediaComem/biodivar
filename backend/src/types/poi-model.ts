@@ -1,4 +1,5 @@
 import { CoordinateModel } from "./coordinate-model";
+import { SymbolModel } from "./symbol-model";
 
 export interface PoiModel {
   id?: number;
@@ -27,6 +28,7 @@ export interface PoiModel {
   trigger_mode: string;
   metadata?: string;
   coordinate?: CoordinateModel;
+  symbol?: SymbolModel;
 }
 
 export interface PoiModels extends Array<PoiModel> {}
