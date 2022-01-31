@@ -1,43 +1,51 @@
 <template>
-  <div>
-    <div class="layout">
-      <h3>BiodivAR</h3>
-      <input
-        id="username"
-        class="input-size"
-        :class="{ error: v$.form.username.$errors.length }"
-        v-model="v$.form.username.$model"
-        placeholder="Login"
-      />
-      <input
-        id="password"
-        class="input-size"
-        :class="{ error: v$.form.password.$errors.length }"
-        type="password"
-        v-model="v$.form.password.$model"
-        placeholder="Password"
-      />
-      <el-button
-        :disabled="v$.form.$invalid"
-        type="primary" class="button-size"
-        @click="authenticate"
-      >
-      Submit
-      </el-button>
-    </div>
-  </div>
+<el-row :gutter="20" :justify="'center'" :align="'middle'">
+  <el-col :span="8">
+    <el-form
+      :model="form"
+      :rules="rules"
+      :label-position="'right'"
+      label-width="auto"
+      @validate="validateForm"
+    >
+      <el-form-item class="layout">
+        <h3>BiodivAR</h3>
+      </el-form-item>
+      <el-form-item label="Username" prop="username">
+        <el-input
+          id="username"
+          v-model="form.username"
+        />
+      </el-form-item>
+      <el-form-item label="Password" prop="password">
+        <el-input
+          id="password"
+          type="password"
+          v-model="form.password"
+        />
+      </el-form-item>
+      <el-form-item class="layout">
+        <el-button
+          :disabled="!error"
+          type="primary"
+          @click="authenticate"
+        >
+        Submit
+        </el-button>
+      </el-form-item>
+    </el-form>
+  </el-col>
+</el-row>
 </template>
 
 <script>
 import axios from 'axios';
-import useVuelidate from '@vuelidate/core';
-import { required, minLength } from '@vuelidate/validators';
 
 export default {
-  setup() {
-    return { v$: useVuelidate() };
-  },
   methods: {
+    validateForm(item, error) {
+      this.error = error;
+    },
     async authenticate() {
       try {
         const response = await axios.post(
@@ -65,49 +73,30 @@ export default {
   name: 'Login',
   data() {
     return {
+      error: true,
       form: {
         username: '',
         password: '',
       },
-    };
-  },
-  validations() {
-    return {
-      form: {
-        username: {
-          required,
-        },
-        password: {
-          required,
-          min: minLength(4),
-        },
+      rules: {
+        username: [{
+          required: true,
+          message: 'Please input username',
+        }],
+        password: [{
+          required: true,
+          message: 'Please input password',
+        }],
       },
     };
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .layout {
-  display: flex;
-  flex-direction: column;
-  height: 90vh;
-  align-items: center;
-}
-
-.input-size {
-  width: 350px;
-  height: 30px;
-  margin-top: 5vh;
-}
-
-.button-size {
-  width: 203px;
-  height: 30px;
-  margin-top: 5vh;
-}
-
-.error {
-  outline: 2px solid red;
+  display: inline-block;
+  text-align: center;
+  margin-top: 20px;
 }
 </style>
