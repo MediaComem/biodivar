@@ -57,11 +57,9 @@ export default {
       this.error = error;
     },
     validateEmail(rule, value, callback) {
-      console.log('fdsfsdfdsa');
       if (value === '') {
         callback(new Error('Please input email'));
       } else if (!this.reg.test(value)) {
-        console.log(this.reg);
         callback(new Error('Please input a valid email address'));
       } else {
         callback();
@@ -79,7 +77,7 @@ export default {
     async createUser() {
       try {
         const response = await axios.post(
-          'http://localhost:3000/user/create',
+          `${process.env.VUE_APP_URL}/user/create`,
           {
             username: this.form.username,
             email: this.form.email,

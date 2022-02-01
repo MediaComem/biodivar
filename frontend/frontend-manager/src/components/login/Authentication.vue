@@ -49,7 +49,7 @@ export default {
     async authenticate() {
       try {
         const response = await axios.post(
-          'http://localhost:3000/login',
+          `${process.env.VUE_APP_URL}/login`,
           {
             username: this.form.username,
             password: this.form.password,

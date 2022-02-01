@@ -5,6 +5,9 @@ node_modules
 /tests/e2e/videos/
 /tests/e2e/screenshots/
 
+.env.production
+.env.development
+
 
 # local env files
 .env.local
