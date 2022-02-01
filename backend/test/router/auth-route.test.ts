@@ -22,7 +22,7 @@ describe("Test Auth Routes", () => {
   it("Login test failed", async () => {
     const res = await server.inject({
       method: "POST",
-      url: "/login",
+      url: "/api/v1/login",
       payload: {
         username: "Rich",
         password: "badPassword",
@@ -34,7 +34,7 @@ describe("Test Auth Routes", () => {
   it("Login test success", async () => {
     const res = await server.inject({
       method: "POST",
-      url: "/login",
+      url: "/api/v1/login",
       payload: {
         username: "Rich",
         password: "test",

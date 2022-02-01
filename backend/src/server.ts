@@ -1,23 +1,19 @@
-import Hapi from "@hapi/hapi";
-import hapiAuthCookie from "@hapi/cookie";
-import { prismaPlugin } from "./plugins/prisma";
-import { authPlugin } from "./plugins/auth";
-import { authRoutes } from "./router/auth-route";
-import { userRoutes } from "./router/user-route";
-import { bioversRoutes } from "./router/biovers-route";
-import { poiRoutes } from "./router/poi-route";
-import { pathRoutes } from "./router/path-route";
-import { winstonPlugin } from "./plugins/winston";
+import Hapi from '@hapi/hapi';
+import hapiAuthCookie from '@hapi/cookie';
+import { prismaPlugin } from './plugins/prisma';
+import { authPlugin } from './plugins/auth';
+import { winstonPlugin } from './plugins/winston';
+import { routerPlugin } from './plugins/router';
 
 const server: Hapi.Server = Hapi.server({
   port: process.env.PORT || 3000,
-  host: process.env.HOST || "localhost",
+  host: process.env.HOST || 'localhost',
   routes: {
     cors: {
       origin: ['*'],
       credentials: true,
     },
-  }
+  },
 });
 
 export async function init(): Promise<Hapi.Server> {
@@ -26,18 +22,17 @@ export async function init(): Promise<Hapi.Server> {
     prismaPlugin,
     hapiAuthCookie,
     authPlugin,
-  ]);
-
-  server.route(authRoutes);
-  server.route(userRoutes);
-  server.route(bioversRoutes);
-  server.route(poiRoutes);
-  server.route(pathRoutes);
+    routerPlugin,
+  ], {
+    routes: {
+      prefix: process.env.URL_PREFIX || '/api',
+    }
+  });
 
   return server;
 }
 
-process.on("unhandledRejection", async (err) => {
+process.on('unhandledRejection', async (err) => {
   await server.app.prisma.$disconnect();
   server.app.logger.error(err);
   process.exit(1);

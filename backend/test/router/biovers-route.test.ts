@@ -31,7 +31,7 @@ describe("Test Biovers Routes", () => {
   it("Get public biovers", async () => {
     const res = await server.inject({
       method: "GET",
-      url: "/biovers",
+      url: "/api/v1/biovers",
       auth: {
         strategy: "default",
         credentials: {
@@ -55,7 +55,7 @@ describe("Test Biovers Routes", () => {
   it("Get biovers by user", async () => {
     const res = await server.inject({
       method: "GET",
-      url: "/biovers/user?id=1",
+      url: "/api/v1/biovers/user?id=1",
       auth: {
         strategy: "default",
         credentials: {
@@ -79,7 +79,7 @@ describe("Test Biovers Routes", () => {
   it("Create a biovers", async () => {
     const res = await server.inject({
       method: "POST",
-      url: '/biovers/create',
+      url: '/api/v1/biovers/create',
       auth: {
         strategy: "default",
         credentials: {
@@ -104,7 +104,7 @@ describe("Test Biovers Routes", () => {
   it("Update a biovers", async () => {
     const res = await server.inject({
       method: "POST",
-      url: '/biovers/update',
+      url: '/api/v1/biovers/update',
       auth: {
         strategy: "default",
         credentials: {
@@ -136,7 +136,7 @@ describe("Test Biovers Routes", () => {
     }
     const res = await server.inject({
       method: "POST",
-      url: `/biovers/delete?id=1`,
+      url: `/api/v1/biovers/delete?id=1`,
       auth: {
         strategy: "default",
         credentials: {

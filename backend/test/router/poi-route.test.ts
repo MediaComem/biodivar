@@ -42,7 +42,7 @@ describe('Test Poi Routes', () => {
   it('Create a poi', async () => {
     const res = await server.inject({
       method: 'POST',
-      url: `/poi/create`,
+      url: `/api/v1/poi/create`,
       auth: {
         strategy: 'default',
         credentials: {
@@ -63,7 +63,7 @@ describe('Test Poi Routes', () => {
     poi_to_create.coordinate = coordinate_test;
     const res = await server.inject({
       method: 'POST',
-      url: `/poi/create`,
+      url: `/api/v1/poi/create`,
       auth: {
         strategy: 'default',
         credentials: {
@@ -85,7 +85,7 @@ describe('Test Poi Routes', () => {
     poi_to_create.symbol = symbol_test;
     const res = await server.inject({
       method: 'POST',
-      url: `/poi/create`,
+      url: `/api/v1/poi/create`,
       auth: {
         strategy: 'default',
         credentials: {
@@ -110,7 +110,7 @@ describe('Test Poi Routes', () => {
       store_poi.style_stroke_width = 255.5;
       const res = await server.inject({
         method: 'POST',
-        url: `/poi/update`,
+        url: `/api/v1/poi/update`,
         auth: {
           strategy: 'default',
           credentials: {
@@ -144,7 +144,7 @@ describe('Test Poi Routes', () => {
       } as Coordinate;
       const res = await server.inject({
         method: 'POST',
-        url: `/poi/update`,
+        url: `/api/v1/poi/update`,
         auth: {
           strategy: 'default',
           credentials: {
@@ -181,7 +181,7 @@ describe('Test Poi Routes', () => {
       } as Symbol;
       const res = await server.inject({
         method: 'POST',
-        url: `/poi/update`,
+        url: `/api/v1/poi/update`,
         auth: {
           strategy: 'default',
           credentials: {
@@ -208,7 +208,7 @@ describe('Test Poi Routes', () => {
     expect(store_poi?.deleted_date).toBeNull();
     const res = await server.inject({
       method: 'POST',
-      url: `/poi/delete`,
+      url: `/api/v1/poi/delete`,
       auth: {
         strategy: 'default',
         credentials: {

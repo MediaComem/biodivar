@@ -26,7 +26,7 @@ describe("Test User Routes", () => {
   it("Create a user", async () => {
     const res = await server.inject({
       method: "POST",
-      url: '/user/create',
+      url: '/api/v1/user/create',
       payload: {
         username: "a",
         email: "b",
@@ -43,7 +43,7 @@ describe("Test User Routes", () => {
   it("Update a user", async () => {
     const res = await server.inject({
       method: "POST",
-      url: `/user/update`,
+      url: `/api/v1/user/update`,
       auth: {
         strategy: "default",
         credentials: {
@@ -68,7 +68,7 @@ describe("Test User Routes", () => {
   it("Delete a user", async () => {
     const res = await server.inject({
       method: "POST",
-      url: `/user/delete?`,
+      url: `/api/v1/user/delete?`,
       auth: {
         strategy: "default",
         credentials: {

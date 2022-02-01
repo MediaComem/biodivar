@@ -39,7 +39,7 @@ describe('Test Path Routes', () => {
   it('Create a path', async () => {
     const res = await server.inject({
       method: 'POST',
-      url: `/path/create`,
+      url: `/api/v1/path/create`,
       auth: {
         strategy: 'default',
         credentials: {

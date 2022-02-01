@@ -8,9 +8,9 @@
     "migrate": "prisma migrate deploy && prisma generate",
     "tsc": "tsc",
     "start:dev": "npm run migrate && ts-node src/index.ts",
-    "start:prod": "npm run migrate && node /dist/src/index.js",
-    "build:prod": "npm run tsc && docker build -f Dockerfile.prod --tag bioversar:1.0.0 .",
-    "run:prod": "docker run -p 3000:3000 bioversar:1.0.0",
+    "start:prod": "npm run migrate && node build/src/index.js",
+    "build:prod": "npm run tsc && docker build -f Dockerfile.prod --tag biodivar:1.0.0 .",
+    "run:prod": "docker run -p 3000:3000 biodivar:1.0.0",
     "run:test": "docker build -f Dockerfile.test --tag bioversar_test:1.0.0 . && docker run -it bioversar_test:1.0.0",
     "test": "jest --detectOpenHandles"
   },
