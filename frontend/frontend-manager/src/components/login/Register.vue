@@ -78,7 +78,7 @@ export default {
     async createUser() {
       try {
         const response = await axios.post(
-          `${process.env.VUE_APP_URL}/user/create`,
+          `${process.env.VUE_APP_URL}/register`,
           {
             username: this.form.username,
             email: this.form.email,
