@@ -1,9 +1,27 @@
 import { ServerRoute } from '@hapi/hapi';
 import Joi from 'joi';
 
-import { validateLogin } from '../controller/auth-controller';
+import { validateLogin, registerUser } from '../controller/auth-controller';
 
 export const authRoutes: ServerRoute[] = [];
+
+authRoutes.push({
+  method: "POST",
+  path: "/register",
+  options: {
+    validate: {
+      payload: Joi.object({
+        username: Joi.string().required(),
+        email: Joi.string().email().required(),
+        password: Joi.string().min(4).required(),
+      }),
+    },
+    handler: registerUser,
+    auth: {
+      mode: "try",
+    },
+  },
+});
 
 authRoutes.push({
   method: 'GET',

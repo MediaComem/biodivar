@@ -23,23 +23,6 @@ describe("Test User Routes", () => {
     await server.stop();
   });
 
-  it("Create a user", async () => {
-    const res = await server.inject({
-      method: "POST",
-      url: '/api/v1/user/create',
-      payload: {
-        username: "a",
-        email: "bbbbbb@gmail.com",
-        password: "cccc",
-      },
-    });
-    const user = res.result as UserModel;
-    expect(user).toBeDefined();
-    expect(user?.email).toEqual("bbbbbb@gmail.com");
-    expect(user?.username).toEqual("a");
-    expect(user?.creation_date).toBeDefined();
-  });
-
   it("Update a user", async () => {
     const res = await server.inject({
       method: "POST",

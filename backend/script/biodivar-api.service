@@ -1,0 +1,6 @@
+[Unit]
+Description=BiodivAR API
+After=network.target
+[Service]
+WorkingDirectory=/var/www/api_biodivar
+ExecStart=/usr/bin/npm run start:prod
