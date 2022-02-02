@@ -29,6 +29,39 @@ export const getBioversByUser = async (
   });
 };
 
+export const getBioversById = async (
+  prisma: PrismaClient,
+  biovers_id: number,
+  user_id: number
+) => {
+  return await prisma.biovers.findFirst({
+    where: {
+      OR: [
+        {
+          owner: user_id,
+          id: biovers_id,
+        },
+        {
+          id: biovers_id,
+          is_public: true,
+        },
+      ],
+    },
+    include: {
+      Poi: {
+        include: {
+          coordinate: true,
+        },
+      },
+      Path: {
+        include: {
+          coordinate: true,
+        },
+      },
+    },
+  });
+};
+
 export const getPublicBiovers = async (prisma: PrismaClient) => {
   return await prisma.biovers.findMany({
     where: {

@@ -29,13 +29,13 @@ describe("Test User Routes", () => {
       url: '/api/v1/user/create',
       payload: {
         username: "a",
-        email: "b",
-        password: "c",
+        email: "bbbbbb@gmail.com",
+        password: "cccc",
       },
     });
     const user = res.result as UserModel;
     expect(user).toBeDefined();
-    expect(user?.email).toEqual("b");
+    expect(user?.email).toEqual("bbbbbb@gmail.com");
     expect(user?.username).toEqual("a");
     expect(user?.creation_date).toBeDefined();
   });

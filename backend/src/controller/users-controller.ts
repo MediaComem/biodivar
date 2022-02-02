@@ -1,7 +1,8 @@
-import { PrismaClient } from "@prisma/client";
-import { UserModel } from "../types/user-model";
-import Bcrypt from "bcrypt";
-import winston from "winston";
+import { PrismaClient, Prisma } from '@prisma/client';
+import { UserModel } from '../types/user-model';
+import Bcrypt from 'bcrypt';
+import winston from 'winston';
+import { PrismaError } from '../types/prisma-error';
 
 export const getUserById = async (prisma: PrismaClient, id: number) => {
   return await prisma.user.findFirst({
@@ -35,7 +36,23 @@ export const createUser = async (
     });
   } catch (error) {
     logger.error(error);
-    return undefined;
+    let errorMessage: string = '';
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === 'P2002') {
+        const meta = error.meta as PrismaError;
+        if (meta.target.length === 1) {
+          errorMessage = `The ${meta.target[0]} is already used`;
+        }
+        else {
+          errorMessage = 'The username and email are already used'
+        }
+        
+      }
+    }
+    else {
+      errorMessage = 'The user cannot be create for unknow reason. Please contact an administator to solve the problem';
+    }
+    throw new Error(errorMessage);
   }
 };
 

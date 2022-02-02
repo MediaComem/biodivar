@@ -56,7 +56,7 @@ describe('Test Path Routes', () => {
     expect(new_path?.coordinate?.length).toEqual(2);
   });
 
-  it('Update a poi without coordinate', async () => {
+  it('Update a path without coordinate', async () => {
     const store_paths = await getPathsByUser(server.app.prisma, 1);
     if (store_paths.length > 0) {
       expect(store_paths[0].update_date).toBeNull();
@@ -64,7 +64,7 @@ describe('Test Path Routes', () => {
       store_paths[0].coordinate[0].alt = 999.99;
       const res = await server.inject({
         method: 'POST',
-        url: `/path/update`,
+        url: `/api/v1/path/update`,
         auth: {
           strategy: 'default',
           credentials: {
@@ -90,13 +90,13 @@ describe('Test Path Routes', () => {
     }
   });
 
-  it('Delete a poi', async () => {
+  it('Delete a path', async () => {
     const paths = await getPathsByUser(server.app.prisma, 1);
     expect(paths).toBeDefined();
     expect(paths[0].deleted_date).toBeNull();
     const res = await server.inject({
       method: 'POST',
-      url: `/path/delete`,
+      url: `/api/v1/path/delete`,
       auth: {
         strategy: 'default',
         credentials: {

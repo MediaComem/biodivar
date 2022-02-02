@@ -4,6 +4,7 @@ import {
   createBiovers,
   deleteBiovers,
   getBioversByUser,
+  getBioversById,
   getPublicBiovers,
   updateBiovers,
 } from "../controller/biovers-controller";
@@ -16,6 +17,14 @@ bioversRoutes.push({
   path: "/biovers",
   handler: function (request, h) {
     return getPublicBiovers(request.server.app.prisma);
+  },
+});
+
+bioversRoutes.push({
+  method: "GET",
+  path: "/biovers/id",
+  handler: function (request, h) {
+    return getBioversById(request.server.app.prisma, +request.query.id, request.auth.credentials.id as number);
   },
 });
 
