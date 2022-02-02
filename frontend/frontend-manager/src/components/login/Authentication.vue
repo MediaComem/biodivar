@@ -40,6 +40,7 @@
 
 <script>
 import axios from 'axios';
+import { ElNotification } from 'element-plus';
 
 export default {
   methods: {
@@ -66,7 +67,17 @@ export default {
           isAuthenticate: false,
           username: '',
         });
-        console.log(error);
+        let errorMessage = '';
+        if (error.response.data.statusCode === 400) {
+          errorMessage = 'Username or password is missing';
+        } else {
+          errorMessage = 'Username or password is wrong';
+        }
+        ElNotification({
+          title: 'Authentication failure',
+          message: errorMessage,
+          type: 'error',
+        });
       }
     },
   },

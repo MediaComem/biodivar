@@ -50,6 +50,7 @@
 
 <script>
 import axios from 'axios';
+import { ElNotification } from 'element-plus';
 
 export default {
   methods: {
@@ -95,7 +96,21 @@ export default {
           isAuthenticate: false,
           username: '',
         });
-        console.log(error);
+        let errorMessage = '';
+        if (error.response.status === 400) {
+          if (error.response.data.errorMessage) {
+            errorMessage = error.response.data.errorMessage;
+          } else {
+            errorMessage = 'One or multiple fiels have input errors';
+          }
+        } else {
+          errorMessage = 'The user cannot be create for unknow reason. Please contact an administator to solve the problem';
+        }
+        ElNotification({
+          title: 'Authentication failure',
+          message: errorMessage,
+          type: 'error',
+        });
       }
     },
   },
