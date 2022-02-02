@@ -4,3 +4,7 @@ After=network.target
 [Service]
 WorkingDirectory=/var/www/api_biodivar
 ExecStart=/usr/bin/npm run start:prod
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
