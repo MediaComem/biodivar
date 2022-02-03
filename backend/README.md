@@ -51,7 +51,7 @@
 ### Get biovers by ID
 
 - HTTP method: GET
-- Route: /biovers/user
+- Route: /biovers/id
 - Query Parameter: `id=id`
 - Example: `/biovers/id?id=1`
 - Return: 
@@ -107,7 +107,7 @@
 ### Get POI by ID
 
 - HTTP method: GET
-- Route: /biovers/user
+- Route: /poi/id
 - Query Parameter: `id=id`
 - Example: `/poi/id?id=46`
 - Return: 
@@ -119,7 +119,7 @@
 ### Get POI by title
 
 - HTTP method: GET
-- Route: /biovers/user
+- Route: /poi/title
 - Query Parameter: `title=title`
 - Example: `/poi/title?title=POI 1`
 - Return: 
@@ -166,13 +166,39 @@
 
 ## PATH
 
+### Get PATH by ID
+
+- HTTP method: GET
+- Route: /path/id
+- Query Parameter: `id=id`
+- Example: `/path/id?id=29`
+- Return: 
+    - When content: `{statusCode: 200, message: "Get Path done successfully", data: {"id":29,"author":1,"creation_date":"2022-01-31T09:34:18.526Z","update_date":null,"deleted_date":null,"last_contributor":1,"is_public":true,"is_editable":false,"biovers":1,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"metadata":null,"coordinate":[{"id":185,"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-31T09:34:18.526Z","update_date":null,"deleted_date":null,"poi_id":null,"path_id":29},{"id":186,"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-31T09:34:18.526Z","update_date":null,"deleted_date":null,"poi_id":null,"path_id":29}]}`
+    - Without content: `{statusCode: 204, message: "Get path done successfully"}`
+- Error:
+    - Internal: `{"error": "Internal server error","message": "Cannot get path due to error","statusCode": 500}`
+
+### Get PATH by user
+
+- HTTP method: GET
+- Route: /path/user
+- Query Parameter: `id=id`
+- Example: `/path/user?user=1`
+- Return: 
+    - When content: `{statusCode: 200, message: "Get Path done successfully", data: {"id":29,"author":1,"creation_date":"2022-01-31T09:34:18.526Z","update_date":null,"deleted_date":null,"last_contributor":1,"is_public":true,"is_editable":false,"biovers":1,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"metadata":null,"coordinate":[{"id":185,"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-31T09:34:18.526Z","update_date":null,"deleted_date":null,"poi_id":null,"path_id":29},{"id":186,"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-31T09:34:18.526Z","update_date":null,"deleted_date":null,"poi_id":null,"path_id":29}]}`
+    - Without content: `{statusCode: 204, message: "Get path done successfully"}`
+- Error:
+    - Internal: `{"error": "Internal server error","message": "Cannot get path due to error","statusCode": 500}`
+
 ### PATH Creation
 
 - HTTP method: POST
 - Route: /path/create
 - Payload: `{"author":1,"creation_date":"2022-01-31T09:34:18.415Z","biovers":1,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"coordinate":[{"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-31T09:34:18.415Z"},{"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-31T09:34:18.415Z"}]}`
 - Example: `/path/create`
-- Return: `{"id":29,"author":1,"creation_date":"2022-01-31T09:34:18.526Z","update_date":null,"deleted_date":null,"last_contributor":1,"is_public":true,"is_editable":false,"biovers":1,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"metadata":null,"coordinate":[{"id":185,"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-31T09:34:18.526Z","update_date":null,"deleted_date":null,"poi_id":null,"path_id":29},{"id":186,"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-31T09:34:18.526Z","update_date":null,"deleted_date":null,"poi_id":null,"path_id":29}]}`
+- Return: `{statusCode: 200, message: "Path creation done successfully", data: {"id":29,"author":1,"creation_date":"2022-01-31T09:34:18.526Z","update_date":null,"deleted_date":null,"last_contributor":1,"is_public":true,"is_editable":false,"biovers":1,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"metadata":null,"coordinate":[{"id":185,"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-31T09:34:18.526Z","update_date":null,"deleted_date":null,"poi_id":null,"path_id":29},{"id":186,"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-31T09:34:18.526Z","update_date":null,"deleted_date":null,"poi_id":null,"path_id":29}]}}`
+- Error:
+    - Internal: `{"error": "Internal server error","message": "Cannot create path due to error","statusCode": 500}`
 
 ### PATH Update
 
@@ -180,7 +206,9 @@
 - Route: /pah/update
 - Payload: `{"id":1,"author":1,"creation_date":"2022-01-31T09:35:26.799Z","update_date":null,"deleted_date":null,"last_contributor":null,"is_public":true,"is_editable":false,"biovers":1,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"metadata":"This is a test","coordinate":[{"id":200,"long":12.2,"lat":13.3,"alt":999.99,"creation_date":"2022-01-31T09:35:26.643Z","update_date":null,"deleted_date":null,"poi_id":null,"path_id":1},{"id":201,"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-31T09:35:26.643Z","update_date":null,"deleted_date":null,"poi_id":null,"path_id":1}]}`
 - Example: `/path/update`
-- Return: `{"id":1,"author":1,"creation_date":"2022-01-31T09:35:26.799Z","update_date":"2022-01-31T09:35:26.815Z","deleted_date":null,"last_contributor":1,"is_public":true,"is_editable":false,"biovers":1,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"metadata":"This is a test","coordinate":[{"id":200,"long":12.2,"lat":13.3,"alt":999.99,"creation_date":"2022-01-31T09:35:26.643Z","update_date":"2022-01-31T09:35:26.808Z","deleted_date":null,"poi_id":null,"path_id":1},{"id":201,"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-31T09:35:26.643Z","update_date":"2022-01-31T09:35:26.812Z","deleted_date":null,"poi_id":null,"path_id":1}]}`
+- Return: `{statusCode: 200, message: "Path update done successfully", data: {"id":1,"author":1,"creation_date":"2022-01-31T09:35:26.799Z","update_date":"2022-01-31T09:35:26.815Z","deleted_date":null,"last_contributor":1,"is_public":true,"is_editable":false,"biovers":1,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"metadata":"This is a test","coordinate":[{"id":200,"long":12.2,"lat":13.3,"alt":999.99,"creation_date":"2022-01-31T09:35:26.643Z","update_date":"2022-01-31T09:35:26.808Z","deleted_date":null,"poi_id":null,"path_id":1},{"id":201,"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-31T09:35:26.643Z","update_date":"2022-01-31T09:35:26.812Z","deleted_date":null,"poi_id":null,"path_id":1}]}}`
+- Error:
+    - Internal: `{"error": "Internal server error","message": "Cannot update path due to error","statusCode": 500}`
 
 ### PATH Deletion
 
@@ -188,4 +216,6 @@
 - Route: /path/delete
 - Payload: `{"id":1,"author":1,"creation_date":"2022-01-31T09:36:25.697Z","update_date":null,"deleted_date":null,"last_contributor":null,"is_public":true,"is_editable":false,"biovers":1,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"metadata":null,"coordinate":[{"id":219,"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-31T09:36:25.494Z","update_date":null,"deleted_date":null,"poi_id":null,"path_id":1},{"id":220,"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-31T09:36:25.494Z","update_date":null,"deleted_date":null,"poi_id":null,"path_id":1}]}`
 - Example: `/path/delete`
-- Return: `{"id":1,"author":1,"creation_date":"2022-01-31T09:36:25.697Z","update_date":null,"deleted_date":"2022-01-31T09:36:25.706Z","last_contributor":null,"is_public":true,"is_editable":false,"biovers":1,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"metadata":null,"coordinate":[{"id":219,"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-31T09:36:25.494Z","update_date":null,"deleted_date":"2022-01-31T09:36:25.706Z","poi_id":null,"path_id":1},{"id":220,"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-31T09:36:25.494Z","update_date":null,"deleted_date":"2022-01-31T09:36:25.706Z","poi_id":null,"path_id":1}]}`
+- Return: `{statusCode: 200, message: "Path deletion done successfully", data: {"id":1,"author":1,"creation_date":"2022-01-31T09:36:25.697Z","update_date":null,"deleted_date":"2022-01-31T09:36:25.706Z","last_contributor":null,"is_public":true,"is_editable":false,"biovers":1,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"metadata":null,"coordinate":[{"id":219,"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-31T09:36:25.494Z","update_date":null,"deleted_date":"2022-01-31T09:36:25.706Z","poi_id":null,"path_id":1},{"id":220,"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-31T09:36:25.494Z","update_date":null,"deleted_date":"2022-01-31T09:36:25.706Z","poi_id":null,"path_id":1}]}}`
+- Error:
+    - Internal: `{"error": "Internal server error","message": "Cannot delete path due to error","statusCode": 500}`
