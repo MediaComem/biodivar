@@ -7,7 +7,6 @@
       :rules="rules"
       :label-position="'right'"
       label-width="auto"
-      @validate="validateForm"
     >
       <el-form-item class="layout">
         <h3>BiodivAR</h3>
@@ -53,10 +52,20 @@ import axios from 'axios';
 import { ElNotification } from 'element-plus';
 
 export default {
-  methods: {
-    validateForm(item, error) {
-      this.error = error;
+  watch: {
+    form: {
+      deep: true,
+      immediate: true,
+      handler() {
+        if (this.$refs && this.$refs.form) {
+          this.$refs.form.validate((valid) => {
+            this.error = valid;
+          });
+        }
+      },
     },
+  },
+  methods: {
     validateEmail(rule, value, callback) {
       if (value === '') {
         callback(new Error('Please input email'));
@@ -88,7 +97,7 @@ export default {
         );
         this.$store.dispatch('authenticate', {
           isAuthenticate: true,
-          username: response.data,
+          username: response.data.data,
         });
         this.$router.push('Home');
       } catch (error) {
@@ -98,11 +107,7 @@ export default {
         });
         let errorMessage = '';
         if (error.response.status === 400) {
-          if (error.response.data.errorMessage) {
-            errorMessage = error.response.data.errorMessage;
-          } else {
-            errorMessage = 'One or multiple fiels have input errors';
-          }
+          errorMessage = error.response.data.message;
         } else {
           errorMessage = 'The user cannot be create for unknow reason. Please contact an administator to solve the problem';
         }
@@ -117,7 +122,7 @@ export default {
   name: 'Register',
   data() {
     return {
-      error: true,
+      error: false,
       form: {
         username: '',
         email: '',

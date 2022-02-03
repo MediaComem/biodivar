@@ -2,11 +2,11 @@
 <el-row :gutter="20" :justify="'center'" :align="'middle'">
   <el-col :span="8">
     <el-form
+      ref="register"
       :model="form"
       :rules="rules"
       :label-position="'right'"
       label-width="auto"
-      @validate="validateForm"
     >
       <el-form-item class="layout">
         <h3>BiodivAR</h3>
@@ -43,10 +43,20 @@ import axios from 'axios';
 import { ElNotification } from 'element-plus';
 
 export default {
-  methods: {
-    validateForm(item, error) {
-      this.error = error;
+  watch: {
+    form: {
+      deep: true,
+      immediate: true,
+      handler() {
+        if (this.$refs && this.$refs.register) {
+          this.$refs.register.validate((valid) => {
+            this.error = valid;
+          });
+        }
+      },
     },
+  },
+  methods: {
     async authenticate() {
       try {
         const response = await axios.post(
@@ -59,7 +69,7 @@ export default {
         );
         this.$store.dispatch('authenticate', {
           isAuthenticate: true,
-          username: response.data.user,
+          username: response.data.data,
         });
         this.$router.push('Home');
       } catch (error) {
@@ -69,8 +79,6 @@ export default {
         });
         let errorMessage = '';
         if (error.response.data.statusCode === 400) {
-          errorMessage = 'Username or password is missing';
-        } else {
           errorMessage = 'Username or password is wrong';
         }
         ElNotification({
@@ -84,7 +92,7 @@ export default {
   name: 'Login',
   data() {
     return {
-      error: true,
+      error: false,
       form: {
         username: '',
         password: '',

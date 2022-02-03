@@ -3,13 +3,29 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import Layout from '@/views/Layout.vue';
+import axios from 'axios';
 
 export default {
   name: 'Home',
   components: {
     Layout,
+  },
+  methods: {
+    async checkLoggin() {
+      try {
+        await axios.get(`${process.env.VUE_APP_URL}/login`, { withCredentials: true });
+      } catch (error) {
+        this.$store.dispatch('authenticate', {
+          isAuthenticate: false,
+          username: '',
+        });
+        this.$router.push('/login');
+      }
+    },
+  },
+  mounted() {
+    this.checkLoggin();
   },
 };
 </script>
