@@ -14,6 +14,7 @@ import {
 import { PoiModel } from '../../src/types/poi-model';
 import { getPoiByTitle } from '../../src/controller/poi-controller';
 import { Coordinate, Symbol } from '@prisma/client';
+import { responseModel } from '../../src/types/response';
 
 describe('Test Poi Routes', () => {
   let server: Server;
@@ -39,6 +40,50 @@ describe('Test Poi Routes', () => {
     await server.stop();
   });
 
+  it("Get POI by title", async () => {
+    const res = await server.inject({
+      method: "GET",
+      url: "/api/v1/poi/title?title=POI 1",
+      auth: {
+        strategy: "default",
+        credentials: {
+          id: 1,
+          password: "test",
+        },
+      },
+    });
+    const response = res.result as responseModel;
+    expect(response.statusCode).toEqual(200);
+    if (response && response.data) {
+      const poi = response.data as PoiModel;
+      expect(poi.title).toEqual('POI 1');
+    } else {
+      throw new Error("No Biovers found where it should be");
+    }
+  });
+
+  it("Get POI by ID", async () => {
+    const res = await server.inject({
+      method: "GET",
+      url: "/api/v1/poi/id?id=1",
+      auth: {
+        strategy: "default",
+        credentials: {
+          id: 1,
+          password: "test",
+        },
+      },
+    });
+    const response = res.result as responseModel;
+    expect(response.statusCode).toEqual(200);
+    if (response && response.data) {
+      const poi = response.data as PoiModel;
+      expect(poi.title).toEqual('POI 1');
+    } else {
+      throw new Error("No Biovers found where it should be");
+    }
+  });
+
   it('Create a poi', async () => {
     const res = await server.inject({
       method: 'POST',
@@ -52,10 +97,16 @@ describe('Test Poi Routes', () => {
       },
       payload: test_poi,
     });
-    const poi = res.result as PoiModel;
-    expect(poi).toBeDefined();
-    expect(poi.title).toEqual('POI 1');
-    expect(poi.last_contributor).toEqual(1);
+    const response = res.result as responseModel;
+    if (response && response.data) {
+      expect(response.statusCode).toEqual(200);
+      const poi = response.data as PoiModel;
+      expect(poi).toBeDefined();
+      expect(poi.title).toEqual('POI 1');
+      expect(poi.last_contributor).toEqual(1);
+    } else {
+      throw new Error('Cannot create the POI');
+    }
   });
 
   it('Create a poi with coordinate', async () => {
@@ -73,11 +124,17 @@ describe('Test Poi Routes', () => {
       },
       payload: poi_to_create,
     });
-    const poi = res.result as PoiModel;
-    expect(poi).toBeDefined();
-    expect(poi.title).toEqual('POI 1');
-    expect(poi.last_contributor).toEqual(1);
-    expect(poi.coordinate?.alt).toEqual(14.4);
+    const response = res.result as responseModel;
+    if (response && response.data) {
+      expect(response.statusCode).toEqual(200);
+      const poi = response.data as PoiModel;
+      expect(poi).toBeDefined();
+      expect(poi.title).toEqual('POI 1');
+      expect(poi.last_contributor).toEqual(1);
+      expect(poi.coordinate?.alt).toEqual(14.4);
+    } else {
+      throw new Error('Cannot create the POI with coordinate');
+    }
   });
 
   it('Create a poi with symbol', async () => {
@@ -95,11 +152,17 @@ describe('Test Poi Routes', () => {
       },
       payload: poi_to_create,
     });
-    const poi = res.result as PoiModel;
-    expect(poi).toBeDefined();
-    expect(poi.title).toEqual('POI 1');
-    expect(poi.last_contributor).toEqual(1);
-    expect(poi.symbol?.media_type).toEqual('Video');
+    const response = res.result as responseModel;
+    if (response && response.data) {
+      expect(response.statusCode).toEqual(200);
+      const poi = response.data as PoiModel;
+      expect(poi).toBeDefined();
+      expect(poi.title).toEqual('POI 1');
+      expect(poi.last_contributor).toEqual(1);
+      expect(poi.symbol?.media_type).toEqual('Video');
+    } else {
+      throw new Error('Cannot create the POI with symbol');
+    }
   });
 
   it('Update a poi without coordinate', async () => {
@@ -120,12 +183,18 @@ describe('Test Poi Routes', () => {
         },
         payload: store_poi as PoiModel,
       });
-      const poi = res.result as PoiModel;
-      expect(poi).toBeDefined();
-      expect(poi?.id).toEqual(poi.id);
-      expect(poi?.title).toEqual('Update POI');
-      expect(poi?.style_stroke_width).toEqual(255.5);
-      expect(poi?.update_date).toBeDefined();
+      const response = res.result as responseModel;
+      if (response && response.data) {
+        expect(response.statusCode).toEqual(200);
+        const poi = response.data as PoiModel;
+        expect(poi).toBeDefined();
+        expect(poi?.id).toEqual(poi.id);
+        expect(poi?.title).toEqual('Update POI');
+        expect(poi?.style_stroke_width).toEqual(255.5);
+        expect(poi?.update_date).toBeDefined();
+      } else {
+        throw new Error('Cannot update POI');
+      }
     } else {
       throw new Error('Cannot find POI to update');
     }
@@ -154,13 +223,19 @@ describe('Test Poi Routes', () => {
         },
         payload: store_poi,
       });
-      const poi = res.result as PoiModel;
-      expect(poi).toBeDefined();
-      expect(poi?.id).toEqual(poi.id);
-      expect(poi?.title).toEqual('Update POI');
-      expect(poi?.style_stroke_width).toEqual(255.5);
-      expect(poi?.update_date).toBeDefined();
-      expect(poi?.coordinate?.alt).toEqual(55.5);
+      const response = res.result as responseModel;
+      if (response && response.data) {
+        expect(response.statusCode).toEqual(200);
+        const poi = response.data as PoiModel;
+        expect(poi).toBeDefined();
+        expect(poi?.id).toEqual(poi.id);
+        expect(poi?.title).toEqual('Update POI');
+        expect(poi?.style_stroke_width).toEqual(255.5);
+        expect(poi?.update_date).toBeDefined();
+        expect(poi?.coordinate?.alt).toEqual(55.5);
+      } else {
+        throw new Error('Cannot update POI with coordinate');
+      }
     } else {
       throw new Error('Cannot find POI to update');
     }
@@ -191,12 +266,18 @@ describe('Test Poi Routes', () => {
         },
         payload: store_poi,
       });
-      const poi = res.result as PoiModel;
-      expect(poi).toBeDefined();
-      expect(poi?.id).toEqual(poi.id);
-      expect(poi?.style_stroke_width).toEqual(555.5);
-      expect(poi?.update_date).toBeDefined();
-      expect(poi.symbol?.media_type).toEqual('Video');
+      const response = res.result as responseModel;
+      if (response && response.data) {
+        expect(response.statusCode).toEqual(200);
+        const poi = response.data as PoiModel;
+        expect(poi).toBeDefined();
+        expect(poi?.id).toEqual(poi.id);
+        expect(poi?.style_stroke_width).toEqual(555.5);
+        expect(poi?.update_date).toBeDefined();
+        expect(poi.symbol?.media_type).toEqual('Video');
+      } else {
+        throw new Error('Cannot update POI with symbol');
+      }
     } else {
       throw new Error('Cannot find POI to update');
     }
@@ -218,9 +299,15 @@ describe('Test Poi Routes', () => {
       },
       payload: store_poi as PoiModel,
     });
-    const poi = res.result as PoiModel;
-    expect(poi).toBeDefined();
-    expect(poi.title).toEqual('POI 1');
-    expect(poi.deleted_date).toBeDefined();
+    const response = res.result as responseModel;
+    if (response && response.data) {
+      expect(response.statusCode).toEqual(200);
+      const poi = response.data as PoiModel;
+      expect(poi).toBeDefined();
+      expect(poi.title).toEqual('POI 1');
+      expect(poi.deleted_date).toBeDefined();
+    } else {
+      throw new Error('Cannot delete POI');
+    }
   });
 });

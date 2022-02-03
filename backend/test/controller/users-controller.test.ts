@@ -12,6 +12,7 @@ import {
 } from "../../src/controller/users-controller";
 import { setupUsers, dropUsers } from "../data/model/users";
 import { UserModel } from "../../src/types/user-model";
+import { User } from "@prisma/client";
 
 describe("Test users controller", () => {
   let server: Server;
@@ -75,8 +76,8 @@ describe("Test users controller", () => {
         server.app.prisma,
         user as UserModel,
         server.app.logger
-      );
-      if (update_user) {
+      ) as User;
+      if (update_user && update_user) {
         expect(update_user.username).toEqual("Update");
         expect(update_user.id).toEqual(2);
         expect(update_user.update_date).toBeDefined();

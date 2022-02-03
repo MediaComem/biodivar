@@ -6,6 +6,7 @@ import { setupUsers, dropUsers } from "../data/model/users";
 import { setupBiovers, dropBiovers } from "../data/model/biovers";
 import { BioversModel, BioversModels } from "../../src/types/biovers-model";
 import { setupPoi, dropPoi } from "../data/model/poi";
+import { responseModel } from "../../src/types/response";
 
 describe("Test Biovers Routes", () => {
   let server: Server;
@@ -40,8 +41,9 @@ describe("Test Biovers Routes", () => {
         },
       },
     });
-    const biovers = res.result as BioversModels;
-    if (biovers && biovers.length > 0) {
+    const response = res.result as responseModel; 
+    if (response && response.data) {
+      const biovers = response.data as BioversModels;
       expect(biovers.length).toEqual(2);
       expect(biovers[0].name).toEqual("Biovers 1");
       expect(biovers[0].Poi?.length).toEqual(2);
@@ -64,8 +66,10 @@ describe("Test Biovers Routes", () => {
         },
       },
     });
-    const biovers = res.result as BioversModels;
-    if (biovers && biovers.length > 0) {
+    const response = res.result as responseModel;
+    expect(response.statusCode).toEqual(200);
+    if (response && response.data) {
+      const biovers = response.data as BioversModels;
       expect(biovers.length).toEqual(2);
       expect(biovers[0].name).toEqual("Biovers 1");
       expect(biovers[0].Poi?.length).toEqual(2);
@@ -92,13 +96,20 @@ describe("Test Biovers Routes", () => {
         owner: 1,
       },
     });
-    const biovers = res.result as BioversModel;
-    expect(biovers).toBeDefined();
-    expect(biovers?.name).toEqual("a");
-    expect(biovers?.owner).toEqual(1);
-    expect(biovers?.creation_date).toBeDefined();
-    expect(biovers?.update_date).toBeNull();
-    expect(biovers?.deleted_date).toBeNull();
+    const response = res.result as responseModel;
+    if (response && response.data) {
+      expect(response.statusCode).toEqual(200);
+      const biovers = response.data as BioversModel;
+      expect(biovers).toBeDefined();
+      expect(biovers?.name).toEqual("a");
+      expect(biovers?.owner).toEqual(1);
+      expect(biovers?.creation_date).toBeDefined();
+      expect(biovers?.update_date).toBeNull();
+      expect(biovers?.deleted_date).toBeNull();
+    }
+    else {
+      throw new Error("Cannot create the biovers");
+    }
   });
 
   it("Update a biovers", async () => {
@@ -118,13 +129,21 @@ describe("Test Biovers Routes", () => {
         owner: 1,
       },
     });
-    const biovers = res.result as BioversModel;
-    expect(biovers).toBeDefined();
-    expect(biovers?.name).toEqual("Test");
-    expect(biovers?.owner).toEqual(1);
-    expect(biovers?.creation_date).toBeDefined();
-    expect(biovers?.update_date).toBeDefined();
-    expect(biovers?.deleted_date).toBeNull();
+    const response = res.result as responseModel;
+    if (response && response.data) {
+      expect(response.statusCode).toEqual(200);
+      const biovers = response.data as BioversModel;
+      expect(biovers).toBeDefined();
+      expect(biovers?.name).toEqual("Test");
+      expect(biovers?.owner).toEqual(1);
+      expect(biovers?.creation_date).toBeDefined();
+      expect(biovers?.update_date).toBeDefined();
+      expect(biovers?.deleted_date).toBeNull();
+    }
+    else {
+      throw new Error("Cannot update the biovers");
+    }
+    
   });
 
   it("Delete a biovers", async () => {
@@ -146,8 +165,15 @@ describe("Test Biovers Routes", () => {
       },
       payload: biovers,
     });
-    const deleted_biovers = res.result as BioversModel;
-    expect(deleted_biovers).toBeDefined();
-    expect(deleted_biovers.deleted_date).toBeDefined();
+    const response = res.result as responseModel;
+    if (response && response.data) {
+      expect(response.statusCode).toEqual(200);
+      const biovers = response.data as BioversModel;
+      expect(biovers).toBeDefined();
+      expect(biovers.deleted_date).toBeDefined();
+    }
+    else {
+      throw new Error("Cannot delete the biovers");
+    }
   });
 });

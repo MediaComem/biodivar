@@ -2,6 +2,7 @@ import { Server } from '@hapi/hapi';
 import {
   createPoi,
   deletePoi,
+  getPoiById,
   getPoiByTitle,
   updatePoi,
 } from '../../src/controller/poi-controller';
@@ -38,6 +39,16 @@ describe('Test poi controller', () => {
     await dropBiovers(server.app.prisma);
     await dropUsers(server.app.prisma);
     await server.stop();
+  });
+
+  it("Get POI by title", async () => {
+    const poi = await getPoiByTitle(server.app.prisma, 'POI 1');
+    expect(poi?.creation_date).toBeDefined();
+  });
+
+  it("Get POI by id", async () => {
+    const poi = await getPoiById(server.app.prisma, 1);
+    expect(poi?.creation_date).toBeDefined();
   });
 
   it('Create poi', async () => {

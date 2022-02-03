@@ -42,15 +42,12 @@ export const createUser = async (
         const meta = error.meta as PrismaError;
         if (meta.target.length === 1) {
           errorMessage = `The ${meta.target[0]} is already used`;
+        } else {
+          errorMessage = 'The username and email are already used';
         }
-        else {
-          errorMessage = 'The username and email are already used'
-        }
-        
       }
-    }
-    else {
-      errorMessage = 'The user cannot be create for unknow reason. Please contact an administator to solve the problem';
+    } else {
+      errorMessage = 'Unknown error';
     }
     throw new Error(errorMessage);
   }
@@ -72,7 +69,7 @@ export const reactivateUser = async (
     });
   } catch (error) {
     logger.error(error);
-    return undefined;
+    return new Error('Cannot reactivate the user due to error');
   }
 };
 
@@ -81,8 +78,8 @@ export const updateUser = async (
   user: UserModel,
   logger: winston.Logger
 ) => {
-  if (user && user.id) {
-    try {
+  try {
+    if (user && user.id) {
       return await prisma.user.update({
         where: {
           id: +user.id,
@@ -94,10 +91,12 @@ export const updateUser = async (
           update_date: new Date().toISOString(),
         },
       });
-    } catch (error) {
-      logger.error(error);
+    } else {
       return undefined;
     }
+  } catch (error) {
+    logger.error(error);
+    return new Error('Cannot update the user due to error');
   }
 };
 
@@ -120,6 +119,6 @@ export const deleteUser = async (
     return undefined;
   } catch (error) {
     logger.error(error);
-    return undefined;
+    return new Error('Cannot delete the user due to error');
   }
 };

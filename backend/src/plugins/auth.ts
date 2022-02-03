@@ -10,8 +10,9 @@ export const authPlugin: Plugin<null> = {
         name: process.env.COOKIE_NAME,
         password: process.env.COOKIE_PASSWORD,
         isSecure: process.env.COOKIE_SECURE,
+        clearInvalid: true,
+        path: '/',
       },
-      redirectTo: `${process.env.URL_PREFIX}/login`,
       validateFunc: alreadyLogged,
     });
     server.auth.default("session");

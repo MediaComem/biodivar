@@ -2,12 +2,13 @@ import { ServerRoute } from '@hapi/hapi';
 import Joi from 'joi';
 
 import { validateLogin, registerUser } from '../controller/auth-controller';
+import { successResponse, failureResponse } from "../utils/response";
 
 export const authRoutes: ServerRoute[] = [];
 
 authRoutes.push({
-  method: "POST",
-  path: "/register",
+  method: 'POST',
+  path: '/register',
   options: {
     validate: {
       payload: Joi.object({
@@ -18,7 +19,7 @@ authRoutes.push({
     },
     handler: registerUser,
     auth: {
-      mode: "try",
+      mode: 'try',
     },
   },
 });
@@ -27,7 +28,11 @@ authRoutes.push({
   method: 'GET',
   path: '/login',
   handler: function (request, h) {
-    return `{'status': 'error', 'msg': 'you need to be auth to make an api request'}`;
+    if (request.auth.isAuthenticated) {
+      return successResponse(h, 'Login Success');
+    } else {
+      return failureResponse(h, 'You need to be auth to make an api request')
+    }
   },
   options: {
     auth: {
@@ -59,7 +64,7 @@ authRoutes.push({
   options: {
     handler: (request, h) => {
       request.cookieAuth.clear();
-      return h.redirect('/');
+      return successResponse(h, 'Logout Success');
     },
   },
 });

@@ -11,11 +11,15 @@ export const setupPoi = async (prisma: PrismaClient) => {
   if (test_poi.symbol) {
     test_poi.symbol = undefined;
   }
+  const first_poi = test_poi;
+  first_poi.id = 1;
   await prisma.poi.create({
-    data: test_poi,
+    data: first_poi,
   });
+  const second_poi = test_poi;
+  first_poi.id = 2;
   await prisma.poi.create({
-    data: test_poi,
+    data: second_poi,
   });
 };
 

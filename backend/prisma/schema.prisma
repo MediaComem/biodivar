@@ -36,6 +36,7 @@ model Biovers {
   User                    User?       @relation(fields: [owner], references: [id])
   Poi                     Poi[]
   Path                    Path[]
+  UserTrace               UserTrace[]
 }
 
 model Poi {
@@ -108,6 +109,8 @@ model Coordinate {
   poi                     Poi?         @relation(fields: [poi_id], references: [id])
   path_id                 Int?
   path                    Path?        @relation(fields: [path_id], references: [id])
+  user_trace_id           Int?
+  user_trace              UserTrace?   @relation(fields: [user_trace_id], references: [id])
 }
 
 model Symbol {
@@ -122,4 +125,16 @@ model Symbol {
   deleted_date            DateTime?
   poi_id                  Int?
   poi                     Poi?         @relation(fields: [poi_id], references: [id])
+}
+
+model UserTrace {
+  id                      Int          @id @default(autoincrement())
+  creation_date           DateTime
+  update_date             DateTime?
+  deleted_date            DateTime?
+  author                  Int
+  is_public               Boolean     @default(true)
+  coordinate              Coordinate?
+  biovers                 Int
+  biovers_fk              Biovers     @relation(fields: [biovers], references: [id])
 }

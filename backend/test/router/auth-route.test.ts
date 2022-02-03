@@ -4,6 +4,7 @@ import { init } from "../../src/server";
 import { setupConfig } from "../config/config";
 import { setupUsers, dropUsers } from "../data/model/users";
 import { UserModel } from "../../src/types/user-model";
+import { responseModel } from "../../src/types/response";
 
 describe("Test Auth Routes", () => {
   let server: Server;
@@ -29,7 +30,10 @@ describe("Test Auth Routes", () => {
         password: "badPassword",
       },
     });
-    expect(res.statusCode).toEqual(401);
+    const response = res.result as responseModel;
+    expect(response.statusCode).toEqual(400);
+    expect(response.error).toEqual("Bad Request");
+    expect(response.message).toEqual("Login Failure");
   });
 
   it("Register a user", async () => {
@@ -42,11 +46,11 @@ describe("Test Auth Routes", () => {
         password: "cccc",
       },
     });
-    const user = res.result as UserModel;
-    expect(user).toBeDefined();
-    expect(user?.email).toEqual("bbbbbb@gmail.com");
-    expect(user?.username).toEqual("a");
-    expect(user?.creation_date).toBeDefined();
+    const response = res.result as responseModel;
+    expect(response).toBeDefined();
+    expect(response.data).toEqual("a");
+    expect(response.statusCode).toEqual(200);
+    expect(response.message).toEqual("Registration Success");
   });
 
   it("Login test success", async () => {

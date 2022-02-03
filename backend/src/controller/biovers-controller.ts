@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import winston from 'winston';
 import { BioversModel } from '../types/biovers-model';
 
@@ -32,58 +32,73 @@ export const getBioversByUser = async (
 export const getBioversById = async (
   prisma: PrismaClient,
   biovers_id: number,
-  user_id: number
+  user_id: number,
+  logger: winston.Logger
 ) => {
-  return await prisma.biovers.findFirst({
-    where: {
-      OR: [
-        {
-          owner: user_id,
-          id: biovers_id,
+  try {
+    return await prisma.biovers.findFirst({
+      where: {
+        OR: [
+          {
+            owner: user_id,
+            id: biovers_id,
+          },
+          {
+            id: biovers_id,
+            is_public: true,
+          },
+        ],
+      },
+      include: {
+        Poi: {
+          include: {
+            coordinate: true,
+          },
         },
-        {
-          id: biovers_id,
-          is_public: true,
-        },
-      ],
-    },
-    include: {
-      Poi: {
-        include: {
-          coordinate: true,
+        Path: {
+          include: {
+            coordinate: true,
+          },
         },
       },
-      Path: {
-        include: {
-          coordinate: true,
-        },
-      },
-    },
-  });
+    });
+  } catch (error) {
+    logger.error(error);
+    throw new Error('Cannot get biovers due to error');
+  }
+  
 };
 
-export const getPublicBiovers = async (prisma: PrismaClient) => {
-  return await prisma.biovers.findMany({
-    where: {
-      is_public: true,
-      deleted_date: null,
-    },
-    orderBy: {
-      id: 'asc',
-    },
-    include: {
-      Poi: {
-        include: {
-          coordinate: true,
+export const getPublicBiovers = async (
+  prisma: PrismaClient,
+  logger: winston.Logger
+) => {
+  try {
+    return await prisma.biovers.findMany({
+      where: {
+        is_public: true,
+        deleted_date: null,
+      },
+      orderBy: {
+        id: 'asc',
+      },
+      include: {
+        Poi: {
+          include: {
+            coordinate: true,
+          },
+        },
+        Path: {
+          include: {
+            coordinate: true,
+          },
         },
       },
-      Path: {
-        include: {
-          coordinate: true,
-        },
-      },
-    },
-  });
+    });
+  } catch (error) {
+    logger.error(error);
+    throw new Error('Cannot get public biovers due to error');
+  }
 };
 
 export const createBiovers = async (
@@ -110,7 +125,7 @@ export const createBiovers = async (
     });
   } catch (error) {
     logger.error(error);
-    return undefined;
+    throw new Error('Cannot create biovers due to error');
   }
 };
 
@@ -147,7 +162,7 @@ export const updateBiovers = async (
     }
   } catch (error) {
     logger.error(error);
-    return undefined;
+    throw new Error('Cannot update biovers due to error');
   }
 };
 
@@ -171,6 +186,6 @@ export const deleteBiovers = async (
     }
   } catch (error) {
     logger.error(error);
-    return undefined;
+    throw new Error('Cannot delete biovers due to error');
   }
 };

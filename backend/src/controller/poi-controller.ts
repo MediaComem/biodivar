@@ -64,8 +64,20 @@ export const createPoi = async (
     });
   } catch (error) {
     logger.error(error);
-    return undefined;
+    throw new Error('Cannot create poi due to error');
   }
+};
+
+export const getPoiById = async (prisma: PrismaClient, id: number) => {
+  return await prisma.poi.findFirst({
+    where: {
+      id: id,
+    },
+    include: {
+      coordinate: true,
+      symbol: true,
+    },
+  });
 };
 
 export const getPoiByTitle = async (prisma: PrismaClient, name: string) => {
@@ -171,7 +183,7 @@ export const updatePoi = async (
     }
   } catch (error) {
     logger.error(error);
-    return undefined;
+    throw new Error('Cannot update poi due to error');
   }
 };
 
@@ -209,6 +221,6 @@ export const deletePoi = async (
     }
   } catch (error) {
     logger.error(error);
-    return undefined;
+    throw new Error('Cannot delete poi due to error');
   }
 };

@@ -7,6 +7,7 @@ import {
   getUserById,
 } from "../../src/controller/users-controller";
 import { UserModel } from "../../src/types/user-model";
+import { responseModel } from "../../src/types/response";
 
 describe("Test User Routes", () => {
   let server: Server;
@@ -41,11 +42,18 @@ describe("Test User Routes", () => {
         password: "c",
       },
     });
-    const updated_user = res.result as UserModel;
-    expect(updated_user?.email).toEqual("bbb");
-    expect(updated_user?.username).toEqual("ddd");
-    expect(updated_user?.creation_date).toBeDefined();
-    expect(updated_user?.update_date).toBeDefined();
+    const response = res.result as responseModel
+    if (response && response.data) {
+      expect(response.statusCode).toEqual(200);
+      const user = response.data as UserModel;
+      expect(user.email).toEqual("bbb");
+      expect(user.username).toEqual("ddd");
+      expect(user?.creation_date).toBeDefined();
+      expect(user?.update_date).toBeDefined();
+    }
+    else {
+      throw new Error("Cannot update the user");
+    }
   });
 
   it("Delete a user", async () => {
@@ -66,7 +74,15 @@ describe("Test User Routes", () => {
         password: "c",
       },
     });
-    const deleted_user = await getUserById(server.app.prisma, 1);
-    expect(deleted_user).toBeNull();
+    const response = res.result as responseModel
+    if (response && response.data) {
+      expect(response.statusCode).toEqual(200);
+      const user = response.data as UserModel;
+      expect(user.id).toEqual(1);
+      expect(user.deleted_date).toBeDefined();
+    }
+    else {
+      throw new Error("Cannot delete the user");
+    }
   });
 });

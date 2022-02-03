@@ -1,11 +1,11 @@
-import { Server } from "@hapi/hapi";
+import { Server } from '@hapi/hapi';
 
-import { init } from "../../src/server";
-import { setupConfig } from "../config/config";
+import { init } from '../../src/server';
+import { setupConfig } from '../config/config';
 
-import { setupBiovers, dropBiovers } from "../data/model/biovers";
-import { setupUsers, dropUsers } from "../data/model/users";
-import { dropPoi, setupPoi } from "../data/model/poi";
+import { setupBiovers, dropBiovers } from '../data/model/biovers';
+import { setupUsers, dropUsers } from '../data/model/users';
+import { dropPoi, setupPoi } from '../data/model/poi';
 
 import {
   createBiovers,
@@ -13,10 +13,10 @@ import {
   getBioversByUser,
   getPublicBiovers,
   updateBiovers,
-} from "../../src/controller/biovers-controller";
-import { BioversModel } from "../../src/types/biovers-model";
+} from '../../src/controller/biovers-controller';
+import { BioversModel } from '../../src/types/biovers-model';
 
-describe("Test biovers controller", () => {
+describe('Test biovers controller', () => {
   let server: Server;
 
   beforeAll(async () => {
@@ -37,32 +37,35 @@ describe("Test biovers controller", () => {
     await server.stop();
   });
 
-  it("Get all biovers for a dedicated user", async () => {
+  it('Get all biovers for a dedicated user', async () => {
     const biovers = await getBioversByUser(server.app.prisma, 1);
     expect(biovers.length).toEqual(2);
-    expect(biovers[0].name).toEqual("Biovers 1");
+    expect(biovers[0].name).toEqual('Biovers 1');
     expect(biovers[0].Poi.length).toEqual(2);
-    expect(biovers[1].name).toEqual("Biovers 3");
+    expect(biovers[1].name).toEqual('Biovers 3');
     expect(biovers[1].Poi.length).toEqual(0);
   });
 
-  it("Get all biovers for a dedicated user that has no biovers", async () => {
+  it('Get all biovers for a dedicated user that has no biovers', async () => {
     const biovers = await getBioversByUser(server.app.prisma, 0);
     expect(biovers.length).toEqual(0);
   });
 
-  it("Get all public biovers", async () => {
-    const biovers = await getPublicBiovers(server.app.prisma);
+  it('Get all public biovers', async () => {
+    const biovers = await getPublicBiovers(
+      server.app.prisma,
+      server.app.logger
+    );
     expect(biovers.length).toEqual(2);
-    expect(biovers[0].name).toEqual("Biovers 1");
+    expect(biovers[0].name).toEqual('Biovers 1');
     expect(biovers[0].Poi.length).toEqual(2);
-    expect(biovers[1].name).toEqual("Biovers 2");
+    expect(biovers[1].name).toEqual('Biovers 2');
     expect(biovers[1].Poi.length).toEqual(0);
   });
 
-  it("Create a biovers", async () => {
+  it('Create a biovers', async () => {
     const biovers: BioversModel = {
-      name: "New Biovers",
+      name: 'New Biovers',
       owner: 2,
       creation_date: new Date(),
     };
@@ -79,14 +82,14 @@ describe("Test biovers controller", () => {
       expect(newBiovers.update_date).toBeNull();
       expect(newBiovers.deleted_date).toBeNull();
     } else {
-      throw new Error("The biovers cannot be created.");
+      throw new Error('The biovers cannot be created.');
     }
   });
 
-  it("Update a biovers", async () => {
+  it('Update a biovers', async () => {
     const biovers: BioversModel = {
       id: 2,
-      name: "Updated Biovers",
+      name: 'Updated Biovers',
       owner: 2,
       creation_date: new Date(),
     };
@@ -102,17 +105,17 @@ describe("Test biovers controller", () => {
       expect(updated_biovers.update_date).toBeDefined();
       expect(updated_biovers.deleted_date).toBeNull();
     } else {
-      throw new Error("The biovers cannot be updated.");
+      throw new Error('The biovers cannot be updated.');
     }
   });
 
-  it("Delete a biovers", async () => {
+  it('Delete a biovers', async () => {
     const biovers: BioversModel = {
       id: 1,
-      name: "Biovers 1",
+      name: 'Biovers 1',
       owner: 1,
       creation_date: new Date(),
-    }
+    };
     const deleted_biovers = await deleteBiovers(
       server.app.prisma,
       biovers,
@@ -121,7 +124,7 @@ describe("Test biovers controller", () => {
     if (deleted_biovers) {
       expect(deleted_biovers.deleted_date).toBeDefined();
     } else {
-      throw new Error("The biovers cannot be deleted.");
+      throw new Error('The biovers cannot be deleted.');
     }
   });
 });

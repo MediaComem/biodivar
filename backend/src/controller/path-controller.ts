@@ -64,7 +64,7 @@ export const createPath = async (
     });
   } catch (error) {
     logger.error(error);
-    return undefined;
+    throw new Error('Cannot create path due to error');
   }
 };
 
@@ -115,7 +115,7 @@ export const updatePath = async (
     });
   } catch (error) {
     logger.error(error);
-    return undefined;
+    throw new Error('Cannot update path due to error');
   }
 };
 
@@ -154,6 +154,6 @@ export const deletePath = async (
     }
   } catch (error) {
     logger.error(error);
-    return undefined;
+    throw new Error('Cannot delete path due to error');
   }
 };

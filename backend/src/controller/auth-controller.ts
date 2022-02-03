@@ -1,9 +1,14 @@
-import { Request, ResponseToolkit } from "@hapi/hapi";
-import Bcrypt from "bcrypt";
-import { User } from "@prisma/client";
+import { Request, ResponseToolkit } from '@hapi/hapi';
+import Bcrypt from 'bcrypt';
+import { User } from '@prisma/client';
 
-import { getUserByName, getUserById, createUser } from "../controller/users-controller";
-import { UserModel } from "../types/user-model";
+import {
+  getUserByName,
+  getUserById,
+  createUser,
+} from '../controller/users-controller';
+import { UserModel } from '../types/user-model';
+import { successResponse, failureResponse, errorResponse } from '../utils/response';
 
 export const validateLogin = async (request: Request, h: ResponseToolkit) => {
   const payload = request.payload as UserModel;
@@ -12,39 +17,34 @@ export const validateLogin = async (request: Request, h: ResponseToolkit) => {
     payload.username
   );
   if (account && (await Bcrypt.compare(payload.password, account.password))) {
-    request.cookieAuth.set({ id: account.id });   
-    return h.response({
-      status: "ok",
-      user: account,
-    }).code(200);
+    request.cookieAuth.set({ id: account.id });
+    return successResponse(h, 'Login Success', account.username);
   } else {
-    return h.response({
-      status: "ko",
-    }).code(401);
+    return failureResponse(h, 'Login Failure');
   }
 };
 
-export const registerUser = async function (request: Request, h: ResponseToolkit) {
+export const registerUser = async function (
+  request: Request,
+  h: ResponseToolkit
+) {
   try {
-    const account = await createUser(
+    const account = (await createUser(
       request.server.app.prisma,
       request.payload as UserModel,
       request.server.app.logger
-    ) as User;
+    )) as User;
     request.cookieAuth.set({ id: account.id });
-    return account;
-  } catch(error) {
+    return successResponse(h, 'Registration Success', account.username);
+  } catch (error) {
     let errorMessage: string = '';
     if (error instanceof Error) {
-      errorMessage = error.message;
+      return failureResponse(h, errorMessage);
+    } else {
+      return errorResponse(h, error as string);
     }
-    else {
-      errorMessage = 'The user cannot be create for unknow reason. Please contact an administator to solve the problem';
-    }
-    return h.response({
-      errorMessage: errorMessage,
-    }).code(400);
-  }  
+    
+  }
 };
 
 export const alreadyLogged = async (request: Request, session: any) => {

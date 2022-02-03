@@ -1,8 +1,8 @@
 -- CreateTable
 CREATE TABLE "User" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "email" TEXT NOT NULL,
-    "username" TEXT NOT NULL,
+    "email" TEXT COLLATE NOCASE NOT NULL,
+    "username" TEXT COLLATE NOCASE NOT NULL,
     "password" TEXT NOT NULL,
     "creation_date" DATETIME NOT NULL,
     "update_date" DATETIME,
