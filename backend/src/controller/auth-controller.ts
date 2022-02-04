@@ -37,9 +37,8 @@ export const registerUser = async function (
     request.cookieAuth.set({ id: account.id });
     return successResponse(h, 'Registration Success', account.username);
   } catch (error) {
-    let errorMessage: string = '';
     if (error instanceof Error) {
-      return failureResponse(h, errorMessage);
+      return failureResponse(h, error.message);
     } else {
       return errorResponse(h, error as string);
     }
