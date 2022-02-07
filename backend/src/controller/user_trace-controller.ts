@@ -32,3 +32,26 @@ export const createUserTrace = async (
     throw new Error('Cannot update poi due to error');
   }
 };
+
+export const deleteUserTrace = async (
+  prisma: PrismaClient,
+  user_trace: UserTraceModel,
+  logger: winston.Logger
+) => {
+  try {
+    if (user_trace && user_trace.id) {
+      return await prisma.userTrace.update({
+        where: {
+          id: +user_trace.id,
+        },
+        data: {
+          deleted_date: new Date().toISOString(),
+        },
+      });
+    }
+    return undefined;
+  } catch (error) {
+    logger.error(error);
+    return new Error('Cannot delete the user trace due to error');
+  }
+};

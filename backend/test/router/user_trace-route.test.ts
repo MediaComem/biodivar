@@ -3,7 +3,7 @@ import { Server } from '@hapi/hapi';
 import { init } from '../../src/server';
 import { setupConfig } from '../config/config';
 import { setupUsers, dropUsers } from '../data/model/users';
-import { dropUsersTrace } from '../data/model/user_trace';
+import { setupUserTrace, dropUsersTrace, userTrace } from '../data/model/user_trace';
 import { setupBiovers, dropBiovers } from '../data/model/biovers';
 import { CoordinateModel } from '../../src/types/coordinate-model';
 import { UserTraceModel } from '../../src/types/user_trace-model';
@@ -23,6 +23,7 @@ describe('Test User Trace Controller', () => {
     await dropUsers(server.app.prisma);
     await setupUsers(server.app.prisma);
     await setupBiovers(server.app.prisma);
+    await setupUserTrace(server.app.prisma);
   });
 
   afterAll(async () => {
@@ -65,6 +66,32 @@ describe('Test User Trace Controller', () => {
     }
     else {
         throw new Error('Cannot create the User trace');
+    }    
+  });
+
+  it('Delete user trace', async () => {
+    const res = await server.inject({
+      method: 'POST',
+      url: '/api/v1/user_trace/delete',
+      auth: {
+        strategy: 'default',
+        credentials: {
+          id: 1,
+          password: 'test',
+        },
+      },
+      payload: userTrace,
+    });
+    const response = res.result as responseModel;
+    if (response && response.data) {
+        const newUserTrace = response.data as UserTraceModel;
+        expect(newUserTrace).toBeDefined();
+        expect(newUserTrace?.author).toEqual(1);
+        expect(newUserTrace?.biovers).toEqual(1);
+        expect(newUserTrace?.deleted_date).toBeDefined();
+    }
+    else {
+        throw new Error('Cannot delete the User trace');
     }    
   });
 });
