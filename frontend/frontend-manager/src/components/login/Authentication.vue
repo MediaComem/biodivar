@@ -71,7 +71,7 @@ export default {
           isAuthenticate: true,
           username: response.data.data,
         });
-        this.$router.push('Home');
+        this.$router.push('Biovers');
       } catch (error) {
         this.$store.dispatch('authenticate', {
           isAuthenticate: false,

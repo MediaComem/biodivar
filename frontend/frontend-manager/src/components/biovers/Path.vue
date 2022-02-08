@@ -1,0 +1,21 @@
+<template>
+  <l-polyline
+    :lat-lngs="coordinate"
+    color="green"
+  ></l-polyline>
+</template>
+
+<script>
+import {
+  LPolyline,
+} from '@vue-leaflet/vue-leaflet';
+
+export default {
+  components: {
+    LPolyline,
+  },
+  props: {
+    coordinate: Array,
+  },
+};
+</script>

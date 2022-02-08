@@ -8,15 +8,6 @@
       router
     >
       <el-menu-item index="/" class="element-position-left menu-title">BiodivAR</el-menu-item>
-      <el-menu-item v-if="getAutheticate" index="/" class="element-position-left"
-        >Tableau de bord</el-menu-item
-      >
-      <el-menu-item v-if="getAutheticate" index="/" class="element-position-left"
-        >Biovers</el-menu-item
-      >
-      <el-menu-item v-if="getAutheticate" index="/" class="element-position-left"
-        >Mes données</el-menu-item
-      >
       <el-menu-item v-if="!getAutheticate" index="/register" class="element-position-right"
         >S'inscrire</el-menu-item
       >

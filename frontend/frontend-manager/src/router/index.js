@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 
 import { authStore } from '../store/auth-store';
 
-import Home from '../views/Home.vue';
+import Biovers from '../views/Biovers.vue';
 import Authentication from '../components/login/Authentication.vue';
 import Register from '../components/login/Register.vue';
 
@@ -10,7 +10,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
+    component: Biovers,
     meta: { isAuthenticate: true },
   },
   {
@@ -27,7 +27,7 @@ const routes = [
   },
   {
     path: '/:pathMatch(.*)*',
-    component: Home,
+    component: Biovers,
     meta: { isAuthenticate: true },
   },
 ];

@@ -1,0 +1,40 @@
+<template>
+  <l-circle :lat-lng='coordinate' :radius='5' :fill="true" :fill-opacity='1'
+  color="RGB(0, 231, 200, 0.5)" fill-color="RGB(205, 231, 65, 0.5)">
+      </l-circle>
+      <l-marker @click="dialogFormVisible = true" :lat-lng='coordinate'>
+        <l-icon :icon-url="iconUrl" :icon-size="iconSize" />
+      </l-marker>
+</template>
+
+<script>
+import {
+  LCircle,
+  LMarker,
+  LIcon,
+} from '@vue-leaflet/vue-leaflet';
+
+export default {
+  watch: {
+  },
+  props: {
+    icon: String,
+    iconWidth: Number,
+    iconHeight: Number,
+    coordinate: Array,
+  },
+  components: {
+    LCircle,
+    LMarker,
+    LIcon,
+  },
+  computed: {
+    iconUrl() {
+      return `${this.icon}/${this.iconWidth}/${this.iconHeight}`;
+    },
+    iconSize() {
+      return [this.iconWidth, this.iconHeight];
+    },
+  },
+};
+</script>
