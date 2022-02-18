@@ -18,11 +18,31 @@ export const getBioversByUser = async (
       Poi: {
         include: {
           coordinate: true,
+          User: {
+            select: {
+              username: true,
+            }
+          },
+          last_contributor_fk: {
+            select: {
+              username: true,
+            }
+          }
         },
       },
       Path: {
         include: {
           coordinate: true,
+          User: {
+            select: {
+              username: true,
+            }
+          },
+          last_contributor_fk: {
+            select: {
+              username: true,
+            }
+          }
         },
       },
     },

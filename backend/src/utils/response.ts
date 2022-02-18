@@ -2,8 +2,6 @@ import { ResponseToolkit } from '@hapi/hapi';
 
 import { Response } from '../types/response';
 
-// {"statusCode":400,"error":"Bad Request","message":"Invalid request payload input"}
-
 export const successResponse = (
   responseToolkit: ResponseToolkit,
   message: string,
