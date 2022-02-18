@@ -2,9 +2,11 @@
   <l-map :max-zoom='19' v-model='zoom' v-model:zoom='zoom'
     :center='center' @click="getPosition">
       <l-tile-layer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'></l-tile-layer>
-      <Path :coordinate="getPath"/>
-      <div v-for="(item, index) in getPois" :key="index">
-          <poi :coordinate="item"
+      <div v-for="(path, index) in paths" :key="index">
+        <Path :path="path"/>
+      </div>
+      <div v-for="(poi, index) in pois" :key="index">
+          <Poi :poi="poi"
             :iconHeight="40"
             :iconWidth="25"
             :icon="'https://placekitten.com'" />
@@ -31,6 +33,8 @@ export default {
   },
   props: {
     biovers: Object,
+    pois: Array,
+    paths: Array,
   },
   data() {
     return {
@@ -45,22 +49,6 @@ export default {
   methods: {
     getPosition(event) {
       console.log(event);
-    },
-  },
-  computed: {
-    getPath() {
-      const path = [];
-      this.biovers.Path[0].coordinate.forEach((x) => {
-        path.push([x.lat, x.long]);
-      });
-      return path;
-    },
-    getPois() {
-      const pois = [];
-      this.biovers.Poi.forEach((x) => {
-        pois.push([x.coordinate.lat, x.coordinate.long]);
-      });
-      return pois;
     },
   },
 };

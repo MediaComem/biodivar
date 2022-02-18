@@ -1,6 +1,6 @@
 <template>
   <l-polyline
-    :lat-lngs="coordinate"
+    :lat-lngs="path.coordinate"
     color="green"
   ></l-polyline>
 </template>
@@ -15,7 +15,7 @@ export default {
     LPolyline,
   },
   props: {
-    coordinate: Array,
+    path: Object,
   },
 };
 </script>

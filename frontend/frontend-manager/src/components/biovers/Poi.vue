@@ -1,8 +1,9 @@
 <template>
-  <l-circle :lat-lng='coordinate' :radius='5' :fill="true" :fill-opacity='1'
+  <l-circle :lat-lng='poi.coordinate' :radius='poi.element.radius'
+  :fill="poi.element.style_fill" :fill-opacity='1'
   color="RGB(0, 231, 200, 0.5)" fill-color="RGB(205, 231, 65, 0.5)">
       </l-circle>
-      <l-marker @click="dialogFormVisible = true" :lat-lng='coordinate'>
+      <l-marker @click="dialogFormVisible = true" :lat-lng='poi.coordinate'>
         <l-icon :icon-url="iconUrl" :icon-size="iconSize" />
       </l-marker>
 </template>
@@ -21,7 +22,7 @@ export default {
     icon: String,
     iconWidth: Number,
     iconHeight: Number,
-    coordinate: Array,
+    poi: Object,
   },
   components: {
     LCircle,
