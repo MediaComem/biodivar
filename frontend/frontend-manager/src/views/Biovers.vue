@@ -1,13 +1,17 @@
 <template>
   <el-row :gutter="20" style="height: 50vh">
     <el-col :span="24">
-      <Map v-if="ownerBiovers.data" :biovers="ownerBiovers.data[0]"
+      <Map v-if="getOwnerBiovers" :biovers="biovers"
       :pois="pois" :paths="paths"/>
     </el-col>
   </el-row>
   <el-row :gutter="20">
-    <el-col :span="24">
-      <BioversTab v-if="ownerBiovers.data" :ownerBiovers="getOwnerBiovers"
+    <el-col v-if="biovers.length === 0" :span="24">
+      <BioversSelection v-if="getOwnerBiovers" :ownerBiovers="getOwnerBiovers"
+      @selected-biovers="selectedBiovers"/>
+    </el-col>
+    <el-col v-if="biovers.length > 0" :span="24">
+      <BioversTab :ownerBiovers="biovers"
       @poi-to-display="poiToDisplay" @path-to-display="pathToDisplay"/>
     </el-col>
   </el-row>
@@ -15,6 +19,7 @@
 <script>
 import Map from '../components/biovers/Map.vue';
 import BioversTab from '../components/biovers/BioversTab.vue';
+import BioversSelection from '../components/biovers/BioversSelection.vue';
 
 import getData from '../api/biovers';
 
@@ -22,9 +27,11 @@ export default {
   components: {
     Map,
     BioversTab,
+    BioversSelection,
   },
   data() {
     return {
+      biovers: [],
       ownerBiovers: {},
       publicBiovers: {},
       pois: [],
@@ -32,6 +39,9 @@ export default {
     };
   },
   methods: {
+    selectedBiovers(event) {
+      this.biovers.push(event);
+    },
     poiToDisplay(event) {
       const pois = [];
       event.forEach((element) => {

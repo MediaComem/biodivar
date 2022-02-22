@@ -36,9 +36,6 @@ export default {
   },
   components: { DataTab },
   methods: {
-    poiToDisplay(event) {
-      this.$emit('poiToDisplay', event);
-    },
     addTab() {
       this.index += 1;
       const newTabName = `${this.index}`;

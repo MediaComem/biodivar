@@ -12,6 +12,8 @@
             :icon="'https://placekitten.com'" />
       </div>
     </l-map>
+    <PoiCreator :showDialog="showDialog" :coordinate="latlng" @close-dialog="showDialog = false"
+    @save="save"/>
 </template>
 
 <script>
@@ -23,6 +25,7 @@ import 'leaflet/dist/leaflet.css';
 
 import Poi from './Poi.vue';
 import Path from './Path.vue';
+import PoiCreator from './PoiCreator.vue';
 
 export default {
   components: {
@@ -30,6 +33,7 @@ export default {
     LTileLayer,
     Poi,
     Path,
+    PoiCreator,
   },
   props: {
     biovers: Object,
@@ -38,6 +42,8 @@ export default {
   },
   data() {
     return {
+      showDialog: false,
+      latlng: undefined,
       zoom: 15,
       pathCoodinate: [],
       poiCoordinate: [],
@@ -48,6 +54,13 @@ export default {
   },
   methods: {
     getPosition(event) {
+      if (event.latlng) {
+        this.latlng = event.latlng;
+        this.showDialog = true;
+      }
+    },
+    save(event) {
+      this.showDialog = false;
       console.log(event);
     },
   },
