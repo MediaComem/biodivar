@@ -27,6 +27,8 @@ import Poi from './Poi.vue';
 import Path from './Path.vue';
 import PoiCreator from './PoiCreator.vue';
 
+import poi from '../../api/poi';
+
 export default {
   components: {
     LMap,
@@ -40,6 +42,7 @@ export default {
     pois: Array,
     paths: Array,
   },
+  emits: ['newPoi'],
   data() {
     return {
       showDialog: false,
@@ -59,9 +62,14 @@ export default {
         this.showDialog = true;
       }
     },
-    save(event) {
+    async save(event) {
+      // eslint-disable-next-line no-param-reassign
+      event.author = 4;
+      // eslint-disable-next-line no-param-reassign
+      event.biovers = this.biovers[0].id;
+      const newPoi = await poi.savePoi(event);
       this.showDialog = false;
-      console.log(event);
+      this.$emit('newPoi', newPoi.data.data);
     },
   },
 };

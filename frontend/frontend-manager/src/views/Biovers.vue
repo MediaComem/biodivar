@@ -2,7 +2,7 @@
   <el-row :gutter="20" style="height: 50vh">
     <el-col :span="24">
       <Map v-if="getOwnerBiovers" :biovers="biovers"
-      :pois="pois" :paths="paths"/>
+      :pois="pois" :paths="paths" @new-poi="addPoiToCurrentList"/>
     </el-col>
   </el-row>
   <el-row :gutter="20">
@@ -68,6 +68,10 @@ export default {
     async getOwner() {
       const result = await getData.getBioversByUser(4);
       this.ownerBiovers = result.data;
+    },
+    async addPoiToCurrentList(event) {
+      const biover = this.ownerBiovers.data.find((e) => e.id === event.biovers);
+      biover.Poi.push(event);
     },
   },
   computed: {

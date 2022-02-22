@@ -1,8 +1,18 @@
 <template>
-  <el-tree :data="data" show-checkbox @check="selectedBiovers"/>
+  <el-tabs v-model="editableTabsValue"
+    type="card" class="demo-tabs">
+      <el-tab-pane
+      label="BIOVERS"
+      name="1"
+      >
+      <el-tree :data="data" show-checkbox @check="selectedBiovers"/>
+    </el-tab-pane>
+  </el-tabs>
 </template>
 
 <script>
+import { ref } from 'vue';
+
 export default {
   props: {
     ownerBiovers: Object,
@@ -11,6 +21,8 @@ export default {
   data() {
     return {
       data: [],
+      editableTabs: [{ title: 'POI', name: '1' }],
+      editableTabsValue: ref('1'),
     };
   },
   methods: {

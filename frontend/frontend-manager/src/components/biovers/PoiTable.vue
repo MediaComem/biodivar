@@ -1,5 +1,5 @@
 <template>
-  <el-table ref="multipleTableRef" :data="data" style="width: 100%" @select="selectElement"
+  <el-table ref="multipleTableRef" :data="rows" style="width: 100%" @select="selectElement"
   @select-all="selectElement">
     <el-table-column fixed type="selection" width="55" />
     <el-table-column property="name" label="Biovers Name" width="120" sortable/>
@@ -21,9 +21,12 @@
      sortable/>
      <el-table-column property="element.is_editable" label="Modifiable" show-overflow-tooltip
      sortable/>
-     <el-table-column property="coordinate.lat" label="Latitude" show-overflow-tooltip sortable/>
-     <el-table-column property="coordinate.long" label="Longitude" show-overflow-tooltip sortable/>
-     <el-table-column property="coordinate.alt" label="Altitude" show-overflow-tooltip sortable/>
+     <el-table-column property="element.coordiante.lat" label="Latitude"
+     show-overflow-tooltip sortable/>
+     <el-table-column property="element.coordinate.long" label="Longitude"
+     show-overflow-tooltip sortable/>
+     <el-table-column property="element.coordinate.alt" label="Altitude"
+     show-overflow-tooltip sortable/>
      <el-table-column property="element.radius" label="Radius" show-overflow-tooltip
      sortable/>
      <el-table-column property="element.style_type" label="Radius Type" show-overflow-tooltip
@@ -34,20 +37,54 @@
      label="Radius Elévation" show-overflow-tooltip sortable/>
      <el-table-column property="element.style_is_visible"
      label="Radius Visible" show-overflow-tooltip sortable/>
-    <el-table-column property="element.title" label="Poi Title" show-overflow-tooltip sortable/>
+    <el-table-column property="element.title" label="Poi Title"
+    show-overflow-tooltip sortable/>
     <el-table-column property="element.subtitle" label="Poi Subtitle" show-overflow-tooltip
     sortable/>
+    <el-table-column align="right">
+     <template #default="scope">
+        <el-button size="small" @click="handleEdit(scope.row)"
+          >Edit</el-button
+        >
+      </template>
+    </el-table-column>
   </el-table>
+  <PoiEdition :poi="poiToEdit" :showDialog="showDialog" @close-dialog="closeDialog"
+  @save="update"/>
 </template>
 
 <script>
 import format from '../../utils/formatter';
+import PoiEdition from './PoiEdition.vue';
+
+import poi from '../../api/poi';
 
 export default {
+  watch: {
+    data(newVal) {
+      if (this.rows.length === newVal.length - 1) {
+        this.rows.push(newVal[newVal.length - 1]);
+        this.selectedRows.push({ type: 'POI', element: newVal[newVal.length - 1] });
+        this.$refs.multipleTableRef.toggleRowSelection(this.rows[this.rows.length - 1]);
+        this.$emit('poiToDisplay', this.selectedRows);
+      } else {
+        this.rows = newVal;
+      }
+    },
+  },
+  components: { PoiEdition },
   props: {
     data: Array,
   },
   emits: ['poiToDisplay'],
+  data() {
+    return {
+      rows: [],
+      selectedRows: [],
+      poiToEdit: {},
+      showDialog: false,
+    };
+  },
   methods: {
     creationDate(row) {
       return format.dateFormatter(row.element.creation_date);
@@ -56,14 +93,28 @@ export default {
       return format.dateFormatter(row.element.update_date);
     },
     selectElement(event) {
-      const data = [];
+      this.selectedRows = [];
       event.forEach((row) => {
-        data.push({ type: row.type, element: row.element });
+        this.selectedRows.push({ type: row.type, element: row.element });
       });
-      this.$emit('poiToDisplay', data);
+      this.$emit('poiToDisplay', this.selectedRows);
+    },
+    handleEdit(row) {
+      this.poiToEdit = row.element;
+      this.showDialog = true;
+    },
+    closeDialog() {
+      this.showDialog = false;
+    },
+    async update(event) {
+      await poi.updatePoi(event);
+      const index = this.rows.findIndex((e) => e.element.id === event.id);
+      this.rows[index].element = event;
+      this.showDialog = false;
     },
   },
   mounted() {
+    this.rows = this.data;
     this.$refs.multipleTableRef.toggleAllSelection();
   },
 };

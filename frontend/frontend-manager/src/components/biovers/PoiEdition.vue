@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogVisible" title="Création d'un POI">
+  <el-dialog v-model="dialogVisible" title="Edition d'un POI">
     <el-form :model="form">
       <el-form-item label="Titre" :label-width="formLabelWidth">
         <el-input v-model="form.title" autocomplete="off"></el-input>
@@ -91,7 +91,7 @@
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="$emit('closeDialog')">Annuler</el-button>
+        <el-button @click="$emit('closeDialog', original)">Annuler</el-button>
         <el-button type="primary" @click="$emit('save', form)"
           >Confirmer</el-button
         >
@@ -107,13 +107,12 @@ export default {
     showDialog(newVal) {
       this.dialogVisible = newVal;
     },
-    coordinate(newVal) {
-      this.form.coordinate.lat = newVal.lat;
-      this.form.coordinate.long = newVal.lng;
+    poi(newVal) {
+      this.form = JSON.parse(JSON.stringify(newVal));
     },
   },
   props: {
-    coordinate: Object,
+    poi: Object,
     showDialog: Boolean,
   },
   data() {
@@ -136,28 +135,8 @@ export default {
         value: 'touch',
         label: 'Touch',
       }],
-      form: {
-        title: '',
-        title_is_visible: true,
-        subtitle: '',
-        subtitle_is_visible: false,
-        coordinate: {
-          lat: undefined,
-          long: undefined,
-          alt: 550,
-        },
-        radius: 2,
-        style_type: 'Sphere',
-        style_stroke: false,
-        style_stroke_width: 1.5,
-        style_fill: false,
-        style_elevation: 15.5,
-        style_elevation_ground: 33.3,
-        style_noise: 15.2,
-        style_is_visible: true,
-        visible_from: 455.3,
-        trigger_mode: 'location',
-      },
+      original: {},
+      form: {},
     };
   },
 };

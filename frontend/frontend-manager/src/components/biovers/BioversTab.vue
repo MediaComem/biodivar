@@ -29,9 +29,9 @@ export default {
   emits: ['poiToDisplay', 'pathToDisplay'],
   data() {
     return {
-      editableTabs: [{ title: 'My Biovers', name: '1' }],
-      editableTabsValue: ref('1'),
-      index: 1,
+      editableTabs: [],
+      editableTabsValue: undefined,
+      index: 0,
     };
   },
   components: { DataTab },
@@ -46,6 +46,14 @@ export default {
       });
       this.editableTabsValue = newTabName;
     },
+  },
+  mounted() {
+    this.editableTabs.push({
+      title: this.ownerBiovers[0].name,
+      name: '1',
+    });
+    this.editableTabsValue = ref('1');
+    this.index = 1;
   },
 };
 </script>
