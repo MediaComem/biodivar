@@ -11,8 +11,9 @@
       :label="item.title"
       :name="item.name"
       >
-        <DataTab :ownerBiovers="ownerBiovers" @poi-to-display="$emit('poiToDisplay', $event)"
-        @path-to-display="$emit('pathToDisplay', $event)"/>
+        <DataTab :biovers="biovers" @poi-to-display="$emit('poiToDisplay', $event)"
+        @path-to-display="$emit('pathToDisplay', $event)"
+        @update-poi="$emit('updatePoi', $event)"/>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -24,9 +25,9 @@ import DataTab from './DataTab.vue';
 
 export default {
   props: {
-    ownerBiovers: Array,
+    biovers: Array,
   },
-  emits: ['poiToDisplay', 'pathToDisplay'],
+  emits: ['poiToDisplay', 'pathToDisplay', 'updatePoi'],
   data() {
     return {
       editableTabs: [],
@@ -49,7 +50,7 @@ export default {
   },
   mounted() {
     this.editableTabs.push({
-      title: this.ownerBiovers[0].name,
+      title: this.biovers[0].name,
       name: '1',
     });
     this.editableTabsValue = ref('1');

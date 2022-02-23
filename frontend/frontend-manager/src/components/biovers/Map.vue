@@ -1,6 +1,6 @@
 <template>
-  <l-map :max-zoom='19' v-model='zoom' v-model:zoom='zoom'
-    :center='center' @click="getPosition">
+  <l-map :min-zoom='minZoom' :max-zoom='maxZoom' v-model='zoom' v-model:zoom='zoom'
+    :center='center' @click="getPosition" :options="{zoomControl: false}">
       <l-tile-layer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'></l-tile-layer>
       <div v-for="(path, index) in paths" :key="index">
         <Path :path="path"/>
@@ -9,11 +9,15 @@
           <Poi :poi="poi"
             :iconHeight="40"
             :iconWidth="25"
-            :icon="'https://placekitten.com'" />
+            :icon="'https://placekitten.com'"
+            @update-poi="openPoiEdition"/>
       </div>
     </l-map>
-    <PoiCreator :showDialog="showDialog" :coordinate="latlng" @close-dialog="showDialog = false"
-    @save="save"/>
+    <PoiCreator :showDialog="showCreationDialog" :coordinate="latlng"
+    @close-dialog="showCreationDialog = false" @save="save"/>
+    <PoiEdition :poi="poiToUpdate" :showDialog="showEditionDialog"
+    @close-dialog="showEditionDialog = false"
+    @save="updatePoi"/>
 </template>
 
 <script>
@@ -26,6 +30,7 @@ import 'leaflet/dist/leaflet.css';
 import Poi from './Poi.vue';
 import Path from './Path.vue';
 import PoiCreator from './PoiCreator.vue';
+import PoiEdition from './PoiEdition.vue';
 
 import poi from '../../api/poi';
 
@@ -36,18 +41,24 @@ export default {
     Poi,
     Path,
     PoiCreator,
+    PoiEdition,
   },
   props: {
     biovers: Object,
     pois: Array,
     paths: Array,
   },
-  emits: ['newPoi'],
+  emits: ['newPoi', 'updatePoi'],
   data() {
     return {
-      showDialog: false,
+      showCreationDialog: false,
+      showEditionDialog: false,
+      poiToUpdate: undefined,
       latlng: undefined,
       zoom: 15,
+      defaultZoom: { min: 1, max: 19 },
+      minZoom: 1,
+      maxZoom: 19,
       pathCoodinate: [],
       poiCoordinate: [],
       center: [
@@ -59,17 +70,27 @@ export default {
     getPosition(event) {
       if (event.latlng) {
         this.latlng = event.latlng;
-        this.showDialog = true;
+        this.showCreationDialog = true;
       }
     },
+    openPoiEdition(event) {
+      this.poiToUpdate = event.element;
+      this.showEditionDialog = true;
+    },
     async save(event) {
+      // TODO: REFACTOR WITH RIGHT ID USER
       // eslint-disable-next-line no-param-reassign
       event.author = 4;
       // eslint-disable-next-line no-param-reassign
       event.biovers = this.biovers[0].id;
       const newPoi = await poi.savePoi(event);
-      this.showDialog = false;
+      this.showCreationDialog = false;
       this.$emit('newPoi', newPoi.data.data);
+    },
+    async updatePoi(event) {
+      const updatedPoi = await poi.updatePoi(event);
+      this.showEditionDialog = false;
+      this.$emit('updatePoi', updatedPoi.data.data);
     },
   },
 };

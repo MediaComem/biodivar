@@ -2,10 +2,10 @@
   <l-circle :lat-lng='poi.coordinate' :radius='poi.element.radius'
   :fill="poi.element.style_fill" :fill-opacity='1'
   color="RGB(0, 231, 200, 0.5)" fill-color="RGB(205, 231, 65, 0.5)">
-      </l-circle>
-      <l-marker @click="dialogFormVisible = true" :lat-lng='poi.coordinate'>
-        <l-icon :icon-url="iconUrl" :icon-size="iconSize" />
-      </l-marker>
+  </l-circle>
+  <l-marker @click="$emit('updatePoi', this.poi)" :lat-lng='poi.coordinate'>
+    <l-icon :icon-url="iconUrl" :icon-size="iconSize" />
+  </l-marker>
 </template>
 
 <script>
@@ -16,8 +16,6 @@ import {
 } from '@vue-leaflet/vue-leaflet';
 
 export default {
-  watch: {
-  },
   props: {
     icon: String,
     iconWidth: Number,
@@ -29,6 +27,7 @@ export default {
     LMarker,
     LIcon,
   },
+  emits: ['updatePoi'],
   computed: {
     iconUrl() {
       return `${this.icon}/${this.iconWidth}/${this.iconHeight}`;

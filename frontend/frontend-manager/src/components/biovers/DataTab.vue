@@ -6,7 +6,8 @@
       label="POI"
       name="1"
       >
-        <PoiTable :data="getPois" @poi-to-display="$emit('poiToDisplay', $event)"/>
+        <PoiTable :data="getPois" @poi-to-display="$emit('poiToDisplay', $event)"
+        @update-poi="$emit('updatePoi', $event)"/>
       </el-tab-pane>
       <el-tab-pane
       label="PATH"
@@ -31,9 +32,9 @@ import PathTable from './PathTable.vue';
 
 export default {
   props: {
-    ownerBiovers: Array,
+    biovers: Array,
   },
-  emits: ['poiToDisplay', 'pathToDisplay'],
+  emits: ['poiToDisplay', 'pathToDisplay', 'updatePoi'],
   components: { PoiTable, PathTable },
   data() {
     return {
@@ -44,7 +45,7 @@ export default {
   computed: {
     getPois() {
       const data = [];
-      this.ownerBiovers.forEach((row) => {
+      this.biovers.forEach((row) => {
         row.Poi.forEach((poiElement) => {
           data.push({
             name: row.name,
@@ -58,7 +59,7 @@ export default {
     },
     getPath() {
       const data = [];
-      this.ownerBiovers.forEach((row) => {
+      this.biovers.forEach((row) => {
         row.Path.forEach((pathElement) => {
           data.push({
             name: row.name,

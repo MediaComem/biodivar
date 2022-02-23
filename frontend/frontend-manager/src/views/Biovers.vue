@@ -2,7 +2,8 @@
   <el-row :gutter="20" style="height: 50vh">
     <el-col :span="24">
       <Map v-if="getOwnerBiovers" :biovers="biovers"
-      :pois="pois" :paths="paths" @new-poi="addPoiToCurrentList"/>
+      :pois="pois" :paths="paths" @new-poi="addPoiToCurrentList"
+      @update-poi="updatePoi"/>
     </el-col>
   </el-row>
   <el-row :gutter="20">
@@ -11,8 +12,9 @@
       @selected-biovers="selectedBiovers"/>
     </el-col>
     <el-col v-if="biovers.length > 0" :span="24">
-      <BioversTab :ownerBiovers="biovers"
-      @poi-to-display="poiToDisplay" @path-to-display="pathToDisplay"/>
+      <BioversTab :biovers="biovers"
+      @poi-to-display="poiToDisplay" @path-to-display="pathToDisplay"
+      @update-poi="updatePoi"/>
     </el-col>
   </el-row>
 </template>
@@ -72,6 +74,14 @@ export default {
     async addPoiToCurrentList(event) {
       const biover = this.ownerBiovers.data.find((e) => e.id === event.biovers);
       biover.Poi.push(event);
+    },
+    updatePoi(event) {
+      const index = this.pois.findIndex((e) => e.element.id === event.id);
+      this.pois[index].element = event;
+      this.pois[index].coordinate = [event.coordinate.lat, event.coordinate.long];
+      const poiIndex = this.biovers[0].Poi.findIndex((e) => e.id === event.id);
+      console.log(poiIndex);
+      this.biovers[0].Poi[poiIndex] = event;
     },
   },
   computed: {

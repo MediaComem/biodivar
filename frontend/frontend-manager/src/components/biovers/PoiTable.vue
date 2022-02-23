@@ -21,7 +21,7 @@
      sortable/>
      <el-table-column property="element.is_editable" label="Modifiable" show-overflow-tooltip
      sortable/>
-     <el-table-column property="element.coordiante.lat" label="Latitude"
+     <el-table-column property="element.coordinate.lat" label="Latitude"
      show-overflow-tooltip sortable/>
      <el-table-column property="element.coordinate.long" label="Longitude"
      show-overflow-tooltip sortable/>
@@ -41,7 +41,7 @@
     show-overflow-tooltip sortable/>
     <el-table-column property="element.subtitle" label="Poi Subtitle" show-overflow-tooltip
     sortable/>
-    <el-table-column align="right">
+    <el-table-column fixed align="right">
      <template #default="scope">
         <el-button size="small" @click="handleEdit(scope.row)"
           >Edit</el-button
@@ -76,7 +76,7 @@ export default {
   props: {
     data: Array,
   },
-  emits: ['poiToDisplay'],
+  emits: ['poiToDisplay', 'updatePoi'],
   data() {
     return {
       rows: [],
@@ -107,10 +107,11 @@ export default {
       this.showDialog = false;
     },
     async update(event) {
-      await poi.updatePoi(event);
+      const updatedPoi = await poi.updatePoi(event);
       const index = this.rows.findIndex((e) => e.element.id === event.id);
       this.rows[index].element = event;
       this.showDialog = false;
+      this.$emit('updatePoi', updatedPoi.data.data);
     },
   },
   mounted() {
