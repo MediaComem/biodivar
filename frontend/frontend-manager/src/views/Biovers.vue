@@ -80,7 +80,6 @@ export default {
       this.pois[index].element = event;
       this.pois[index].coordinate = [event.coordinate.lat, event.coordinate.long];
       const poiIndex = this.biovers[0].Poi.findIndex((e) => e.id === event.id);
-      console.log(poiIndex);
       this.biovers[0].Poi[poiIndex] = event;
     },
   },

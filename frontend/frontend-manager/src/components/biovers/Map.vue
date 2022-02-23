@@ -78,9 +78,6 @@ export default {
       this.showEditionDialog = true;
     },
     async save(event) {
-      // TODO: REFACTOR WITH RIGHT ID USER
-      // eslint-disable-next-line no-param-reassign
-      event.author = 4;
       // eslint-disable-next-line no-param-reassign
       event.biovers = this.biovers[0].id;
       const newPoi = await poi.savePoi(event);
