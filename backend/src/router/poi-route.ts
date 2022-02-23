@@ -58,6 +58,7 @@ poiRoutes.push({
       const poi = await createPoi(
         request.server.app.prisma,
         request.payload as PoiModel,
+        request.state.biodivar.id,
         request.server.app.logger
       );
       if (poi) {
@@ -79,6 +80,7 @@ poiRoutes.push({
       const poi = await updatePoi(
         request.server.app.prisma,
         request.payload as PoiModel,
+        request.state.biodivar.id,
         request.server.app.logger
       );
       if (poi) {

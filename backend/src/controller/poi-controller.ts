@@ -5,6 +5,7 @@ import { PoiModel } from '../types/poi-model';
 export const createPoi = async (
   prisma: PrismaClient,
   poi: PoiModel,
+  userId: number,
   logger: winston.Logger
 ) => {
   try {
@@ -14,11 +15,9 @@ export const createPoi = async (
         title_is_visible: poi.title_is_visible,
         subtitle: poi.subtitle ? poi.subtitle : '',
         subtitle_is_visible: poi.subtitle_is_visible ? poi.subtitle_is_visible : false,
-        author: poi.author,
+        author: userId,
         creation_date: new Date(),
-        last_contributor: poi.last_contributor
-          ? poi.last_contributor
-          : poi.author,
+        last_contributor: userId,
         is_public: poi.is_public,
         is_editable: poi.is_editable,
         biovers: poi.biovers,
@@ -95,6 +94,7 @@ export const getPoiByTitle = async (prisma: PrismaClient, name: string) => {
 export const updatePoi = async (
   prisma: PrismaClient,
   poi: PoiModel,
+  userId: number,
   logger: winston.Logger
 ) => {
   try {
@@ -114,9 +114,7 @@ export const updatePoi = async (
           subtitle_is_visible: poi.subtitle_is_visible,
           author: poi.author,
           update_date: new Date(),
-          last_contributor: poi.last_contributor
-            ? poi.last_contributor
-            : poi.author,
+          last_contributor: userId,
           is_public: poi.is_public,
           is_editable: poi.is_editable,
           biovers: poi.biovers,
