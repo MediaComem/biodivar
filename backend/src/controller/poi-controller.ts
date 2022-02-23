@@ -59,6 +59,16 @@ export const createPoi = async (
       include: {
         coordinate: true,
         symbol: true,
+        User: {
+          select: {
+            username: true,
+          }
+        },
+        last_contributor_fk: {
+          select: {
+            username: true,
+          }
+        }
       },
     });
   } catch (error) {
@@ -174,6 +184,16 @@ export const updatePoi = async (
         include: {
           coordinate: true,
           symbol: true,
+          User: {
+            select: {
+              username: true,
+            }
+          },
+          last_contributor_fk: {
+            select: {
+              username: true,
+            }
+          }
         },
       });
     } else {
