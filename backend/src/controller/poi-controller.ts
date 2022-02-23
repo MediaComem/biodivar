@@ -12,8 +12,8 @@ export const createPoi = async (
       data: {
         title: poi.title,
         title_is_visible: poi.title_is_visible,
-        subtitle: poi.subtitle,
-        subtitle_is_visible: poi.subtitle_is_visible,
+        subtitle: poi.subtitle ? poi.subtitle : '',
+        subtitle_is_visible: poi.subtitle_is_visible ? poi.subtitle_is_visible : false,
         author: poi.author,
         creation_date: new Date(),
         last_contributor: poi.last_contributor
@@ -37,9 +37,9 @@ export const createPoi = async (
         coordinate: poi.coordinate
           ? {
               create: {
-                long: poi.coordinate?.long,
-                lat: poi.coordinate.lat,
-                alt: poi.coordinate.alt,
+                long: +poi.coordinate?.long,
+                lat: +poi.coordinate.lat,
+                alt: +poi.coordinate.alt,
                 creation_date: new Date(),
               },
             }
@@ -136,15 +136,15 @@ export const updatePoi = async (
             ? {
                 upsert: {
                   update: {
-                    long: poi.coordinate?.long,
-                    lat: poi.coordinate.lat,
-                    alt: poi.coordinate.alt,
+                    long: +poi.coordinate?.long,
+                    lat: +poi.coordinate.lat,
+                    alt: +poi.coordinate.alt,
                     update_date: new Date(),
                   },
                   create: {
-                    long: poi.coordinate?.long,
-                    lat: poi.coordinate.lat,
-                    alt: poi.coordinate.alt,
+                    long: +poi.coordinate?.long,
+                    lat: +poi.coordinate.lat,
+                    alt: +poi.coordinate.alt,
                     creation_date: new Date(),
                   },
                 },
