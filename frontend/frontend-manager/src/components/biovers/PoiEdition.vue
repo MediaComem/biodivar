@@ -108,7 +108,7 @@ export default {
       this.dialogVisible = newVal;
     },
     poi(newVal) {
-      this.form = JSON.parse(JSON.stringify(newVal));
+      this.form = JSON.parse(JSON.stringify(newVal.poi));
     },
   },
   props: {

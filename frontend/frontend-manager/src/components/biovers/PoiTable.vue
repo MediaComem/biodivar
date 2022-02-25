@@ -67,6 +67,8 @@ export default {
         this.selectedRows.push({ type: 'POI', element: newVal[newVal.length - 1] });
         this.$refs.multipleTableRef.toggleRowSelection(this.rows[this.rows.length - 1]);
         this.$emit('poiToDisplay', this.selectedRows);
+      } else if (this.rows.length === newVal.length) {
+        console.log('Find a way to update only the modified element');
       } else {
         this.rows = newVal;
       }
@@ -100,7 +102,7 @@ export default {
       this.$emit('poiToDisplay', this.selectedRows);
     },
     handleEdit(row) {
-      this.poiToEdit = row.element;
+      this.poiToEdit = { poi: row.element };
       this.showDialog = true;
     },
     closeDialog() {

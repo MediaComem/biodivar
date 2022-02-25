@@ -6,14 +6,16 @@
       label="POI"
       name="1"
       >
-        <PoiTable :data="getPois" @poi-to-display="$emit('poiToDisplay', $event)"
-        @update-poi="$emit('updatePoi', $event)"/>
+        <PoiTable :data="getPois"
+        @poi-to-display="$emit('poiToDisplay', { biover: biovers.id, pois: $event })"
+        @update-poi="$emit('updatePoi', { biover: biovers.id, poi: $event })"/>
       </el-tab-pane>
       <el-tab-pane
       label="PATH"
       name="2"
       >
-        <PathTable :data="getPath" @path-to-display="$emit('pathToDisplay', $event)"/>
+        <PathTable :data="getPath"
+        @path-to-display="$emit('pathToDisplay', { biover: biovers.id, paths: $event })"/>
       </el-tab-pane>
       <el-tab-pane
       label="TRACE"
@@ -32,7 +34,7 @@ import PathTable from './PathTable.vue';
 
 export default {
   props: {
-    biovers: Array,
+    biovers: Object,
   },
   emits: ['poiToDisplay', 'pathToDisplay', 'updatePoi'],
   components: { PoiTable, PathTable },
@@ -45,28 +47,24 @@ export default {
   computed: {
     getPois() {
       const data = [];
-      this.biovers.forEach((row) => {
-        row.Poi.forEach((poiElement) => {
-          data.push({
-            name: row.name,
-            type: 'POI',
-            element: poiElement,
-            coordinate: poiElement.coordinate,
-          });
+      this.biovers.Poi.forEach((poiElement) => {
+        data.push({
+          name: this.biovers.name,
+          type: 'POI',
+          element: poiElement,
+          coordinate: poiElement.coordinate,
         });
       });
       return data;
     },
     getPath() {
       const data = [];
-      this.biovers.forEach((row) => {
-        row.Path.forEach((pathElement) => {
-          data.push({
-            name: row.name,
-            type: 'PATH',
-            element: pathElement,
-            coordinate: pathElement.coordinate,
-          });
+      this.biovers.Path.forEach((pathElement) => {
+        data.push({
+          name: this.biovers.name,
+          type: 'PATH',
+          element: pathElement,
+          coordinate: pathElement.coordinate,
         });
       });
       return data;

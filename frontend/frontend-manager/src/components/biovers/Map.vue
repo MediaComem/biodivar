@@ -1,16 +1,16 @@
 <template>
   <l-map :min-zoom='minZoom' :max-zoom='maxZoom' v-model='zoom' v-model:zoom='zoom'
-    :center='center' @click="getPosition" :options="{zoomControl: false}">
+    :center='center' @click="getPosition">
       <l-tile-layer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'></l-tile-layer>
-      <div v-for="(path, index) in paths" :key="index">
+      <div v-for="(path, index) in getPaths" :key="index">
         <Path :path="path"/>
       </div>
-      <div v-for="(poi, index) in pois" :key="index">
-          <Poi :poi="poi"
+      <div v-for="(poi, index) in getPois" :key="index">
+          <Poi :poi="poi.poi"
             :iconHeight="40"
             :iconWidth="25"
             :icon="'https://placekitten.com'"
-            @update-poi="openPoiEdition"/>
+            @update-poi="openPoiEdition(poi.poi, poi.biover)"/>
       </div>
     </l-map>
     <PoiCreator :showDialog="showCreationDialog" :coordinate="latlng"
@@ -56,15 +56,32 @@ export default {
       poiToUpdate: undefined,
       latlng: undefined,
       zoom: 15,
-      defaultZoom: { min: 1, max: 19 },
       minZoom: 1,
       maxZoom: 19,
-      pathCoodinate: [],
-      poiCoordinate: [],
       center: [
         46.7809153620790993954869918525218963623046875,
         6.64862875164097832936249687918461859226226806640625],
     };
+  },
+  computed: {
+    getPois() {
+      const pois = [];
+      this.pois.forEach((pAll) => {
+        pAll.pois.forEach((p) => {
+          pois.push({ biover: pAll.biover, poi: p });
+        });
+      });
+      return pois;
+    },
+    getPaths() {
+      const paths = [];
+      this.paths.forEach((pAll) => {
+        pAll.paths.forEach((p) => {
+          paths.push(p);
+        });
+      });
+      return paths;
+    },
   },
   methods: {
     getPosition(event) {
@@ -73,8 +90,8 @@ export default {
         this.showCreationDialog = true;
       }
     },
-    openPoiEdition(event) {
-      this.poiToUpdate = event.element;
+    openPoiEdition(event, bioverId) {
+      this.poiToUpdate = { poi: event.element, biover: bioverId };
       this.showEditionDialog = true;
     },
     async save(event) {
@@ -87,7 +104,7 @@ export default {
     async updatePoi(event) {
       const updatedPoi = await poi.updatePoi(event);
       this.showEditionDialog = false;
-      this.$emit('updatePoi', updatedPoi.data.data);
+      this.$emit('updatePoi', { biover: updatedPoi.data.data.biovers, poi: updatedPoi.data.data });
     },
   },
 };

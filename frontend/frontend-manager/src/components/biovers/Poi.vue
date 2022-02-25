@@ -3,7 +3,8 @@
   :fill="poi.element.style_fill" :fill-opacity='1'
   color="RGB(0, 231, 200, 0.5)" fill-color="RGB(205, 231, 65, 0.5)">
   </l-circle>
-  <l-marker @click="$emit('updatePoi', this.poi)" :lat-lng='poi.coordinate'>
+  <l-marker @click="$emit('updatePoi', poi)" :lat-lng='poi.coordinate'
+  :draggable="true" @dragstart="test" @dragend="test">
     <l-icon :icon-url="iconUrl" :icon-size="iconSize" />
   </l-marker>
 </template>
@@ -34,6 +35,11 @@ export default {
     },
     iconSize() {
       return [this.iconWidth, this.iconHeight];
+    },
+  },
+  methods: {
+    test() {
+      console.log(this.poi);
     },
   },
 };
