@@ -1,11 +1,16 @@
 <template>
-  <l-circle :lat-lng='poi.coordinate' :radius='poi.element.radius'
+  <l-circle :lat-lng='poi.coordinate' :radius="poi.element.radius"
   :fill="poi.element.style_fill" :fill-opacity='1'
   color="RGB(0, 231, 200, 0.5)" fill-color="RGB(205, 231, 65, 0.5)">
   </l-circle>
   <l-marker @click="$emit('updatePoi', poi)" :lat-lng='poi.coordinate'
   :draggable="true" @dragstart="test" @dragend="test">
-    <l-icon :icon-url="iconUrl" :icon-size="iconSize" />
+    <l-tooltip v-if="poi.element.title_is_visible || poi.element.subtitle_is_visible"
+    :options="{ permanent: true, direction: 'top'}">
+      <p v-if="poi.element.title_is_visible">{{ poi.element.title }}</p>
+      <p v-if="poi.element.subtitle_is_visible">{{ poi.element.subtitle }}</p>
+    </l-tooltip>
+    <l-icon :icon-url="iconUrl" :icon-size="iconSize"/>
   </l-marker>
 </template>
 
@@ -14,6 +19,7 @@ import {
   LCircle,
   LMarker,
   LIcon,
+  LTooltip,
 } from '@vue-leaflet/vue-leaflet';
 
 export default {
@@ -27,6 +33,7 @@ export default {
     LCircle,
     LMarker,
     LIcon,
+    LTooltip,
   },
   emits: ['updatePoi'],
   computed: {

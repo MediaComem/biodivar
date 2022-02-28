@@ -30,7 +30,7 @@ export default {
     ownerBiovers: Object,
     bioversToDisplay: Array,
   },
-  emits: ['poiToDisplay', 'pathToDisplay', 'updatePoi', 'selectedBiovers'],
+  emits: ['poiToDisplay', 'pathToDisplay', 'updatePoi', 'selectedBiovers', 'removeBiover'],
   components: { DataTab },
   data() {
     return {
@@ -42,9 +42,14 @@ export default {
   },
   methods: {
     selectedBiovers(event) {
-      this.index += 1;
-      this.editableTabsValue = ref(`${this.index}`);
-      this.$emit('selectedBiovers', { index: this.index, biover: event });
+      const index = this.bioversToDisplay.findIndex((biovers) => biovers.biover.id === event.id);
+      if (index === -1) {
+        this.index += 1;
+        this.editableTabsValue = ref(`${this.index}`);
+        this.$emit('selectedBiovers', { index: this.index, biover: event });
+      } else {
+        this.$emit('removeBiover', event.id);
+      }
     },
   },
   mounted() {
@@ -52,6 +57,7 @@ export default {
     this.ownerBiovers.forEach((biover) => {
       own.push({
         label: biover.name,
+        id: biover.id,
       });
     });
     this.data.push({

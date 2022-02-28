@@ -12,6 +12,7 @@
       :ownerBiovers="getOwnerBiovers"
       :bioversToDisplay="bioversToDisplay"
       @selected-biovers="selectedBiovers"
+      @remove-biover="removeBiover"
       @poi-to-display="poiToDisplay"
       @path-to-display="pathToDisplay"
       @update-poi="updatePoi"/>
@@ -47,6 +48,14 @@ export default {
         name: `${event.index}`,
         biover: selectBiover,
       });
+    },
+    removeBiover(bioverId) {
+      const index = this.bioversToDisplay.findIndex((biovers) => biovers.biover.id === bioverId);
+      this.bioversToDisplay.splice(index, 1);
+      const poiIndex = this.pois.findIndex((poi) => poi.biover === bioverId);
+      this.pois.splice(poiIndex, 1);
+      const pathIndex = this.paths.findIndex((path) => path.biover === bioverId);
+      this.paths.splice(pathIndex, 1);
     },
     poiToDisplay(event) {
       const index = this.pois.findIndex((e) => e.biover === event.biover);
