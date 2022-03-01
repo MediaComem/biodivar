@@ -44,7 +44,7 @@ export default {
     PoiEdition,
   },
   props: {
-    biovers: Object,
+    currentBioversId: Number,
     pois: Array,
     paths: Array,
   },
@@ -96,7 +96,7 @@ export default {
     },
     async save(event) {
       // eslint-disable-next-line no-param-reassign
-      event.biovers = this.biovers[0].id;
+      event.biovers = this.currentBioversId;
       const newPoi = await poi.savePoi(event);
       this.showCreationDialog = false;
       this.$emit('newPoi', newPoi.data.data);

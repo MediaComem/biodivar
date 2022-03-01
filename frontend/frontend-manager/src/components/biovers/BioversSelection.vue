@@ -6,6 +6,7 @@
       name="1"
       >
       <el-tree :data="data" show-checkbox @check="selectedBiovers"/>
+      <el-button style="display: flex;" @click="showDialog = true">Créer un biover</el-button>
     </el-tab-pane>
     <el-tab-pane
       v-for="item in bioversToDisplay"
@@ -18,12 +19,17 @@
         @update-poi="$emit('updatePoi', $event)"/>
       </el-tab-pane>
   </el-tabs>
+  <BioverCreator :showDialog="showDialog" @close="showDialog = false"
+  @close-dialog="showDialog = false" @save="createBiover"/>
 </template>
 
 <script>
 import { ref } from 'vue';
 
 import DataTab from './DataTab.vue';
+import BioverCreator from './BioverCreator.vue';
+
+import getData from '../../api/biovers';
 
 export default {
   props: {
@@ -31,13 +37,14 @@ export default {
     bioversToDisplay: Array,
   },
   emits: ['poiToDisplay', 'pathToDisplay', 'updatePoi', 'selectedBiovers', 'removeBiover'],
-  components: { DataTab },
+  components: { DataTab, BioverCreator },
   data() {
     return {
       data: [],
       editableTabs: [{ title: 'POI', name: '1' }],
       editableTabsValue: ref('1'),
       index: 1,
+      showDialog: false,
     };
   },
   methods: {
@@ -50,6 +57,11 @@ export default {
       } else {
         this.$emit('removeBiover', event.id);
       }
+    },
+    async createBiover(event) {
+      this.showDialog = false;
+      const newBiover = await getData.createBiover(event);
+      console.log(newBiover);
     },
   },
   mounted() {

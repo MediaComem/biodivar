@@ -1,7 +1,7 @@
 <template>
   <el-row :gutter="20" style="height: 50vh">
     <el-col :span="24">
-      <Map v-if="getOwnerBiovers" :biovers="biovers"
+      <Map v-if="getOwnerBiovers" :currentBioversId="currentBioversId"
       :pois="pois" :paths="paths" @new-poi="addPoiToCurrentList"
       @update-poi="updatePoi"/>
     </el-col>
@@ -32,7 +32,7 @@ export default {
   },
   data() {
     return {
-      biovers: [],
+      currentBioversId: 0,
       ownerBiovers: {},
       publicBiovers: {},
       pois: [],
@@ -48,6 +48,7 @@ export default {
         name: `${event.index}`,
         biover: selectBiover,
       });
+      this.currentBioversId = event.biover.id;
     },
     removeBiover(bioverId) {
       const index = this.bioversToDisplay.findIndex((biovers) => biovers.biover.id === bioverId);

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogVisible" title="Création d'un POI">
+  <el-dialog v-model="dialogVisible" title="Création d'un POI" @close="$emit('closeDialog')">
     <el-form :model="form">
       <el-form-item label="Titre" :label-width="formLabelWidth">
         <el-input v-model="form.title" autocomplete="off"></el-input>
