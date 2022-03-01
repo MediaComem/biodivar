@@ -90,6 +90,10 @@ bioversRoutes.push({
   path: '/biovers/create',
   handler: async function (request, h) {
     try {
+      const biover = request.payload as BioversModel;
+      if (!biover.owner) {
+        biover.owner = request.state.biodivar.id;
+      }
       const biovers = await createBiovers(
         request.server.app.prisma,
         request.payload as BioversModel,
