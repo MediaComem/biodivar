@@ -77,6 +77,7 @@
 - HTTP method: POST
 - Route: /biovers/create
 - Payload: `{"name": "a", "owner": 1}`
+- Additionnal information: The owner id isn't mandatory but could be sent and it will use to sent the owner in DB. Otherwise, the cookie add this information for you.
 - Example: `/biovers/create`
 - Return: `{statusCode: 200, message: "Biovers creation done successfully", data: {"id":5,"name":"a","owner":1,"creation_date":"2022-01-26T15:07:32.242Z","update_date":null,"deleted_date":null,"is_public":true}}`
 - Error:
