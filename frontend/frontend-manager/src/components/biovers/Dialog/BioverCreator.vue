@@ -14,12 +14,14 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="$emit('closeDialog')">Annuler</el-button>
-        <el-button type="primary" @click="$emit('save', form)">Confirmer</el-button>
+        <el-button type="primary" @click="save">Confirmer</el-button>
       </span>
     </template>
   </el-dialog>
 </template>
 <script>
+import getData from '../../../api/biovers';
+
 export default {
   watch: {
     showDialog(newVal) {
@@ -39,6 +41,12 @@ export default {
         is_public: true,
       },
     };
+  },
+  methods: {
+    async save() {
+      const newBiover = await getData.createBiover(this.form);
+      this.$emit('save', newBiover.data.data);
+    },
   },
 };
 </script>

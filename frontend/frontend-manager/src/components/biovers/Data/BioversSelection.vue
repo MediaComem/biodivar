@@ -29,8 +29,6 @@ import { ref } from 'vue';
 import DataTab from './DataTab.vue';
 import BioverCreator from '../Dialog/BioverCreator.vue';
 
-import getData from '../../../api/biovers';
-
 export default {
   props: {
     ownerBiovers: Object,
@@ -75,8 +73,7 @@ export default {
     },
     async createBiover(event) {
       this.showDialog = false;
-      const newBiover = await getData.createBiover(event);
-      this.$emit('createBiover', newBiover.data.data);
+      this.$emit('createBiover', event);
     },
   },
   mounted() {
