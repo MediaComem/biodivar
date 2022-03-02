@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import format from '../../utils/formatter';
+import format from '../../../utils/formatter';
 
 export default {
   props: {

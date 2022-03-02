@@ -14,6 +14,7 @@
       </div>
     </l-map>
     <PoiCreator :showDialog="showCreationDialog" :coordinate="latlng"
+    :currentBiover="currentBioversId"
     @close-dialog="showCreationDialog = false" @save="save"/>
     <PoiEdition :poi="poiToUpdate" :showDialog="showEditionDialog"
     @close-dialog="showEditionDialog = false"
@@ -29,10 +30,8 @@ import 'leaflet/dist/leaflet.css';
 
 import Poi from './Poi.vue';
 import Path from './Path.vue';
-import PoiCreator from './PoiCreator.vue';
-import PoiEdition from './PoiEdition.vue';
-
-import poi from '../../api/poi';
+import PoiCreator from '../Dialog/PoiCreator.vue';
+import PoiEdition from '../Dialog/PoiEdition.vue';
 
 export default {
   components: {
@@ -95,16 +94,12 @@ export default {
       this.showEditionDialog = true;
     },
     async save(event) {
-      // eslint-disable-next-line no-param-reassign
-      event.biovers = this.currentBioversId;
-      const newPoi = await poi.savePoi(event);
       this.showCreationDialog = false;
-      this.$emit('newPoi', newPoi.data.data);
+      this.$emit('newPoi', event);
     },
     async updatePoi(event) {
-      const updatedPoi = await poi.updatePoi(event);
       this.showEditionDialog = false;
-      this.$emit('updatePoi', { biover: updatedPoi.data.data.biovers, poi: updatedPoi.data.data });
+      this.$emit('updatePoi', { biover: event.biovers, poi: event });
     },
   },
 };

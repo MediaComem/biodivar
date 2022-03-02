@@ -27,9 +27,9 @@
 import { ref } from 'vue';
 
 import DataTab from './DataTab.vue';
-import BioverCreator from './BioverCreator.vue';
+import BioverCreator from '../Dialog/BioverCreator.vue';
 
-import getData from '../../api/biovers';
+import getData from '../../../api/biovers';
 
 export default {
   props: {

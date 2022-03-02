@@ -54,17 +54,15 @@
 </template>
 
 <script>
-import format from '../../utils/formatter';
-import PoiEdition from './PoiEdition.vue';
-
-import poi from '../../api/poi';
+import format from '../../../utils/formatter';
+import PoiEdition from '../Dialog/PoiEdition.vue';
 
 export default {
   watch: {
     data(newVal) {
       if (this.rows.length === newVal.length - 1) {
         this.rows.push(newVal[newVal.length - 1]);
-        this.selectedRows.push({ type: 'POI', element: newVal[newVal.length - 1] });
+        this.selectedRows.push(newVal[newVal.length - 1].element);
         this.$refs.multipleTableRef.toggleRowSelection(this.rows[this.rows.length - 1]);
         this.$emit('poiToDisplay', this.selectedRows);
       } else if (this.rows.length === newVal.length) {
@@ -97,7 +95,7 @@ export default {
     selectElement(event) {
       this.selectedRows = [];
       event.forEach((row) => {
-        this.selectedRows.push({ type: row.type, element: row.element });
+        this.selectedRows.push(row.element);
       });
       this.$emit('poiToDisplay', this.selectedRows);
     },
@@ -109,11 +107,10 @@ export default {
       this.showDialog = false;
     },
     async update(event) {
-      const updatedPoi = await poi.updatePoi(event);
       const index = this.rows.findIndex((e) => e.element.id === event.id);
       this.rows[index].element = event;
       this.showDialog = false;
-      this.$emit('updatePoi', updatedPoi.data.data);
+      this.$emit('updatePoi', event);
     },
   },
   mounted() {
