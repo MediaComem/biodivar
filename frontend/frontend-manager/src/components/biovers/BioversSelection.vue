@@ -36,8 +36,22 @@ export default {
     ownerBiovers: Object,
     bioversToDisplay: Array,
   },
-  emits: ['poiToDisplay', 'pathToDisplay', 'updatePoi', 'selectedBiovers', 'removeBiover'],
+  emits: ['poiToDisplay', 'pathToDisplay', 'updatePoi', 'selectedBiovers', 'createBiover', 'removeBiover'],
   components: { DataTab, BioverCreator },
+  watch: {
+    ownerBiovers: {
+      deep: true,
+      handler(newVal) {
+        if (newVal.length !== this.currentBiovers.length) {
+          const diff = newVal.filter((x) => !this.currentBiovers.includes(x));
+          this.data[0].children.push({
+            label: diff[0].name,
+            id: diff[0].id,
+          });
+        }
+      },
+    },
+  },
   data() {
     return {
       data: [],
@@ -45,6 +59,7 @@ export default {
       editableTabsValue: ref('1'),
       index: 1,
       showDialog: false,
+      currentBiovers: [],
     };
   },
   methods: {
@@ -61,10 +76,11 @@ export default {
     async createBiover(event) {
       this.showDialog = false;
       const newBiover = await getData.createBiover(event);
-      console.log(newBiover);
+      this.$emit('createBiover', newBiover.data.data);
     },
   },
   mounted() {
+    this.currentBiovers = Array.from(this.ownerBiovers);
     const own = [];
     this.ownerBiovers.forEach((biover) => {
       own.push({
