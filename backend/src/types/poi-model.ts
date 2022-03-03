@@ -1,5 +1,6 @@
 import { CoordinateModel } from "./coordinate-model";
 import { SymbolModel } from "./symbol-model";
+import { MediaModels } from "./media_model";
 
 export interface PoiModel {
   id?: number;
@@ -29,6 +30,7 @@ export interface PoiModel {
   metadata?: string;
   coordinate?: CoordinateModel;
   symbol?: SymbolModel;
+  media?: MediaModels;
 }
 
 export interface PoiModels extends Array<PoiModel> {}

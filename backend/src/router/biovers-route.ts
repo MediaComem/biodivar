@@ -96,7 +96,7 @@ bioversRoutes.push({
       }
       const biovers = await createBiovers(
         request.server.app.prisma,
-        request.payload as BioversModel,
+        biover,
         request.server.app.logger
       );
       return successResponse(h, 'Biovers creation done successfully', biovers);
@@ -111,9 +111,13 @@ bioversRoutes.push({
   path: '/biovers/update',
   handler: async function (request, h) {
     try {
+      const biover = request.payload as BioversModel;
+      if (!biover.owner) {
+        biover.owner = request.state.biodivar.id;
+      }
       const biovers = await updateBiovers(
         request.server.app.prisma,
-        request.payload as BioversModel,
+        biover,
         request.server.app.logger
       );
       return successResponse(
@@ -132,9 +136,13 @@ bioversRoutes.push({
   path: '/biovers/delete',
   handler: async function (request, h) {
     try {
+      const biover = request.payload as BioversModel;
+      if (!biover.owner) {
+        biover.owner = request.state.biodivar.id;
+      }
       const biovers = await deleteBiovers(
         request.server.app.prisma,
-        request.payload as BioversModel,
+        biover,
         request.server.app.logger
       );
       return successResponse(h, 'Biovers deletion done successfully', biovers);

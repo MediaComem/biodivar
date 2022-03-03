@@ -12,15 +12,19 @@ userTraceRoutes.push({
   path: '/user_trace/create',
   handler: async function (request, h) {
     try {
-      const user_trace = await createUserTrace(
+      const user_trace = request.payload as UserTraceModel;
+      if (!user_trace.author) {
+        user_trace.author = request.state.biodivar.id;
+      }
+      const user_traces = await createUserTrace(
         request.server.app.prisma,
-        request.payload as UserTraceModel,
+        user_trace,
         request.server.app.logger
       );
       return successResponse(
         h,
         'User trace creation done successfully',
-        user_trace
+        user_traces
       );
     } catch (error) {
       return errorResponse(h, error as string);

@@ -59,4 +59,5 @@ export const test_poi: PoiModel = {
   style_is_visible: true,
   visible_from: 455.5,
   trigger_mode: "location",
+  media: undefined,
 };

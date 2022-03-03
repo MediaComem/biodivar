@@ -18,6 +18,8 @@ export const getBioversByUser = async (
       Poi: {
         include: {
           coordinate: true,
+          symbol: true,
+          media: true,
           User: {
             select: {
               username: true,
@@ -73,11 +75,33 @@ export const getBioversById = async (
         Poi: {
           include: {
             coordinate: true,
+            symbol: true,
+            media: true,
+            User: {
+              select: {
+                username: true,
+              }
+            },
+            last_contributor_fk: {
+              select: {
+                username: true,
+              }
+            }
           },
         },
         Path: {
           include: {
             coordinate: true,
+            User: {
+              select: {
+                username: true,
+              }
+            },
+            last_contributor_fk: {
+              select: {
+                username: true,
+              }
+            }
           },
         },
       },
@@ -106,11 +130,33 @@ export const getPublicBiovers = async (
         Poi: {
           include: {
             coordinate: true,
+            symbol: true,
+            media: true,
+            User: {
+              select: {
+                username: true,
+              }
+            },
+            last_contributor_fk: {
+              select: {
+                username: true,
+              }
+            }
           },
         },
         Path: {
           include: {
             coordinate: true,
+            User: {
+              select: {
+                username: true,
+              }
+            },
+            last_contributor_fk: {
+              select: {
+                username: true,
+              }
+            }
           },
         },
       },
@@ -134,11 +180,33 @@ export const createBiovers = async (
         Poi: {
           include: {
             coordinate: true,
+            symbol: true,
+            media: true,
+            User: {
+              select: {
+                username: true,
+              }
+            },
+            last_contributor_fk: {
+              select: {
+                username: true,
+              }
+            }
           },
         },
         Path: {
           include: {
             coordinate: true,
+            User: {
+              select: {
+                username: true,
+              }
+            },
+            last_contributor_fk: {
+              select: {
+                username: true,
+              }
+            }
           },
         },
       },
@@ -168,11 +236,33 @@ export const updateBiovers = async (
           Poi: {
             include: {
               coordinate: true,
+              symbol: true,
+              media: true,
+              User: {
+                select: {
+                  username: true,
+                }
+              },
+              last_contributor_fk: {
+                select: {
+                  username: true,
+                }
+              }
             },
           },
           Path: {
             include: {
               coordinate: true,
+              User: {
+                select: {
+                  username: true,
+                }
+              },
+              last_contributor_fk: {
+                select: {
+                  username: true,
+                }
+              }
             },
           },
         },

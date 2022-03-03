@@ -5,7 +5,6 @@ import { PoiModel } from '../types/poi-model';
 export const createPoi = async (
   prisma: PrismaClient,
   poi: PoiModel,
-  userId: number,
   logger: winston.Logger
 ) => {
   try {
@@ -14,10 +13,12 @@ export const createPoi = async (
         title: poi.title,
         title_is_visible: poi.title_is_visible,
         subtitle: poi.subtitle ? poi.subtitle : '',
-        subtitle_is_visible: poi.subtitle_is_visible ? poi.subtitle_is_visible : false,
-        author: userId,
+        subtitle_is_visible: poi.subtitle_is_visible
+          ? poi.subtitle_is_visible
+          : false,
+        author: poi.author,
         creation_date: new Date(),
-        last_contributor: userId,
+        last_contributor: poi.author,
         is_public: poi.is_public,
         is_editable: poi.is_editable,
         biovers: poi.biovers,
@@ -59,16 +60,17 @@ export const createPoi = async (
       include: {
         coordinate: true,
         symbol: true,
+        media: true,
         User: {
           select: {
             username: true,
-          }
+          },
         },
         last_contributor_fk: {
           select: {
             username: true,
-          }
-        }
+          },
+        },
       },
     });
   } catch (error) {
@@ -85,6 +87,17 @@ export const getPoiById = async (prisma: PrismaClient, id: number) => {
     include: {
       coordinate: true,
       symbol: true,
+      media: true,
+      User: {
+        select: {
+          username: true,
+        },
+      },
+      last_contributor_fk: {
+        select: {
+          username: true,
+        },
+      },
     },
   });
 };
@@ -97,6 +110,17 @@ export const getPoiByTitle = async (prisma: PrismaClient, name: string) => {
     include: {
       coordinate: true,
       symbol: true,
+      media: true,
+      User: {
+        select: {
+          username: true,
+        },
+      },
+      last_contributor_fk: {
+        select: {
+          username: true,
+        },
+      },
     },
   });
 };
@@ -104,7 +128,6 @@ export const getPoiByTitle = async (prisma: PrismaClient, name: string) => {
 export const updatePoi = async (
   prisma: PrismaClient,
   poi: PoiModel,
-  userId: number,
   logger: winston.Logger
 ) => {
   try {
@@ -124,7 +147,7 @@ export const updatePoi = async (
           subtitle_is_visible: poi.subtitle_is_visible,
           author: poi.author,
           update_date: new Date(),
-          last_contributor: userId,
+          last_contributor: poi.author,
           is_public: poi.is_public,
           is_editable: poi.is_editable,
           biovers: poi.biovers,
@@ -184,16 +207,17 @@ export const updatePoi = async (
         include: {
           coordinate: true,
           symbol: true,
+          media: true,
           User: {
             select: {
               username: true,
-            }
+            },
           },
           last_contributor_fk: {
             select: {
               username: true,
-            }
-          }
+            },
+          },
         },
       });
     } else {
@@ -222,6 +246,18 @@ export const deletePoi = async (
             ? {
                 update: {
                   deleted_date: new Date(),
+                },
+              }
+            : undefined,
+          media: poi.media
+            ? {
+                updateMany: {
+                  where: {
+                    poi_id: poi.id,
+                  },
+                  data: {
+                    deleted_date: new Date(),
+                  },
                 },
               }
             : undefined,

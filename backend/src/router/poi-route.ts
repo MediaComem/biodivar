@@ -55,14 +55,17 @@ poiRoutes.push({
   path: '/poi/create',
   handler: async function (request, h) {
     try {
-      const poi = await createPoi(
+      const poi = request.payload as PoiModel;
+      if (!poi.author) {
+        poi.author = request.state.biodivar.id;
+      }
+      const pois = await createPoi(
         request.server.app.prisma,
-        request.payload as PoiModel,
-        request.state.biodivar.id,
+        poi,
         request.server.app.logger
       );
-      if (poi) {
-        return successResponse(h, 'POI creation done successfully', poi);
+      if (pois) {
+        return successResponse(h, 'POI creation done successfully', pois);
       } else {
         return failureResponse(h, 'Mandatory fields are not provided');
       }
@@ -77,14 +80,17 @@ poiRoutes.push({
   path: '/poi/update',
   handler: async function (request, h) {
     try {
-      const poi = await updatePoi(
+      const poi = request.payload as PoiModel;
+      if (!poi.author) {
+        poi.author = request.state.biodivar.id;
+      }
+      const pois = await updatePoi(
         request.server.app.prisma,
-        request.payload as PoiModel,
-        request.state.biodivar.id,
+        poi,
         request.server.app.logger
       );
-      if (poi) {
-        return successResponse(h, 'POI update done successfully', poi);
+      if (pois) {
+        return successResponse(h, 'POI update done successfully', pois);
       } else {
         return failureResponse(h, 'Mandatory fields are not provided');
       }
@@ -99,13 +105,17 @@ poiRoutes.push({
   path: '/poi/delete',
   handler: async function (request, h) {
     try {
-      const poi = await deletePoi(
+      const poi = request.payload as PoiModel;
+      if (!poi.author) {
+        poi.author = request.state.biodivar.id;
+      }
+      const pois = await deletePoi(
         request.server.app.prisma,
-        request.payload as PoiModel,
+        poi,
         request.server.app.logger
       );
-      if (poi) {
-        return successResponse(h, 'POI deletion done successfully', poi);
+      if (pois) {
+        return successResponse(h, 'POI deletion done successfully', pois);
       } else {
         return failureResponse(h, 'Mandatory fields are not provided');
       }

@@ -49,12 +49,16 @@ pathRoutes.push({
   path: "/path/create",
   handler: async function (request, h) {
     try {
-      const path = await createPath(
+      const path = request.payload as PathModel;
+      if (!path.author) {
+        path.author = request.state.biodivar.id;
+      }
+      const paths = await createPath(
         request.server.app.prisma,
-        request.payload as PathModel,
+        path,
         request.server.app.logger
       );
-      return successResponse(h, 'Path creation done successfully', path);
+      return successResponse(h, 'Path creation done successfully', paths);
     } catch (error) {
       return errorResponse(h, error as string);
     }
@@ -66,12 +70,16 @@ pathRoutes.push({
   path: "/path/update",
   handler: async function (request, h) {
     try {
-      const path = await updatePath(
+      const path = request.payload as PathModel;
+      if (!path.author) {
+        path.author = request.state.biodivar.id;
+      }
+      const paths = await updatePath(
         request.server.app.prisma,
-        request.payload as PathModel,
+        path,
         request.server.app.logger
       );
-      return successResponse(h, 'Path update done successfully', path);
+      return successResponse(h, 'Path update done successfully', paths);
     } catch (error) {
       return errorResponse(h, error as string);
     }
