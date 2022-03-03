@@ -8,6 +8,7 @@ import {
   getSymbolById,
   createSymbol,
   updateSymbol,
+  deleteSymbol
 } from '../../src/controller/symbol-controller';
 import { SymbolModel } from '../../src/types/symbol-model';
 
@@ -62,7 +63,7 @@ describe('Test Symbol Controller', () => {
     await setupSymbol(server.app.prisma);
     const getSymbol = await getSymbolById(server.app.prisma, 2);
     if (getSymbol) {
-      const symbol = await updateSymbol(
+      const symbol = await deleteSymbol(
         server.app.prisma,
         getSymbol as SymbolModel,
         server.app.logger
