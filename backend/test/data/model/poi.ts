@@ -2,7 +2,6 @@ import { PrismaClient } from "@prisma/client";
 import { CoordinateModel } from "../../../src/types/coordinate-model";
 
 import { PoiModel } from "../../../src/types/poi-model";
-import { SymbolModel } from "../../../src/types/symbol-model";
 
 export const setupPoi = async (prisma: PrismaClient) => {
   if (test_poi.coordinate) {
@@ -32,14 +31,6 @@ export const coordinate_test: CoordinateModel = {
   lat: 13.3,
   alt: 14.4,
   creation_date: new Date(),
-};
-
-export const symbol_test: SymbolModel = {
-  media_type: "Video",
-  url: "/specific/path",
-  elevation_ground: 355.36,
-  is_facing_user: false,
-  is_visible: true,
 };
 
 export const test_poi: PoiModel = {

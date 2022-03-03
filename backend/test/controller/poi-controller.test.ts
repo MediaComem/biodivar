@@ -16,8 +16,8 @@ import {
   dropPoi,
   test_poi,
   coordinate_test,
-  symbol_test,
 } from '../data/model/poi';
+import { symbol_test } from '../data/model/symbol';
 import { setupUsers, dropUsers } from '../data/model/users';
 
 describe('Test poi controller', () => {

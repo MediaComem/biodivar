@@ -9,8 +9,8 @@ import {
   setupPoi,
   test_poi,
   coordinate_test,
-  symbol_test,
 } from '../data/model/poi';
+import { symbol_test } from '../data/model/symbol';
 import { PoiModel } from '../../src/types/poi-model';
 import { getPoiByTitle } from '../../src/controller/poi-controller';
 import { Coordinate, Symbol } from '@prisma/client';

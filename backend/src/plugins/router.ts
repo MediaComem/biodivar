@@ -6,6 +6,7 @@ import { bioversRoutes } from '../router/biovers-route';
 import { poiRoutes } from '../router/poi-route';
 import { pathRoutes } from '../router/path-route';
 import { userTraceRoutes } from '../router/user_trace-route';
+import { symbolRoutes } from '../router/symbol-route';
 
 import { NotFoundResponse } from '../utils/response';
 
@@ -18,6 +19,7 @@ export const routerPlugin: Plugin<null> = {
     server.route(poiRoutes);
     server.route(pathRoutes);
     server.route(userTraceRoutes);
+    server.route(symbolRoutes);
 
     server.route({
       method: '*',
