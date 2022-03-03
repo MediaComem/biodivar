@@ -220,3 +220,89 @@
 - Return: `{statusCode: 200, message: "Path deletion done successfully", data: {"id":1,"author":1,"creation_date":"2022-01-31T09:36:25.697Z","update_date":null,"deleted_date":"2022-01-31T09:36:25.706Z","last_contributor":null,"is_public":true,"is_editable":false,"biovers":1,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"metadata":null,"coordinate":[{"id":219,"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-31T09:36:25.494Z","update_date":null,"deleted_date":"2022-01-31T09:36:25.706Z","poi_id":null,"path_id":1},{"id":220,"long":12.2,"lat":13.3,"alt":14.4,"creation_date":"2022-01-31T09:36:25.494Z","update_date":null,"deleted_date":"2022-01-31T09:36:25.706Z","poi_id":null,"path_id":1}]}}`
 - Error:
     - Internal: `{"error": "Internal server error","message": "Cannot delete path due to error","statusCode": 500}`
+
+## Symbol
+
+### Get Symbol by ID
+
+- HTTP method: GET
+- Route: /symbol/id
+- Query Parameter: `id=id`
+- Example: `/symbol/id?id=2`
+- Return: 
+    - When content: `{statusCode: 200,message: 'Get Symbol done successfully',data: {id: 2,media_type: 'Video',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: null,deleted_date: null,poi_id: 2}}`
+- Error:
+    - Internal: `{"error": "Internal server error","message": "Cannot get symbol due to error","statusCode": 500}`
+
+### Symbol Creation
+
+- HTTP method: POST
+- Route: /symbol/create
+- Payload: `{media_type: 'Video',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: null,deleted_date: null,poi_id: 2}`
+- Example: `/symbol/create`
+- Return: `{statusCode: 200,message: 'Symbol creation done successfully',data: {id: 2,media_type: 'Video',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: null,deleted_date: null,poi_id: 2}}`
+- Error:
+    - Internal: `{"error": "Internal server error","message": "Cannot create symbol due to error","statusCode": 500}`
+
+### Symbol Update
+
+- HTTP method: POST
+- Route: /symbol/update
+- Payload: `{id: 2, media_type: 'Test',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: null,deleted_date: null,poi_id: 2}`
+- Example: `/symbol/create`
+- Return: `{statusCode: 200,message: 'Symbol update done successfully',data: {id: 2,media_type: 'Test',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: 2022-03-04T15:47:33.368Z,deleted_date: null,poi_id: 2}}`
+- Error:
+    - Internal: `{"error": "Internal server error","message": "Cannot update symbol due to error","statusCode": 500}`
+
+### Symbol Deletion
+
+- HTTP method: POST
+- Route: /symbol/delete
+- Payload: `{id: 2, media_type: 'Test',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: null,deleted_date: null,poi_id: 2}`
+- Example: `/symbol/delete`
+- Return: `{statusCode: 200,message: 'Symbol update done successfully',data: {id: 2,media_type: 'Test',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: 2022-03-04T15:47:33.368Z,deleted_date: 2022-03-05T15:47:33.368Z,poi_id: 2}}`
+- Error:
+    - Internal: `{"error": "Internal server error","message": "Cannot delete symbol due to error","statusCode": 500}`
+
+## Media
+
+### Get Media by ID
+
+- HTTP method: GET
+- Route: /media/id
+- Query Parameter: `id=id`
+- Example: `/media/id?id=2`
+- Return: 
+    - When content: `{statusCode: 200,message: 'Get Media done successfully',data: {id: 2,media_type: 'Video',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,caption:'test',caption_is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: null,deleted_date: null,poi_id: 2}}`
+- Error:
+    - Internal: `{"error": "Internal server error","message": "Cannot get media due to error","statusCode": 500}`
+
+### Media Creation
+
+- HTTP method: POST
+- Route: /media/create
+- Payload: `{media_type: 'Video',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,caption:'test',caption_is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: null,deleted_date: null,poi_id: 2}`
+- Example: `/media/create`
+- Return: `{statusCode: 200,message: 'Media creation done successfully',data: {id: 2,media_type: 'Video',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,caption:'test',caption_is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: null,deleted_date: null,poi_id: 2}}`
+- Error:
+    - Internal: `{"error": "Internal server error","message": "Cannot create media due to error","statusCode": 500}`
+
+### Media Update
+
+- HTTP method: POST
+- Route: /media/update
+- Payload: `{id: 2, media_type: 'Test',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,caption:'test',caption_is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: null,deleted_date: null,poi_id: 2}`
+- Example: `/media/create`
+- Return: `{statusCode: 200,message: 'Media update done successfully',data: {id: 2,media_type: 'Test',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,caption:'test',caption_is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: 2022-03-04T15:47:33.368Z,deleted_date: null,poi_id: 2}}`
+- Error:
+    - Internal: `{"error": "Internal server error","message": "Cannot update media due to error","statusCode": 500}`
+
+### Media Deletion
+
+- HTTP method: POST
+- Route: /media/delete
+- Payload: `{id: 2, media_type: 'Test',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,caption:'test',caption_is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: null,deleted_date: null,poi_id: 2}`
+- Example: `/media/delete`
+- Return: `{statusCode: 200,message: 'Media update done successfully',data: {id: 2,media_type: 'Test',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,caption:'test',caption_is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: 2022-03-04T15:47:33.368Z,deleted_date: 2022-03-05T15:47:33.368Z,poi_id: 2}}`
+- Error:
+    - Internal: `{"error": "Internal server error","message": "Cannot delete media due to error","statusCode": 500}`
