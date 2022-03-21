@@ -31,6 +31,9 @@
     Save to server
     </el-button>
   </el-upload>
+  <template v-if="saveDone">
+    <el-alert title="Data save" type="success" />
+  </template>
 </template>
 
 <script>
@@ -47,6 +50,7 @@ export default {
   data() {
     return {
       upload: null,
+      saveDone: false,
       pois: [],
     };
   },
@@ -107,9 +111,13 @@ export default {
       };
       fr.readAsText(this.upload.uploadFiles[0].raw);
     },
-    save() {
+    async save() {
       this.$emit('save');
-      console.log(api.savePois(this.pois));
+      await api.savePois(this.pois);
+      this.saveDone = true;
+      setTimeout(() => {
+        this.saveDone = false;
+      }, 2000);
     },
   },
   mounted() {
