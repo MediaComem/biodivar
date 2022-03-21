@@ -7,7 +7,7 @@ import {
   getPoiByTitle,
   updatePoi,
 } from '../controller/poi-controller';
-import { PoiModel } from '../types/poi-model';
+import { PoiModel, PoiModels } from '../types/poi-model';
 
 import {
   failureResponse,
@@ -66,6 +66,32 @@ poiRoutes.push({
       );
       if (pois) {
         return successResponse(h, 'POI creation done successfully', pois);
+      } else {
+        return failureResponse(h, 'Mandatory fields are not provided');
+      }
+    } catch (error) {
+      return errorResponse(h, error as string);
+    }
+  },
+});
+
+poiRoutes.push({
+  method: 'POST',
+  path: '/poi/creates',
+  handler: async function (request, h) {
+    try {
+      const pois = request.payload as PoiModels;
+      const results = [];
+      for (let i = 0; i < pois.length; i++) {
+        const result = await createPoi(
+          request.server.app.prisma,
+          pois[i],
+          request.server.app.logger
+        );
+        results.push(result);
+      }
+      if (results.length > 0) {
+        return successResponse(h, 'POI creation done successfully', results);
       } else {
         return failureResponse(h, 'Mandatory fields are not provided');
       }
