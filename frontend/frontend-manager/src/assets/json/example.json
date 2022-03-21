@@ -1,0 +1,3438 @@
+{
+  "name": "flower",
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66182823135826, 46.7815076798889, 470]
+      },
+      "properties": {
+        "id_poi": 500,
+        "id_zone": 6,
+        "id_specie": 21,
+        "common_name": {
+          "fr": "Géranium herbe à Robert",
+          "de": "Stinkender Storchschnabel",
+          "it": "Geranio di San Roberto",
+          "la": "Geranium robertianum s.l."
+        },
+        "period_start": 5,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66329848381934, 46.7823833783422, 477]
+      },
+      "properties": {
+        "id_poi": 501,
+        "id_zone": 6,
+        "id_specie": 27,
+        "common_name": {
+          "fr": "Lamier des montagnes",
+          "de": "Berg-Goldnessel",
+          "it": "Ortica montana",
+          "la": "Lamium galeobdolon subsp. montanum"
+        },
+        "period_start": 5,
+        "period_end": 7,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66340832904551, 46.7824246300895, 474]
+      },
+      "properties": {
+        "id_poi": 502,
+        "id_zone": 6,
+        "id_specie": 133,
+        "common_name": {
+          "fr": "Marguerite",
+          "de": "Wiesen-Margerite",
+          "it": "Margherita comune",
+          "la": "Leucanthemum vulgare aggr."
+        },
+        "period_start": 6,
+        "period_end": 7,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.6635653987841, 46.7825136810274, 467]
+      },
+      "properties": {
+        "id_poi": 503,
+        "id_zone": 7,
+        "id_specie": 138,
+        "common_name": {
+          "fr": "Cardamine à tiges nombreuses",
+          "de": "Vielstängeliges Schaumkraut",
+          "it": "Billeri primaticcio",
+          "la": "Cardamine hirsuta"
+        },
+        "period_start": 3,
+        "period_end": 6,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66395440180568, 46.7827809676833, 472]
+      },
+      "properties": {
+        "id_poi": 504,
+        "id_zone": 7,
+        "id_specie": 140,
+        "common_name": {
+          "fr": "Gaillet gratteron",
+          "de": "Kletten-Labkraut",
+          "it": "Caglio asprello",
+          "la": "Galium aparine"
+        },
+        "period_start": 5,
+        "period_end": 10,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.6642500806984, 46.7829136593597, 475]
+      },
+      "properties": {
+        "id_poi": 505,
+        "id_zone": 7,
+        "id_specie": 51,
+        "common_name": {
+          "fr": "Patte d'ours, Berce des prés",
+          "de": "Wiesen-Bärenklau",
+          "it": "Panace comune",
+          "la": "Heracleum sphondylium s.l."
+        },
+        "period_start": 6,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66396003207506, 46.7827068356039, 482]
+      },
+      "properties": {
+        "id_poi": 516,
+        "id_zone": 7,
+        "id_specie": 81,
+        "common_name": {
+          "fr": "Cirse commun",
+          "de": "Gemeine Kratzdistel",
+          "it": "Cardo asinino",
+          "la": "Cirsium vulgare"
+        },
+        "period_start": 7,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66379403035268, 46.7826540709646, 479]
+      },
+      "properties": {
+        "id_poi": 517,
+        "id_zone": 7,
+        "id_specie": 56,
+        "common_name": {
+          "fr": "Lamier tacheté",
+          "de": "Gefleckte Taubnessel",
+          "it": "Falsa ortica macchiata",
+          "la": "Lamium maculatum"
+        },
+        "period_start": 4,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66293053938415, 46.7822225240883, 486]
+      },
+      "properties": {
+        "id_poi": 523,
+        "id_zone": 6,
+        "id_specie": 19,
+        "common_name": {
+          "fr": "Colchique d'automne",
+          "de": "Herbst-Zeitlose",
+          "it": "Colchico d'autunno",
+          "la": "Colchicium automnale"
+        },
+        "period_start": 8,
+        "period_end": 10,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66261840268031, 46.7819819987308, 480]
+      },
+      "properties": {
+        "id_poi": 525,
+        "id_zone": 6,
+        "id_specie": 161,
+        "common_name": {
+          "fr": "Angélique sauvage",
+          "de": "Wilde Brustwurz",
+          "it": "Angelica selvatica",
+          "la": "Angelica sylvestris"
+        },
+        "period_start": 7,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66213738061816, 46.7816359779562, 492]
+      },
+      "properties": {
+        "id_poi": 528,
+        "id_zone": 6,
+        "id_specie": 27,
+        "common_name": {
+          "fr": "Lamier des montagnes",
+          "de": "Berg-Goldnessel",
+          "it": "Ortica montana",
+          "la": "Lamium galeobdolon subsp. montanum"
+        },
+        "period_start": 5,
+        "period_end": 7,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66202694578971, 46.78160956506, 487]
+      },
+      "properties": {
+        "id_poi": 529,
+        "id_zone": 6,
+        "id_specie": 1,
+        "common_name": {
+          "fr": "Anémone des bois",
+          "de": "Busch-Windröschen",
+          "it": "Anemone bianca",
+          "la": "Anemone nemorosa"
+        },
+        "period_start": 3,
+        "period_end": 5,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.6611422320834, 46.7810785450298, 521]
+      },
+      "properties": {
+        "id_poi": 533,
+        "id_zone": 6,
+        "id_specie": 156,
+        "common_name": {
+          "fr": "Sceau de Salomon multiflore",
+          "de": "Vielblütiges Salomonssiegel",
+          "it": "Sigillo di Salomone maggiore",
+          "la": "Polygonatum multiflorum"
+        },
+        "period_start": 5,
+        "period_end": 7,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65982772734324, 46.7802870025651, 486]
+      },
+      "properties": {
+        "id_poi": 537,
+        "id_zone": 6,
+        "id_specie": 72,
+        "common_name": {
+          "fr": "Plantain lancéolé",
+          "de": "Spitz-Wegerich",
+          "it": "Piantaggine lanciuola",
+          "la": "Plantago lanceolata"
+        },
+        "period_start": 4,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65946850409795, 46.7802988363999, 479]
+      },
+      "properties": {
+        "id_poi": 538,
+        "id_zone": 6,
+        "id_specie": 119,
+        "common_name": {
+          "fr": "Cirse des champs",
+          "de": "Acker-Kratzdistel",
+          "it": "Cardo campestre",
+          "la": "Cirsium arvense"
+        },
+        "period_start": 7,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65887837013465, 46.7800441346256, 472]
+      },
+      "properties": {
+        "id_poi": 540,
+        "id_zone": 6,
+        "id_specie": 112,
+        "common_name": {
+          "fr": "Renoncule de Fries",
+          "de": "Fries' Scharfer Hahnenfuss",
+          "it": "Ranuncolo di Fries",
+          "la": "Ranunculus acris subsp. friesianus"
+        },
+        "period_start": 4,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65878900125184, 46.7799981547031, 470]
+      },
+      "properties": {
+        "id_poi": 541,
+        "id_zone": 6,
+        "id_specie": 135,
+        "common_name": {
+          "fr": "Trèfle des prés",
+          "de": "Gewöhnlicher Rot-Klee",
+          "it": "Trifoglio pratense",
+          "la": "Trifolium pratense s.str."
+        },
+        "period_start": 5,
+        "period_end": 10,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65827633113867, 46.7798710063173, 479]
+      },
+      "properties": {
+        "id_poi": 542,
+        "id_zone": 6,
+        "id_specie": 24,
+        "common_name": {
+          "fr": "Gouet",
+          "de": "Gemeiner Aronstab",
+          "it": "Gigaro scuro",
+          "la": "Arum maculatum"
+        },
+        "period_start": 4,
+        "period_end": 5,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65698376181312, 46.7792716661124, 483]
+      },
+      "properties": {
+        "id_poi": 547,
+        "id_zone": 5,
+        "id_specie": 152,
+        "common_name": {
+          "fr": "Alliaire pétiolée",
+          "de": "Knoblauchhederich",
+          "it": "Alliaria comune",
+          "la": "Alliaria petiolata"
+        },
+        "period_start": 4,
+        "period_end": 6,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65616270046721, 46.7790025569809, 485]
+      },
+      "properties": {
+        "id_poi": 549,
+        "id_zone": 5,
+        "id_specie": 5,
+        "common_name": {
+          "fr": "Joubarbe des toits",
+          "de": "Dach-Hauswurz",
+          "it": "Semprevivo maggiore",
+          "la": "Sempervivum tectorum s.l."
+        },
+        "period_start": 7,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.6559707727136, 46.7790807071026, 483]
+      },
+      "properties": {
+        "id_poi": 550,
+        "id_zone": 5,
+        "id_specie": 159,
+        "common_name": {
+          "fr": "Petite mauve",
+          "de": "Kleine Malve",
+          "it": "Malva domestica",
+          "la": "Malva neglecta"
+        },
+        "period_start": 6,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65569892740149, 46.7789909323913, 474]
+      },
+      "properties": {
+        "id_poi": 551,
+        "id_zone": 5,
+        "id_specie": 57,
+        "common_name": {
+          "fr": "Pâquerette vivace",
+          "de": "Massliebchen",
+          "it": "Pratolina comune",
+          "la": "Bellis perennis"
+        },
+        "period_start": 2,
+        "period_end": 11,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65540918346893, 46.7789269042395, 485]
+      },
+      "properties": {
+        "id_poi": 552,
+        "id_zone": 5,
+        "id_specie": 169,
+        "common_name": {
+          "fr": "Clématite blanche",
+          "de": "Gemeine Waldrebe",
+          "it": "Clematide vitalba",
+          "la": "Clematis vitalba"
+        },
+        "period_start": 7,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65527581367203, 46.7791356554297, 484]
+      },
+      "properties": {
+        "id_poi": 553,
+        "id_zone": 5,
+        "id_specie": 49,
+        "common_name": {
+          "fr": "Chélidoine",
+          "de": "Schöllkraut",
+          "it": "Celidonia",
+          "la": "Chelidonium majus"
+        },
+        "period_start": 4,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65506874144408, 46.7792468650364, 482]
+      },
+      "properties": {
+        "id_poi": 555,
+        "id_zone": 5,
+        "id_specie": 17,
+        "common_name": {
+          "fr": "Violette des forêts",
+          "de": "Wald-Veilchen",
+          "it": "Viola silvestre",
+          "la": "Viola reichenbachiana"
+        },
+        "period_start": 4,
+        "period_end": 5,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65401240150943, 46.7801929132863, 481]
+      },
+      "properties": {
+        "id_poi": 558,
+        "id_zone": 5,
+        "id_specie": 56,
+        "common_name": {
+          "fr": "Lamier tacheté",
+          "de": "Gefleckte Taubnessel",
+          "it": "Falsa ortica macchiata",
+          "la": "Lamium maculatum"
+        },
+        "period_start": 4,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65420176352684, 46.7803839068718, 484]
+      },
+      "properties": {
+        "id_poi": 559,
+        "id_zone": 5,
+        "id_specie": 151,
+        "common_name": {
+          "fr": "Grand plantain",
+          "de": "Breit-Wegerich",
+          "it": "Piantaggine maggiore",
+          "la": "Plantago major s.l."
+        },
+        "period_start": 5,
+        "period_end": 11,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65514425530335, 46.7805736162884, 481]
+      },
+      "properties": {
+        "id_poi": 560,
+        "id_zone": 4,
+        "id_specie": 115,
+        "common_name": {
+          "fr": "Lamier rouge",
+          "de": "Acker-Taubnessel",
+          "it": "Falsa ortica purpurea",
+          "la": "Lamium purpureum"
+        },
+        "period_start": 2,
+        "period_end": 11,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65491161458115, 46.7804412655696, 477]
+      },
+      "properties": {
+        "id_poi": 561,
+        "id_zone": 4,
+        "id_specie": 44,
+        "common_name": {
+          "fr": "Ronce d’Arménie",
+          "de": "Armenische Brombeere",
+          "it": "Rovo d'Armenia",
+          "la": "Rubus armeniacus"
+        },
+        "period_start": 6,
+        "period_end": 7,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65639298011488, 46.7809140270045, 476]
+      },
+      "properties": {
+        "id_poi": 567,
+        "id_zone": 3,
+        "id_specie": 4,
+        "common_name": {
+          "fr": "Roseau commun",
+          "de": "Schilf",
+          "it": "Cannuccia di palude",
+          "la": "Phragmites australis"
+        },
+        "period_start": 8,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65585946392571, 46.7815313210925, 483]
+      },
+      "properties": {
+        "id_poi": 571,
+        "id_zone": 3,
+        "id_specie": 44,
+        "common_name": {
+          "fr": "Ronce d’Arménie",
+          "de": "Armenische Brombeere",
+          "it": "Rovo d'Armenia",
+          "la": "Rubus armeniacus"
+        },
+        "period_start": 6,
+        "period_end": 7,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65542293519156, 46.7824021494138, 493]
+      },
+      "properties": {
+        "id_poi": 576,
+        "id_zone": 3,
+        "id_specie": 54,
+        "common_name": {
+          "fr": "Reine des prés",
+          "de": "Moor-Geissbart",
+          "it": "Olmaria comune",
+          "la": "Filipendula ulmaria"
+        },
+        "period_start": 6,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65512051528951, 46.7829792132474, 483]
+      },
+      "properties": {
+        "id_poi": 579,
+        "id_zone": 3,
+        "id_specie": 50,
+        "common_name": {
+          "fr": "Renoncule tête d'or",
+          "de": "Gold-Hahnenfuss",
+          "it": "Ranuncolo botton d'oro",
+          "la": "Ranunculus auricomus aggr."
+        },
+        "period_start": 4,
+        "period_end": 6,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65512236892283, 46.783110326496, 481]
+      },
+      "properties": {
+        "id_poi": 580,
+        "id_zone": 3,
+        "id_specie": 92,
+        "common_name": {
+          "fr": "Herbe aux goutteux",
+          "de": "Geissfuss",
+          "it": "Girardina silvestre",
+          "la": "Aegopodium podagraria"
+        },
+        "period_start": 5,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65561452206465, 46.7819722231782, 477]
+      },
+      "properties": {
+        "id_poi": 584,
+        "id_zone": 3,
+        "id_specie": 13,
+        "common_name": {
+          "fr": "Parisette à quatre feuilles",
+          "de": "Vierblättrige Einbeere",
+          "it": "Uva di volpe",
+          "la": "Paris quadrifolia"
+        },
+        "period_start": 4,
+        "period_end": 5,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65422403856954, 46.782959068803, 465]
+      },
+      "properties": {
+        "id_poi": 588,
+        "id_zone": 2,
+        "id_specie": 120,
+        "common_name": {
+          "fr": "Ficaire",
+          "de": "Scharbockskraut",
+          "it": "Ranuncolo favagello",
+          "la": "Ranunculus ficaria"
+        },
+        "period_start": 3,
+        "period_end": 4,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65323174461422, 46.7828169853839, 462]
+      },
+      "properties": {
+        "id_poi": 591,
+        "id_zone": 1,
+        "id_specie": 105,
+        "common_name": {
+          "fr": "Pâturin annuel",
+          "de": "Einjähriges Rispengras",
+          "it": "Fienarola annuale",
+          "la": "Poa annua"
+        },
+        "period_start": 1,
+        "period_end": 12,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65276053042442, 46.7827664120569, 471]
+      },
+      "properties": {
+        "id_poi": 592,
+        "id_zone": 1,
+        "id_specie": 138,
+        "common_name": {
+          "fr": "Cardamine à tiges nombreuses",
+          "de": "Vielstängeliges Schaumkraut",
+          "it": "Billeri primaticcio",
+          "la": "Cardamine hirsuta"
+        },
+        "period_start": 3,
+        "period_end": 6,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65265689758622, 46.7827805758736, 471]
+      },
+      "properties": {
+        "id_poi": 593,
+        "id_zone": 1,
+        "id_specie": 29,
+        "common_name": {
+          "fr": "Renoncule rampante",
+          "de": "Kriechender Hahnenfuss",
+          "it": "Ranuncolo strisciante",
+          "la": "Ranunculus repens"
+        },
+        "period_start": 5,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65257928302556, 46.7827941794604, 471]
+      },
+      "properties": {
+        "id_poi": 594,
+        "id_zone": 1,
+        "id_specie": 46,
+        "common_name": {
+          "fr": "Drave du printemps",
+          "de": "Frühlings-Hungerblümchen",
+          "it": "Draba primaverile",
+          "la": "Erophila verna aggr."
+        },
+        "period_start": 2,
+        "period_end": 5,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65230985406287, 46.7828528876817, 475]
+      },
+      "properties": {
+        "id_poi": 595,
+        "id_zone": 1,
+        "id_specie": 15,
+        "common_name": {
+          "fr": "Achillée millefeuille",
+          "de": "Wiesen-Schafgarbe",
+          "it": "Millefoglio montano",
+          "la": "Achillea millefolium aggr."
+        },
+        "period_start": 6,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65189723124434, 46.7830724389615, 474]
+      },
+      "properties": {
+        "id_poi": 596,
+        "id_zone": 1,
+        "id_specie": 120,
+        "common_name": {
+          "fr": "Ficaire",
+          "de": "Scharbockskraut",
+          "it": "Ranuncolo favagello",
+          "la": "Ranunculus ficaria"
+        },
+        "period_start": 3,
+        "period_end": 4,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65198750553269, 46.7830365978559, 477]
+      },
+      "properties": {
+        "id_poi": 597,
+        "id_zone": 1,
+        "id_specie": 77,
+        "common_name": {
+          "fr": "Rumex à feuilles obtuses",
+          "de": "Stumpfblättriger Ampfer",
+          "it": "Romice comune",
+          "la": "Rumex obtusifolius"
+        },
+        "period_start": 6,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65205214621779, 46.7829245192433, 474]
+      },
+      "properties": {
+        "id_poi": 598,
+        "id_zone": 1,
+        "id_specie": 35,
+        "common_name": {
+          "fr": "Véronique à feuilles de lierre",
+          "de": "Efeu-Ehrenpreis",
+          "it": "Veronica con foglie d'edera",
+          "la": "Veronica hederifolia s.l."
+        },
+        "period_start": 3,
+        "period_end": 7,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65176534687431, 46.7830306948859, 470]
+      },
+      "properties": {
+        "id_poi": 599,
+        "id_zone": 1,
+        "id_specie": 57,
+        "common_name": {
+          "fr": "Pâquerette vivace",
+          "de": "Massliebchen",
+          "it": "Pratolina comune",
+          "la": "Bellis perennis"
+        },
+        "period_start": 2,
+        "period_end": 11,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.6518668507153, 46.7824568343849, 479]
+      },
+      "properties": {
+        "id_poi": 601,
+        "id_zone": 1,
+        "id_specie": 70,
+        "common_name": {
+          "fr": "Véronique de Perse",
+          "de": "Persischer Ehrenpreis",
+          "it": "Veronica comune",
+          "la": "Veronica persica"
+        },
+        "period_start": 2,
+        "period_end": 10,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65188440228751, 46.7823816231428, 478]
+      },
+      "properties": {
+        "id_poi": 602,
+        "id_zone": 1,
+        "id_specie": 139,
+        "common_name": {
+          "fr": "Ortie dioïque",
+          "de": "Grosse Brennnessel",
+          "it": "Ortica comune",
+          "la": "Urtica dioica"
+        },
+        "period_start": 6,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65196469676528, 46.7819369193032, 476]
+      },
+      "properties": {
+        "id_poi": 604,
+        "id_zone": 1,
+        "id_specie": 15,
+        "common_name": {
+          "fr": "Achillée millefeuille",
+          "de": "Wiesen-Schafgarbe",
+          "it": "Millefoglio montano",
+          "la": "Achillea millefolium aggr."
+        },
+        "period_start": 6,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65197063013149, 46.7817235951993, 474]
+      },
+      "properties": {
+        "id_poi": 605,
+        "id_zone": 1,
+        "id_specie": 76,
+        "common_name": {
+          "fr": "Gaillet commun, Gaillet blanc",
+          "de": "Wiesen-Labkraut",
+          "it": "Caglio bianco",
+          "la": "Galium mollugo aggr."
+        },
+        "period_start": 5,
+        "period_end": 7,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65190258267216, 46.7814307295223, 483]
+      },
+      "properties": {
+        "id_poi": 607,
+        "id_zone": 1,
+        "id_specie": 135,
+        "common_name": {
+          "fr": "Trèfle des prés",
+          "de": "Gewöhnlicher Rot-Klee",
+          "it": "Trifoglio pratense",
+          "la": "Trifolium pratense s.str."
+        },
+        "period_start": 5,
+        "period_end": 10,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65183821246502, 46.7813310884252, 481]
+      },
+      "properties": {
+        "id_poi": 608,
+        "id_zone": 1,
+        "id_specie": 82,
+        "common_name": {
+          "fr": "Véronique beccabunga",
+          "de": "Bachbungen-Ehrenpreis",
+          "it": "Veronica beccabunga",
+          "la": "Veronica beccabunga"
+        },
+        "period_start": 5,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65181677502346, 46.781108539307, 480]
+      },
+      "properties": {
+        "id_poi": 609,
+        "id_zone": 1,
+        "id_specie": 162,
+        "common_name": {
+          "fr": "Rumex oseille",
+          "de": "Wiesen-Sauerampfer",
+          "it": "Romice acetosa",
+          "la": "Rumex acetosa"
+        },
+        "period_start": 5,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65163931093382, 46.7806045811323, 483]
+      },
+      "properties": {
+        "id_poi": 610,
+        "id_zone": 1,
+        "id_specie": 87,
+        "common_name": {
+          "fr": "Luzerne cultivée",
+          "de": "Saat-Luzerne",
+          "it": "Erba medica",
+          "la": "Medicago sativa"
+        },
+        "period_start": 6,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65134222076532, 46.7804059362577, 480]
+      },
+      "properties": {
+        "id_poi": 614,
+        "id_zone": 1,
+        "id_specie": 162,
+        "common_name": {
+          "fr": "Rumex oseille",
+          "de": "Wiesen-Sauerampfer",
+          "it": "Romice acetosa",
+          "la": "Rumex acetosa"
+        },
+        "period_start": 5,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65152142965094, 46.7806192545441, 482]
+      },
+      "properties": {
+        "id_poi": 616,
+        "id_zone": 1,
+        "id_specie": 112,
+        "common_name": {
+          "fr": "Renoncule de Fries",
+          "de": "Fries' Scharfer Hahnenfuss",
+          "it": "Ranuncolo di Fries",
+          "la": "Ranunculus acris subsp. friesianus"
+        },
+        "period_start": 4,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65143774989463, 46.7807722398046, 475]
+      },
+      "properties": {
+        "id_poi": 617,
+        "id_zone": 1,
+        "id_specie": 170,
+        "common_name": {
+          "fr": "Séneçon commun",
+          "de": "Gemeines Greiskraut",
+          "it": "Senecione comune",
+          "la": "Senecio vulgaris"
+        },
+        "period_start": 1,
+        "period_end": 12,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65136881114858, 46.7807626669894, 474]
+      },
+      "properties": {
+        "id_poi": 618,
+        "id_zone": 1,
+        "id_specie": 140,
+        "common_name": {
+          "fr": "Gaillet gratteron",
+          "de": "Kletten-Labkraut",
+          "it": "Caglio asprello",
+          "la": "Galium aparine"
+        },
+        "period_start": 5,
+        "period_end": 10,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65110067706793, 46.7808692975966, 474]
+      },
+      "properties": {
+        "id_poi": 619,
+        "id_zone": 1,
+        "id_specie": 152,
+        "common_name": {
+          "fr": "Alliaire pétiolée",
+          "de": "Knoblauchhederich",
+          "it": "Alliaria comune",
+          "la": "Alliaria petiolata"
+        },
+        "period_start": 4,
+        "period_end": 6,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65063449380445, 46.7810372215161, 479]
+      },
+      "properties": {
+        "id_poi": 620,
+        "id_zone": 1,
+        "id_specie": 23,
+        "common_name": {
+          "fr": "Laiche hérissée",
+          "de": "Behaarte Segge",
+          "it": "Carice villosa",
+          "la": "Carex hirta"
+        },
+        "period_start": 4,
+        "period_end": 6,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64974709199172, 46.78124632796, 471]
+      },
+      "properties": {
+        "id_poi": 622,
+        "id_zone": 1,
+        "id_specie": 155,
+        "common_name": {
+          "fr": "Corydale creuse",
+          "de": "Hohlknolliger Lerchensporn",
+          "it": "Colombina cava",
+          "la": "Corydalis cava"
+        },
+        "period_start": 3,
+        "period_end": 4,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64971021541761, 46.7813078060391, 476]
+      },
+      "properties": {
+        "id_poi": 623,
+        "id_zone": 1,
+        "id_specie": 115,
+        "common_name": {
+          "fr": "Lamier rouge",
+          "de": "Acker-Taubnessel",
+          "it": "Falsa ortica purpurea",
+          "la": "Lamium purpureum"
+        },
+        "period_start": 2,
+        "period_end": 11,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64970833045498, 46.7813617944356, 475]
+      },
+      "properties": {
+        "id_poi": 624,
+        "id_zone": 1,
+        "id_specie": 121,
+        "common_name": {
+          "fr": "Gui",
+          "de": "Mistel",
+          "it": "Vischio comune",
+          "la": "Viscum album s.l."
+        },
+        "period_start": 3,
+        "period_end": 4,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64955614201689, 46.7814223046821, 484]
+      },
+      "properties": {
+        "id_poi": 626,
+        "id_zone": 1,
+        "id_specie": 35,
+        "common_name": {
+          "fr": "Véronique à feuilles de lierre",
+          "de": "Efeu-Ehrenpreis",
+          "it": "Veronica con foglie d'edera",
+          "la": "Veronica hederifolia s.l."
+        },
+        "period_start": 3,
+        "period_end": 7,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64932527231007, 46.7815083326465, 485]
+      },
+      "properties": {
+        "id_poi": 627,
+        "id_zone": 1,
+        "id_specie": 20,
+        "common_name": {
+          "fr": "Primevère acaule",
+          "de": "Stängellose Schlüsselblume",
+          "it": "Primula comune",
+          "la": "Primula acaulis"
+        },
+        "period_start": 3,
+        "period_end": 4,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64916400411967, 46.7815532866715, 479]
+      },
+      "properties": {
+        "id_poi": 629,
+        "id_zone": 1,
+        "id_specie": 100,
+        "common_name": {
+          "fr": "Plantain moyen",
+          "de": "Mittlerer Wegerich",
+          "it": "Piantaggine pelosa",
+          "la": "Plantago media"
+        },
+        "period_start": 5,
+        "period_end": 7,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64908218750167, 46.7815694186457, 486]
+      },
+      "properties": {
+        "id_poi": 630,
+        "id_zone": 1,
+        "id_specie": 59,
+        "common_name": {
+          "fr": "Trèfle rampant",
+          "de": "Kriechender Klee",
+          "it": "Trifoglio bianco",
+          "la": "Trifolium repens s.l."
+        },
+        "period_start": 5,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.6486950443353, 46.7817273594855, 484]
+      },
+      "properties": {
+        "id_poi": 631,
+        "id_zone": 1,
+        "id_specie": 70,
+        "common_name": {
+          "fr": "Véronique de Perse",
+          "de": "Persischer Ehrenpreis",
+          "it": "Veronica comune",
+          "la": "Veronica persica"
+        },
+        "period_start": 2,
+        "period_end": 10,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64812517258213, 46.7819325073724, 484]
+      },
+      "properties": {
+        "id_poi": 636,
+        "id_zone": 1,
+        "id_specie": 142,
+        "common_name": {
+          "fr": "Luzerne lupuline",
+          "de": "Hopfenklee",
+          "it": "Erba medica lupulina",
+          "la": "Medicago lupulina"
+        },
+        "period_start": 5,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64803092263427, 46.7819647676101, 481]
+      },
+      "properties": {
+        "id_poi": 637,
+        "id_zone": 1,
+        "id_specie": 111,
+        "common_name": {
+          "fr": "Lierre terrestre",
+          "de": "Gundelrebe",
+          "it": "Edera terrestre",
+          "la": "Glechoma hederacea s.l."
+        },
+        "period_start": 4,
+        "period_end": 5,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64784446411693, 46.7820023265458, 480]
+      },
+      "properties": {
+        "id_poi": 638,
+        "id_zone": 1,
+        "id_specie": 111,
+        "common_name": {
+          "fr": "Lierre terrestre",
+          "de": "Gundelrebe",
+          "it": "Edera terrestre",
+          "la": "Glechoma hederacea s.l."
+        },
+        "period_start": 4,
+        "period_end": 5,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64743277161281, 46.7821760331272, 484]
+      },
+      "properties": {
+        "id_poi": 639,
+        "id_zone": 1,
+        "id_specie": 163,
+        "common_name": {
+          "fr": "Brunelle commune",
+          "de": "Kleine Brunelle",
+          "it": "Prunella comune",
+          "la": "Prunella vulgaris"
+        },
+        "period_start": 6,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.6473272169155, 46.7822131657119, 484]
+      },
+      "properties": {
+        "id_poi": 640,
+        "id_zone": 1,
+        "id_specie": 165,
+        "common_name": {
+          "fr": "Porcelle des prés",
+          "de": "Wiesen-Ferkelkraut",
+          "it": "Costolina giuncolina",
+          "la": "Hypochaeris radicata"
+        },
+        "period_start": 6,
+        "period_end": 10,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64720298438537, 46.7822680217408, 487]
+      },
+      "properties": {
+        "id_poi": 641,
+        "id_zone": 1,
+        "id_specie": 174,
+        "common_name": {
+          "fr": "Epervière piloselle",
+          "de": "Langhaariges Habichtskraut",
+          "it": "Sparviere pelosetto",
+          "la": "Hieracium pilosella"
+        },
+        "period_start": 5,
+        "period_end": 10,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.6457243636827, 46.7827987587391, 484]
+      },
+      "properties": {
+        "id_poi": 646,
+        "id_zone": 1,
+        "id_specie": 47,
+        "common_name": {
+          "fr": "Mouron des oiseaux",
+          "de": "Vogelmiere",
+          "it": "Centocchio comune",
+          "la": "Stellaria media aggr."
+        },
+        "period_start": 1,
+        "period_end": 12,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64530041641625, 46.7829469518901, 482]
+      },
+      "properties": {
+        "id_poi": 648,
+        "id_zone": 1,
+        "id_specie": 153,
+        "common_name": {
+          "fr": "Dactyle aggloméré",
+          "de": "Wiesen-Knäuelgras",
+          "it": "Erba mazzolina comune",
+          "la": "Dactylis glomerata"
+        },
+        "period_start": 5,
+        "period_end": 6,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64498650085365, 46.7827871327791, 478]
+      },
+      "properties": {
+        "id_poi": 649,
+        "id_zone": 1,
+        "id_specie": 137,
+        "common_name": {
+          "fr": "Réséda jaune",
+          "de": "Gelbe Reseda",
+          "it": "Reseda comune",
+          "la": "Reseda lutea"
+        },
+        "period_start": 5,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.6444872745615, 46.7821617123613, 476]
+      },
+      "properties": {
+        "id_poi": 651,
+        "id_zone": 1,
+        "id_specie": 22,
+        "common_name": {
+          "fr": "Cardamine des prés",
+          "de": "Wiesen-Schaumkraut",
+          "it": "Billeri dei prati",
+          "la": "Cardamine pratensis aggr."
+        },
+        "period_start": 4,
+        "period_end": 5,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64435819882538, 46.7819820497891, 474]
+      },
+      "properties": {
+        "id_poi": 652,
+        "id_zone": 1,
+        "id_specie": 77,
+        "common_name": {
+          "fr": "Rumex à feuilles obtuses",
+          "de": "Stumpfblättriger Ampfer",
+          "it": "Romice comune",
+          "la": "Rumex obtusifolius"
+        },
+        "period_start": 6,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.6664606687934, 46.7856580279016, 485]
+      },
+      "properties": {
+        "id_poi": 654,
+        "id_zone": 8,
+        "id_specie": 64,
+        "common_name": {
+          "fr": "Peucédan des marais",
+          "de": "Sumpf-Haarstrang",
+          "it": "Imperatoria delle paludi",
+          "la": "Peucedanum palustre"
+        },
+        "period_start": 7,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66655713733421, 46.7856638306688, 487]
+      },
+      "properties": {
+        "id_poi": 655,
+        "id_zone": 8,
+        "id_specie": 88,
+        "common_name": {
+          "fr": "Pigamon jaune",
+          "de": "Gelbe Wiesenraute",
+          "it": "Pigamo giallo",
+          "la": "Thalictrum flavum"
+        },
+        "period_start": 6,
+        "period_end": 7,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66640103427923, 46.7860287749264, 487]
+      },
+      "properties": {
+        "id_poi": 656,
+        "id_zone": 8,
+        "id_specie": 44,
+        "common_name": {
+          "fr": "Ronce d’Arménie",
+          "de": "Armenische Brombeere",
+          "it": "Rovo d'Armenia",
+          "la": "Rubus armeniacus"
+        },
+        "period_start": 6,
+        "period_end": 7,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66607601392713, 46.7860206420222, 477]
+      },
+      "properties": {
+        "id_poi": 657,
+        "id_zone": 8,
+        "id_specie": 107,
+        "common_name": {
+          "fr": "Ronce commune",
+          "de": "Echte Brombeere",
+          "it": "Rovo comune",
+          "la": "Rubus fruticosus aggr."
+        },
+        "period_start": 5,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66603860277525, 46.785996601683, 476]
+      },
+      "properties": {
+        "id_poi": 658,
+        "id_zone": 8,
+        "id_specie": 127,
+        "common_name": {
+          "fr": "Iris jaune",
+          "de": "Gelbe Schwertlilie",
+          "it": "Giaggiolo acquatico",
+          "la": "Iris pseudacorus"
+        },
+        "period_start": 6,
+        "period_end": 6,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66620277548397, 46.7860667774454, 480]
+      },
+      "properties": {
+        "id_poi": 662,
+        "id_zone": 8,
+        "id_specie": 121,
+        "common_name": {
+          "fr": "Gui",
+          "de": "Mistel",
+          "it": "Vischio comune",
+          "la": "Viscum album s.l."
+        },
+        "period_start": 3,
+        "period_end": 4,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66629466589423, 46.7860818863491, 481]
+      },
+      "properties": {
+        "id_poi": 663,
+        "id_zone": 8,
+        "id_specie": 28,
+        "common_name": {
+          "fr": "Potamot plantain",
+          "de": "Gefärbtes Laichkraut",
+          "it": "Brasca arrossata",
+          "la": "Potamogeton coloratus"
+        },
+        "period_start": 7,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66636620584533, 46.78600677985, 482]
+      },
+      "properties": {
+        "id_poi": 664,
+        "id_zone": 8,
+        "id_specie": 127,
+        "common_name": {
+          "fr": "Iris jaune",
+          "de": "Gelbe Schwertlilie",
+          "it": "Giaggiolo acquatico",
+          "la": "Iris pseudacorus"
+        },
+        "period_start": 6,
+        "period_end": 6,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66636648625502, 46.7859871721982, 481]
+      },
+      "properties": {
+        "id_poi": 665,
+        "id_zone": 8,
+        "id_specie": 66,
+        "common_name": {
+          "fr": "Laiche des rives",
+          "de": "Ufer-Segge",
+          "it": "Carice spondicola",
+          "la": "Carex riparia"
+        },
+        "period_start": 5,
+        "period_end": 6,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66637997386342, 46.785959826081, 481]
+      },
+      "properties": {
+        "id_poi": 666,
+        "id_zone": 8,
+        "id_specie": 42,
+        "common_name": {
+          "fr": "Laiche des forêts",
+          "de": "Wald-Segge",
+          "it": "Carice delle selve",
+          "la": "Carex sylvatica"
+        },
+        "period_start": 5,
+        "period_end": 6,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66638880183616, 46.7858331632928, 483]
+      },
+      "properties": {
+        "id_poi": 668,
+        "id_zone": 8,
+        "id_specie": 54,
+        "common_name": {
+          "fr": "Reine des prés",
+          "de": "Moor-Geissbart",
+          "it": "Olmaria comune",
+          "la": "Filipendula ulmaria"
+        },
+        "period_start": 6,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66643672705011, 46.785859841404, 478]
+      },
+      "properties": {
+        "id_poi": 669,
+        "id_zone": 8,
+        "id_specie": 4,
+        "common_name": {
+          "fr": "Roseau commun",
+          "de": "Schilf",
+          "it": "Cannuccia di palude",
+          "la": "Phragmites australis"
+        },
+        "period_start": 8,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66645190249279, 46.7856962147386, 480]
+      },
+      "properties": {
+        "id_poi": 670,
+        "id_zone": 8,
+        "id_specie": 123,
+        "common_name": {
+          "fr": "Marisque",
+          "de": "Schneidebinse",
+          "it": "Falasco",
+          "la": "Cladium mariscus"
+        },
+        "period_start": 6,
+        "period_end": 6,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66660343495753, 46.7857121115405, 479]
+      },
+      "properties": {
+        "id_poi": 671,
+        "id_zone": 8,
+        "id_specie": 123,
+        "common_name": {
+          "fr": "Marisque",
+          "de": "Schneidebinse",
+          "it": "Falasco",
+          "la": "Cladium mariscus"
+        },
+        "period_start": 6,
+        "period_end": 6,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66673185311069, 46.7856048970364, 477]
+      },
+      "properties": {
+        "id_poi": 672,
+        "id_zone": 8,
+        "id_specie": 90,
+        "common_name": {
+          "fr": "Gesse des marais",
+          "de": "Sumpf-Platterbse",
+          "it": "Cicerchia palustre",
+          "la": "Lathyrus palustris"
+        },
+        "period_start": 6,
+        "period_end": 6,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66663677707064, 46.7855756883384, 478]
+      },
+      "properties": {
+        "id_poi": 673,
+        "id_zone": 8,
+        "id_specie": 3,
+        "common_name": {
+          "fr": "Jonc noueux",
+          "de": "Knötchen-Binse",
+          "it": "Giunco subnodoso",
+          "la": "Juncus subnodulosus"
+        },
+        "period_start": 6,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.6665850515092, 46.7854833939031, 476]
+      },
+      "properties": {
+        "id_poi": 674,
+        "id_zone": 8,
+        "id_specie": 125,
+        "common_name": {
+          "fr": "Cirse des marais",
+          "de": "Sumpf-Kratzdistel",
+          "it": "Cardo di palude",
+          "la": "Cirsium palustre"
+        },
+        "period_start": 7,
+        "period_end": 10,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.666559289333, 46.785425402772, 476]
+      },
+      "properties": {
+        "id_poi": 675,
+        "id_zone": 8,
+        "id_specie": 4,
+        "common_name": {
+          "fr": "Roseau commun",
+          "de": "Schilf",
+          "it": "Cannuccia di palude",
+          "la": "Phragmites australis"
+        },
+        "period_start": 8,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66663554572104, 46.7854590977678, 476]
+      },
+      "properties": {
+        "id_poi": 676,
+        "id_zone": 8,
+        "id_specie": 14,
+        "common_name": {
+          "fr": "Laiche élevée",
+          "de": "Steife Segge",
+          "it": "Carice spondicola",
+          "la": "Carex elata"
+        },
+        "period_start": 5,
+        "period_end": 5,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66725396714534, 46.7849251049016, 480]
+      },
+      "properties": {
+        "id_poi": 679,
+        "id_zone": 7,
+        "id_specie": 27,
+        "common_name": {
+          "fr": "Lamier des montagnes",
+          "de": "Berg-Goldnessel",
+          "it": "Ortica montana",
+          "la": "Lamium galeobdolon subsp. montanum"
+        },
+        "period_start": 5,
+        "period_end": 7,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66726433760542, 46.7848990199565, 477]
+      },
+      "properties": {
+        "id_poi": 681,
+        "id_zone": 7,
+        "id_specie": 36,
+        "common_name": {
+          "fr": "Anémone jaune",
+          "de": "Gelbes Windröschen",
+          "it": "Anemone gialla",
+          "la": "Anemone ranunculoides"
+        },
+        "period_start": 4,
+        "period_end": 4,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66686003305928, 46.7847267796911, 477]
+      },
+      "properties": {
+        "id_poi": 684,
+        "id_zone": 7,
+        "id_specie": 19,
+        "common_name": {
+          "fr": "Colchique d'automne",
+          "de": "Herbst-Zeitlose",
+          "it": "Colchico d'autunno",
+          "la": "Colchicium automnale"
+        },
+        "period_start": 8,
+        "period_end": 10,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66670765634106, 46.7845890409677, 477]
+      },
+      "properties": {
+        "id_poi": 685,
+        "id_zone": 7,
+        "id_specie": 46,
+        "common_name": {
+          "fr": "Drave du printemps",
+          "de": "Frühlings-Hungerblümchen",
+          "it": "Draba primaverile",
+          "la": "Erophila verna aggr."
+        },
+        "period_start": 2,
+        "period_end": 5,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66648183759702, 46.7843773080658, 477]
+      },
+      "properties": {
+        "id_poi": 686,
+        "id_zone": 7,
+        "id_specie": 116,
+        "common_name": {
+          "fr": "Armoise commune",
+          "de": "Gemeiner Beifuss",
+          "it": "Assenzio selvatico",
+          "la": "Artemisia vulgaris"
+        },
+        "period_start": 7,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66631773946464, 46.7844200594183, 480]
+      },
+      "properties": {
+        "id_poi": 688,
+        "id_zone": 7,
+        "id_specie": 167,
+        "common_name": {
+          "fr": "Tanaisie commune",
+          "de": "Rainfarn",
+          "it": "Erba amara selvatica",
+          "la": "Tanacetum vulgare"
+        },
+        "period_start": 6,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66616988932156, 46.7844306647957, 483]
+      },
+      "properties": {
+        "id_poi": 691,
+        "id_zone": 7,
+        "id_specie": 20,
+        "common_name": {
+          "fr": "Primevère acaule",
+          "de": "Stängellose Schlüsselblume",
+          "it": "Primula comune",
+          "la": "Primula acaulis"
+        },
+        "period_start": 3,
+        "period_end": 4,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.66586298780887, 46.7841755235583, 484]
+      },
+      "properties": {
+        "id_poi": 693,
+        "id_zone": 7,
+        "id_specie": 168,
+        "common_name": {
+          "fr": "Petite pimprenelle",
+          "de": "Kleiner Wiesenknopf",
+          "it": "Salvastrella minore",
+          "la": "Sanguisorba minor s.l."
+        },
+        "period_start": 5,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.666088840189, 46.7839466407889, 486]
+      },
+      "properties": {
+        "id_poi": 695,
+        "id_zone": 7,
+        "id_specie": 113,
+        "common_name": {
+          "fr": "Petite pervenche",
+          "de": "Kleines Immergrün",
+          "it": "Pervinca minore",
+          "la": "Vinca minor"
+        },
+        "period_start": 4,
+        "period_end": 5,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64410946670368, 46.7816552291707, 487]
+      },
+      "properties": {
+        "id_poi": 697,
+        "id_zone": 1,
+        "id_specie": 126,
+        "common_name": {
+          "fr": "Orpin blanc",
+          "de": "Weisser Mauerpfeffer",
+          "it": "Borracina bianca",
+          "la": "Sedum album"
+        },
+        "period_start": 6,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64405292038545, 46.7815087304049, 477]
+      },
+      "properties": {
+        "id_poi": 698,
+        "id_zone": 1,
+        "id_specie": 31,
+        "common_name": {
+          "fr": "Violette hérissée",
+          "de": "Rauhaariges Veilchen",
+          "it": "Viola irta",
+          "la": "Viola hirta"
+        },
+        "period_start": 3,
+        "period_end": 4,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64377921057459, 46.7811423815763, 476]
+      },
+      "properties": {
+        "id_poi": 699,
+        "id_zone": 1,
+        "id_specie": 85,
+        "common_name": {
+          "fr": "Prêle des champs",
+          "de": "Acker-Schachtelhalm",
+          "it": "Equiseto dei campi",
+          "la": "Equisetum arvense"
+        },
+        "period_start": 3,
+        "period_end": 5,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64374960259583, 46.7811011510484, 475]
+      },
+      "properties": {
+        "id_poi": 700,
+        "id_zone": 1,
+        "id_specie": 108,
+        "common_name": {
+          "fr": "Myosotis des champs",
+          "de": "Acker-Vergissmeinnicht",
+          "it": "Nontiscordardimé minore",
+          "la": "Myosotis arvensis"
+        },
+        "period_start": 4,
+        "period_end": 10,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64372190607633, 46.7810655924338, 465]
+      },
+      "properties": {
+        "id_poi": 701,
+        "id_zone": 1,
+        "id_specie": 128,
+        "common_name": {
+          "fr": "Drave des murailles",
+          "de": "Mauer-Felsenblümchen",
+          "it": "Draba murale",
+          "la": "Draba muralis"
+        },
+        "period_start": 4,
+        "period_end": 6,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64348175142474, 46.7807542040866, 470]
+      },
+      "properties": {
+        "id_poi": 702,
+        "id_zone": 1,
+        "id_specie": 142,
+        "common_name": {
+          "fr": "Luzerne lupuline",
+          "de": "Hopfenklee",
+          "it": "Erba medica lupulina",
+          "la": "Medicago lupulina"
+        },
+        "period_start": 5,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64310737633507, 46.7803697255076, 478]
+      },
+      "properties": {
+        "id_poi": 703,
+        "id_zone": 1,
+        "id_specie": 8,
+        "common_name": {
+          "fr": "Knautie des champs",
+          "de": "Feld-Witwenblume",
+          "it": "Ambretta comune",
+          "la": "Knautia arvensis"
+        },
+        "period_start": 5,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64321377743147, 46.7804780157622, 481]
+      },
+      "properties": {
+        "id_poi": 704,
+        "id_zone": 1,
+        "id_specie": 148,
+        "common_name": {
+          "fr": "Sauge des prés",
+          "de": "Wiesen-Salbei",
+          "it": "Salvia comune",
+          "la": "Salvia pratensis"
+        },
+        "period_start": 5,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64325760589389, 46.7805306694084, 479]
+      },
+      "properties": {
+        "id_poi": 705,
+        "id_zone": 1,
+        "id_specie": 67,
+        "common_name": {
+          "fr": "Mâche, doucette, rampon",
+          "de": "Echter Ackersalat",
+          "it": "Gallinella comune",
+          "la": "Valerianella locusta"
+        },
+        "period_start": 4,
+        "period_end": 5,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64332548238582, 46.780613183665, 467]
+      },
+      "properties": {
+        "id_poi": 706,
+        "id_zone": 1,
+        "id_specie": 158,
+        "common_name": {
+          "fr": "Fenasse",
+          "de": "Französisches Raygras",
+          "it": "Avena altissima",
+          "la": "Arrhenatherum elatius"
+        },
+        "period_start": 6,
+        "period_end": 7,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64335260441431, 46.7806706781815, 473]
+      },
+      "properties": {
+        "id_poi": 707,
+        "id_zone": 1,
+        "id_specie": 47,
+        "common_name": {
+          "fr": "Mouron des oiseaux",
+          "de": "Vogelmiere",
+          "it": "Centocchio comune",
+          "la": "Stellaria media aggr."
+        },
+        "period_start": 1,
+        "period_end": 12,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64326047615102, 46.7805678150368, 484]
+      },
+      "properties": {
+        "id_poi": 708,
+        "id_zone": 1,
+        "id_specie": 12,
+        "common_name": {
+          "fr": "Orpin doux",
+          "de": "Milder Mauerpfeffer",
+          "it": "Borracina insipida",
+          "la": "Sedum sexangulare"
+        },
+        "period_start": 6,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64322365217417, 46.7805008870045, 481]
+      },
+      "properties": {
+        "id_poi": 709,
+        "id_zone": 1,
+        "id_specie": 110,
+        "common_name": {
+          "fr": "Gaillet jaune",
+          "de": "Echtes Labkraut",
+          "it": "Caglio zolfino",
+          "la": "Galium verum s.l."
+        },
+        "period_start": 6,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64317060233737, 46.7804440272843, 477]
+      },
+      "properties": {
+        "id_poi": 710,
+        "id_zone": 1,
+        "id_specie": 93,
+        "common_name": {
+          "fr": "Vipérine commune",
+          "de": "Gemeiner Natterkopf",
+          "it": "Viperina azzurra",
+          "la": "Echium vulgare"
+        },
+        "period_start": 5,
+        "period_end": 10,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64314924151874, 46.7804227582437, 482]
+      },
+      "properties": {
+        "id_poi": 711,
+        "id_zone": 1,
+        "id_specie": 106,
+        "common_name": {
+          "fr": "Buglosse officinale",
+          "de": "Echte Ochsenzunge",
+          "it": "Buglossa comune",
+          "la": "Anchusa officinalis"
+        },
+        "period_start": 5,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.6433615905656, 46.7806292164611, 483]
+      },
+      "properties": {
+        "id_poi": 712,
+        "id_zone": 1,
+        "id_specie": 76,
+        "common_name": {
+          "fr": "Gaillet commun, Gaillet blanc",
+          "de": "Wiesen-Labkraut",
+          "it": "Caglio bianco",
+          "la": "Galium mollugo aggr."
+        },
+        "period_start": 5,
+        "period_end": 7,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64329140988976, 46.7805947825304, 485]
+      },
+      "properties": {
+        "id_poi": 713,
+        "id_zone": 1,
+        "id_specie": 70,
+        "common_name": {
+          "fr": "Véronique de Perse",
+          "de": "Persischer Ehrenpreis",
+          "it": "Veronica comune",
+          "la": "Veronica persica"
+        },
+        "period_start": 2,
+        "period_end": 10,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64305976099694, 46.780329364052, 486]
+      },
+      "properties": {
+        "id_poi": 714,
+        "id_zone": 1,
+        "id_specie": 129,
+        "common_name": {
+          "fr": "Centaurée scabieuse",
+          "de": "Skabiosen-Flockenblume",
+          "it": "Fiordaliso vedovino",
+          "la": "Centaurea scabiosa s.l."
+        },
+        "period_start": 7,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64290175884989, 46.7801501439811, 479]
+      },
+      "properties": {
+        "id_poi": 715,
+        "id_zone": 1,
+        "id_specie": 61,
+        "common_name": {
+          "fr": "Ibéris toujours vert",
+          "de": "Immergrüner Bauernsenf",
+          "it": "Iberide sempreverde",
+          "la": "Iberis sempervirens"
+        },
+        "period_start": 5,
+        "period_end": 6,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64206732387053, 46.7804349775166, 477]
+      },
+      "properties": {
+        "id_poi": 717,
+        "id_zone": 1,
+        "id_specie": 32,
+        "common_name": {
+          "fr": "Linaire commune",
+          "de": "Gemeines Leinkraut",
+          "it": "Linaiola comune",
+          "la": "Linaria vulgaris"
+        },
+        "period_start": 6,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64209435316031, 46.7804609358422, 474]
+      },
+      "properties": {
+        "id_poi": 718,
+        "id_zone": 1,
+        "id_specie": 151,
+        "common_name": {
+          "fr": "Grand plantain",
+          "de": "Breit-Wegerich",
+          "it": "Piantaggine maggiore",
+          "la": "Plantago major s.l."
+        },
+        "period_start": 5,
+        "period_end": 11,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64157535399627, 46.7805537986953, 475]
+      },
+      "properties": {
+        "id_poi": 719,
+        "id_zone": 1,
+        "id_specie": 68,
+        "common_name": {
+          "fr": "Silène enflé",
+          "de": "Gewöhnliche Klatschnelke",
+          "it": "Silene rigonfia",
+          "la": "Silene vulgaris s.str."
+        },
+        "period_start": 6,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64223043898182, 46.7804049386792, 479]
+      },
+      "properties": {
+        "id_poi": 720,
+        "id_zone": 1,
+        "id_specie": 134,
+        "common_name": {
+          "fr": "Pissenlit officinal",
+          "de": "Gewöhnlicher Löwenzahn",
+          "it": "Tarassaco comune",
+          "la": "Taraxacum officinale aggr."
+        },
+        "period_start": 4,
+        "period_end": 5,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64246093892771, 46.780206818074, 478]
+      },
+      "properties": {
+        "id_poi": 721,
+        "id_zone": 1,
+        "id_specie": 10,
+        "common_name": {
+          "fr": "Potentille des collines",
+          "de": "Hügel-Fingerkraut",
+          "it": "",
+          "la": "Potentilla collina aggr."
+        },
+        "period_start": 5,
+        "period_end": 7,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64229948856592, 46.7802641113684, 481]
+      },
+      "properties": {
+        "id_poi": 722,
+        "id_zone": 1,
+        "id_specie": 53,
+        "common_name": {
+          "fr": "Origan, Marjolaine",
+          "de": "Echter Dost",
+          "it": "Origano comune",
+          "la": "Origanum vulgare"
+        },
+        "period_start": 7,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64241805732988, 46.7802744262185, 479]
+      },
+      "properties": {
+        "id_poi": 723,
+        "id_zone": 1,
+        "id_specie": 105,
+        "common_name": {
+          "fr": "Pâturin annuel",
+          "de": "Einjähriges Rispengras",
+          "it": "Fienarola annuale",
+          "la": "Poa annua"
+        },
+        "period_start": 1,
+        "period_end": 12,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64149674335296, 46.7806961439233, 480]
+      },
+      "properties": {
+        "id_poi": 724,
+        "id_zone": 1,
+        "id_specie": 143,
+        "common_name": {
+          "fr": "Hélianthème sombre",
+          "de": "Ovalblättriges Sonnenröschen",
+          "it": "Eliantemo tenebroso",
+          "la": "Helianthemum nummularium ssp. obscurum"
+        },
+        "period_start": 5,
+        "period_end": 10,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64161153951724, 46.7806565173318, 479]
+      },
+      "properties": {
+        "id_poi": 725,
+        "id_zone": 1,
+        "id_specie": 16,
+        "common_name": {
+          "fr": "Lotier corniculé",
+          "de": "Gewöhnlicher Hornklee",
+          "it": "Ginestrino comune",
+          "la": "Lotus corniculatus"
+        },
+        "period_start": 5,
+        "period_end": 7,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64127728832397, 46.7806718598032, 475]
+      },
+      "properties": {
+        "id_poi": 726,
+        "id_zone": 1,
+        "id_specie": 43,
+        "common_name": {
+          "fr": "Anthyllide vulnéraire",
+          "de": "Echter Wundklee",
+          "it": "Vulneraria comune",
+          "la": "Anthyllis vulneraria s.l."
+        },
+        "period_start": 5,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64253175442358, 46.7802731531217, 482]
+      },
+      "properties": {
+        "id_poi": 727,
+        "id_zone": 1,
+        "id_specie": 78,
+        "common_name": {
+          "fr": "Thym serpolet",
+          "de": "Feld-Thymian",
+          "it": "Timo comune",
+          "la": "Thymus serpyllum aggr."
+        },
+        "period_start": 5,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64236874152228, 46.7803448521751, 482]
+      },
+      "properties": {
+        "id_poi": 728,
+        "id_zone": 1,
+        "id_specie": 79,
+        "common_name": {
+          "fr": "Oeillet géant",
+          "de": "Riesen-Nelke",
+          "it": "",
+          "la": "Dianthus giganteus"
+        },
+        "period_start": 7,
+        "period_end": 10,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64179621035255, 46.7805747124798, 485]
+      },
+      "properties": {
+        "id_poi": 729,
+        "id_zone": 1,
+        "id_specie": 126,
+        "common_name": {
+          "fr": "Orpin blanc",
+          "de": "Weisser Mauerpfeffer",
+          "it": "Borracina bianca",
+          "la": "Sedum album"
+        },
+        "period_start": 6,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64136061496447, 46.7807534713311, 481]
+      },
+      "properties": {
+        "id_poi": 730,
+        "id_zone": 1,
+        "id_specie": 148,
+        "common_name": {
+          "fr": "Sauge des prés",
+          "de": "Wiesen-Salbei",
+          "it": "Salvia comune",
+          "la": "Salvia pratensis"
+        },
+        "period_start": 5,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64120952068462, 46.7808185252189, 482]
+      },
+      "properties": {
+        "id_poi": 731,
+        "id_zone": 1,
+        "id_specie": 37,
+        "common_name": {
+          "fr": "Anthémis des teinturiers",
+          "de": "Färber-Hundskamille",
+          "it": "Camomilla per tintori",
+          "la": "Anthemis tinctoria"
+        },
+        "period_start": 6,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.654077654013, 46.7803060375423, 492]
+      },
+      "properties": {
+        "id_poi": 734,
+        "id_zone": 5,
+        "id_specie": 63,
+        "common_name": {
+          "fr": "Houblon",
+          "de": "Hopfen",
+          "it": "Luppolo comune",
+          "la": "Humulus lupulus"
+        },
+        "period_start": 7,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65452641310077, 46.7803848788526, 487]
+      },
+      "properties": {
+        "id_poi": 735,
+        "id_zone": 4,
+        "id_specie": 103,
+        "common_name": {
+          "fr": "Capselle bourse à pasteur",
+          "de": "Gemeines Hirtentäschel",
+          "it": "Borsapastore comune",
+          "la": "Capsella bursa-pastoris"
+        },
+        "period_start": 3,
+        "period_end": 11,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65547456642035, 46.7806284510548, 488]
+      },
+      "properties": {
+        "id_poi": 736,
+        "id_zone": 4,
+        "id_specie": 80,
+        "common_name": {
+          "fr": "Capselle rougeâtre",
+          "de": "Rötliches Hirtentäschel",
+          "it": "Borsapastore annuale",
+          "la": "Capsella rubella"
+        },
+        "period_start": 4,
+        "period_end": 11,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65536459158594, 46.7824358880328, 489]
+      },
+      "properties": {
+        "id_poi": 740,
+        "id_zone": 3,
+        "id_specie": 99,
+        "common_name": {
+          "fr": "Menthe aquatique",
+          "de": "Wasser-Minze",
+          "it": "Menta d'acqua",
+          "la": "Mentha aquatica"
+        },
+        "period_start": 7,
+        "period_end": 10,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65517924573669, 46.7827498060875, 488]
+      },
+      "properties": {
+        "id_poi": 741,
+        "id_zone": 3,
+        "id_specie": 38,
+        "common_name": {
+          "fr": "Salicaire commune",
+          "de": "Blut-Weiderich",
+          "it": "Salcerella comune",
+          "la": "Lythrum salicaria"
+        },
+        "period_start": 7,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65516768855323, 46.7830389518947, 481]
+      },
+      "properties": {
+        "id_poi": 742,
+        "id_zone": 3,
+        "id_specie": 21,
+        "common_name": {
+          "fr": "Géranium herbe à Robert",
+          "de": "Stinkender Storchschnabel",
+          "it": "Geranio di San Roberto",
+          "la": "Geranium robertianum s.l."
+        },
+        "period_start": 5,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65716804480818, 46.7840887574895, 482]
+      },
+      "properties": {
+        "id_poi": 743,
+        "id_zone": 2,
+        "id_specie": 4,
+        "common_name": {
+          "fr": "Roseau commun",
+          "de": "Schilf",
+          "it": "Cannuccia di palude",
+          "la": "Phragmites australis"
+        },
+        "period_start": 8,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65606799037126, 46.7835818491213, 487]
+      },
+      "properties": {
+        "id_poi": 745,
+        "id_zone": 2,
+        "id_specie": 39,
+        "common_name": {
+          "fr": "Prêle d'hiver",
+          "de": "Winter-Schachtelhalm",
+          "it": "Equiseto invernale",
+          "la": "Equisetum hyemale"
+        },
+        "period_start": 5,
+        "period_end": 7,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65189897629904, 46.7824972085773, 479]
+      },
+      "properties": {
+        "id_poi": 749,
+        "id_zone": 1,
+        "id_specie": 84,
+        "common_name": {
+          "fr": "Bryone dioïque",
+          "de": "Zweihäusige Zaunrübe",
+          "it": "Brionia comune",
+          "la": "Bryonia dioica"
+        },
+        "period_start": 6,
+        "period_end": 7,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65192123660546, 46.7817050398309, 487]
+      },
+      "properties": {
+        "id_poi": 750,
+        "id_zone": 1,
+        "id_specie": 65,
+        "common_name": {
+          "fr": "Prêle des marais",
+          "de": "Sumpf-Schachtelhalm",
+          "it": "Equiseto palustre",
+          "la": "Equisetum palustre"
+        },
+        "period_start": 6,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.65172845139282, 46.7807730006694, 477]
+      },
+      "properties": {
+        "id_poi": 751,
+        "id_zone": 1,
+        "id_specie": 173,
+        "common_name": {
+          "fr": "Carotte sauvage",
+          "de": "Wilde Möhre",
+          "it": "Carota selvatica",
+          "la": "Daucus carota"
+        },
+        "period_start": 6,
+        "period_end": 8,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64867941638307, 46.7817070623824, 476]
+      },
+      "properties": {
+        "id_poi": 752,
+        "id_zone": 1,
+        "id_specie": 86,
+        "common_name": {
+          "fr": "Bec de grue commun",
+          "de": "Gemeiner Reiherschnabel",
+          "it": "Becco di gru comune",
+          "la": "Erodium cicutarium"
+        },
+        "period_start": 4,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64413209269123, 46.781719512773, 474]
+      },
+      "properties": {
+        "id_poi": 754,
+        "id_zone": 1,
+        "id_specie": 114,
+        "common_name": {
+          "fr": "Liseron des haies",
+          "de": "Echte Zaunwinde",
+          "it": "Vilucchio bianco",
+          "la": "Calystegia sepium"
+        },
+        "period_start": 6,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.6440784614781, 46.7816693277269, 472]
+      },
+      "properties": {
+        "id_poi": 755,
+        "id_zone": 1,
+        "id_specie": 21,
+        "common_name": {
+          "fr": "Géranium herbe à Robert",
+          "de": "Stinkender Storchschnabel",
+          "it": "Geranio di San Roberto",
+          "la": "Geranium robertianum s.l."
+        },
+        "period_start": 5,
+        "period_end": 9,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.64409273561297, 46.7815644031554, 472]
+      },
+      "properties": {
+        "id_poi": 756,
+        "id_zone": 1,
+        "id_specie": 16,
+        "common_name": {
+          "fr": "Lotier corniculé",
+          "de": "Gewöhnlicher Hornklee",
+          "it": "Ginestrino comune",
+          "la": "Lotus corniculatus"
+        },
+        "period_start": 5,
+        "period_end": 7,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.6417998120852, 46.7805784990009, 476]
+      },
+      "properties": {
+        "id_poi": 757,
+        "id_zone": 1,
+        "id_specie": 69,
+        "common_name": {
+          "fr": "Alysson annuel",
+          "de": "Kelch-Steinkraut",
+          "it": "Alisso annuo",
+          "la": "Alyssum alyssoides"
+        },
+        "period_start": 4,
+        "period_end": 5,
+        "theme_name": "flower",
+        "owner_name": "Alain Jotterand"
+      }
+    }
+  ]
+}

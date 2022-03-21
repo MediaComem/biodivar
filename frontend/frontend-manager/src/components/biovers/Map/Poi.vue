@@ -4,7 +4,7 @@
   color="RGB(0, 231, 200, 0.5)" fill-color="RGB(205, 231, 65, 0.5)">
   </l-circle>
   <l-marker @click="$emit('updatePoi', poi)" :lat-lng='poi.coordinate'
-  :draggable="true" @dragstart="test" @dragend="test">
+  :draggable="true" @dragstart="test" @dragend="test" @add="$emit('add')">
     <l-tooltip v-if="poi.element.title_is_visible || poi.element.subtitle_is_visible"
     :options="{ permanent: true, direction: 'top'}">
       <p v-if="poi.element.title_is_visible">{{ poi.element.title }}</p>
@@ -35,7 +35,7 @@ export default {
     LIcon,
     LTooltip,
   },
-  emits: ['updatePoi'],
+  emits: ['updatePoi', 'add'],
   computed: {
     iconUrl() {
       return `${this.icon}/${this.iconWidth}/${this.iconHeight}`;

@@ -10,7 +10,8 @@
             :iconHeight="40"
             :iconWidth="25"
             :icon="'https://placekitten.com'"
-            @update-poi="openPoiEdition(poi.poi, poi.biover)"/>
+            @update-poi="openPoiEdition(poi.poi, poi.biover)"
+            @add="$emit('add')"/>
       </div>
     </l-map>
     <PoiCreator :showDialog="showCreationDialog" :coordinate="latlng"
@@ -47,7 +48,7 @@ export default {
     pois: Array,
     paths: Array,
   },
-  emits: ['newPoi', 'updatePoi'],
+  emits: ['newPoi', 'updatePoi', 'add'],
   data() {
     return {
       showCreationDialog: false,

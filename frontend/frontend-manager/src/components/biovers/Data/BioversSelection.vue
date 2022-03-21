@@ -32,6 +32,7 @@ import BioverCreator from '../Dialog/BioverCreator.vue';
 export default {
   props: {
     ownerBiovers: Object,
+    publicBiovers: Object,
     bioversToDisplay: Array,
   },
   emits: ['poiToDisplay', 'pathToDisplay', 'updatePoi', 'selectedBiovers', 'createBiover', 'removeBiover'],
@@ -88,6 +89,18 @@ export default {
     this.data.push({
       label: 'Mes Biovers',
       children: own,
+      disabled: true,
+    });
+    const publicB = [];
+    this.publicBiovers.forEach((biover) => {
+      publicB.push({
+        label: biover.name,
+        id: biover.id,
+      });
+    });
+    this.data.push({
+      label: 'Biovers Publiques',
+      children: publicB,
       disabled: true,
     });
   },

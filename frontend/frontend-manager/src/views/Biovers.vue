@@ -3,13 +3,27 @@
     <el-col :span="24">
       <Map :currentBioversId="currentBioversId"
       :pois="pois" :paths="paths" @new-poi="addPoiToCurrentList"
-      @update-poi="updatePoi"/>
+      @update-poi="updatePoi" @add="add"/>
     </el-col>
+  </el-row>
+  <el-row
+    :gutter="20"
+    v-if="ownerBiovers && currentBioversId !== 0"
+    style="margin-top: 2vh; margin-bottom: 2vh; margin-left: 0px;"
+  >
+    <GeoJsonImporter v-if="ownerBiovers.length > 0"
+      :authorId="ownerBiovers[0].owner"
+      :bioverId="currentBioversId"
+      :uploadDone="uploadDone"
+      @import-poi="importPoi"
+      @save="uploadDone = true"
+    />
   </el-row>
   <el-row :gutter="20">
     <el-col :span="24">
       <BioversSelection v-if="ownerBiovers.length > 0"
       :ownerBiovers="ownerBiovers"
+      :publicBiovers="publicBiovers"
       :bioversToDisplay="bioversToDisplay"
       @selected-biovers="selectedBiovers"
       @create-biover="createBiover"
@@ -23,6 +37,7 @@
 <script>
 import Map from '../components/biovers/Map/Map.vue';
 import BioversSelection from '../components/biovers/Data/BioversSelection.vue';
+import GeoJsonImporter from '../components/biovers/Import/GeoJsonImporter.vue';
 
 import getData from '../api/biovers';
 
@@ -30,6 +45,7 @@ export default {
   components: {
     Map,
     BioversSelection,
+    GeoJsonImporter,
   },
   data() {
     return {
@@ -39,9 +55,17 @@ export default {
       pois: [],
       paths: [],
       bioversToDisplay: [],
+      uploadInProgress: false,
+      uploadDone: true,
     };
   },
   methods: {
+    add() {
+      if (this.uploadInProgress) {
+        this.uploadDone = false;
+        this.uploadInProgress = false;
+      }
+    },
     selectedBiovers(event) {
       const selectBiover = this.getOwnerBiovers.find((e) => e.name === event.biover.label);
       this.bioversToDisplay.push({
@@ -91,13 +115,24 @@ export default {
         this.paths.push({ biover: event.biover, paths: p });
       }
     },
-    async getPublic() {
-      const result = await getData.getPublicBiovers();
-      this.publicBiovers = result.data;
+    importPoi(pois) {
+      this.uploadInProgress = true;
+      const currentMapIndex = this.pois.findIndex((e) => e.biover === this.currentBioversId);
+      const currentTableIndex = this.bioversToDisplay
+        .findIndex((e) => e.biover.id === this.currentBioversId);
+      pois.forEach((poi) => {
+        this.pois[currentMapIndex].pois.push({
+          coordinate: [poi.coordinate.lat, poi.coordinate.long],
+          element: poi,
+        });
+        this.bioversToDisplay[currentTableIndex].biover.Poi.push(poi);
+      });
     },
-    async getOwner() {
-      const result = await getData.getBioversByUser(4);
-      this.ownerBiovers = result.data.data;
+    getPublic() {
+      return getData.getPublicBiovers();
+    },
+    getOwner() {
+      return getData.getBioversByUser(4);
     },
     async addPoiToCurrentList(event) {
       const biover = this.ownerBiovers.find((e) => e.id === event.biovers);
@@ -120,15 +155,20 @@ export default {
   },
   computed: {
     getPublicBiovers() {
-      return this.publicBiovers.data;
+      return this.publicBiovers;
     },
     getOwnerBiovers() {
       return this.ownerBiovers;
     },
   },
   async mounted() {
-    await this.getOwner();
-    await this.getPublic();
+    const owners = await this.getOwner();
+    const publicB = await this.getPublic();
+    const difference = publicB.data.data.filter(
+      (x) => !owners.data.data.some((present) => present.id === x.id),
+    );
+    this.ownerBiovers = owners.data.data;
+    this.publicBiovers = difference;
   },
 };
 </script>
