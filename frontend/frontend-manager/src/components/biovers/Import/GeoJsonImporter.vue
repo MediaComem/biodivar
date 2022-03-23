@@ -5,6 +5,7 @@
     accept=".json,.geojson"
     action="https://jsonplaceholder.typicode.com/posts/"
     :auto-upload="false"
+    :on-change="handleExceed"
   >
     <template #trigger>
       <el-button
@@ -55,6 +56,11 @@ export default {
     };
   },
   methods: {
+    handleExceed() {
+      if (this.upload.uploadFiles.length > 1) {
+        this.upload.uploadFiles.splice(0, 1);
+      }
+    },
     createPoi(poi) {
       return {
         title: poi.properties.common_name.fr,
