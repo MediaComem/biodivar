@@ -11,7 +11,7 @@ import {
   coordinate_test,
 } from '../data/model/poi';
 import { symbol_test } from '../data/model/symbol';
-import { PoiModel } from '../../src/types/poi-model';
+import { PoiModel, PoiModels } from '../../src/types/poi-model';
 import { getPoiByTitle } from '../../src/controller/poi-controller';
 import { Coordinate, Symbol } from '@prisma/client';
 import { responseModel } from '../../src/types/response';
@@ -162,6 +162,34 @@ describe('Test Poi Routes', () => {
       expect(poi.symbol?.media_type).toEqual('Video');
     } else {
       throw new Error('Cannot create the POI with symbol');
+    }
+  });
+
+  it('Create multiple pois', async () => {
+    const res = await server.inject({
+      method: 'POST',
+      url: `/api/v1/poi/creates`,
+      auth: {
+        strategy: 'default',
+        credentials: {
+          id: 1,
+          password: 'test',
+        },
+      },
+      payload: [test_poi, test_poi],
+    });
+    const response = res.result as responseModel;
+    if (response && response.data) {
+      expect(response.statusCode).toEqual(200);
+      expect(Array.isArray(response.data)).toBe(true);
+      const data = response.data as PoiModels;
+      data.forEach((poi) => {
+        expect(poi).toBeDefined();
+        expect(poi.title).toEqual('POI 1');
+        expect(poi.last_contributor).toEqual(1);
+      })
+    } else {
+      throw new Error('Cannot create the POI');
     }
   });
 
