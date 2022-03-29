@@ -14,9 +14,10 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    background: #FFE7BA;
+    min-height: 100%;
+    background: rgb(147,191,112);
+    background: linear-gradient(90deg, rgba(147,191,112,1) 41%, rgba(61,136,69,1) 100%);
     display: grid;
-    place-content: center;
+    padding: 2rem;
   }
 </style>

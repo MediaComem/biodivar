@@ -18,17 +18,17 @@
 </script>
 
 <template>
-  <div v-show="isLoading">
+  <div v-if="isLoading">
     <app-modal>
       Loading
     </app-modal>
   </div>
-  <div v-show="!isAuth">
+  <div v-if="!isAuth">
     <app-modal>
       <the-login></the-login>
     </app-modal>
   </div>
-  <div v-show="isAuth">
+  <div v-if="isAuth">
     <the-aframe></the-aframe>
     <the-hud></the-hud>
   </div>
