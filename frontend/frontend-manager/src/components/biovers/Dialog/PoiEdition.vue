@@ -101,10 +101,11 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import poi from '../../../api/poi';
 
 export default {
-  emits: ['closeDialog', 'save'],
+  emits: ['closeDialog'],
   watch: {
     showDialog(newVal) {
       this.dialogVisible = newVal;
@@ -144,8 +145,10 @@ export default {
   methods: {
     async save() {
       const updatedPoi = await poi.updatePoi(this.form);
-      this.$emit('save', updatedPoi.data.data);
+      this.updatePoi(updatedPoi.data.data);
+      this.$emit('closeDialog');
     },
+    ...mapActions('biovers', ['updatePoi']),
   },
 };
 </script>

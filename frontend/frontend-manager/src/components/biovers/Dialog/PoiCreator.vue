@@ -101,10 +101,12 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+
 import poi from '../../../api/poi';
 
 export default {
-  emits: ['closeDialog', 'save'],
+  emits: ['closeDialog'],
   watch: {
     showDialog(newVal) {
       this.dialogVisible = newVal;
@@ -117,7 +119,6 @@ export default {
   props: {
     coordinate: Object,
     showDialog: Boolean,
-    currentBiover: Number,
   },
   data() {
     return {
@@ -163,13 +164,18 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapState('biovers', ['currentBioversId']),
+  },
   methods: {
     async save() {
-      this.form.biovers = this.currentBiover;
+      this.form.biovers = this.currentBioversId;
       const newPoi = await poi.savePoi(this.form);
+      this.addNewPoi(newPoi.data.data);
       this.showCreationDialog = false;
-      this.$emit('save', newPoi.data.data);
+      this.$emit('closeDialog');
     },
+    ...mapActions('biovers', ['addNewPoi']),
   },
 };
 </script>

@@ -3,23 +3,26 @@
     :center='center' @click="getPosition">
       <l-tile-layer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'></l-tile-layer>
       <div v-for="(path, index) in getPaths" :key="index">
-        <Path :path="path"/>
+        <Path v-if="path.display" :path="path" />
       </div>
       <div v-for="(poi, index) in getPois" :key="index">
-          <Poi :poi="poi.poi"
+          <Poi
+            v-if="poi.display &&
+            (ownOrPublic(poi.element.biovers) === 'own'
+            || (ownOrPublic(poi.element.biovers) === 'public'
+            && poi.element.is_public))"
+            :poi="poi"
             :iconHeight="40"
             :iconWidth="25"
             :icon="'https://placekitten.com'"
-            @update-poi="openPoiEdition(poi.poi, poi.biover)"
-            @add="$emit('add')"/>
+            @update-poi="openPoiEdition"
+          />
       </div>
     </l-map>
     <PoiCreator :showDialog="showCreationDialog" :coordinate="latlng"
-    :currentBiover="currentBioversId"
-    @close-dialog="showCreationDialog = false" @save="save"/>
+    @close-dialog="showCreationDialog = false" />
     <PoiEdition :poi="poiToUpdate" :showDialog="showEditionDialog"
-    @close-dialog="showEditionDialog = false"
-    @save="updatePoi"/>
+    @close-dialog="showEditionDialog = false" />
 </template>
 
 <script>
@@ -28,6 +31,8 @@ import {
   LTileLayer,
 } from '@vue-leaflet/vue-leaflet';
 import 'leaflet/dist/leaflet.css';
+
+import { mapGetters } from 'vuex';
 
 import Poi from './Poi.vue';
 import Path from './Path.vue';
@@ -43,12 +48,6 @@ export default {
     PoiCreator,
     PoiEdition,
   },
-  props: {
-    currentBioversId: Number,
-    pois: Array,
-    paths: Array,
-  },
-  emits: ['newPoi', 'updatePoi', 'add'],
   data() {
     return {
       showCreationDialog: false,
@@ -64,24 +63,7 @@ export default {
     };
   },
   computed: {
-    getPois() {
-      const pois = [];
-      this.pois.forEach((pAll) => {
-        pAll.pois.forEach((p) => {
-          pois.push({ biover: pAll.biover, poi: p });
-        });
-      });
-      return pois;
-    },
-    getPaths() {
-      const paths = [];
-      this.paths.forEach((pAll) => {
-        pAll.paths.forEach((p) => {
-          paths.push(p);
-        });
-      });
-      return paths;
-    },
+    ...mapGetters('biovers', ['getPois', 'getPaths', 'ownOrPublic']),
   },
   methods: {
     getPosition(event) {
@@ -90,17 +72,9 @@ export default {
         this.showCreationDialog = true;
       }
     },
-    openPoiEdition(event, bioverId) {
-      this.poiToUpdate = { poi: event.element, biover: bioverId };
+    openPoiEdition(event) {
+      this.poiToUpdate = { poi: event };
       this.showEditionDialog = true;
-    },
-    async save(event) {
-      this.showCreationDialog = false;
-      this.$emit('newPoi', event);
-    },
-    async updatePoi(event) {
-      this.showEditionDialog = false;
-      this.$emit('updatePoi', { biover: event.biovers, poi: event });
     },
   },
 };

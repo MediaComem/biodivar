@@ -7,6 +7,7 @@
       :rules="rules"
       :label-position="'right'"
       label-width="auto"
+      @keyup.enter="authentication"
     >
       <el-form-item class="layout">
         <h3>BiodivAR</h3>
@@ -28,7 +29,7 @@
         <el-button
           :disabled="!error"
           type="primary"
-          @click="authenticate"
+          @click="authentication"
         >
         Submit
         </el-button>
@@ -40,6 +41,7 @@
 
 <script>
 import axios from 'axios';
+import { mapActions } from 'vuex';
 import { ElNotification } from 'element-plus';
 
 export default {
@@ -57,37 +59,41 @@ export default {
     },
   },
   methods: {
-    async authenticate() {
-      try {
-        const response = await axios.post(
-          `${process.env.VUE_APP_URL}/login`,
-          {
-            username: this.form.username,
-            password: this.form.password,
-          },
-          { withCredentials: true },
-        );
-        this.$store.dispatch('authenticate', {
-          isAuthenticate: true,
-          username: response.data.data,
-        });
-        this.$router.push('Biovers');
-      } catch (error) {
-        this.$store.dispatch('authenticate', {
-          isAuthenticate: false,
-          username: '',
-        });
-        let errorMessage = '';
-        if (error.response.data.statusCode === 400) {
-          errorMessage = 'Username or password is wrong';
+    authentication() {
+      this.$refs.register.validate((valid) => {
+        if (valid) {
+          axios.post(
+            `${process.env.VUE_APP_URL}/login`,
+            {
+              username: this.form.username,
+              password: this.form.password,
+            },
+            { withCredentials: true },
+          ).then((response) => {
+            this.authenticate({
+              isAuthenticate: true,
+              username: response.data.data,
+            });
+            this.$router.push('Biovers');
+          }).catch((error) => {
+            this.authenticate({
+              isAuthenticate: false,
+              username: '',
+            });
+            let errorMessage = '';
+            if (error.response.data.statusCode === 400) {
+              errorMessage = 'Username or password is wrong';
+            }
+            ElNotification({
+              title: 'Authentication failure',
+              message: errorMessage,
+              type: 'error',
+            });
+          });
         }
-        ElNotification({
-          title: 'Authentication failure',
-          message: errorMessage,
-          type: 'error',
-        });
-      }
+      });
     },
+    ...mapActions('auth', ['authenticate']),
   },
   name: 'Login',
   data() {

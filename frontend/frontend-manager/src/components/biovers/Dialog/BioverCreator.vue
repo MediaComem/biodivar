@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogVisible" title="Création d'un Biover" @close="$emit('close')">
+  <el-dialog v-model="dialogVisible" title="Création d'un Biover" @close="$emit('closeDialog')">
     <el-form :model="form">
       <el-form-item label="Nom" :label-width="formLabelWidth">
         <el-input v-model="form.name" autocomplete="off"></el-input>
@@ -20,18 +20,21 @@
   </el-dialog>
 </template>
 <script>
+import { mapActions } from 'vuex';
+
 import getData from '../../../api/biovers';
 
 export default {
   watch: {
     showDialog(newVal) {
       this.dialogVisible = newVal;
+      this.form.name = '';
     },
   },
   props: {
     showDialog: Boolean,
   },
-  emits: ['close', 'closeDialog', 'save'],
+  emits: ['closeDialog'],
   data() {
     return {
       dialogVisible: false,
@@ -45,8 +48,10 @@ export default {
   methods: {
     async save() {
       const newBiover = await getData.createBiover(this.form);
-      this.$emit('save', newBiover.data.data);
+      this.addNewBiover(newBiover.data.data);
+      this.$emit('closeDialog');
     },
+    ...mapActions('biovers', ['addNewBiover']),
   },
 };
 </script>

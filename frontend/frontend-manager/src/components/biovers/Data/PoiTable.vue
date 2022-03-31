@@ -1,5 +1,6 @@
 <template>
-  <el-table ref="multipleTableRef" :data="rows" style="width: 100%" @select="selectElement"
+  <el-table ref="multipleTableRef" :data="getData"
+  style="width: 100%" @select="selectElement"
   @select-all="selectElement">
     <el-table-column fixed type="selection" width="55" />
     <el-table-column property="name" label="Biovers Name" width="120" sortable/>
@@ -43,47 +44,60 @@
     sortable/>
     <el-table-column fixed align="right">
      <template #default="scope">
-        <el-button size="small" @click="handleEdit(scope.row)"
+        <el-button :class="{disabled: couldUpdate(scope.row)}"
+          size="small"
+          @click="handleEdit(scope.row)"
           >Edit</el-button
         >
       </template>
     </el-table-column>
   </el-table>
-  <PoiEdition :poi="poiToEdit" :showDialog="showDialog" @close-dialog="closeDialog"
-  @save="update"/>
+  <PoiEdition :poi="poiToEdit" :showDialog="showDialog" @close-dialog="showDialog = false" />
 </template>
 
 <script>
+import { mapActions, mapGetters, mapState } from 'vuex';
+
 import format from '../../../utils/formatter';
 import PoiEdition from '../Dialog/PoiEdition.vue';
 
 export default {
+  components: { PoiEdition },
+  props: {
+    bioverId: Number,
+  },
   watch: {
-    data(newVal) {
-      if (this.rows.length === newVal.length - 1) {
-        this.rows.push(newVal[newVal.length - 1]);
-        this.selectedRows.push(newVal[newVal.length - 1].element);
-        this.$refs.multipleTableRef.toggleRowSelection(this.rows[this.rows.length - 1]);
-        this.$emit('poiToDisplay', this.selectedRows);
-      } else if (this.rows.length === newVal.length) {
-        console.log('Find a way to update only the modified element');
-      } else {
-        this.rows = newVal;
+    poisModification(newVal) {
+      if (Array.isArray(newVal)) {
+        newVal.forEach((poi) => {
+          if (poi.element.element.biovers === this.bioverId) {
+            this.$refs.multipleTableRef.toggleRowSelection(poi.element);
+            this.resetPoisModification();
+          }
+        });
+        return;
+      }
+      if (newVal.element.element.biovers === this.bioverId) {
+        this.$refs.multipleTableRef.toggleRowSelection(newVal.element);
+        this.resetPoisModification();
       }
     },
   },
-  components: { PoiEdition },
-  props: {
-    data: Array,
-  },
-  emits: ['poiToDisplay', 'updatePoi'],
   data() {
     return {
-      rows: [],
-      selectedRows: [],
       poiToEdit: {},
       showDialog: false,
     };
+  },
+  computed: {
+    getData() {
+      if (this.ownOrPublic(this.bioverId) === 'own') {
+        return this.getPoisByBiover(this.bioverId);
+      }
+      return this.getPoisByBiover(this.bioverId).filter((e) => e.element.is_public);
+    },
+    ...mapState('biovers', ['poisModification']),
+    ...mapGetters('biovers', ['getPoisByBiover', 'ownOrPublic']),
   },
   methods: {
     creationDate(row) {
@@ -92,30 +106,34 @@ export default {
     updateDate(row) {
       return format.dateFormatter(row.element.update_date);
     },
-    selectElement(event) {
-      this.selectedRows = [];
-      event.forEach((row) => {
-        this.selectedRows.push(row.element);
-      });
-      this.$emit('poiToDisplay', this.selectedRows);
+    selectElement(selection, row) {
+      if (row) {
+        this.updatePoiToDisplay({
+          bioverId: this.bioverId,
+          poi: row,
+        });
+      }
+    },
+    couldUpdate(row) {
+      return this.ownOrPublic(row.element.biovers) === 'public' && !row.element.is_editable;
     },
     handleEdit(row) {
+      if (this.couldUpdate(row)) {
+        return;
+      }
       this.poiToEdit = { poi: row.element };
       this.showDialog = true;
     },
-    closeDialog() {
-      this.showDialog = false;
-    },
-    async update(event) {
-      const index = this.rows.findIndex((e) => e.element.id === event.id);
-      this.rows[index].element = event;
-      this.showDialog = false;
-      this.$emit('updatePoi', event);
-    },
+    ...mapActions('biovers', ['updatePoiToDisplay', 'resetPoisModification']),
   },
   mounted() {
-    this.rows = this.data;
     this.$refs.multipleTableRef.toggleAllSelection();
   },
 };
 </script>
+
+<style scoped>
+.disabled {
+  opacity: 0.3;
+}
+</style>

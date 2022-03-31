@@ -7,6 +7,7 @@
       :rules="rules"
       :label-position="'right'"
       label-width="auto"
+      @keyup.enter="createUser"
     >
       <el-form-item class="layout">
         <h3>BiodivAR</h3>
@@ -84,39 +85,42 @@ export default {
         callback();
       }
     },
-    async createUser() {
-      try {
-        const response = await axios.post(
-          `${process.env.VUE_APP_URL}/register`,
-          {
-            username: this.form.username,
-            email: this.form.email,
-            password: this.form.password,
-          },
-          { withCredentials: true },
-        );
-        this.$store.dispatch('authenticate', {
-          isAuthenticate: true,
-          username: response.data.data,
-        });
-        this.$router.push('Biovers');
-      } catch (error) {
-        this.$store.dispatch('authenticate', {
-          isAuthenticate: false,
-          username: '',
-        });
-        let errorMessage = '';
-        if (error.response.status === 400) {
-          errorMessage = error.response.data.message;
-        } else {
-          errorMessage = 'The user cannot be create for unknow reason. Please contact an administator to solve the problem';
+    createUser() {
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          axios.post(
+            `${process.env.VUE_APP_URL}/register`,
+            {
+              username: this.form.username,
+              email: this.form.email,
+              password: this.form.password,
+            },
+            { withCredentials: true },
+          ).then((response) => {
+            this.$store.dispatch('authenticate', {
+              isAuthenticate: true,
+              username: response.data.data,
+            });
+            this.$router.push('Biovers');
+          }).catch((error) => {
+            this.$store.dispatch('authenticate', {
+              isAuthenticate: false,
+              username: '',
+            });
+            let errorMessage = '';
+            if (error.response.status === 400) {
+              errorMessage = error.response.data.message;
+            } else {
+              errorMessage = 'The user cannot be create for unknow reason. Please contact an administator to solve the problem';
+            }
+            ElNotification({
+              title: 'Authentication failure',
+              message: errorMessage,
+              type: 'error',
+            });
+          });
         }
-        ElNotification({
-          title: 'Authentication failure',
-          message: errorMessage,
-          type: 'error',
-        });
-      }
+      });
     },
   },
   name: 'Register',

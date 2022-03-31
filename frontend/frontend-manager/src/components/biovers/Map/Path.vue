@@ -1,6 +1,7 @@
 <template>
   <l-polyline
-    :lat-lngs="path.coordinate"
+    v-if="path.element.coordinate"
+    :lat-lngs="[path.element.coordinate.map((c) => [c.lat,c.long])]"
     color="green"
   ></l-polyline>
 </template>

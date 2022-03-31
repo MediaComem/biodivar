@@ -8,14 +8,14 @@
       router
     >
       <el-menu-item index="/" class="element-position-left menu-title">BiodivAR</el-menu-item>
-      <el-menu-item v-if="!getAutheticate" index="/register" class="element-position-right"
+      <el-menu-item v-if="!isAuthenticate" index="/register" class="element-position-right"
         >S'inscrire</el-menu-item
       >
-      <el-menu-item v-if="!getAutheticate" index="/login" class="element-position-right"
+      <el-menu-item v-if="!isAuthenticate" index="/login" class="element-position-right"
         >Login</el-menu-item
       >
-      <el-sub-menu v-if="getAutheticate" index="user" class="element-position-right">
-        <template #title>{{ getUsername }}</template>
+      <el-sub-menu v-if="isAuthenticate" index="user" class="element-position-right">
+        <template #title>{{ username }}</template>
           <el-menu-item index="/logout" @click="logout">Logout</el-menu-item>
       </el-sub-menu>
     </el-menu>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import axios from 'axios';
 
 export default {
@@ -32,7 +32,7 @@ export default {
     async logout() {
       try {
         await axios.get(`${process.env.VUE_APP_URL}/logout`, { withCredentials: true });
-        this.$store.dispatch('authenticate', {
+        this.authenticate({
           isAuthenticate: false,
           username: '',
         });
@@ -41,9 +41,10 @@ export default {
         console.log(error);
       }
     },
+    ...mapActions('auth', ['authenticate']),
   },
   computed: {
-    ...mapGetters(['getAutheticate', 'getUsername']),
+    ...mapState('auth', ['isAuthenticate', 'username']),
   },
 };
 </script>

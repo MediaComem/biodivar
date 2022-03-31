@@ -1,6 +1,7 @@
 <template>
   <el-tabs v-model="editableTabsValue"
-    type="card" class="demo-tabs">
+    type="card" class="demo-tabs"
+    @tab-click="selectTab">
       <el-tab-pane
       label="BIOVERS"
       name="1"
@@ -14,31 +15,24 @@
       :label="item.title"
       :name="item.name"
       >
-        <DataTab :biovers="item.biover" @poi-to-display="$emit('poiToDisplay', $event)"
-        @path-to-display="$emit('pathToDisplay', $event)"
-        @update-poi="$emit('updatePoi', $event)"/>
+        <DataTab :biovers="item.biover"
+        :bioverId="item.biover.id" />
       </el-tab-pane>
   </el-tabs>
-  <BioverCreator :showDialog="showDialog" @close="showDialog = false"
-  @close-dialog="showDialog = false" @save="createBiover"/>
+  <BioverCreator :showDialog="showDialog" @close-dialog="showDialog = false"/>
 </template>
 
 <script>
 import { ref } from 'vue';
+import { mapState, mapActions } from 'vuex';
 
 import DataTab from './DataTab.vue';
 import BioverCreator from '../Dialog/BioverCreator.vue';
 
 export default {
-  props: {
-    ownerBiovers: Object,
-    publicBiovers: Object,
-    bioversToDisplay: Array,
-  },
-  emits: ['poiToDisplay', 'pathToDisplay', 'updatePoi', 'selectedBiovers', 'createBiover', 'removeBiover'],
   components: { DataTab, BioverCreator },
   watch: {
-    ownerBiovers: {
+    ownBiovers: {
       deep: true,
       handler(newVal) {
         if (newVal.length !== this.currentBiovers.length) {
@@ -61,26 +55,36 @@ export default {
       currentBiovers: [],
     };
   },
+  computed: {
+    ...mapState('biovers', ['ownBiovers', 'publicBiovers', 'bioversToDisplay']),
+  },
   methods: {
     selectedBiovers(event) {
       const index = this.bioversToDisplay.findIndex((biovers) => biovers.biover.id === event.id);
       if (index === -1) {
         this.index += 1;
         this.editableTabsValue = ref(`${this.index}`);
-        this.$emit('selectedBiovers', { index: this.index, biover: event });
+        this.addBioverToDisplay({ index: this.index, biover: event });
+        this.addPoiToDisplay(event.id);
+        this.addPathToDisplay(event.id);
       } else {
-        this.$emit('removeBiover', event.id);
+        this.removeBioverToDisplay(event.id);
       }
     },
-    async createBiover(event) {
-      this.showDialog = false;
-      this.$emit('createBiover', event);
+    selectTab(event) {
+      const tabIndex = this.bioversToDisplay.findIndex((b) => b.name === event.props.name);
+      if (tabIndex !== -1) {
+        this.setCurrentBiover(this.bioversToDisplay[tabIndex].biover.id);
+      } else {
+        this.setCurrentBiover(0);
+      }
     },
+    ...mapActions('biovers', ['addBioverToDisplay', 'removeBioverToDisplay', 'addPoiToDisplay', 'addPathToDisplay', 'setCurrentBiover']),
   },
   mounted() {
-    this.currentBiovers = Array.from(this.ownerBiovers);
+    this.currentBiovers = Array.from(this.ownBiovers);
     const own = [];
-    this.ownerBiovers.forEach((biover) => {
+    this.ownBiovers.forEach((biover) => {
       own.push({
         label: biover.name,
         id: biover.id,

@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 export default {
-  async getBioversByUser(id) {
-    return axios.get(`${process.env.VUE_APP_URL}/biovers/user?id=${id}`, { withCredentials: true });
+  async getBioversByUser() {
+    return axios.get(`${process.env.VUE_APP_URL}/biovers/user`, { withCredentials: true });
   },
 
   async getPublicBiovers() {

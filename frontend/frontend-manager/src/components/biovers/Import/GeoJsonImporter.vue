@@ -27,7 +27,7 @@
       class="ml-3"
       type="success"
       @click="save"
-      :disabled="uploadDone"
+      :disabled="!uploadDone"
     >
     Save to server
     </el-button>
@@ -38,15 +38,14 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
+
 import api from '../../../api/poi';
 
 export default {
   name: 'GeoJsonImporter',
-  emits: ['importPoi', 'save'],
   props: {
-    bioverId: Number,
     authorId: Number,
-    uploadDone: Boolean,
   },
   data() {
     return {
@@ -54,6 +53,9 @@ export default {
       saveDone: false,
       pois: [],
     };
+  },
+  computed: {
+    ...mapState('biovers', ['currentBioversId', 'uploadInProgress', 'uploadDone']),
   },
   methods: {
     handleExceed() {
@@ -69,13 +71,13 @@ export default {
         subtitle_is_visible: false,
         author: this.authorId,
         is_public: false,
-        is_editable: true,
+        is_editable: false,
         coordinate: {
           long: poi.geometry.coordinates[0],
           lat: poi.geometry.coordinates[1],
           alt: poi.geometry.coordinates[2],
         },
-        biovers: this.bioverId,
+        biovers: this.currentBioversId,
         radius: 15.5,
         style_type: 'sphere',
         style_stroke: true,
@@ -104,7 +106,7 @@ export default {
               }
             });
           });
-          this.$emit('importPoi', this.pois);
+          this.importPois(this.pois);
         } else {
           result.features.forEach((data) => {
             if (data.geometry.type === 'Point') {
@@ -112,19 +114,20 @@ export default {
             }
           });
           this.upload.uploadFiles.splice(0, 1);
-          this.$emit('importPoi', this.pois);
+          this.importPois(this.pois);
         }
       };
       fr.readAsText(this.upload.uploadFiles[0].raw);
     },
     async save() {
-      this.$emit('save');
       await api.savePois(this.pois);
+      this.resetUpload();
       this.saveDone = true;
       setTimeout(() => {
         this.saveDone = false;
       }, 2000);
     },
+    ...mapActions('biovers', ['importPois', 'resetUpload']),
   },
   mounted() {
     this.upload = this.$refs.upload;

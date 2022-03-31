@@ -15,9 +15,9 @@ export const formatter = {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   },
 
-  coordinateFormatter(coordiantes) {
+  coordinateFormatter(coordinates) {
     let t = '[';
-    coordiantes.forEach((coordinate) => {
+    coordinates.forEach((coordinate) => {
       t = `${t}[${coordinate.long},${coordinate.lat},${coordinate.alt}],`;
     });
     t = t.slice(0, -1);

@@ -1,5 +1,6 @@
 <template>
-  <el-table ref="multipleTableRef" :data="data" style="width: 100%" @select="selectElement"
+  <el-table ref="multipleTableRef" :data="getPathsByBiover(bioverId)" style="width: 100%"
+  @select="selectElement"
   @select-all="selectElement">
     <el-table-column fixed type="selection" width="55" />
     <el-table-column property="name" label="Biovers Name" width="120" sortable/>
@@ -21,7 +22,7 @@
      sortable/>
      <el-table-column property="element.is_editable" label="Modifiable" show-overflow-tooltip
      sortable/>
-     <el-table-column :formatter="corrdinateFormater" label="Coordinate" show-overflow-tooltip
+     <el-table-column :formatter="coordinateFormatter" label="Coordinate" show-overflow-tooltip
      sortable/>
      <el-table-column property="element.radius" label="Radius" show-overflow-tooltip
      sortable/>
@@ -33,21 +34,25 @@
      label="Radius Elévation" show-overflow-tooltip sortable/>
      <el-table-column property="element.style_is_visible"
      label="Radius Visible" show-overflow-tooltip sortable/>
-    <el-table-column property="element.title" label="Poi Title" show-overflow-tooltip
+    <el-table-column property="element.title" label="Path Title" show-overflow-tooltip
     sortable/>
-    <el-table-column property="element.subtitle" label="Poi Subtitle" show-overflow-tooltip
+    <el-table-column property="element.subtitle" label="Path Subtitle" show-overflow-tooltip
     sortable/>
   </el-table>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 import format from '../../../utils/formatter';
 
 export default {
   props: {
-    data: Array,
+    bioverId: Number,
   },
-  emits: ['pathToDisplay'],
+  computed: {
+    ...mapGetters('biovers', ['getPathsByBiover']),
+  },
   methods: {
     creationDate(row) {
       return format.dateFormatter(row.element.creation_date);
@@ -55,16 +60,18 @@ export default {
     updateDate(row) {
       return format.dateFormatter(row.element.update_date);
     },
-    corrdinateFormater(row) {
-      return format.coordinateFormatter(row.coordinate);
+    coordinateFormatter(row) {
+      return format.coordinateFormatter(row.element.coordinate);
     },
-    selectElement(event) {
-      const data = [];
-      event.forEach((row) => {
-        data.push({ type: row.type, element: row.element });
-      });
-      this.$emit('pathToDisplay', data);
+    selectElement(selection, row) {
+      if (row) {
+        this.updatePathToDisplay({
+          bioverId: this.bioverId,
+          path: row,
+        });
+      }
     },
+    ...mapActions('biovers', ['updatePathToDisplay']),
   },
   mounted() {
     this.$refs.multipleTableRef.toggleAllSelection();

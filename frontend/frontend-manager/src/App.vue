@@ -5,6 +5,7 @@
 <script>
 import Layout from '@/views/Layout.vue';
 import axios from 'axios';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'Home',
@@ -16,13 +17,14 @@ export default {
       try {
         await axios.get(`${process.env.VUE_APP_URL}/login`, { withCredentials: true });
       } catch (error) {
-        this.$store.dispatch('authenticate', {
+        this.authenticate({
           isAuthenticate: false,
           username: '',
         });
         this.$router.push('/login');
       }
     },
+    ...mapActions('auth', ['authenticate']),
   },
   mounted() {
     this.checkLoggin();

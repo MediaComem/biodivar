@@ -1,15 +1,5 @@
-import { createStore } from 'vuex';
-import VuexPersistence from 'vuex-persist';
-
-const vuexLocal = new VuexPersistence({
-  storage: window.localStorage,
-  modules: [
-    'isAuthenticate',
-    'username',
-  ],
-});
-
-export const authStore = createStore({
+export const authStore = {
+  namespaced: true,
   state() {
     return {
       isAuthenticate: false,
@@ -35,7 +25,6 @@ export const authStore = createStore({
       return state.username;
     },
   },
-  plugins: [vuexLocal.plugin],
-});
+};
 
 export default authStore;
