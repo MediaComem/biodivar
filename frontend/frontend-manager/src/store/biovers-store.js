@@ -103,7 +103,6 @@ export const bioversStore = {
     UPDATE_IMPORT_POIS(state, pois) {
       const index = state.pois.findIndex((e) => e.bioverId === pois[0].biovers);
       let saveIndex = 0;
-      console.log(pois[0]);
       for (let i = 0; i < state.pois[index].pois.length; i += 1) {
         if (state.pois[index].pois[i].import) {
           state.pois[index].pois[i].import = false;
@@ -141,6 +140,30 @@ export const bioversStore = {
     },
     RESET_POI_MODIFICATION(state) {
       state.poisModification = null;
+    },
+    SELECT_ALL_POIS(state) {
+      const poisIndex = state.pois.findIndex((e) => e.bioverId === state.currentBioversId);
+      for (let i = 0; i < state.pois[poisIndex].pois.length; i += 1) {
+        state.pois[poisIndex].pois[i].display = true;
+      }
+    },
+    UNSELECT_ALL_POIS(state) {
+      const poisIndex = state.pois.findIndex((e) => e.bioverId === state.currentBioversId);
+      for (let i = 0; i < state.pois[poisIndex].pois.length; i += 1) {
+        state.pois[poisIndex].pois[i].display = false;
+      }
+    },
+    SELECT_ALL_PATHS(state) {
+      const pathsIndex = state.paths.findIndex((e) => e.bioverId === state.currentBioversId);
+      for (let i = 0; i < state.paths[pathsIndex].paths.length; i += 1) {
+        state.paths[pathsIndex].paths[i].display = true;
+      }
+    },
+    UNSELECT_ALL_PATHS(state) {
+      const pathsIndex = state.paths.findIndex((e) => e.bioverId === state.currentBioversId);
+      for (let i = 0; i < state.paths[pathsIndex].paths.length; i += 1) {
+        state.paths[pathsIndex].paths[i].display = false;
+      }
     },
   },
   actions: {
@@ -248,6 +271,18 @@ export const bioversStore = {
     },
     resetPoisModification({ commit }) {
       commit('RESET_POI_MODIFICATION');
+    },
+    selectAllPois({ commit }) {
+      commit('SELECT_ALL_POIS');
+    },
+    unselectAllPois({ commit }) {
+      commit('UNSELECT_ALL_POIS');
+    },
+    selectAllPaths({ commit }) {
+      commit('SELECT_ALL_PATHS');
+    },
+    unselectAllPaths({ commit }) {
+      commit('UNSELECT_ALL_PATHS');
     },
   },
   getters: {

@@ -1,7 +1,7 @@
 <template>
   <el-table ref="multipleTableRef" :data="getPathsByBiover(bioverId)" style="width: 100%"
   @select="selectElement"
-  @select-all="selectElement">
+  @select-all="selectAll">
     <el-table-column fixed type="selection" width="55" />
     <el-table-column property="name" label="Biovers Name" width="120" sortable/>
     <el-table-column property="element.id" label="Path ID" show-overflow-tooltip sortable/>
@@ -70,7 +70,14 @@ export default {
         });
       }
     },
-    ...mapActions('biovers', ['updatePathToDisplay']),
+    selectAll(event) {
+      if (event.length === 0) {
+        this.unselectAllPaths();
+      } else {
+        this.selectAllPaths();
+      }
+    },
+    ...mapActions('biovers', ['updatePathToDisplay', 'selectAllPaths', 'unselectAllPaths']),
   },
   mounted() {
     this.$refs.multipleTableRef.toggleAllSelection();

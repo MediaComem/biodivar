@@ -1,7 +1,7 @@
 <template>
   <el-table ref="multipleTableRef" :data="getData"
   style="width: 100%" @select="selectElement"
-  @select-all="selectElement">
+  @select-all="selectAll">
     <el-table-column fixed type="selection" width="55" />
     <el-table-column property="name" label="Biovers Name" width="120" sortable/>
     <el-table-column property="element.id" label="Poi ID" show-overflow-tooltip sortable/>
@@ -67,7 +67,6 @@ export default {
   },
   watch: {
     poisModification(newVal) {
-      console.log(newVal);
       if (newVal) {
         if (Array.isArray(newVal)) {
           newVal.forEach((poi) => {
@@ -116,6 +115,13 @@ export default {
         });
       }
     },
+    selectAll(event) {
+      if (event.length === 0) {
+        this.unselectAllPois();
+      } else {
+        this.selectAllPois();
+      }
+    },
     couldUpdate(row) {
       return (this.ownOrPublic(row.element.biovers) === 'public' && !row.element.is_editable) || row.import;
     },
@@ -126,7 +132,7 @@ export default {
       this.poiToEdit = { poi: row.element };
       this.showDialog = true;
     },
-    ...mapActions('biovers', ['updatePoiToDisplay', 'resetPoisModification']),
+    ...mapActions('biovers', ['updatePoiToDisplay', 'resetPoisModification', 'selectAllPois', 'unselectAllPois']),
   },
   mounted() {
     this.$refs.multipleTableRef.toggleAllSelection();
