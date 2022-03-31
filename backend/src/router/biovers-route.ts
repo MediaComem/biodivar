@@ -72,7 +72,7 @@ bioversRoutes.push({
   handler: async function (request, h) {
     const biovers = await getBioversByUser(
       request.server.app.prisma,
-      +request.query.id
+      request.state.biodivar.id as number
     );
     if (biovers) {
       return successResponse(h, 'Get biovers done successfully', biovers);

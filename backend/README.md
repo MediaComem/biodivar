@@ -1,5 +1,26 @@
 # API:
 
+## Login
+
+### Login
+
+- HTTP method: POST
+- Route: /login
+- Payload: `{"username": "user", "password": "password"}`
+- Example: `/login`
+- Return: `{statusCode: 200, message: "Registration Success", data: {"username": "user"}}`
+- Error: 
+    - Validation: `{"error": "Bad Request","message": "Invalid request params input","statusCode": 400}`
+    - Validation: `{"error": "Bad Request",statusCode: 400, message: "Login Failure"}`
+    - Internal: `{"error": "Internal server error","message": "Error depending","statusCode": 500}`
+
+### Logout
+
+- HTTP method: GET
+- Route: /logout
+- Example: `/logout`
+- Return: `{statusCode: 200, message: "Logout Success"}`
+
 ## Users
 
 ### User Creation
@@ -64,8 +85,7 @@
 
 - HTTP method: GET
 - Route: /biovers/user
-- Query Parameter: `id=id`
-- Example: `/biovers/user?id=1`
+- Example: `/biovers/user`
 - Return: 
     - When content: `{statusCode: 200, message: "Get biovers done successfully", data: [{"id":1,"name":"Biovers 1","owner":1,"creation_date":"2022-01-26T13:43:02.007Z","update_date":null,"deleted_date":null,"is_public":true,"Poi":[{"id":1,"title":"POI 1","title_is_visible":true,"subtitle":null,"subtitle_is_visible":false,"author":1,"creation_date":"2022-01-26T13:43:01.892Z","update_date":null,"deleted_date":null,"last_contributor":null,"is_public":true,"is_editable":false,"biovers":1,"radius":15.5,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_fill":false,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"trigger_mode":"location","metadata":null,"coordinate":null},{"id":2,"title":"POI 1","title_is_visible":true,"subtitle":null,"subtitle_is_visible":false,"author":1,"creation_date":"2022-01-26T13:43:01.892Z","update_date":null,"deleted_date":null,"last_contributor":null,"is_public":true,"is_editable":false,"biovers":1,"radius":15.5,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_fill":false,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"trigger_mode":"location","metadata":null,"coordinate":null},{"id":3,"title":"POI 1","title_is_visible":true,"subtitle":null,"subtitle_is_visible":false,"author":1,"creation_date":"2022-01-26T13:43:02.026Z","update_date":null,"deleted_date":null,"last_contributor":1,"is_public":true,"is_editable":false,"biovers":1,"radius":15.5,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_fill":false,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"trigger_mode":"location","metadata":null,"coordinate":null}]},{"id":3,"name":"Biovers 3","owner":1,"creation_date":"2022-01-26T13:43:02.012Z","update_date":null,"deleted_date":null,"is_public":false,"Poi":[]}]}`
     - Without content: `{statusCode: 204, message: "Get biovers done successfully"}`
