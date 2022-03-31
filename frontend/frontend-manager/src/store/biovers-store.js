@@ -77,6 +77,7 @@ export const bioversStore = {
         name: state.bioversToDisplay[bioverToDisplayIndex].title,
         element: poi,
         display: true,
+        import: false,
       };
       state.pois[index].pois.push(poiElementToAdd);
       state.poisModification = { element: poiElementToAdd };
@@ -91,12 +92,33 @@ export const bioversStore = {
           name: state.bioversToDisplay[bioverToDisplayIndex].title,
           element: poi,
           display: true,
+          import: true,
         };
         state.pois[index].pois.push(poiElementToAdd);
         modifications.push({ element: poiElementToAdd });
       });
       state.poisModification = modifications;
       state.uploadInProgress = true;
+    },
+    UPDATE_IMPORT_POIS(state, pois) {
+      const index = state.pois.findIndex((e) => e.bioverId === pois[0].biovers);
+      let saveIndex = 0;
+      console.log(pois[0]);
+      for (let i = 0; i < state.pois[index].pois.length; i += 1) {
+        if (state.pois[index].pois[i].import) {
+          state.pois[index].pois[i].import = false;
+          state.pois[index].pois[i].element.id = pois[saveIndex].id;
+          state.pois[index].pois[i].element.creation_date = pois[saveIndex].creation_date;
+          state.pois[index].pois[i].element.author = pois[saveIndex].author;
+          state.pois[index].pois[i].element.last_contributor = pois[saveIndex].last_contributor;
+          state.pois[index].pois[i].element.User = pois[saveIndex].User;
+          state.pois[index].pois[i].element.last_contributor_fk = pois[saveIndex]
+            .last_contributor_fk;
+          state.pois[index].pois[i].element.symbol = pois[saveIndex].symbol;
+          state.pois[index].pois[i].element.media = pois[saveIndex].media;
+          saveIndex += 1;
+        }
+      }
     },
     UPLOAD_DONE(state) {
       state.uploadInProgress = false;
@@ -118,7 +140,7 @@ export const bioversStore = {
       }
     },
     RESET_POI_MODIFICATION(state) {
-      state.poisModification$ = {};
+      state.poisModification = null;
     },
   },
   actions: {
@@ -165,6 +187,7 @@ export const bioversStore = {
           name: bioverName,
           element: poiElement,
           display: true,
+          import: false,
         });
       });
       commit('SAVE_POI_TO_DISPLAY', {
@@ -193,6 +216,7 @@ export const bioversStore = {
           name: bioverName,
           element: pathElement,
           display: true,
+          import: false,
         });
       });
       commit('SAVE_PATH_TO_DISPLAY', {
@@ -212,6 +236,9 @@ export const bioversStore = {
     },
     importPois({ commit }, pois) {
       commit('IMPORT_POI', pois);
+    },
+    updateImportPois({ commit }, pois) {
+      commit('UPDATE_IMPORT_POIS', pois);
     },
     uploadDone({ commit }) {
       commit('UPLOAD_DONE');

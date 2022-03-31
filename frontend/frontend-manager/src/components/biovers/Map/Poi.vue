@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     updatePoi() {
-      if (this.ownOrPublic(this.poi.element.biovers) === 'public' && !this.poi.element.is_editable) {
+      if ((this.ownOrPublic(this.poi.element.biovers) === 'public' && !this.poi.element.is_editable) || this.poi.import) {
         return;
       }
       this.$emit('updatePoi', this.poi.element);

@@ -5,7 +5,6 @@
     <el-table-column fixed type="selection" width="55" />
     <el-table-column property="name" label="Biovers Name" width="120" sortable/>
     <el-table-column property="element.id" label="Poi ID" show-overflow-tooltip sortable/>
-    <el-table-column property="type" label="Type" show-overflow-tooltip sortable/>
     <el-table-column property="element.visible_from" label="Distance" show-overflow-tooltip
     sortable/>
     <el-table-column property="element.trigger_mode" label="Trigger" show-overflow-tooltip
@@ -68,18 +67,21 @@ export default {
   },
   watch: {
     poisModification(newVal) {
-      if (Array.isArray(newVal)) {
-        newVal.forEach((poi) => {
-          if (poi.element.element.biovers === this.bioverId) {
-            this.$refs.multipleTableRef.toggleRowSelection(poi.element);
-            this.resetPoisModification();
-          }
-        });
-        return;
-      }
-      if (newVal.element.element.biovers === this.bioverId) {
-        this.$refs.multipleTableRef.toggleRowSelection(newVal.element);
-        this.resetPoisModification();
+      console.log(newVal);
+      if (newVal) {
+        if (Array.isArray(newVal)) {
+          newVal.forEach((poi) => {
+            if (poi.element.element.biovers === this.bioverId) {
+              this.$refs.multipleTableRef.toggleRowSelection(poi.element);
+              this.resetPoisModification();
+            }
+          });
+          return;
+        }
+        if (newVal.element.element.biovers === this.bioverId) {
+          this.$refs.multipleTableRef.toggleRowSelection(newVal.element);
+          this.resetPoisModification();
+        }
       }
     },
   },
@@ -115,7 +117,7 @@ export default {
       }
     },
     couldUpdate(row) {
-      return this.ownOrPublic(row.element.biovers) === 'public' && !row.element.is_editable;
+      return (this.ownOrPublic(row.element.biovers) === 'public' && !row.element.is_editable) || row.import;
     },
     handleEdit(row) {
       if (this.couldUpdate(row)) {

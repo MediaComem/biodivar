@@ -5,7 +5,6 @@
     <el-table-column fixed type="selection" width="55" />
     <el-table-column property="name" label="Biovers Name" width="120" sortable/>
     <el-table-column property="element.id" label="Path ID" show-overflow-tooltip sortable/>
-    <el-table-column property="type" label="Type" show-overflow-tooltip sortable/>
     <el-table-column property="element.visible_from" label="Distance" show-overflow-tooltip
     sortable/>
     <el-table-column property="element.trigger_mode" label="Trigger" show-overflow-tooltip

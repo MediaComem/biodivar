@@ -120,14 +120,15 @@ export default {
       fr.readAsText(this.upload.uploadFiles[0].raw);
     },
     async save() {
-      await api.savePois(this.pois);
+      const createdPois = await api.savePois(this.pois);
+      this.updateImportPois(createdPois.data.data);
       this.resetUpload();
       this.saveDone = true;
       setTimeout(() => {
         this.saveDone = false;
       }, 2000);
     },
-    ...mapActions('biovers', ['importPois', 'resetUpload']),
+    ...mapActions('biovers', ['importPois', 'resetUpload', 'updateImportPois']),
   },
   mounted() {
     this.upload = this.$refs.upload;
