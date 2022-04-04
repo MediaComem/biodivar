@@ -35,11 +35,29 @@ export default {
     ownBiovers: {
       deep: true,
       handler(newVal) {
-        if (newVal.length !== this.currentBiovers.length) {
-          const diff = newVal.filter((x) => !this.currentBiovers.includes(x));
-          this.data[0].children.push({
-            label: diff[0].name,
-            id: diff[0].id,
+        if (newVal.length !== this.data[0].length) {
+          const diff = newVal.filter((x) => !this.data[0].children
+            .some((child) => child.id === x.id));
+          diff.forEach((element) => {
+            this.data[0].children.push({
+              label: element.name,
+              id: element.id,
+            });
+          });
+        }
+      },
+    },
+    publicBiovers: {
+      deep: true,
+      handler(newVal) {
+        if (newVal.length !== this.data[1].length) {
+          const diff = newVal.filter((x) => !this.data[1].children
+            .some((child) => child.id === x.id));
+          diff.forEach((element) => {
+            this.data[1].children.push({
+              label: element.name,
+              id: element.id,
+            });
           });
         }
       },
@@ -47,7 +65,17 @@ export default {
   },
   data() {
     return {
-      data: [],
+      data: [{
+        label: 'Mes Biovers',
+        children: [],
+        disabled: true,
+      },
+      {
+        label: 'Biovers Publiques',
+        children: [],
+        disabled: true,
+      },
+      ],
       editableTabs: [{ title: 'POI', name: '1' }],
       editableTabsValue: ref('1'),
       index: 1,
@@ -63,7 +91,6 @@ export default {
       const index = this.bioversToDisplay.findIndex((biovers) => biovers.biover.id === event.id);
       if (index === -1) {
         this.index += 1;
-        this.editableTabsValue = ref(`${this.index}`);
         this.addBioverToDisplay({ index: this.index, biover: event });
         this.addPoiToDisplay(event.id);
         this.addPathToDisplay(event.id);
@@ -81,32 +108,9 @@ export default {
     },
     ...mapActions('biovers', ['addBioverToDisplay', 'removeBioverToDisplay', 'addPoiToDisplay', 'addPathToDisplay', 'setCurrentBiover']),
   },
-  mounted() {
-    this.currentBiovers = Array.from(this.ownBiovers);
-    const own = [];
-    this.ownBiovers.forEach((biover) => {
-      own.push({
-        label: biover.name,
-        id: biover.id,
-      });
-    });
-    this.data.push({
-      label: 'Mes Biovers',
-      children: own,
-      disabled: true,
-    });
-    const publicB = [];
-    this.publicBiovers.forEach((biover) => {
-      publicB.push({
-        label: biover.name,
-        id: biover.id,
-      });
-    });
-    this.data.push({
-      label: 'Biovers Publiques',
-      children: publicB,
-      disabled: true,
-    });
+  deactivated() {
+    this.data[0].children = [];
+    this.data[1].children = [];
   },
 };
 </script>

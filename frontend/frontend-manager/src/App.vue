@@ -21,7 +21,6 @@ export default {
           isAuthenticate: false,
           username: '',
         });
-        this.$router.push('/login');
       }
     },
     ...mapActions('auth', ['authenticate']),

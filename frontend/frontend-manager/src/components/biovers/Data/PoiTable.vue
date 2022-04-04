@@ -67,6 +67,7 @@ export default {
   },
   watch: {
     poisModification(newVal) {
+      console.log(newVal);
       if (newVal) {
         if (Array.isArray(newVal)) {
           newVal.forEach((poi) => {
@@ -77,7 +78,7 @@ export default {
           });
           return;
         }
-        if (newVal.element.element.biovers === this.bioverId) {
+        if (newVal.element && newVal.element.element.biovers === this.bioverId) {
           this.$refs.multipleTableRef.toggleRowSelection(newVal.element);
           this.resetPoisModification();
         }

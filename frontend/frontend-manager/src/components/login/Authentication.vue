@@ -25,6 +25,9 @@
           v-model="form.password"
         />
       </el-form-item>
+      <el-form-item class="">
+        <router-link to="/forgot">Mot de passe oublié?</router-link>
+      </el-form-item>
       <el-form-item class="layout">
         <el-button
           :disabled="!error"

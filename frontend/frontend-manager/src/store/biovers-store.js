@@ -165,6 +165,17 @@ export const bioversStore = {
         state.paths[pathsIndex].paths[i].display = false;
       }
     },
+    RESET_STORE(state) {
+      state.ownBiovers = [];
+      state.publicBiovers = [];
+      state.bioversToDisplay = [];
+      state.currentBioversId = -1;
+      state.pois = [];
+      state.poisModification = {};
+      state.paths = [];
+      state.uploadInProgress = false;
+      state.uploadDone = false;
+    },
   },
   actions: {
     async getBiovers({ commit }) {
@@ -283,6 +294,9 @@ export const bioversStore = {
     },
     unselectAllPaths({ commit }) {
       commit('UNSELECT_ALL_PATHS');
+    },
+    resetStore({ commit }) {
+      commit('RESET_STORE');
     },
   },
   getters: {

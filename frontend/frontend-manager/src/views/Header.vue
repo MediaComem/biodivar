@@ -36,12 +36,14 @@ export default {
           isAuthenticate: false,
           username: '',
         });
+        this.resetStore();
         this.$router.push('Login');
       } catch (error) {
         console.log(error);
       }
     },
     ...mapActions('auth', ['authenticate']),
+    ...mapActions('biovers', ['resetStore']),
   },
   computed: {
     ...mapState('auth', ['isAuthenticate', 'username']),

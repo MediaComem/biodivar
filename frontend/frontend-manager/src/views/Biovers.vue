@@ -6,7 +6,7 @@
   </el-row>
   <el-row
     :gutter="20"
-    v-if="ownBiovers && currentBioversId !== 0"
+    v-if="currentBioversId !== 0"
     style="margin-top: 2vh; margin-bottom: 2vh; margin-left: 0px;"
   >
     <GeoJsonImporter v-if="bioversToDisplay.length > 0"
@@ -15,7 +15,7 @@
   </el-row>
   <el-row :gutter="20">
     <el-col :span="24">
-      <BioversSelection v-if="ownBiovers.length > 0" />
+      <BioversSelection />
     </el-col>
   </el-row>
 </template>
@@ -36,9 +36,9 @@ export default {
     ...mapActions('biovers', ['getBiovers']),
   },
   computed: {
-    ...mapState('biovers', ['ownBiovers', 'publicBiovers', 'bioversToDisplay', 'currentBioversId']),
+    ...mapState('biovers', ['ownBiovers', 'bioversToDisplay', 'currentBioversId']),
   },
-  async mounted() {
+  async activated() {
     this.getBiovers();
   },
 };

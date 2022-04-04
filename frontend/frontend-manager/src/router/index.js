@@ -1,10 +1,12 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
-import { authStore } from '../store/auth-store';
+import { store } from '../store/store';
 
 import Biovers from '../views/Biovers.vue';
 import Authentication from '../components/login/Authentication.vue';
 import Register from '../components/login/Register.vue';
+import ForgotPassword from '../components/login/ForgotPassword.vue';
+import ChangePassword from '../components/login/ChangePassword.vue';
 
 const routes = [
   {
@@ -26,6 +28,18 @@ const routes = [
     meta: { isAuthenticate: false },
   },
   {
+    path: '/change/:token',
+    name: 'ChangePassword',
+    component: ChangePassword,
+    meta: { isAuthenticate: false },
+  },
+  {
+    path: '/forgot',
+    name: 'ForgotPassword',
+    component: ForgotPassword,
+    meta: { isAuthenticate: false },
+  },
+  {
     path: '/:pathMatch(.*)*',
     component: Biovers,
     meta: { isAuthenticate: true },
@@ -39,7 +53,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.isAuthenticate)) {
-    if (authStore.getters.getAutheticate) {
+    if (store.getters['auth/getAutheticate']) {
       next();
       return;
     }

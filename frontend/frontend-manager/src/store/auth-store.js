@@ -18,12 +18,11 @@ export const authStore = {
     },
   },
   getters: {
-    getAutheticate(state) {
-      return state.isAuthenticate;
+    getAutheticate: (state) => {
+      console.log(state);
+      return state ? state.isAuthenticate : false;
     },
-    getUsername(state) {
-      return state.username;
-    },
+    getUsername: (state) => state.username,
   },
 };
 
