@@ -3,11 +3,21 @@ import { UserModel } from '../types/user-model';
 import Bcrypt from 'bcrypt';
 import winston from 'winston';
 import { PrismaError } from '../types/prisma-error';
+import { EmailModel } from '../types/email';
 
 export const getUserById = async (prisma: PrismaClient, id: number) => {
   return await prisma.user.findFirst({
     where: {
       id: id,
+      deleted_date: null,
+    },
+  });
+};
+
+export const getUserByEmail = async (prisma: PrismaClient, email: EmailModel) => {
+  return await prisma.user.findFirst({
+    where: {
+      email: email.email,
       deleted_date: null,
     },
   });
@@ -120,5 +130,57 @@ export const deleteUser = async (
   } catch (error) {
     logger.error(error);
     return new Error('Cannot delete the user due to error');
+  }
+};
+
+export const insertToken = async (
+  prisma: PrismaClient,
+  email: string,
+  token: string,
+  logger: winston.Logger
+) => {
+  try {
+    return await prisma.user.update({
+      where: {
+        email: email,
+      },
+      data: {
+        token: token,
+      },
+    });
+  } catch (error) {
+    logger.error(error);
+    return new Error('Cannot insert information in the table');
+  }
+};
+
+export const changePassword = async (
+  prisma: PrismaClient,
+  password: string,
+  token: string,
+  logger: winston.Logger
+) => {
+  try {
+    const user = await prisma.user.findFirst({
+      where: {
+        token: token,
+        deleted_date: null,
+      },
+    });
+    if (user) {
+      user.password = await Bcrypt.hash(password, 10);
+      user.token = null;
+      return await prisma.user.update({
+        where: {
+          id: user.id,
+        },
+        data: user,
+      });
+    } else {
+      return new Error('Invalid token, please retry to change your password');
+    }
+  } catch (error) {
+    logger.error(error);
+    return new Error('Cannot insert information in the table');
   }
 };

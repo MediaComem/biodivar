@@ -1,7 +1,12 @@
 import { ServerRoute } from '@hapi/hapi';
 import Joi from 'joi';
 
-import { validateLogin, registerUser } from '../controller/auth-controller';
+import { 
+  validateLogin, 
+  registerUser, 
+  resetPassword, 
+  authChangePassword,
+} from '../controller/auth-controller';
 import { successResponse, failureResponse } from "../utils/response";
 
 export const authRoutes: ServerRoute[] = [];
@@ -68,3 +73,30 @@ authRoutes.push({
     },
   },
 });
+
+authRoutes.push({
+  method: 'POST',
+  path: '/forgot-password',
+  options: {
+    validate: {
+      payload: Joi.object({
+        email: Joi.string().email().required(),
+      }),
+    },
+    handler: resetPassword,
+    auth: {
+      mode: 'try',
+    },
+  },
+})
+
+authRoutes.push({
+  method: 'POST',
+  path: '/change-password',
+  options: {
+    handler: authChangePassword,
+    auth: {
+      mode: 'try',
+    },
+  },
+})

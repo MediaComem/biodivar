@@ -1,14 +1,20 @@
 import { Request, ResponseToolkit } from '@hapi/hapi';
 import Bcrypt from 'bcrypt';
+import generator from "generate-password";
 import { User } from '@prisma/client';
 
 import {
   getUserByName,
   getUserById,
+  getUserByEmail,
   createUser,
+  insertToken,
+  changePassword,
 } from '../controller/users-controller';
 import { UserModel } from '../types/user-model';
-import { successResponse, failureResponse, errorResponse } from '../utils/response';
+import { successResponse, successWithoutContentResponse, failureResponse, errorResponse } from '../utils/response';
+import { EmailModel } from '../types/email';
+import { ChangePasswordInformation } from '../types/changeParsswordInformation';
 
 export const validateLogin = async (request: Request, h: ResponseToolkit) => {
   const payload = request.payload as UserModel;
@@ -48,10 +54,55 @@ export const registerUser = async function (
 
 export const alreadyLogged = async (request: Request, session: any) => {
   const account = await getUserById(request.server.app.prisma, session.id);
-
   if (!account) {
     return { valid: false };
   }
 
   return { valid: true, credentials: account };
+};
+
+export const resetPassword = async (request: Request, h: ResponseToolkit) => {
+  const account = await getUserByEmail(request.server.app.prisma, request.payload as EmailModel);
+
+  if (!account) {
+    return failureResponse(h, 'Email not found or user locked');
+  }
+  const token = generator.generate({
+    length: 64,
+    numbers: true,
+    strict: true,
+  });
+  await insertToken(
+    request.server.app.prisma,
+    account.email,
+    token,
+    request.server.app.logger
+  );
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: account.email,
+    subject: 'BiodivAR reset password link',
+    text: `${process.env.CHANGE_PASSWORD_LINK}${token}`
+  };
+  await request.server.app.email.sendMail(mailOptions);
+  return successWithoutContentResponse(h, 'Email Sent');
+};
+
+export const authChangePassword = async (request: Request, h: ResponseToolkit) => {
+  const information = request.payload as ChangePasswordInformation;
+  try {
+    await changePassword(
+      request.server.app.prisma,
+      information.password,
+      information.token,
+      request.server.app.logger,
+    );
+    return successWithoutContentResponse(h, 'Password change successfully');
+  } catch (error) {
+    if (error instanceof Error) {
+      return failureResponse(h, error.message);
+    } else {
+      return errorResponse(h, error as string);
+    }
+  }
 };

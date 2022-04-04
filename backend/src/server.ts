@@ -4,6 +4,7 @@ import { prismaPlugin } from './plugins/prisma';
 import { authPlugin } from './plugins/auth';
 import { winstonPlugin } from './plugins/winston';
 import { routerPlugin } from './plugins/router';
+import { emailPlugin } from './plugins/email';
 
 const server: Hapi.Server = Hapi.server({
   port: process.env.PORT || 3000,
@@ -23,6 +24,7 @@ export async function init(): Promise<Hapi.Server> {
     hapiAuthCookie,
     authPlugin,
     routerPlugin,
+    emailPlugin,
   ], {
     routes: {
       prefix: process.env.URL_PREFIX || '/api',
