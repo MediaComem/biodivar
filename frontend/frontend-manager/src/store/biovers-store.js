@@ -4,6 +4,8 @@ export const bioversStore = {
   namespaced: true,
   state() {
     return {
+      index: 1,
+      userPreference: [],
       ownBiovers: [],
       publicBiovers: [],
       addBioversInTab: false,
@@ -27,19 +29,25 @@ export const bioversStore = {
       state.currentBioversId = bioverId;
     },
     SELECT_BIOVER(state, selectBiover) {
+      state.index += 1;
       state.addBioversInTab = true;
       state.bioversToDisplay.push({
-        title: selectBiover.biover.name,
-        name: `${selectBiover.name}`,
-        biover: selectBiover.biover,
+        title: selectBiover.name,
+        name: `${state.index}`,
+        biover: selectBiover,
       });
-      state.currentBioversId = selectBiover.biover.id;
+      if (!state.userPreference.includes(selectBiover.id)) {
+        state.userPreference.push(selectBiover.id);
+      }
+      state.currentBioversId = selectBiover.id;
     },
     ADD_NEW_BIOVER(state, biover) {
       state.ownBiovers.push(biover);
     },
     REMOVE_BIOVER(state, bioverId) {
       state.addBioversInTab = false;
+      const preferenceIndex = state.userPreference.findIndex((id) => id === bioverId);
+      state.userPreference.splice(preferenceIndex, 1);
       const index = state.bioversToDisplay.findIndex((biovers) => biovers.biover.id === bioverId);
       state.bioversToDisplay.splice(index, 1);
       const poisIndex = state.pois.findIndex((e) => e.bioverId === bioverId);
@@ -183,7 +191,7 @@ export const bioversStore = {
     },
   },
   actions: {
-    async getBiovers({ commit }) {
+    async getBiovers({ dispatch, commit, state }) {
       const ownerBiovers = await bioversApi.getBioversByUser();
       const publicB = await bioversApi.getPublicBiovers();
       const difference = publicB.data.data.filter(
@@ -191,6 +199,23 @@ export const bioversStore = {
       );
       commit('SAVE_OWNER_BIOVERS', ownerBiovers.data.data);
       commit('SAVE_PUBLIC_BIOVERS', difference);
+      state.userPreference.forEach((pref) => {
+        let bioverIndex = ownerBiovers.data.data.findIndex((biover) => biover.id === pref);
+        if (bioverIndex !== -1) {
+          const biover = ownerBiovers.data.data[bioverIndex];
+          commit('SELECT_BIOVER', biover);
+          dispatch('addPoiToDisplay', biover.id);
+          dispatch('addPathToDisplay', biover.id);
+        } else {
+          bioverIndex = difference.findIndex((biover) => biover.id === pref);
+          if (bioverIndex !== -1) {
+            const biover = difference[bioverIndex];
+            commit('SELECT_BIOVER', biover);
+            dispatch('addPoiToDisplay', biover.id);
+            dispatch('addPathToDisplay', biover.id);
+          }
+        }
+      });
     },
     setCurrentBiover({ commit }, bioverId) {
       commit('SET_CURRENT_BIOVER', bioverId);
@@ -199,11 +224,11 @@ export const bioversStore = {
       commit('ADD_NEW_BIOVER', biover);
     },
     addBioverToDisplay({ commit, state }, event) {
-      let selectBiover = state.ownBiovers.find((e) => e.name === event.biover.label);
+      let selectBiover = state.ownBiovers.find((e) => e.name === event.label);
       if (!selectBiover) {
-        selectBiover = state.publicBiovers.find((e) => e.name === event.biover.label);
+        selectBiover = state.publicBiovers.find((e) => e.name === event.label);
       }
-      commit('SELECT_BIOVER', { biover: selectBiover, name: event.index });
+      commit('SELECT_BIOVER', selectBiover);
     },
     removeBioverToDisplay({ commit }, id) {
       commit('REMOVE_BIOVER', id);

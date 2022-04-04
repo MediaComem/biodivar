@@ -11,6 +11,9 @@ const vuexLocal = new VuexPersistence({
       isAuthenticate: state.auth.isAuthenticate,
       username: state.auth.username,
     },
+    biovers: {
+      userPreference: state.biovers.userPreference,
+    },
   }),
 });
 

@@ -6,7 +6,7 @@
       label="BIOVERS"
       name="1"
       >
-      <el-tree :data="data" show-checkbox @check="selectedBiovers"/>
+      <el-tree ref="tree" node-key="id" :data="data" show-checkbox @check="selectedBiovers"/>
       <el-button style="display: flex;" @click="showDialog = true">Créer un biover</el-button>
     </el-tab-pane>
     <el-tab-pane
@@ -67,6 +67,13 @@ export default {
       handler(newVal) {
         if (this.addBioversInTab && newVal.length > 0) {
           this.editableTabsValue = ref(newVal[newVal.length - 1].name);
+          const checked = [];
+          newVal.forEach((val) => {
+            checked.push(val.biover.id);
+          });
+          this.$nextTick(() => {
+            this.$refs.tree.setCheckedKeys(checked, false);
+          });
         }
       },
     },
@@ -74,18 +81,19 @@ export default {
   data() {
     return {
       data: [{
+        id: 0,
         label: 'Mes Biovers',
         children: [],
         disabled: true,
       },
       {
+        id: -1,
         label: 'Biovers Publiques',
         children: [],
         disabled: true,
       },
       ],
       editableTabsValue: ref('1'),
-      index: 1,
       showDialog: false,
     };
   },
@@ -96,8 +104,7 @@ export default {
     selectedBiovers(event) {
       const index = this.bioversToDisplay.findIndex((biovers) => biovers.biover.id === event.id);
       if (index === -1) {
-        this.index += 1;
-        this.addBioverToDisplay({ index: this.index, biover: event });
+        this.addBioverToDisplay(event);
         this.addPoiToDisplay(event.id);
         this.addPathToDisplay(event.id);
       } else {

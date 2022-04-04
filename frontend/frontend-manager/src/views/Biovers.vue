@@ -9,7 +9,8 @@
     v-if="currentBioversId !== 0"
     style="margin-top: 2vh; margin-bottom: 2vh; margin-left: 0px;"
   >
-    <GeoJsonImporter v-if="bioversToDisplay.length > 0"
+    <GeoJsonImporter
+      v-if="bioversToDisplay.length > 0 && ownBiovers.length > 0"
       :authorId="ownBiovers[0].owner"
     />
   </el-row>
