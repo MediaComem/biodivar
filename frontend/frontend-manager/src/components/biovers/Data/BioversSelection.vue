@@ -62,6 +62,14 @@ export default {
         }
       },
     },
+    bioversToDisplay: {
+      deep: true,
+      handler(newVal) {
+        if (this.addBioversInTab && newVal.length > 0) {
+          this.editableTabsValue = ref(newVal[newVal.length - 1].name);
+        }
+      },
+    },
   },
   data() {
     return {
@@ -76,15 +84,13 @@ export default {
         disabled: true,
       },
       ],
-      editableTabs: [{ title: 'POI', name: '1' }],
       editableTabsValue: ref('1'),
       index: 1,
       showDialog: false,
-      currentBiovers: [],
     };
   },
   computed: {
-    ...mapState('biovers', ['ownBiovers', 'publicBiovers', 'bioversToDisplay']),
+    ...mapState('biovers', ['ownBiovers', 'publicBiovers', 'bioversToDisplay', 'addBioversInTab']),
   },
   methods: {
     selectedBiovers(event) {

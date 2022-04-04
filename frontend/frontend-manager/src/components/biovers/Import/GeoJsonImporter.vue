@@ -123,6 +123,7 @@ export default {
       const createdPois = await api.savePois(this.pois);
       this.updateImportPois(createdPois.data.data);
       this.resetUpload();
+      this.upload.uploadFiles.splice(0, 1);
       this.saveDone = true;
       setTimeout(() => {
         this.saveDone = false;

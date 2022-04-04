@@ -18,10 +18,7 @@ export const authStore = {
     },
   },
   getters: {
-    getAutheticate: (state) => {
-      console.log(state);
-      return state ? state.isAuthenticate : false;
-    },
+    getAutheticate: (state) => (state ? state.isAuthenticate : false),
     getUsername: (state) => state.username,
   },
 };

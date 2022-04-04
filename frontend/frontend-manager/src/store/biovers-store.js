@@ -6,6 +6,7 @@ export const bioversStore = {
     return {
       ownBiovers: [],
       publicBiovers: [],
+      addBioversInTab: false,
       bioversToDisplay: [],
       currentBioversId: -1,
       pois: [],
@@ -26,6 +27,7 @@ export const bioversStore = {
       state.currentBioversId = bioverId;
     },
     SELECT_BIOVER(state, selectBiover) {
+      state.addBioversInTab = true;
       state.bioversToDisplay.push({
         title: selectBiover.biover.name,
         name: `${selectBiover.name}`,
@@ -37,6 +39,7 @@ export const bioversStore = {
       state.ownBiovers.push(biover);
     },
     REMOVE_BIOVER(state, bioverId) {
+      state.addBioversInTab = false;
       const index = state.bioversToDisplay.findIndex((biovers) => biovers.biover.id === bioverId);
       state.bioversToDisplay.splice(index, 1);
       const poisIndex = state.pois.findIndex((e) => e.bioverId === bioverId);
@@ -120,8 +123,10 @@ export const bioversStore = {
       }
     },
     UPLOAD_DONE(state) {
-      state.uploadInProgress = false;
-      state.uploadDone = true;
+      if (state.uploadInProgress) {
+        state.uploadInProgress = false;
+        state.uploadDone = true;
+      }
     },
     RESET_UPLOAD(state) {
       state.uploadDone = false;

@@ -67,7 +67,6 @@ export default {
   },
   watch: {
     poisModification(newVal) {
-      console.log(newVal);
       if (newVal) {
         if (Array.isArray(newVal)) {
           newVal.forEach((poi) => {

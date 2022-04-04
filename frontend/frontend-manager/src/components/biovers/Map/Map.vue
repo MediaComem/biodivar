@@ -10,7 +10,7 @@
             v-if="poi.display &&
             (ownOrPublic(poi.element.biovers) === 'own'
             || (ownOrPublic(poi.element.biovers) === 'public'
-            && poi.element.is_public))"
+            && poi.element.is_public)) && poi.element.coordinate"
             :poi="poi"
             :iconHeight="40"
             :iconWidth="25"
