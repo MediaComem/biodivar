@@ -6,6 +6,7 @@ export const getPathById = async (prisma: PrismaClient, path_id: number) => {
   return await prisma.path.findFirst({
     where: {
       id: path_id,
+      deleted_date: null,
     },
     include: {
       coordinate: true,
@@ -17,6 +18,7 @@ export const getPathsByUser = async (prisma: PrismaClient, user_id: number) => {
   return await prisma.path.findMany({
     where: {
       author: user_id,
+      deleted_date: null,
     },
     include: {
       coordinate: true,

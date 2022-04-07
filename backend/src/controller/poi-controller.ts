@@ -83,6 +83,7 @@ export const getPoiById = async (prisma: PrismaClient, id: number) => {
   return await prisma.poi.findFirst({
     where: {
       id: id,
+      deleted_date: null,
     },
     include: {
       coordinate: true,
@@ -106,6 +107,7 @@ export const getPoiByTitle = async (prisma: PrismaClient, name: string) => {
   return await prisma.poi.findFirst({
     where: {
       title: name,
+      deleted_date: null,
     },
     include: {
       coordinate: true,

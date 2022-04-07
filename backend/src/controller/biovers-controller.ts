@@ -16,6 +16,9 @@ export const getBioversByUser = async (
     },
     include: {
       Poi: {
+        where: {
+          deleted_date: null,
+        },
         include: {
           coordinate: true,
           symbol: true,
@@ -33,6 +36,9 @@ export const getBioversByUser = async (
         },
       },
       Path: {
+        where: {
+          deleted_date: null,
+        },
         include: {
           coordinate: true,
           User: {
@@ -64,15 +70,20 @@ export const getBioversById = async (
           {
             owner: user_id,
             id: biovers_id,
+            deleted_date: null,
           },
           {
             id: biovers_id,
             is_public: true,
+            deleted_date: null,
           },
         ],
       },
       include: {
         Poi: {
+          where: {
+            deleted_date: null,
+          },
           include: {
             coordinate: true,
             symbol: true,
@@ -90,6 +101,9 @@ export const getBioversById = async (
           },
         },
         Path: {
+          where: {
+            deleted_date: null,
+          },
           include: {
             coordinate: true,
             User: {
@@ -128,6 +142,9 @@ export const getPublicBiovers = async (
       },
       include: {
         Poi: {
+          where: {
+            deleted_date: null,
+          },
           include: {
             coordinate: true,
             symbol: true,
@@ -145,6 +162,9 @@ export const getPublicBiovers = async (
           },
         },
         Path: {
+          where: {
+            deleted_date: null,
+          },
           include: {
             coordinate: true,
             User: {
