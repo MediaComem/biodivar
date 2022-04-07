@@ -2,6 +2,7 @@
   <el-upload
     ref="upload"
     class="upload-demo"
+    style="display: flex;"
     accept=".json,.geojson"
     action="https://jsonplaceholder.typicode.com/posts/"
     :auto-upload="false"

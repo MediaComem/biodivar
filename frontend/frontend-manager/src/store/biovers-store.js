@@ -16,6 +16,7 @@ export const bioversStore = {
       paths: [],
       uploadInProgress: false,
       uploadDone: false,
+      filter: '',
     };
   },
   mutations: {
@@ -189,6 +190,9 @@ export const bioversStore = {
       state.uploadInProgress = false;
       state.uploadDone = false;
     },
+    FILTER(state, filter) {
+      state.filter = filter;
+    },
   },
   actions: {
     async getBiovers({ dispatch, commit, state }) {
@@ -328,6 +332,9 @@ export const bioversStore = {
     resetStore({ commit }) {
       commit('RESET_STORE');
     },
+    filter({ commit }, filter) {
+      commit('FILTER', filter);
+    },
   },
   getters: {
     getPoisByBiover: (state) => (id) => {
@@ -335,7 +342,7 @@ export const bioversStore = {
       if (index === -1) {
         return [];
       }
-      return state.pois[index].pois;
+      return state.pois[index].pois.filter((poi) => poi.element.title.includes(state.filter));
     },
     getPathsByBiover: (state) => (id) => {
       const index = state.paths.findIndex((path) => path.bioverId === id);
@@ -347,7 +354,8 @@ export const bioversStore = {
     getPois(state) {
       const poisToDisplay = [];
       state.pois.forEach((poi) => {
-        poisToDisplay.push(...poi.pois);
+        poisToDisplay.push(...poi.pois.filter((element) => element.element
+          .title.includes(state.filter)));
       });
       return poisToDisplay;
     },
