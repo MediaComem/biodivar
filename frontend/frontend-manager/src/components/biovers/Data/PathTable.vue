@@ -7,9 +7,7 @@
     <el-table-column property="element.id" label="Path ID" show-overflow-tooltip sortable/>
     <el-table-column property="element.visible_from" label="Distance" show-overflow-tooltip
     sortable/>
-    <el-table-column property="element.trigger_mode" label="Trigger" show-overflow-tooltip
-    sortable/>
-    <el-table-column property="element.User.username" label="Poi Author" show-overflow-tooltip
+    <el-table-column property="element.User.username" label="Path Author" show-overflow-tooltip
     sortable/>
     <el-table-column :formatter="creationDate" property="element.creation_date"
     label="Date de création" show-overflow-tooltip sortable/>
@@ -22,8 +20,6 @@
      <el-table-column property="element.is_editable" label="Modifiable" show-overflow-tooltip
      sortable/>
      <el-table-column :formatter="coordinateFormatter" label="Coordinate" show-overflow-tooltip
-     sortable/>
-     <el-table-column property="element.radius" label="Radius" show-overflow-tooltip
      sortable/>
      <el-table-column property="element.style_type" label="Radius Type" show-overflow-tooltip
      sortable/>
