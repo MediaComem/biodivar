@@ -1,4 +1,5 @@
 import bioversApi from '../api/biovers';
+import filterUtils from '../utils/filters';
 
 export const bioversStore = {
   namespaced: true,
@@ -342,20 +343,30 @@ export const bioversStore = {
       if (index === -1) {
         return [];
       }
-      return state.pois[index].pois.filter((poi) => poi.element.title.includes(state.filter));
+      if (state.filter.length === 0) {
+        return state.pois[index].pois;
+      }
+      return state.pois[index].pois.filter((poi) => (
+        filterUtils.poiFilter(poi, state.filter)
+      ));
     },
     getPathsByBiover: (state) => (id) => {
       const index = state.paths.findIndex((path) => path.bioverId === id);
       if (index === -1) {
         return [];
       }
-      return state.paths[index].paths;
+      if (state.filter.length === 0) {
+        return state.paths[index].pois;
+      }
+      return state.paths[index].paths.filter((path) => (
+        filterUtils.pathFilter(path, state.filter)
+      ));
     },
     getPois(state) {
       const poisToDisplay = [];
       state.pois.forEach((poi) => {
-        poisToDisplay.push(...poi.pois.filter((element) => element.element
-          .title.includes(state.filter)));
+        poisToDisplay.push(...poi.pois
+          .filter((element) => filterUtils.poiFilter(element, state.filter)));
       });
       return poisToDisplay;
     },

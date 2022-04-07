@@ -44,7 +44,7 @@ export default {
     ...mapActions('biovers', ['getBiovers']),
   },
   computed: {
-    ...mapState('biovers', ['ownBiovers', 'bioversToDisplay', 'currentBioversId', 'pois', 'backupPois']),
+    ...mapState('biovers', ['ownBiovers', 'bioversToDisplay', 'currentBioversId']),
   },
   async activated() {
     this.getBiovers();
