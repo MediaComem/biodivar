@@ -10,5 +10,28 @@
         "password": "Mot de passe",
         "forgot": "Mot de passe oublié?",
         "submit": "Soumettre"
+    },
+    "register": {
+        "username": "Nom d'utilisateur",
+        "email": "Adresse mail",
+        "password": "Mot de passe",
+        "confirm": "Confirmer mot de passe",
+        "submit": "Soumettre"
+    },
+    "changePassword": {
+        "password": "Mot de passe",
+        "confirm": "Confirmer mot de passe"
+    },
+    "forgotPassword": {
+        "email": "Adresse mail",
+        "sent": "Un mail a été envoyé, veuillez vérifier votre boite de réception"
+    },
+    "validation": {
+        "username": "S'il vous plaît, entrer un nom d'utilisateur",
+        "password": "S'il vous plaît, entrer un mot de passe",
+        "email": "S'il vous plaît, entrer une adresse email",
+        "validEmail": "Entrer une adresse mail valide",
+        "confirm": "S'il vous plaît, confirmer le mot de passe",
+        "match": "Les mots de passes ne correspondent pas!"
     }
 }

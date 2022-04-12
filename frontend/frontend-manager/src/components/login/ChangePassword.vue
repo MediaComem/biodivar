@@ -10,16 +10,16 @@
       @keyup.enter="createUser"
     >
       <el-form-item class="layout">
-        <h3>BiodivAR</h3>
+        <h3>{{ $t('title') }}</h3>
       </el-form-item>
-      <el-form-item label="Password" prop="password">
+      <el-form-item :label="$t('authentication.password')" prop="password">
       <el-input
         type="password"
         id="password"
         v-model="form.password"
       />
       </el-form-item>
-      <el-form-item label="Confirm Password" prop="confirm">
+      <el-form-item :label="$t('changePassword.confirm')" prop="confirm">
       <el-input
         type="password"
         id="confirm"
@@ -28,7 +28,7 @@
       </el-form-item>
       <el-form-item class="layout">
       <el-button :disabled="!error" type="primary" @click="changePassword"
-        >Submit</el-button
+        >{{ $t('authentication.submit') }}</el-button
       >
       </el-form-item>
     </el-form>

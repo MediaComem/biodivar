@@ -10,28 +10,28 @@
       @keyup.enter="createUser"
     >
       <el-form-item class="layout">
-        <h3>BiodivAR</h3>
+        <h3>{{ $t('title') }}</h3>
       </el-form-item>
-      <el-form-item label="Username" prop="username">
+      <el-form-item :label="$t('register.username')" prop="username">
       <el-input
         id="username"
         v-model="form.username"
       />
       </el-form-item>
-      <el-form-item label="Email" prop="email">
+      <el-form-item :label="$t('register.email')" prop="email">
       <el-input
         id="email"
         v-model="form.email"
       />
       </el-form-item>
-      <el-form-item label="Password" prop="password">
+      <el-form-item :label="$t('register.password')" prop="password">
       <el-input
         type="password"
         id="password"
         v-model="form.password"
       />
       </el-form-item>
-      <el-form-item label="Confirm Password" prop="confirm">
+      <el-form-item :label="$t('register.confirm')" prop="confirm">
       <el-input
         type="password"
         id="confirm"
@@ -40,7 +40,7 @@
       </el-form-item>
       <el-form-item class="layout">
       <el-button :disabled="!error" type="primary" @click="createUser"
-        >Submit</el-button
+        >{{ $t('register.submit') }}</el-button
       >
       </el-form-item>
     </el-form>
@@ -69,18 +69,18 @@ export default {
   methods: {
     validateEmail(rule, value, callback) {
       if (value === '') {
-        callback(new Error('Please input email'));
+        callback(new Error(this.$i18n.t('validation.email')));
       } else if (!this.reg.test(value)) {
-        callback(new Error('Please input a valid email address'));
+        callback(new Error(this.$i18n.t('validation.validEmail')));
       } else {
         callback();
       }
     },
     validateConfirm(rule, value, callback) {
       if (value === '') {
-        callback(new Error('Please input the password again'));
+        callback(new Error(this.$i18n.t('validation.confirm')));
       } else if (value !== this.form.password) {
-        callback(new Error("Two inputs don't match!"));
+        callback(new Error(this.$i18n.t('validation.match')));
       } else {
         callback();
       }
@@ -137,7 +137,7 @@ export default {
       rules: {
         username: [{
           required: true,
-          message: 'Please input username',
+          message: this.$i18n.t('validation.username'),
         }],
         email: [{
           required: true,
@@ -146,7 +146,7 @@ export default {
         password: [{
           required: true,
           min: 4,
-          message: 'Please input password',
+          message: this.$i18n.t('validation.password'),
         }],
         confirm: [{
           required: true,

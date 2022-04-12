@@ -109,11 +109,11 @@ export default {
       rules: {
         username: [{
           required: true,
-          message: 'Please input username',
+          message: this.$i18n.t('validation.username'),
         }],
         password: [{
           required: true,
-          message: 'Please input password',
+          message: this.$i18n.t('validation.password'),
         }],
       },
     };

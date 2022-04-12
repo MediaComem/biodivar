@@ -11,9 +11,9 @@
       @keyup.enter="sendRequest"
     >
       <el-form-item class="layout">
-        <h3>BiodivAR</h3>
+        <h3>{{ $t('title') }}</h3>
       </el-form-item>
-      <el-form-item label="Email" prop="email">
+      <el-form-item :label="$t('forgotPassword.email')" prop="email">
       <el-input
         id="email"
         v-model="form.email"
@@ -21,11 +21,11 @@
       </el-form-item>
       <el-form-item class="layout">
       <el-button :disabled="!error" type="primary" @click="sendRequest"
-        >Submit</el-button
+        >{{ $t('authentication.submit') }}</el-button
       >
       </el-form-item>
     </el-form>
-    <h2 v-if="send">Un mail a été envoyé, veuillez vérifier votre boite de réception</h2>
+    <h2 v-if="send">{{ $t('forgotPassword.sent') }}</h2>
   </el-col>
 </el-row>
 </template>
