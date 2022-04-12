@@ -102,7 +102,6 @@ export default {
       };
     },
     createPathCoordinates(coordiantes) {
-      console.log(coordiantes);
       const pathCoordiantes = [];
       coordiantes.forEach((coordiante) => pathCoordiantes.push({
         long: coordiante[0],
