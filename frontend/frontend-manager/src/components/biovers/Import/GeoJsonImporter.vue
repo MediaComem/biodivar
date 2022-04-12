@@ -41,7 +41,8 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 
-import api from '../../../api/poi';
+import poiAPI from '../../../api/poi';
+import pathAPI from '../../../api/path';
 
 export default {
   name: 'GeoJsonImporter',
@@ -53,6 +54,7 @@ export default {
       upload: null,
       saveDone: false,
       pois: [],
+      paths: [],
     };
   },
   computed: {
@@ -62,6 +64,13 @@ export default {
     handleExceed() {
       if (this.upload.uploadFiles.length > 1) {
         this.upload.uploadFiles.splice(0, 1);
+      }
+    },
+    createElement(data) {
+      if (data.geometry.type === 'Point') {
+        this.pois.push(this.createPoi(data));
+      } else if (data.geometry.type === 'LineString') {
+        this.paths.push(this.createPath(data.geometry.coordinates));
       }
     },
     createPoi(poi) {
@@ -92,6 +101,34 @@ export default {
         trigger_mode: 'location',
       };
     },
+    createPathCoordinates(coordiantes) {
+      console.log(coordiantes);
+      const pathCoordiantes = [];
+      coordiantes.forEach((coordiante) => pathCoordiantes.push({
+        long: coordiante[0],
+        lat: coordiante[1],
+        alt: coordiante[2] || 0,
+      }));
+      return pathCoordiantes;
+    },
+    createPath(coordinates) {
+      return {
+        author: this.authorId,
+        is_public: false,
+        is_editable: false,
+        coordinate: this.createPathCoordinates(coordinates),
+        biovers: this.currentBioversId,
+        radius: 15.5,
+        style_type: 'sphere',
+        style_stroke: true,
+        style_stroke_width: 1.2,
+        style_elevation: 16.4,
+        style_elevation_ground: 32.4,
+        style_noise: 22.3,
+        style_is_visible: true,
+        visible_from: 455.5,
+      };
+    },
     sent() {
       let fileContent = '';
 
@@ -102,27 +139,30 @@ export default {
         if (Array.isArray(result)) {
           result.forEach((type) => {
             type.features.forEach((data) => {
-              if (data.geometry.type === 'Point') {
-                this.pois.push(this.createPoi(data));
-              }
+              this.createElement(data);
             });
           });
-          this.importPois(this.pois);
         } else {
           result.features.forEach((data) => {
-            if (data.geometry.type === 'Point') {
-              this.pois.push(this.createPoi(data));
-            }
+            this.createElement(data);
           });
-          this.upload.uploadFiles.splice(0, 1);
-          this.importPois(this.pois);
         }
+        this.importPois(this.pois);
+        this.importPaths(this.paths);
       };
       fr.readAsText(this.upload.uploadFiles[0].raw);
     },
     async save() {
-      const createdPois = await api.savePois(this.pois);
-      this.updateImportPois(createdPois.data.data);
+      if (this.pois.length > 0) {
+        const createdPois = await poiAPI.savePois(this.pois);
+        this.updateImportPois(createdPois.data.data);
+      }
+
+      if (this.paths.length > 0) {
+        const createdPaths = await pathAPI.savePaths(this.paths);
+        this.updateImportPaths(createdPaths.data.data);
+      }
+
       this.resetUpload();
       this.upload.uploadFiles.splice(0, 1);
       this.saveDone = true;
@@ -130,7 +170,7 @@ export default {
         this.saveDone = false;
       }, 2000);
     },
-    ...mapActions('biovers', ['importPois', 'resetUpload', 'updateImportPois']),
+    ...mapActions('biovers', ['importPois', 'importPaths', 'resetUpload', 'updateImportPois', 'updateImportPaths']),
   },
   mounted() {
     this.upload = this.$refs.upload;

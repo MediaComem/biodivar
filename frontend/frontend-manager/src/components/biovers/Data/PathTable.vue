@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapState } from 'vuex';
 
 import format from '../../../utils/formatter';
 
@@ -45,7 +45,27 @@ export default {
   props: {
     bioverId: Number,
   },
+  watch: {
+    pathsModification(newVal) {
+      if (newVal) {
+        if (Array.isArray(newVal)) {
+          newVal.forEach((path) => {
+            if (path.element.element.biovers === this.bioverId) {
+              this.$refs.multipleTableRef.toggleRowSelection(path.element);
+              this.resetPathsModification();
+            }
+          });
+          return;
+        }
+        if (newVal.element && newVal.element.element.biovers === this.bioverId) {
+          this.$refs.multipleTableRef.toggleRowSelection(newVal.element);
+          this.resetPathsModification();
+        }
+      }
+    },
+  },
   computed: {
+    ...mapState('biovers', ['pathsModification']),
     ...mapGetters('biovers', ['getPathsByBiover']),
   },
   methods: {
@@ -73,7 +93,7 @@ export default {
         this.selectAllPaths();
       }
     },
-    ...mapActions('biovers', ['updatePathToDisplay', 'selectAllPaths', 'unselectAllPaths']),
+    ...mapActions('biovers', ['updatePathToDisplay', 'selectAllPaths', 'unselectAllPaths', 'resetPathsModification']),
   },
   mounted() {
     this.$refs.multipleTableRef.toggleAllSelection();

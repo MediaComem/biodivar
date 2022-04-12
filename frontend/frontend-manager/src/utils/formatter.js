@@ -3,7 +3,7 @@ const dateIfAddZero = (time) => (time < 10 ? `0${time}` : time);
 export const formatter = {
   dateFormatter(date) {
     const t = new Date(date);
-    if (!t) {
+    if (!t || Number.isNaN(t.getFullYear())) {
       return '';
     }
     const year = t.getFullYear();

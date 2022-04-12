@@ -83,9 +83,6 @@ export default {
         }
       }
     },
-    getData(newVal) {
-      console.log(newVal);
-    },
   },
   data() {
     return {

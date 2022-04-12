@@ -15,6 +15,7 @@ export const bioversStore = {
       pois: [],
       poisModification: {},
       paths: [],
+      pathsModification: {},
       uploadInProgress: false,
       uploadDone: false,
       filter: '',
@@ -113,6 +114,24 @@ export const bioversStore = {
       state.poisModification = modifications;
       state.uploadInProgress = true;
     },
+    IMPORT_PATH(state, paths) {
+      const index = state.paths.findIndex((e) => e.bioverId === state.currentBioversId);
+      const bioverToDisplayIndex = state.bioversToDisplay
+        .findIndex((biover) => biover.biover.id === state.currentBioversId);
+      const modifications = [];
+      paths.forEach((path) => {
+        const pathElementToAdd = {
+          name: state.bioversToDisplay[bioverToDisplayIndex].title,
+          element: path,
+          display: true,
+          import: true,
+        };
+        state.paths[index].paths.push(pathElementToAdd);
+        modifications.push({ element: pathElementToAdd });
+      });
+      state.pathsModification = modifications;
+      state.uploadInProgress = true;
+    },
     UPDATE_IMPORT_POIS(state, pois) {
       const index = state.pois.findIndex((e) => e.bioverId === pois[0].biovers);
       let saveIndex = 0;
@@ -128,6 +147,25 @@ export const bioversStore = {
             .last_contributor_fk;
           state.pois[index].pois[i].element.symbol = pois[saveIndex].symbol;
           state.pois[index].pois[i].element.media = pois[saveIndex].media;
+          saveIndex += 1;
+        }
+      }
+    },
+    UPDATE_IMPORT_PATHS(state, paths) {
+      const index = state.paths.findIndex((e) => e.bioverId === paths[0].biovers);
+      let saveIndex = 0;
+      for (let i = 0; i < state.paths[index].paths.length; i += 1) {
+        if (state.paths[index].paths[i].import) {
+          state.paths[index].paths[i].import = false;
+          state.paths[index].paths[i].element.id = paths[saveIndex].id;
+          state.paths[index].paths[i].element.creation_date = paths[saveIndex].creation_date;
+          state.paths[index].paths[i].element.author = paths[saveIndex].author;
+          state.paths[index].paths[i].element.last_contributor = paths[saveIndex].last_contributor;
+          state.paths[index].paths[i].element.User = paths[saveIndex].User;
+          state.paths[index].paths[i].element.last_contributor_fk = paths[saveIndex]
+            .last_contributor_fk;
+          state.paths[index].paths[i].element.symbol = paths[saveIndex].symbol;
+          state.paths[index].paths[i].element.media = paths[saveIndex].media;
           saveIndex += 1;
         }
       }
@@ -155,6 +193,9 @@ export const bioversStore = {
     },
     RESET_POI_MODIFICATION(state) {
       state.poisModification = null;
+    },
+    RESET_PATH_MODIFICATION(state) {
+      state.pathsModification = null;
     },
     SELECT_ALL_POIS(state) {
       const poisIndex = state.pois.findIndex((e) => e.bioverId === state.currentBioversId);
@@ -306,8 +347,14 @@ export const bioversStore = {
     importPois({ commit }, pois) {
       commit('IMPORT_POI', pois);
     },
+    importPaths({ commit }, paths) {
+      commit('IMPORT_PATH', paths);
+    },
     updateImportPois({ commit }, pois) {
       commit('UPDATE_IMPORT_POIS', pois);
+    },
+    updateImportPaths({ commit }, paths) {
+      commit('UPDATE_IMPORT_PATHS', paths);
     },
     uploadDone({ commit }) {
       commit('UPLOAD_DONE');
@@ -317,6 +364,9 @@ export const bioversStore = {
     },
     resetPoisModification({ commit }) {
       commit('RESET_POI_MODIFICATION');
+    },
+    resetPathsModification({ commit }) {
+      commit('RESET_PATH_MODIFICATION');
     },
     selectAllPois({ commit }) {
       commit('SELECT_ALL_POIS');
@@ -356,7 +406,7 @@ export const bioversStore = {
         return [];
       }
       if (state.filter.length === 0) {
-        return state.paths[index].pois;
+        return state.paths[index].paths;
       }
       return state.paths[index].paths.filter((path) => (
         filterUtils.pathFilter(path, state.filter)
