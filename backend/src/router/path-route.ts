@@ -1,7 +1,7 @@
 import { ServerRoute } from "@hapi/hapi";
 
 import { createPath, deletePath, getPathById, getPathsByUser, updatePath } from "../controller/path-controller";
-import { PathModel } from "../types/path-model";
+import { PathModel, PathModels } from "../types/path-model";
 
 import {
   failureResponse,
@@ -59,6 +59,32 @@ pathRoutes.push({
         request.server.app.logger
       );
       return successResponse(h, 'Path creation done successfully', paths);
+    } catch (error) {
+      return errorResponse(h, error as string);
+    }
+  },
+});
+
+pathRoutes.push({
+  method: "POST",
+  path: "/path/creates",
+  handler: async function (request, h) {
+    try {
+      const paths = request.payload as PathModels;
+      const results = [];
+      for (let i = 0; i < paths.length; i++) {
+        const result = await createPath(
+          request.server.app.prisma,
+          paths[i],
+          request.server.app.logger
+        );
+        results.push(result);
+      }
+      if (results.length > 0) {
+        return successResponse(h, 'Path creation done successfully', results);
+      } else {
+        return failureResponse(h, 'Mandatory fields are not provided');
+      }
     } catch (error) {
       return errorResponse(h, error as string);
     }
