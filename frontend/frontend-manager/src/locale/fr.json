@@ -1,0 +1,14 @@
+{
+    "title": "BiodivAR",
+    "header": {
+        "login": "Authentifier",
+        "register": "S'inscrire",
+        "logout": "Déconnexion"
+    },
+    "authentication": {
+        "username": "Nom d'utilisateur",
+        "password": "Mot de passe",
+        "forgot": "Mot de passe oublié?",
+        "submit": "Soumettre"
+    }
+}

@@ -7,16 +7,18 @@
       mode="horizontal"
       router
     >
-      <el-menu-item index="/" class="element-position-left menu-title">BiodivAR</el-menu-item>
-      <el-menu-item v-if="!isAuthenticate" index="/register" class="element-position-right"
-        >S'inscrire</el-menu-item
-      >
-      <el-menu-item v-if="!isAuthenticate" index="/login" class="element-position-right"
-        >Login</el-menu-item
-      >
+      <el-menu-item index="/" class="element-position-left menu-title">
+        {{ $t('title') }}
+      </el-menu-item>
+      <el-menu-item v-if="!isAuthenticate" index="/register" class="element-position-right">
+        {{ $t('header.register') }}
+      </el-menu-item>
+      <el-menu-item v-if="!isAuthenticate" index="/login" class="element-position-right">
+        {{ $t('header.login') }}
+      </el-menu-item>
       <el-sub-menu v-if="isAuthenticate" index="user" class="element-position-right">
         <template #title>{{ username }}</template>
-          <el-menu-item index="/logout" @click="logout">Logout</el-menu-item>
+          <el-menu-item index="/logout" @click="logout">{{ $t('header.logout') }}</el-menu-item>
       </el-sub-menu>
     </el-menu>
   </el-header>
