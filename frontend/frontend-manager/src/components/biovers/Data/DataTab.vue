@@ -3,19 +3,19 @@
     <el-tabs v-model="editableTabsValue"
       type="card" class="demo-tabs">
       <el-tab-pane
-      label="POI"
+      :label="$t('table.poi')"
       name="1"
       >
         <PoiTable :bioverId="bioverId" />
       </el-tab-pane>
       <el-tab-pane
-      label="PATH"
+      :label="$t('table.path')"
       name="2"
       >
         <PathTable :bioverId="bioverId" />
       </el-tab-pane>
       <el-tab-pane
-      label="TRACE"
+      :label="$t('table.trace')"
       name="3"
       >
         USER TRACE

@@ -3,51 +3,51 @@
   style="width: 100%" @select="selectElement"
   @select-all="selectAll">
     <el-table-column fixed type="selection" width="55" />
-    <el-table-column property="name" label="Biovers Name" width="120" sortable/>
-    <el-table-column property="element.id" label="Poi ID" show-overflow-tooltip sortable/>
-    <el-table-column property="element.visible_from" label="Distance" show-overflow-tooltip
-    sortable/>
-    <el-table-column property="element.trigger_mode" label="Trigger" show-overflow-tooltip
-    sortable/>
-    <el-table-column property="element.User.username" label="Poi Author" show-overflow-tooltip
-    sortable/>
-    <el-table-column :formatter="creationDate" property="element.creation_date"
-    label="Date de création" show-overflow-tooltip sortable/>
-     <el-table-column property="element.last_contributor_fk.username"
-     label="Edité par" show-overflow-tooltip sortable/>
-     <el-table-column :formatter="updateDate" property="element.update_date"
-     label="Date d'édition" show-overflow-tooltip sortable/>
-     <el-table-column property="element.is_public" label="Confidentiel" show-overflow-tooltip
-     sortable/>
-     <el-table-column property="element.is_editable" label="Modifiable" show-overflow-tooltip
-     sortable/>
-     <el-table-column property="element.coordinate.lat" label="Latitude"
-     show-overflow-tooltip sortable/>
-     <el-table-column property="element.coordinate.long" label="Longitude"
-     show-overflow-tooltip sortable/>
-     <el-table-column property="element.coordinate.alt" label="Altitude"
-     show-overflow-tooltip sortable/>
-     <el-table-column property="element.radius" label="Radius" show-overflow-tooltip
-     sortable/>
-     <el-table-column property="element.style_type" label="Radius Type" show-overflow-tooltip
-     sortable/>
-     <el-table-column property="element.style_stroke.width"
-     label="Radius Stroke" show-overflow-tooltip sortable/>
-     <el-table-column property="element.style_elevation"
-     label="Radius Elévation" show-overflow-tooltip sortable/>
-     <el-table-column property="element.style_is_visible"
-     label="Radius Visible" show-overflow-tooltip sortable/>
-    <el-table-column property="element.title" label="Poi Title"
+    <el-table-column property="name" :label="$t('poi.biover')" width="120" sortable/>
+    <el-table-column property="element.id" :label="$t('poi.id')" show-overflow-tooltip sortable/>
+    <el-table-column property="element.visible_from" :label="$t('poi.visible_from')"
     show-overflow-tooltip sortable/>
-    <el-table-column property="element.subtitle" label="Poi Subtitle" show-overflow-tooltip
-    sortable/>
+    <el-table-column property="element.trigger_mode" :label="$t('poi.trigger')"
+    show-overflow-tooltip sortable/>
+    <el-table-column property="element.User.username" :label="$t('poi.author')"
+    show-overflow-tooltip sortable/>
+    <el-table-column :formatter="creationDate" property="element.creation_date"
+    :label="$t('poi.created_date')" show-overflow-tooltip sortable/>
+     <el-table-column property="element.last_contributor_fk.username"
+     :label="$t('poi.contributor')" show-overflow-tooltip sortable/>
+     <el-table-column :formatter="updateDate" property="element.update_date"
+     :label="$t('poi.update_date')" show-overflow-tooltip sortable/>
+     <el-table-column property="element.is_public" :label="$t('poi.is_public')"
+     show-overflow-tooltip sortable/>
+     <el-table-column property="element.is_editable" :label="$t('poi.is_editable')"
+     show-overflow-tooltip sortable/>
+     <el-table-column property="element.coordinate.lat" :label="$t('poi.lat')"
+     show-overflow-tooltip sortable/>
+     <el-table-column property="element.coordinate.long" :label="$t('poi.long')"
+     show-overflow-tooltip sortable/>
+     <el-table-column property="element.coordinate.alt" :label="$t('poi.alt')"
+     show-overflow-tooltip sortable/>
+     <el-table-column property="element.radius" :label="$t('poi.radius')"
+     show-overflow-tooltip sortable/>
+     <el-table-column property="element.style_type" :label="$t('poi.radius_type')"
+     show-overflow-tooltip sortable/>
+     <el-table-column property="element.style_stroke.width"
+     :label="$t('poi.stroke')" show-overflow-tooltip sortable/>
+     <el-table-column property="element.style_elevation"
+     :label="$t('poi.elevation')" show-overflow-tooltip sortable/>
+     <el-table-column property="element.style_is_visible"
+     :label="$t('poi.is_visible')" show-overflow-tooltip sortable/>
+    <el-table-column property="element.title" :label="$t('poi.title')"
+    show-overflow-tooltip sortable/>
+    <el-table-column property="element.subtitle" :label="$t('poi.subtitle')"
+    show-overflow-tooltip sortable/>
     <el-table-column fixed align="right">
      <template #default="scope">
         <el-button :class="{disabled: couldUpdate(scope.row)}"
           size="small"
           @click="handleEdit(scope.row)"
-          >Edit</el-button
-        >
+          >{{ $t('poi.edit') }}
+        </el-button>
       </template>
     </el-table-column>
   </el-table>

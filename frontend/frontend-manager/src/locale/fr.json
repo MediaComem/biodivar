@@ -33,5 +33,99 @@
         "validEmail": "Entrer une adresse mail valide",
         "confirm": "S'il vous plaît, confirmer le mot de passe",
         "match": "Les mots de passes ne correspondent pas!"
+    },
+    "import": {
+        "select": "Sélectionner un fichier",
+        "upload": "Importer dans la vue",
+        "save": "Sauvegarder sur le serveur",
+        "result": "Les données ont été sauvegardées avec succès"
+    },
+    "biover": {
+        "create": "Créer un biover",
+        "configurator": {
+            "title": "Création d'un Biover",
+            "name": "Nom",
+            "public": "Est public?",
+            "yes": "Oui",
+            "no": "Non",
+            "cancel": "Annuler",
+            "confirm": "Confirmer"
+        }
+    },
+    "table": {
+        "poi": "POI",
+        "path": "PATH",
+        "trace": "Trace utilisateur"
+    },
+    "poi": {
+        "biover": "Biover Name",
+        "id": "POI ID",
+        "visible_from": "Distance",
+        "trigger": "Déclencheur",
+        "author": "Auteur",
+        "created_date": "Date de création",
+        "contributor": "Edité par",
+        "update_date": "Date d'édition",
+        "is_public": "Confidentiel",
+        "is_editable": "Modifiable",
+        "lat": "Latitude",
+        "long": "Longitude",
+        "alt": "Altitude",
+        "radius": "Radius",
+        "radius_type": "Type de radius",
+        "stroke": "Radius stroke",
+        "elevation": "Elevation du radius",
+        "is_visible": "Visibilité du radius",
+        "title": "Titre du POI",
+        "subtitle": "Sous-titre du POI",
+        "edit": "Edition",
+        "configurator": {
+            "page_creation": "Création d'un POI",
+            "page_edition": "Edition d'un POI",
+            "title": "Titre",
+            "title_is_visible": "Visibilité du titre",
+            "yes": "Oui",
+            "no": "Non",
+            "subtitle": "Sous-titre",
+            "subtitle_is_visible": "Visibilité du sous-titre",
+            "lat": "Latitude",
+            "long": "Longitude",
+            "radius": "Radius",
+            "style_type": "Type de style",
+            "style_stroke": "Stroke type",
+            "style_stroke_width": "Style Stroke Width",
+            "style_fill": "Est-il rempli",
+            "elevation": "Elevation",
+            "elevation_ground": "Elevation par rapport au sol",
+            "noise": "Bruit",
+            "style_is_visible": "Visibilité du style",
+            "visible_from": "Visible depuis en mètre",
+            "trigger": "Déclencheur",
+            "cancel": "Annuler",
+            "confirm": "Confirmer",
+            "action": {
+                "sphere": "Sphère",
+                "circle": "Cercle",
+                "location": "Emplacement",
+                "touch": "Toucher"
+            }
+        }
+    },
+    "path": {
+        "biover": "Biover Name",
+        "id": "PATH ID",
+        "visible_from": "Distance",
+        "author": "Auteur",
+        "created_date": "Date de création",
+        "contributor": "Edité par",
+        "update_date": "Date d'édition",
+        "is_public": "Confidentiel",
+        "is_editable": "Modifiable",
+        "coordinate": "Coordonnées",
+        "radius_type": "Type de radius",
+        "stroke": "Radius stroke",
+        "elevation": "Elevation du radius",
+        "is_visible": "Visibilité du radius",
+        "edit": "Edition"
     }
 }

@@ -13,7 +13,7 @@
         class="ml-3"
         type="info"
       >
-      select file
+      {{ $t('import.select') }}
       </el-button>
     </template>
     <el-button
@@ -22,7 +22,7 @@
       @click="sent"
       :disabled="upload && upload.uploadFiles.length === 0"
     >
-    upload to view
+    {{ $t('import.upload') }}
     </el-button>
     <el-button
       class="ml-3"
@@ -30,11 +30,11 @@
       @click="save"
       :disabled="!uploadDone"
     >
-    Save to server
+    {{ $t('import.save') }}
     </el-button>
   </el-upload>
   <template v-if="saveDone">
-    <el-alert title="Data save" type="success" />
+    <el-alert :title="$t('import.result')" type="success" />
   </template>
 </template>
 

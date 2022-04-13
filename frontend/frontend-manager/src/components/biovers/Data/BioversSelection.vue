@@ -7,7 +7,9 @@
       name="1"
       >
       <el-tree ref="tree" node-key="id" :data="data" show-checkbox @check="selectedBiovers"/>
-      <el-button style="display: flex;" @click="showDialog = true">Créer un biover</el-button>
+      <el-button style="display: flex;" @click="showDialog = true">
+        {{ $t('biover.create') }}
+      </el-button>
     </el-tab-pane>
     <el-tab-pane
       v-for="item in bioversToDisplay"

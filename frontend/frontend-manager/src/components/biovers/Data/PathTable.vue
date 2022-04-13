@@ -3,36 +3,32 @@
   @select="selectElement"
   @select-all="selectAll">
     <el-table-column fixed type="selection" width="55" />
-    <el-table-column property="name" label="Biovers Name" width="120" sortable/>
-    <el-table-column property="element.id" label="Path ID" show-overflow-tooltip sortable/>
-    <el-table-column property="element.visible_from" label="Distance" show-overflow-tooltip
-    sortable/>
-    <el-table-column property="element.User.username" label="Path Author" show-overflow-tooltip
-    sortable/>
+    <el-table-column property="name" :label="$t('path.biover')" width="120" sortable/>
+    <el-table-column property="element.id" :label="$t('path.id')" show-overflow-tooltip sortable/>
+    <el-table-column property="element.visible_from" :label="$t('path.visible_from')"
+    show-overflow-tooltip sortable/>
+    <el-table-column property="element.User.username" :label="$t('path.author')"
+    show-overflow-tooltip sortable/>
     <el-table-column :formatter="creationDate" property="element.creation_date"
-    label="Date de création" show-overflow-tooltip sortable/>
+    :label="$t('path.created_date')" show-overflow-tooltip sortable/>
      <el-table-column property="element.last_contributor_fk.username"
      label="Edité par" show-overflow-tooltip sortable/>
      <el-table-column :formatter="updateDate" property="element.update_date"
-     label="Date d'édition" show-overflow-tooltip sortable/>
-     <el-table-column property="element.is_public" label="Confidentiel" show-overflow-tooltip
-     sortable/>
-     <el-table-column property="element.is_editable" label="Modifiable" show-overflow-tooltip
-     sortable/>
-     <el-table-column :formatter="coordinateFormatter" label="Coordinate" show-overflow-tooltip
-     sortable/>
-     <el-table-column property="element.style_type" label="Radius Type" show-overflow-tooltip
-     sortable/>
+     :label="$t('path.update_date')" show-overflow-tooltip sortable/>
+     <el-table-column property="element.is_public" :label="$t('path.is_public')"
+     show-overflow-tooltip sortable/>
+     <el-table-column property="element.is_editable" :label="$t('path.is_editable')"
+     show-overflow-tooltip sortable/>
+     <el-table-column :formatter="coordinateFormatter" :label="$t('path.coordinate')"
+     show-overflow-tooltip sortable/>
+     <el-table-column property="element.style_type" :label="$t('path.radius_type')"
+     show-overflow-tooltip sortable/>
      <el-table-column property="element.style_stroke.width"
-     label="Radius Stroke" show-overflow-tooltip sortable/>
+     :label="$t('path.stroke')" show-overflow-tooltip sortable/>
      <el-table-column property="element.style_elevation"
-     label="Radius Elévation" show-overflow-tooltip sortable/>
+     :label="$t('path.elevation')" show-overflow-tooltip sortable/>
      <el-table-column property="element.style_is_visible"
-     label="Radius Visible" show-overflow-tooltip sortable/>
-    <el-table-column property="element.title" label="Path Title" show-overflow-tooltip
-    sortable/>
-    <el-table-column property="element.subtitle" label="Path Subtitle" show-overflow-tooltip
-    sortable/>
+     :label="$t('path.is_visible')" show-overflow-tooltip sortable/>
   </el-table>
 </template>
 
