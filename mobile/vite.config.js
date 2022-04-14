@@ -2,10 +2,22 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
 export default defineConfig(({ command, mode }) => {
-  // define env specific configuration
-  modeConfig = {};
+
+  const config = {
+    plugins: [vue({
+      template: {
+        compilerOptions: {
+          // Allow A-Frame elements to be in Vue template
+          isCustomElement: tag => tag.startsWith('a-')
+        }
+      }
+    })],
+    base: ''
+  };
+
+  // define specific env configuration
   if (mode === 'development') {
-    modeConfig.server = {
+    config.server = {
       proxy : {
         '/api/v1': {
           target: 'https://inf.onivers.com/api/v1',
@@ -16,19 +28,6 @@ export default defineConfig(({ command, mode }) => {
     }
   }
 
-  return {
+  return config;
 
-    plugins: [vue({
-      template: {
-        compilerOptions: {
-          isCustomElement: tag => tag.startsWith('a-')
-        }
-      }
-    })],
-
-    base: '',
-
-    ...modeConfig
-
-  }
 });
