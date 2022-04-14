@@ -1,13 +1,13 @@
 <script setup>
-  import TheAframe from './components/TheAframe.vue';
-  import TheHud from './components/TheHud.vue';
+  import BaseModal from './components/base/BaseModal.vue';
   import TheLogin from './components/TheLogin.vue';
-  import AppModal from './components/AppModal.vue';
-  import {ref} from '@vue/reactivity';
-  import {getBiovers} from './utils/api.js';
+  import TheApp from './components/TheApp.vue';
+
+  import { ref } from '@vue/reactivity';
+  import { getBiovers } from './utils/api.js';
+  import { isAuth } from './store.js';
 
   const isLoading = ref(true);
-  const isAuth = ref(false);
 
   getBiovers().then(biovers => {
     isLoading.value = false;
@@ -19,18 +19,15 @@
 
 <template>
   <div v-if="isLoading">
-    <app-modal>
-      Loading
-    </app-modal>
+    <base-modal/>
   </div>
-  <div v-if="!isAuth">
-    <app-modal>
+  <div v-else-if="!isAuth">
+    <base-modal>
       <the-login></the-login>
-    </app-modal>
+    </base-modal>
   </div>
-  <div v-if="isAuth">
-    <the-aframe></the-aframe>
-    <the-hud></the-hud>
+  <div v-else>
+    <the-app></the-app>
   </div>
 </template>
 

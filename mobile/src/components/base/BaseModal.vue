@@ -17,7 +17,6 @@
     min-height: 100%;
     background: rgb(147,191,112);
     background: linear-gradient(90deg, rgba(147,191,112,1) 41%, rgba(61,136,69,1) 100%);
-    display: grid;
     padding: 2rem;
   }
 </style>

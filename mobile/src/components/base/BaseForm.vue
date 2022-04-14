@@ -3,14 +3,15 @@
 </script>
 
 <template>
-  <fieldset>
+  <form>
     <slot></slot>
-  </fieldset>
+  </form>
 </template>
 
 <style scoped>
 
-  fieldset {
+  form {
+    display: block;
     --bg-color: white;
     --color: #999;
     --color-sec: #ccc;
@@ -23,7 +24,7 @@
     margin: 0 auto;
   }
 
-  fieldset :slotted(header) {
+  form :slotted(header) {
     color: var(--color);
     font-size: 1.1rem;
     display: block;
@@ -34,7 +35,7 @@
     margin: 0 0 1.3rem 0;
   }
 
-  fieldset :slotted(input) {
+  form :slotted(input) {
     display: block;
     width: calc(100% - 4rem);
     font-size: 1rem;
@@ -43,11 +44,11 @@
     margin: 0 auto 1rem auto;
   }
 
-  fieldset :slotted(input::placeholder) {
+  form :slotted(input::placeholder) {
     color: var(--color-sec);
   }
 
-  fieldset :slotted(button) {
+  form :slotted(button) {
     width: calc(100% - 4rem);
     border-radius: 1rem;
     border: none;
