@@ -4,7 +4,7 @@ import generator from "generate-password";
 import { User } from '@prisma/client';
 
 import {
-  getUserByName,
+  getUserByNameOrEmail,
   getUserById,
   getUserByEmail,
   createUser,
@@ -18,7 +18,7 @@ import { ChangePasswordInformation } from '../types/changeParsswordInformation';
 
 export const validateLogin = async (request: Request, h: ResponseToolkit) => {
   const payload = request.payload as UserModel;
-  const account = await getUserByName(
+  const account = await getUserByNameOrEmail(
     request.server.app.prisma,
     payload.username
   );

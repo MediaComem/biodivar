@@ -23,11 +23,19 @@ export const getUserByEmail = async (prisma: PrismaClient, email: EmailModel) =>
   });
 };
 
-export const getUserByName = async (prisma: PrismaClient, username: string) => {
+export const getUserByNameOrEmail = async (prisma: PrismaClient, username: string) => {
   return await prisma.user.findFirst({
     where: {
-      username: username,
-      deleted_date: null,
+      OR: [
+        {
+          username: username,
+          deleted_date: null,
+        },
+        {
+          email: username,
+          deleted_date: null,
+        },
+      ],
     },
   });
 };
