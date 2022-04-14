@@ -1,34 +1,39 @@
 <script setup>
-  import BaseModal from './components/base/BaseModal.vue';
   import TheLogin from './components/TheLogin.vue';
   import TheApp from './components/TheApp.vue';
 
   import { ref } from '@vue/reactivity';
-  import { getBiovers } from './utils/api.js';
-  import { isAuth } from './store.js';
+  import { useStore } from './composables/store.js';
+  import { isLogged } from './utils/api.js';
+
+  const { isAuth } = useStore();
 
   const isLoading = ref(true);
 
-  getBiovers().then(biovers => {
+  isLogged().then(resp => {
     isLoading.value = false;
-    if (biovers?.statusCode !== 200) return;
+    if (resp?.statusCode !== 200) return;
     isAuth.value = true;
   });
 
 </script>
 
 <template>
+
   <div v-if="isLoading">
     <base-modal/>
   </div>
+
   <div v-else-if="!isAuth">
     <base-modal>
       <the-login></the-login>
     </base-modal>
   </div>
+
   <div v-else>
     <the-app></the-app>
   </div>
+
 </template>
 
 <style>

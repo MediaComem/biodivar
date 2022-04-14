@@ -1,32 +1,35 @@
 <script setup>
-  import BaseForm from './base/BaseForm.vue';
-  import BaseMessage from './base/BaseMessage.vue';
-  import { login } from '../utils/api.js';
+  import { login, getBiovers } from '../utils/api.js';
   import { ref } from '@vue/reactivity';
-  import { isAuth } from '../store.js';
+  import { useStore } from '../composables/store.js';
+
+  const { isAuth} = useStore();
 
   const username = ref('');
   const password = ref('');
   const error = ref(false);
 
-  function checkAuth () {
-    login(username.value, password.value).then(response => {
-      if (response?.statusCode !== 200) {
-        error.value = true;
-        return;
-      }
+  async function checkAuth() {
+    const resp = await login(username.value, password.value);
+    if (resp?.statusCode === 200) {
       isAuth.value = true;
-    });
+    } else {
+      error.value = true;
+    }
   }
 
 </script>
 
 <template>
+
   <div>
+
     <img data-role="header" alt="Biodivar" src="../assets/logo.svg" />
+
     <h1 data-role="title">
       Réalité augmentée géolocalisée pour l'exploration de la nature
     </h1>
+
     <base-form @submit.prevent="checkAuth()">
       <header>Connexion</header>
       <base-message data-type="error" v-if="error">
@@ -36,10 +39,13 @@
       <input type="password" v-model="password" placeholder="mot de passe">
       <button>Connexion</button>
     </base-form>
+
   </div>
+
 </template>
 
 <style scoped>
+
   div {
     --max-width: 640px;
     min-height: 100%;
@@ -59,4 +65,5 @@
     font-size: 1rem;
     margin: 0 0 4rem 0;
   }
+
 </style>
