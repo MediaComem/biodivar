@@ -45,7 +45,8 @@
         "configurator": {
             "title": "Création d'un Biover",
             "name": "Nom",
-            "public": "Est public?",
+            "public": "Est-il public?",
+            "editable": "Est-il éditable",
             "yes": "Oui",
             "no": "Non",
             "cancel": "Annuler",

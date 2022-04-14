@@ -15,6 +15,16 @@
           </el-radio>
         </div>
       </el-form-item>
+      <el-form-item :label="$t('biover.configurator.editable')" :label-width="formLabelWidth">
+        <div>
+          <el-radio v-model="form.is_editable" :label="true" size="large">
+            {{ $t('biover.configurator.yes') }}
+          </el-radio>
+          <el-radio v-model="form.is_editable" :label="false" size="large">
+            {{ $t('biover.configurator.no') }}
+          </el-radio>
+        </div>
+      </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
@@ -51,6 +61,7 @@ export default {
       form: {
         name: '',
         is_public: true,
+        is_editable: false,
       },
     };
   },
