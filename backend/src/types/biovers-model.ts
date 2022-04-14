@@ -8,6 +8,7 @@ export interface BioversModel {
   update_date?: Date;
   deleted_date?: Date;
   is_public?: boolean;
+  is_editable?: boolean,
   Poi?: PoiModels;
 }
 

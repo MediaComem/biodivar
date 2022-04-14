@@ -250,6 +250,8 @@ export const updateBiovers = async (
         },
         data: {
           name: biovers.name,
+          is_public: biovers.is_public,
+          is_editable: biovers.is_editable,
           update_date: new Date(),
         },
         include: {

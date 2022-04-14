@@ -34,6 +34,7 @@ model Biovers {
   update_date             DateTime?
   deleted_date            DateTime?
   is_public               Boolean     @default(true)
+  is_editable             Boolean     @default(false)
   User                    User?       @relation(fields: [owner], references: [id])
   Poi                     Poi[]
   Path                    Path[]
