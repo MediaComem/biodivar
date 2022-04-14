@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogVisible" :title="$t('poi.configurator.page_title')"
+  <el-dialog v-model="dialogVisible" :title="$t('poi.configurator.page_creation')"
    @close="$emit('closeDialog')">
     <el-form :model="form">
       <el-form-item :label="$t('poi.configurator.title')" :label-width="formLabelWidth">
