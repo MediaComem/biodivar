@@ -21,7 +21,7 @@
 <template>
 
   <div v-if="isLoading">
-    <base-modal/>
+    <base-modal>Chargement de l'app</base-modal>
   </div>
 
   <div v-else-if="!isAuth">

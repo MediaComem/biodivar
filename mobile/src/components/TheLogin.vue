@@ -3,9 +3,8 @@
   import { ref } from '@vue/reactivity';
   import { useStore } from '../composables/store.js';
 
-  const { isAuth} = useStore();
+  const { isAuth, username } = useStore();
 
-  const username = ref('');
   const password = ref('');
   const error = ref(false);
 
@@ -49,7 +48,6 @@
   div {
     --max-width: 640px;
     min-height: 100%;
-    font-family: 'Courier New', Courier, monospace;
     text-align: center;
   }
 
