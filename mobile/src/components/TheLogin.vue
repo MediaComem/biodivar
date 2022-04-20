@@ -10,6 +10,7 @@
   const confirmPassword = ref('');
   
   const error = ref(false);
+  const registerError = ref('');
 
   const page = ref('inscription');
 
@@ -23,17 +24,50 @@
   }
 
   async function registerUser() {
-    const resp = await register(username.value, email.value, password.value);
-    if (resp?.statusCode === 200) {
-      selectPage('connexion');
-    } else {
+    if (validateEmail() && validatePassword()) {
+      const resp = await register(username.value, email.value, password.value);
+      if (resp?.statusCode === 200) {
+        selectPage('connexion');
+      } else {
+        registerError.value = 'Erreur durant l\'enregistrement de l\'utilisateur';
+        error.value = true;
+      } 
+    }
+    else {
       error.value = true;
     }
   }
 
   function selectPage(selection) {
+    if (page.value === selection) return;
     error.value = false;
     page.value = selection;
+  }
+
+  function validateEmail() {
+    const reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/;
+    if (email.value === '') {
+        registerError.value = 'S\'il vous plaît, entrer une adresse email';
+        return false;
+      } else if (!reg.test(email.value)) {
+        registerError.value = 'Entrer une adresse mail valide';
+        return false;
+      } else {
+        return true;
+      }
+  }
+
+  function validatePassword() {
+    if (password.value.length < 4) {
+      registerError.value = 'Le mot de passe doit contenir au moins 4 caractères';
+      error.value = true;
+      return false;
+    }
+    if (password.value !== confirmPassword.value) {
+      registerError.value = 'Les mot de passes ne correspondent pas';
+      return false;
+    }
+    return true;
   }
 
 </script>
@@ -66,14 +100,18 @@
 
     <base-form v-if="page === 'inscription'" @submit.prevent="registerUser()">
       <base-message data-type="error" v-if="error">
-        Erreur durant l'enregistrement de l'utilisateur
+        {{ registerError }}
       </base-message>
       <p>Déjà inscrit·e ? <a @click="selectPage('connexion')">Connectez-vous</a></p>
       <input type="text" v-model="username" placeholder="nom d'utilisateur">
       <input type="text" v-model="email" placeholder="email utilisateur">
       <input type="password" v-model="password" placeholder="mot de passe">
       <input type="password" v-model="confirmPassword" placeholder="confirmer mot de passe">
-      <button>Créer un compte</button>
+      <base-checkbox>
+        <input type="checkbox" id="license" name="license">
+        <label for="license">J'accepte les <a>conditions générales</a></label>
+      </base-checkbox>
+      <button><img src="../assets/person_add.svg" />Créer un compte</button>
     </base-form>
     <div data-role="footer">
       <div class="heig">
@@ -82,7 +120,6 @@
       <div class="hes">
         <img src="../assets/Logo_HES-SO_Couleurs.svg" alt="hes">
       </div>
-      
     </div>
   </div>
 

@@ -40,6 +40,10 @@
     color: var(--color);
   }
 
+  form ::slotted(input::-webkit-autofill) {
+    background: var( --bg-color);
+  }
+
   form :slotted(button) {
     width: calc(100% - 4rem);
     border-radius: 1rem;
