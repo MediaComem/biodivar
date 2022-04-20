@@ -12,27 +12,16 @@
 
   form {
     display: block;
-    --bg-color: white;
-    --color: #999;
-    --color-sec: #ccc;
+    --bg-color: none;
+    --color: black;
+    --link-color: white;
     --highlight-color: #009FE3;
-    background: var(--bg-color);
+    background: var( --bg-color);
     border-radius: 1rem;
     max-width: var(--max-width);
-    border: none;
-    padding: 0;
+    border: solid black 1px;
+    padding: 1.2rem 0 1.2rem 0;
     margin: 0 auto;
-  }
-
-  form :slotted(header) {
-    color: var(--color);
-    font-size: 1.1rem;
-    display: block;
-    text-align: center;
-    text-transform: uppercase;
-    border-bottom: solid 1px var(--color-sec);
-    padding: 0.8rem;
-    margin: 0 0 1.3rem 0;
   }
 
   form :slotted(input) {
@@ -40,12 +29,15 @@
     width: calc(100% - 4rem);
     font-size: 1rem;
     border: solid var(--color) 1px;
+    border-radius: 1rem;
     padding: 0.3rem;
     margin: 0 auto 1rem auto;
+    background: var(--bg-color);
+    padding-left: 1rem;
   }
 
   form :slotted(input::placeholder) {
-    color: var(--color-sec);
+    color: var(--color);
   }
 
   form :slotted(button) {
@@ -53,12 +45,32 @@
     border-radius: 1rem;
     border: none;
     background: var(--highlight-color);
-    color: var(--bg-color);
+    color: var(--link-color);
     font-size: 0.8rem;
     padding: 0.5rem;
     margin: 1rem auto 2rem auto;
     text-transform: uppercase;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  form :slotted(button>img) {
+    padding-right: 0.5rem;
+  }
+
+  form :slotted(p) {
+    color: var(--color);
+    font-size: 1rem;
+    margin: 1rem auto 1rem auto;
+  }
+
+  form :slotted(a) {
+    color: var(--link-color);
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 1rem auto 1rem auto;
   }
 
 </style>

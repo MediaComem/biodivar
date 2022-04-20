@@ -13,3 +13,7 @@ export function isLogged() {
 export function login(username, password) {
   return postJson(API + 'login', {username, password});
 }
+
+export function register(username, email, password) {
+  return postJson(API + 'register', {username, email, password});
+}
