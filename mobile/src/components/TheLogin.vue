@@ -14,6 +14,8 @@
 
   const page = ref('inscription');
 
+  const aggreement = ref(false);
+
   async function checkAuth() {
     const resp = await login(username.value, password.value);
     if (resp?.statusCode === 200) {
@@ -24,7 +26,7 @@
   }
 
   async function registerUser() {
-    if (validateEmail() && validatePassword()) {
+    if (validateEmail() && validatePassword() && validateAggreement()) {
       const resp = await register(username.value, email.value, password.value);
       if (resp?.statusCode === 200) {
         selectPage('connexion');
@@ -70,6 +72,11 @@
     return true;
   }
 
+  function validateAggreement() {
+    if (!aggreement.value) registerError.value = 'Veuillez lire et accepter les conditions générales' 
+    return aggreement.value
+  }
+
 </script>
 
 <template>
@@ -108,8 +115,8 @@
       <input type="password" v-model="password" placeholder="mot de passe">
       <input type="password" v-model="confirmPassword" placeholder="confirmer mot de passe">
       <base-checkbox>
-        <input type="checkbox" id="license" name="license">
-        <label for="license">J'accepte les <a>conditions générales</a></label>
+        <input type="checkbox" v-model="aggreement">
+        <label>J'accepte les <a>conditions générales</a></label>
       </base-checkbox>
       <button><img src="../assets/person_add.svg" />Créer un compte</button>
     </base-form>

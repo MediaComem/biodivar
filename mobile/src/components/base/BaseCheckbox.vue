@@ -11,12 +11,32 @@
 <style scoped>
   [data-role="check"] {
     max-width: var(--max-width);
+    align-items: center;
+    display: inline-flex;
+    --bg-color: #E8E8E8;
+    --highlight-color: #009FE3;
   }
 
   form :slotted(input) {
-    border: solid lightblue 1px;
+    appearance: none;
+    background-color: var(--bg-color);
+    border-radius: 4px;
     height: 1rem;
     width: 1rem;
+    margin: 0 0.5rem 0 0;
+  }
+
+  form :slotted(input:checked) {
+    background: var(--highlight-color);
+  }
+
+  form :slotted(input:checked::after) {
+    content: 'X';
+    color: black;
+    font-size: 1rem;
+    display: flex;
+    align-content: center;
+    justify-content: center;
   }
 
   form :slotted(label) {
