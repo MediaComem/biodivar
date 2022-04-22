@@ -151,7 +151,7 @@
       <img src="../assets/memory.svg" alt="memory">
       <header>{{ $t('TheLogin.reset.title') }}</header>
       <p>{{ $t('TheLogin.reset.description') }}</p>
-      <base-input data-role="dialog-input-color">
+      <base-input class="dialog-input-color">
         <input type="text" v-model="email" placeholder="email utilisateur">
       </base-input>
     </base-dialog>
