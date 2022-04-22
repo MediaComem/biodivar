@@ -2,6 +2,9 @@
   import { login, register } from '../utils/api.js';
   import { ref } from '@vue/reactivity';
   import { useStore } from '../composables/store.js';
+  import { emailRegex } from '../utils/validation.js';
+
+  import licenseAggreement from "../assets/text/license.json";
 
   const { isAuth, username } = useStore();
 
@@ -15,6 +18,10 @@
   const page = ref('inscription');
 
   const aggreement = ref(false);
+
+  const showAggreement = ref(false);
+
+  const forgotPassword = ref(false);
 
   async function checkAuth() {
     const resp = await login(username.value, password.value);
@@ -31,7 +38,7 @@
       if (resp?.statusCode === 200) {
         selectPage('connexion');
       } else {
-        registerError.value = 'Erreur durant l\'enregistrement de l\'utilisateur';
+        registerError.value = this.$i18n.t('TheLogin.error.login-failure');
         error.value = true;
       } 
     }
@@ -46,34 +53,33 @@
     page.value = selection;
   }
 
-  function validateEmail() {
-    const reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/;
-    if (email.value === '') {
-        registerError.value = 'S\'il vous plaît, entrer une adresse email';
-        return false;
-      } else if (!reg.test(email.value)) {
-        registerError.value = 'Entrer une adresse mail valide';
-        return false;
-      } else {
-        return true;
-      }
-  }
-
   function validatePassword() {
     if (password.value.length < 4) {
-      registerError.value = 'Le mot de passe doit contenir au moins 4 caractères';
+      registerError.value = this.$i18n.t('TheLogin.error.password-length');
       error.value = true;
       return false;
     }
     if (password.value !== confirmPassword.value) {
-      registerError.value = 'Les mot de passes ne correspondent pas';
+      registerError.value = this.$i18n.t('TheLogin.error.password-confirm');
       return false;
     }
     return true;
   }
 
+  function validateEmail() {
+    if (email.value === '') {
+        registerError.value = this.$i18n.t('TheLogin.error.no-mail');
+        return false;
+      } else if (!emailRegex.test(email.value)) {
+        registerError.value = this.$i18n.t('TheLogin.error.email-valid');
+        return false;
+      } else {
+        return true;
+    }
+}
+
   function validateAggreement() {
-    if (!aggreement.value) registerError.value = 'Veuillez lire et accepter les conditions générales' 
+    if (!aggreement.value) this.$i18n.t('TheLogin.error.license')
     return aggreement.value
   }
 
@@ -86,39 +92,47 @@
     <img data-role="header" alt="Biodivar" src="../assets/logo.svg" />
 
     <h1 data-role="title">
-      Réalité augmentée géolocalisée pour l'exploration de la nature
+      {{ $t('TheLogin.title') }}
     </h1>
 
     <base-radio>
-      <button :class="{ 'active': page === 'connexion' }" @click="selectPage('connexion')">connexion</button>
-      <button :class="{ 'active': page === 'inscription' }" @click="selectPage('inscription')">inscription</button>
+      <button :class="{ 'active': page === 'connexion' }" @click="selectPage('connexion')">
+        {{ $t('TheLogin.button.connexion') }}
+      </button>
+      <button :class="{ 'active': page === 'inscription' }" @click="selectPage('inscription')">
+        {{ $t('TheLogin.button.inscription') }}
+      </button>
     </base-radio>
 
     <base-form v-if="page === 'connexion'" @submit.prevent="checkAuth()">
       <base-message data-type="error" v-if="error">
-        Erreur dans le nom d'utilisateur ou le mot de passe
+        {{ $t('TheLogin.error.login') }}
       </base-message>
-      <p>Pas encore de compte? <a @click="selectPage('inscription')">Inscrivez-vous</a></p>
-      <input type="text" v-model="username" placeholder="email ou nom d'utilisateur">
-      <input type="password" v-model="password" placeholder="mot de passe">
-      <button><img src="../assets/connexion.svg" />Connexion</button>
-      <a style="display: block">Mot de passe oublié?</a>
+      <p>{{ $t('TheLogin.no-account') }} <a @click="selectPage('inscription')">{{ $t('TheLogin.inscription') }}</a></p>
+      <input type="text" v-model="username" :placeholder="$t('TheLogin.placeholder.login.user')">
+      <input type="password" v-model="password" :placeholder="$t('TheLogin.placeholder.login.password')">
+      <button><img src="../assets/connexion.svg" />
+      {{ $t('TheLogin.button.connexion') }}
+      </button>
+      <a style="display: block" @click="forgotPassword = true">{{ $t('TheLogin.forgot-password') }}</a>
     </base-form>
 
     <base-form v-if="page === 'inscription'" @submit.prevent="registerUser()">
       <base-message data-type="error" v-if="error">
         {{ registerError }}
       </base-message>
-      <p>Déjà inscrit·e ? <a @click="selectPage('connexion')">Connectez-vous</a></p>
-      <input type="text" v-model="username" placeholder="nom d'utilisateur">
-      <input type="text" v-model="email" placeholder="email utilisateur">
-      <input type="password" v-model="password" placeholder="mot de passe">
-      <input type="password" v-model="confirmPassword" placeholder="confirmer mot de passe">
+      <p>{{ $t('TheLogin.already-register') }} <a @click="selectPage('connexion')">{{ $t('TheLogin.connect') }}</a></p>
+      <base-input>
+        <input type="text" v-model="username" :placeholder="$t('TheLogin.placeholder.register.username')">
+      </base-input>
+      <input type="text" v-model="email" :placeholder="$t('TheLogin.placeholder.register.email')">
+      <input type="password" v-model="password" :placeholder="$t('TheLogin.placeholder.register.password')">
+      <input type="password" v-model="confirmPassword" :placeholder="$t('TheLogin.placeholder.register.confirm')">
       <base-checkbox>
         <input type="checkbox" v-model="aggreement">
-        <label>J'accepte les <a>conditions générales</a></label>
+        <label>{{ $t('TheLogin.aggree') }} <a @click="showAggreement = true">{{ $t('TheLogin.license.link') }}</a></label>
       </base-checkbox>
-      <button><img src="../assets/person_add.svg" />Créer un compte</button>
+      <button><img src="../assets/person_add.svg" />{{ $t('TheLogin.creation') }}</button>
     </base-form>
     <div data-role="footer">
       <div class="heig">
@@ -128,8 +142,20 @@
         <img src="../assets/Logo_HES-SO_Couleurs.svg" alt="hes">
       </div>
     </div>
+    <base-dialog class="text-only" v-if="showAggreement" @close="showAggreement = false">
+      <img src="../assets/aggreement-icon.svg" alt="aggreement">
+      <header>{{ $t('TheLogin.license.general') }}</header>
+      <p v-for="(element, index) in licenseAggreement" :key="index">{{ element }}</p>
+    </base-dialog>
+    <base-dialog class="input" v-if="forgotPassword" @close="forgotPassword = false">
+      <img src="../assets/memory.svg" alt="memory">
+      <header>{{ $t('TheLogin.reset.title') }}</header>
+      <p>{{ $t('TheLogin.reset.description') }}</p>
+      <base-input data-role="dialog-input-color">
+        <input type="text" v-model="email" placeholder="email utilisateur">
+      </base-input>
+    </base-dialog>
   </div>
-
 </template>
 
 <style scoped>

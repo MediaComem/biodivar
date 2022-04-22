@@ -1,0 +1,45 @@
+{
+    "TheLogin": {
+        "title": "Réalité augmentée géolocalisée pour l'exploration de la nature",
+        "no-account": "Pas encore de compte? ",
+        "inscription": "Inscrivez-vous",
+        "forgot-password": "Mot de passe oublié?",
+        "already-register": "Déjà inscrit·e ?",
+        "connect": "Connectez-vous",
+        "aggree": "J'accepte les",
+        "creation": "Créer un compte",
+        "placeholder": {
+            "login": {
+                "user": "email ou nom d'utilisateur",
+                "password": "mot de passe"
+            },
+            "register": {
+                "username": "nom d'utilisateur",
+                "email": "email utilisateur",
+                "password": "mot de passe",
+                "confirm": "confirmer mot de passe"
+            }
+        },
+        "license": {
+            "link": "conditions générales",
+            "general": "Conditions générales (CG)"
+        },
+        "reset": {
+            "title": "Mot de passe oublié?",
+            "description": "Entrez l'adresse email associée à votre compte. Vous recevrez un lien qui vous permettra de réinitialiser votre mot de passe"
+        },
+        "button": {
+            "connexion": "connexion",
+            "inscription": "inscription"
+        },
+        "error": {
+            "login": "Erreur dans le nom d'utilisateur ou le mot de passe",
+            "login-failure": "Erreur durant l'enregistrement de l'utilisateur",
+            "password-length": "Le mot de passe doit contenir au moins 4 caractères",
+            "password-confirm": "Les mot de passes ne correspondent pas",
+            "no-mail": "S'il vous plaît, entrer une adresse email",
+            "valid-email": "Entrer une adresse mail valide",
+            "license": "Veuillez lire et accepter les conditions générales"
+        }
+    }
+}

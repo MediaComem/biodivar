@@ -8,7 +8,7 @@ const section = ref('menu');
 
 const biovers = ref([]);
 
-const username = ref('anonyme');
+const username = ref('');
 
 export function useStore() {
 

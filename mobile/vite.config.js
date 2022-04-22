@@ -16,7 +16,7 @@ export default defineConfig(({ command, mode }) => {
   };
 
   // define specific env configuration
-  if (mode === 'development') {
+  /* if (mode === 'development') {
     config.server = {
       proxy : {
         '/api/v1': {
@@ -26,7 +26,7 @@ export default defineConfig(({ command, mode }) => {
         }
       }
     }
-  }
+  } */
 
   return config;
 
