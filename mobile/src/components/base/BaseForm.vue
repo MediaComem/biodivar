@@ -24,26 +24,6 @@
     margin: 0 auto;
   }
 
-  form :slotted(input) {
-    display: block;
-    width: calc(100% - 4rem);
-    font-size: 1rem;
-    border: solid var(--color) 1px;
-    border-radius: 1rem;
-    padding: 0.3rem;
-    margin: 0 auto 1rem auto;
-    background: var(--bg-color);
-    padding-left: 1rem;
-  }
-
-  form :slotted(input::placeholder) {
-    color: var(--color);
-  }
-
-  form ::slotted(input::-webkit-autofill) {
-    background: var( --bg-color);
-  }
-
   form :slotted(button) {
     width: calc(100% - 4rem);
     border-radius: 1rem;

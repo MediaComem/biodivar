@@ -27,11 +27,29 @@
         {{ $t('TheLogin.error.login') }}
       </base-message>
       <p>{{ $t('TheLogin.no-account') }} <a @click="emit('register')">{{ $t('TheLogin.inscription') }}</a></p>
-      <input type="text" v-model="username" :placeholder="$t('TheLogin.placeholder.login.user')">
-      <input type="password" v-model="password" :placeholder="$t('TheLogin.placeholder.login.password')">
+      <base-input class="user">
+        <input type="text" v-model="username" :placeholder="$t('TheLogin.placeholder.login.user')">
+      </base-input>
+      <base-input class="password">
+        <input type="password" v-model="password" :placeholder="$t('TheLogin.placeholder.login.password')">
+      </base-input>
       <button><img src="../../assets/connexion.svg" />
       {{ $t('TheLogin.button.connexion') }}
       </button>
       <a style="display: block" @click="emit('forgot-password')">{{ $t('TheLogin.forgot-password') }}</a>
     </base-form>
 </template>
+
+<style scoped>
+  .user {
+    --icon-link: url("../../assets/perm_identity.svg");
+    --bg-color: none;
+    --color: black;
+  }
+
+  .password {
+    --icon-link: url("../../assets/lock_outline.svg");
+    --bg-color: none;
+    --color: black;
+  }
+</style>

@@ -10,15 +10,19 @@
 
 <style scoped>
   [data-role="input"] :slotted(input) {
-    display: block;
-    width: calc(100% - 4rem);
-    font-size: 1rem;
-    border: solid var(--color) 1px;
-    border-radius: 1rem;
-    padding: 0.3rem;
+    width: calc(100% - 1rem);
+    max-width: var(--max-width);
+    padding: 1rem 1rem;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 3rem;
+    font-size: 16px;
+    background-color: var(--bg-color);
+    background-image: var(--icon-link);
+    background-position: 1rem 0.9rem;
+    background-repeat: no-repeat;
+    padding-left: 3rem;
     margin: 0 auto 1rem auto;
-    background: var(--bg-color);
-    padding-left: 1rem;
   }
 
   [data-role="input"] :slotted(input::placeholder) {

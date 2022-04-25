@@ -76,13 +76,19 @@
       <base-message data-type="error" v-show="error === 6">
         {{ $t('TheLogin.error.license') }}
       </base-message>
-        <p>{{ $t('TheLogin.already-register') }} <a @click="emit('connection')">{{ $t('TheLogin.connect') }}</a></p>
-      <base-input>
+      <p>{{ $t('TheLogin.already-register') }} <a @click="emit('connection')">{{ $t('TheLogin.connect') }}</a></p>
+      <base-input class="user">
         <input type="text" v-model="username" :placeholder="$t('TheLogin.placeholder.register.username')">
       </base-input>
-      <input type="text" v-model="email" :placeholder="$t('TheLogin.placeholder.register.email')">
-      <input type="password" v-model="password" :placeholder="$t('TheLogin.placeholder.register.password')">
-      <input type="password" v-model="confirmPassword" :placeholder="$t('TheLogin.placeholder.register.confirm')">
+      <base-input class="email">
+        <input type="text" v-model="email" :placeholder="$t('TheLogin.placeholder.register.email')">
+      </base-input>
+      <base-input class="password">
+        <input type="password" v-model="password" :placeholder="$t('TheLogin.placeholder.register.password')">
+      </base-input>
+      <base-input class="password">
+        <input type="password" v-model="confirmPassword" :placeholder="$t('TheLogin.placeholder.register.confirm')">
+      </base-input>
       <base-checkbox>
         <input type="checkbox" v-model="aggreement">
         <label>{{ $t('TheLogin.aggree') }} <a @click="emit('aggreement')">{{ $t('TheLogin.license.link') }}</a></label>
@@ -90,3 +96,23 @@
       <button><img src="../../assets/person_add.svg" />{{ $t('TheLogin.creation') }}</button>
     </base-form>
 </template>
+
+<style scoped>
+  .user {
+    --icon-link: url("../../assets/perm_identity.svg");
+    --bg-color: none;
+    --color: black;
+  }
+
+  .password {
+    --icon-link: url("../../assets/lock_outline.svg");
+    --bg-color: none;
+    --color: black;
+  }
+
+  .email {
+    --icon-link: url("../../assets/email.svg");
+    --bg-color: none;
+    --color: black;
+  }
+</style>

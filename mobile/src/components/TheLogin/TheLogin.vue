@@ -3,10 +3,11 @@
 
   import TheLoginRegister from './TheLoginRegister.vue';
   import TheLoginConnection from './TheLoginConnection.vue';
+  import TheLoginFooter from './TheLoginFooter.vue';
 
   import licenseAggreement from "../../assets/text/license.json";
 
-  const page = ref('inscription');
+  const page = ref('connexion');
 
   const showAggreement = ref(false);
   const forgotPassword = ref(false);
@@ -16,7 +17,6 @@
 <template>
 
   <div>
-
     <img data-role="header" alt="Biodivar" src="../../assets/logo.svg" />
 
     <h1 data-role="title">
@@ -35,15 +35,9 @@
     <the-login-connection v-if="page === 'connexion'" @forgot-password="forgotPassword = true" @register="page = 'inscription'" />
 
     <the-login-register v-if="page === 'inscription'" @connection="page = 'connexion'" @register="page = connexion" @aggreement="showAggreement = true"/>
+    
+    <the-login-footer></the-login-footer>
 
-    <div data-role="footer">
-      <div class="heig">
-        <img src="../../assets/Logo_HEIG-VD_MEI.svg" alt="heig">
-      </div>
-      <div class="hes">
-        <img src="../../assets/Logo_HES-SO_Couleurs.svg" alt="hes">
-      </div>
-    </div>
     <base-dialog class="text-only" v-if="showAggreement" @close="showAggreement = false">
       <img src="../../assets/aggreement-icon.svg" alt="aggreement">
       <header>{{ $t('TheLogin.license.general') }}</header>
@@ -54,7 +48,7 @@
       <header>{{ $t('TheLogin.reset.title') }}</header>
       <p>{{ $t('TheLogin.reset.description') }}</p>
       <base-input class="dialog-input-color">
-        <input type="text" v-model="email" placeholder="email utilisateur">
+        <input class="email-link" type="text" v-model="email" placeholder="email utilisateur">
       </base-input>
     </base-dialog>
   </div>
@@ -81,22 +75,10 @@
     margin: 0 0 4rem 0;
   }
 
-  [data-role="footer"] {
-    max-width: var(--max-width);
-    width: 100%;
-    display: inline-flex;
-  }
-
-  .heig {
-    width: 50%;
-    display: flex;
-    justify-content: flex-start;
-  }
-
-  .hes {
-    width: 50%;
-    display: flex;
-    justify-content: flex-end;
+  .email-link {
+    --icon-link: url("../../assets/email.svg");
+    --bg-color: none;
+    --color: black;
   }
 
 </style>
