@@ -1,5 +1,5 @@
 <script setup>
-  import TheLogin from './components/TheLogin.vue';
+  import TheLogin from './components/TheLogin/TheLogin.vue';
   import TheApp from './components/TheApp.vue';
 
   import { ref } from '@vue/reactivity';

@@ -1,0 +1,92 @@
+<script setup>
+  import { register } from '../../utils/api.js';
+  import { ref } from '@vue/reactivity';
+  import { useStore } from '../../composables/store.js';
+  import { emailRegex } from '../../utils/validation.js';
+
+  const { username } = useStore();
+
+  const email = ref('');
+  const password = ref('');
+  const confirmPassword = ref('');
+
+  const aggreement = ref(false);
+  const error = ref(0);
+
+  const emit = defineEmits(['aggreement', 'register', 'connection'])
+
+  async function registerUser() {
+    if (validateEmail() && validatePassword() && validateAggreement()) {
+      const resp = await register(username.value, email.value, password.value);
+      if (resp?.statusCode === 200) {
+        emit('register');
+      } else {
+        error.value = 0;
+      } 
+    }
+  }
+
+  function validatePassword() {
+    if (password.value.length < 4) {
+      error.value = 2;
+      return false;
+    }
+    if (password.value !== confirmPassword.value) {
+      error.value = 3;
+      return false;
+    }
+    return true;
+  }
+
+  function validateEmail() {
+    if (email.value === '') {
+        error.value = 4;
+        return false;
+      } else if (!emailRegex.test(email.value)) {
+        error.value = 5;
+        return false;
+      } else {
+        return true;
+    }
+  }
+
+  function validateAggreement() {
+    if (!aggreement.value) error.value = 6
+    return aggreement.value
+  }
+</script>
+
+<template>
+    <base-form @submit.prevent="registerUser()">
+      <base-message data-type="error" v-show="error === 1">
+        {{ $t('TheLogin.error.login-failure') }}
+      </base-message>
+      <base-message data-type="error" v-show="error === 2">
+        {{ $t('TheLogin.error.password-length') }}
+      </base-message>
+      <base-message data-type="error" v-show="error === 3">
+        {{ $t('TheLogin.error.password-confirm') }}
+      </base-message>
+      <base-message data-type="error" v-show="error === 4">
+        {{ $t('TheLogin.error.no-mail') }}
+      </base-message>
+      <base-message data-type="error" v-show="error === 5">
+        {{ $t('TheLogin.error.valid-email') }}
+      </base-message>
+      <base-message data-type="error" v-show="error === 6">
+        {{ $t('TheLogin.error.license') }}
+      </base-message>
+        <p>{{ $t('TheLogin.already-register') }} <a @click="emit('connection')">{{ $t('TheLogin.connect') }}</a></p>
+      <base-input>
+        <input type="text" v-model="username" :placeholder="$t('TheLogin.placeholder.register.username')">
+      </base-input>
+      <input type="text" v-model="email" :placeholder="$t('TheLogin.placeholder.register.email')">
+      <input type="password" v-model="password" :placeholder="$t('TheLogin.placeholder.register.password')">
+      <input type="password" v-model="confirmPassword" :placeholder="$t('TheLogin.placeholder.register.confirm')">
+      <base-checkbox>
+        <input type="checkbox" v-model="aggreement">
+        <label>{{ $t('TheLogin.aggree') }} <a @click="emit('aggreement')">{{ $t('TheLogin.license.link') }}</a></label>
+      </base-checkbox>
+      <button><img src="../../assets/person_add.svg" />{{ $t('TheLogin.creation') }}</button>
+    </base-form>
+</template>
