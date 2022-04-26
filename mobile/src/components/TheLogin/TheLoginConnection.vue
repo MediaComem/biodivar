@@ -9,6 +9,8 @@
 
   const password = ref('');
 
+  const showPassword = ref(false);
+
   const emit = defineEmits(['register']);
 
   async function checkAuth() {
@@ -31,7 +33,8 @@
         <input type="text" v-model="username" :placeholder="$t('TheLogin.placeholder.login.user')">
       </base-input>
       <base-input class="password">
-        <input type="password" v-model="password" :placeholder="$t('TheLogin.placeholder.login.password')">
+        <input :type="showPassword ? 'text' : 'password'" v-model="password" :placeholder="$t('TheLogin.placeholder.login.password')">
+        <span @click="showPassword = !showPassword"><img src="../../assets/remove_red_eye.svg"></span>
       </base-input>
       <base-button><img src="../../assets/connexion.svg" />
       {{ $t('TheLogin.button.connexion') }}

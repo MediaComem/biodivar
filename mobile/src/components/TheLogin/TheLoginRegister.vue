@@ -10,6 +10,9 @@
   const password = ref('');
   const confirmPassword = ref('');
 
+  const showPassword = ref(false);
+  const showConfirmPassword = ref(false);
+
   const aggreement = ref(false);
   const error = ref(0);
 
@@ -84,10 +87,12 @@
         <input type="text" v-model="email" :placeholder="$t('TheLogin.placeholder.register.email')">
       </base-input>
       <base-input class="password">
-        <input type="password" v-model="password" :placeholder="$t('TheLogin.placeholder.register.password')">
+        <input :type="showPassword ? 'text' : 'password'" v-model="password" :placeholder="$t('TheLogin.placeholder.register.password')">
+        <span @click="showPassword = !showPassword"><img src="../../assets/remove_red_eye.svg"></span>
       </base-input>
       <base-input class="password">
-        <input type="password" v-model="confirmPassword" :placeholder="$t('TheLogin.placeholder.register.confirm')">
+        <input :type="showConfirmPassword ? 'text' : 'password'" v-model="confirmPassword" :placeholder="$t('TheLogin.placeholder.register.confirm')">
+        <span @click="showConfirmPassword = !showConfirmPassword"><img src="../../assets/remove_red_eye.svg"></span>
       </base-input>
       <base-checkbox>
         <input type="checkbox" v-model="aggreement">

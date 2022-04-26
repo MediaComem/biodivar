@@ -11,6 +11,7 @@
 <style scoped>
   [data-role="input"] {
     min-height: 0;
+    position: relative;
   }
 
   [data-role="input"] :slotted(input) {
@@ -35,5 +36,12 @@
 
   [data-role="input"] ::slotted(input::-webkit-autofill) {
     background: var( --bg-color);
+  }
+
+  [data-role="input"] :slotted(span) {
+    display: block;
+    position: absolute;
+    right: 35px;
+    top: 20%;
   }
 </style>
