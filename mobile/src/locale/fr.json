@@ -9,6 +9,7 @@
         "connect": "Connectez-vous",
         "aggree": "J'accepte les",
         "creation": "Créer un compte",
+        "email-send": "Vous recevrez un email contenant un lien pour réinitialiser votre mot de passe dans quelques minutes",
         "placeholder": {
             "login": {
                 "user": "email ou nom d'utilisateur",
@@ -31,7 +32,8 @@
         },
         "button": {
             "connexion": "connexion",
-            "inscription": "inscription"
+            "inscription": "inscription",
+            "home": "Retour à la page d'accueil"
         },
         "error": {
             "login": "Erreur dans le nom d'utilisateur ou le mot de passe",
@@ -40,7 +42,8 @@
             "password-confirm": "Les mot de passes ne correspondent pas",
             "no-mail": "S'il vous plaît, entrer une adresse email",
             "valid-email": "Entrer une adresse mail valide",
-            "license": "Veuillez lire et accepter les conditions générales"
+            "license": "Veuillez lire et accepter les conditions générales",
+            "mail-not-found": "L'adresse ne correspond pas à un compter BiodivAR"
         }
     }
 }

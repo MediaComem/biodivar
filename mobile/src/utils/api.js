@@ -17,3 +17,8 @@ export function login(username, password) {
 export function register(username, email, password) {
   return postJson(API + 'register', {username, email, password});
 }
+
+export function resetEmail(email) {
+  console.log(email);
+  return true;
+}

@@ -7,7 +7,7 @@
   import { useStore } from './composables/store.js';
   import { isLogged } from './utils/api.js';
 
-  const { isAuth, showAggreement, forgotPassword } = useStore();
+  const { isAuth, showAggreement, forgotPassword, send } = useStore();
 
   const isLoading = ref(true);
 
@@ -27,7 +27,7 @@
 
   <div v-else-if="!isAuth">
     <base-modal>
-      <the-login :class="{'dialog': showAggreement || forgotPassword }"></the-login>
+      <the-login :class="{'dialog': showAggreement || forgotPassword || send }"></the-login>
     </base-modal>
     <the-login-dialog></the-login-dialog>
   </div>

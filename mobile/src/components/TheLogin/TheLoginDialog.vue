@@ -2,35 +2,51 @@
   import { ref } from '@vue/reactivity';
   import { useStore } from '../../composables/store.js';
 
+  import { resetEmail } from '../../utils/api.js';
+
   import licenseAggreement from "../../assets/text/license.json";
 
-  const { showAggreement, forgotPassword } = useStore();
+  const { showAggreement, forgotPassword, send } = useStore();
 
   const email = ref('');
 
   const error = ref(false);
+
+  function passwordReset() {
+      error.value = !resetEmail(email.value);
+      forgotPassword.value = false;
+      send.value = true;
+  }
 </script>
 
 
 <template>
     <div>
         <base-dialog class="text-only" v-if="showAggreement" @close="showAggreement = false">
-        <img src="../../assets/aggreement-icon.svg" alt="aggreement">
-        <header>{{ $t('TheLogin.license.general') }}</header>
-        <p v-for="(element, index) in licenseAggreement" :key="index">{{ element }}</p>
+            <img src="../../assets/aggreement-icon.svg" alt="aggreement">
+            <header>{{ $t('TheLogin.license.general') }}</header>
+            <p v-for="(element, index) in licenseAggreement" :key="index">{{ element }}</p>
         </base-dialog>
 
-        <base-dialog class="input" v-if="forgotPassword" @close="forgotPassword = false">
-        <img src="../../assets/memory.svg" alt="memory">
-        <header>{{ $t('TheLogin.reset.title') }}</header>
-        <p>{{ $t('TheLogin.reset.description') }}</p>
-        <base-input class="dialog-input-color">
-            <input class="email" type="text" v-model="email" placeholder="email utilisateur">
-        </base-input>
-        <base-button class="reset">
-            <img src="../../assets/refresh.svg" />{{ $t('TheLogin.reset-password') }}
-        </base-button>
-        <span v-if="error">L'adresse ne correspond</span>
+        <base-dialog class="input" v-if="forgotPassword && !send" @close="forgotPassword = false">
+            <img src="../../assets/memory.svg" alt="memory">
+            <header>{{ $t('TheLogin.reset.title') }}</header>
+            <p>{{ $t('TheLogin.reset.description') }}</p>
+            <base-input class="dialog-input-color">
+                <input class="email" type="text" v-model="email" placeholder="email utilisateur">
+            </base-input>
+            <base-button class="reset" @click="passwordReset()">
+                <img src="../../assets/refresh.svg" />{{ $t('TheLogin.reset-password') }}
+            </base-button>
+            <span v-if="error"><img src="../../assets/report_problem.svg" /> {{ $t('TheLogin.error.mail-not-found') }}</span>
+        </base-dialog>
+
+        <base-dialog v-if="send" class="result" @close="send = false">
+            <img src="../../assets/mark_email_unread.svg" alt="memory">
+            <p>{{ $t('TheLogin.email-send') }}</p>
+            <base-button class="home" @click="send= false">
+                <img src="../../assets/home.svg" />{{ $t('TheLogin.button.home') }}
+            </base-button>
         </base-dialog>
     </div>
 </template>
@@ -45,5 +61,10 @@
   .reset {
     --link-color: white;
     --highlight-color: #009FE3;
+  }
+
+  .home {
+    --link-color: white;
+    --highlight-color: #323232;
   }
 </style>

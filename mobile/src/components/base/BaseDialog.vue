@@ -67,6 +67,13 @@
     text-align: center;
   }
 
+  .result {
+    top: 25%;
+    height: 50%;
+    background: rgb(147,191,112);
+    text-align: center;
+  }
+
   .dialog-input-color {
     --color: black;
     --bg-color: white;

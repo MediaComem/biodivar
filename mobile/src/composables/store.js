@@ -14,8 +14,10 @@ const showAggreement = ref(false);
 
 const forgotPassword = ref(false);
 
+const send = ref(false);
+
 export function useStore() {
 
-  return { isAuth, section, biovers, username, showAggreement, forgotPassword };
+  return { isAuth, section, biovers, username, showAggreement, forgotPassword, send };
 
 }
