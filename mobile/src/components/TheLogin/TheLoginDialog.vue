@@ -7,6 +7,8 @@
   const { showAggreement, forgotPassword } = useStore();
 
   const email = ref('');
+
+  const error = ref(false);
 </script>
 
 
@@ -28,6 +30,7 @@
         <base-button class="reset">
             <img src="../../assets/refresh.svg" />{{ $t('TheLogin.reset-password') }}
         </base-button>
+        <span v-if="error">L'adresse ne correspond</span>
         </base-dialog>
     </div>
 </template>
