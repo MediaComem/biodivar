@@ -29,13 +29,6 @@
     margin: 0 1rem 1rem 1rem;
   }
 
-  [data-role="input"] :slotted(span) {
-    height: 50px;
-    width: 50px;
-    background-image: var(--icon-link-right);
-    background-repeat: no-repeat;
-  }
-
   [data-role="input"] :slotted(input::placeholder) {
     color: var(--color);
   }

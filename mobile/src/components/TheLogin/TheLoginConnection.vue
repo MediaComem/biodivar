@@ -30,9 +30,8 @@
       <base-input class="user">
         <input type="text" v-model="username" :placeholder="$t('TheLogin.placeholder.login.user')">
       </base-input>
-      <base-input>
-        <input class="password" type="password" v-model="password" :placeholder="$t('TheLogin.placeholder.login.password')">
-        <span class="password"></span>
+      <base-input class="password">
+        <input type="password" v-model="password" :placeholder="$t('TheLogin.placeholder.login.password')">
       </base-input>
       <base-button><img src="../../assets/connexion.svg" />
       {{ $t('TheLogin.button.connexion') }}
