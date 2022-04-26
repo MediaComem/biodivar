@@ -9,8 +9,12 @@
 </template>
 
 <style scoped>
+  [data-role="input"] {
+    min-height: 0;
+  }
+
   [data-role="input"] :slotted(input) {
-    width: calc(100% - 1rem);
+    width: calc(100% - 2rem);
     max-width: var(--max-width);
     padding: 1rem 1rem;
     box-sizing: border-box;
@@ -22,7 +26,14 @@
     background-position: 1rem 0.9rem;
     background-repeat: no-repeat;
     padding-left: 3rem;
-    margin: 0 auto 1rem auto;
+    margin: 0 1rem 1rem 1rem;
+  }
+
+  [data-role="input"] :slotted(span) {
+    height: 50px;
+    width: 50px;
+    background-image: var(--icon-link-right);
+    background-repeat: no-repeat;
   }
 
   [data-role="input"] :slotted(input::placeholder) {

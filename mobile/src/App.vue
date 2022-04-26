@@ -1,12 +1,13 @@
 <script setup>
   import TheLogin from './components/TheLogin/TheLogin.vue';
+  import TheLoginDialog from './components/TheLogin/TheLoginDialog.vue';
   import TheApp from './components/TheApp.vue';
 
   import { ref } from '@vue/reactivity';
   import { useStore } from './composables/store.js';
   import { isLogged } from './utils/api.js';
 
-  const { isAuth } = useStore();
+  const { isAuth, showAggreement, forgotPassword } = useStore();
 
   const isLoading = ref(true);
 
@@ -26,8 +27,9 @@
 
   <div v-else-if="!isAuth">
     <base-modal>
-      <the-login></the-login>
+      <the-login :class="{'dialog': showAggreement || forgotPassword }"></the-login>
     </base-modal>
+    <the-login-dialog></the-login-dialog>
   </div>
 
   <div v-else>

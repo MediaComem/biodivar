@@ -3,13 +3,13 @@
   import { ref } from '@vue/reactivity';
   import { useStore } from '../../composables/store.js';
 
-  const { isAuth, username } = useStore();
+  const { isAuth, username, forgotPassword } = useStore();
 
   const error = ref(false);
 
   const password = ref('');
 
-  const emit = defineEmits(['forgot-password', 'register']);
+  const emit = defineEmits(['register']);
 
   async function checkAuth() {
     const resp = await login(username.value, password.value);
@@ -30,13 +30,14 @@
       <base-input class="user">
         <input type="text" v-model="username" :placeholder="$t('TheLogin.placeholder.login.user')">
       </base-input>
-      <base-input class="password">
-        <input type="password" v-model="password" :placeholder="$t('TheLogin.placeholder.login.password')">
+      <base-input>
+        <input class="password" type="password" v-model="password" :placeholder="$t('TheLogin.placeholder.login.password')">
+        <span class="password"></span>
       </base-input>
-      <button><img src="../../assets/connexion.svg" />
+      <base-button><img src="../../assets/connexion.svg" />
       {{ $t('TheLogin.button.connexion') }}
-      </button>
-      <a style="display: block" @click="emit('forgot-password')">{{ $t('TheLogin.forgot-password') }}</a>
+      </base-button>
+      <a style="display: block" @click="forgotPassword = true">{{ $t('TheLogin.forgot-password') }}</a>
     </base-form>
 </template>
 
@@ -49,6 +50,7 @@
 
   .password {
     --icon-link: url("../../assets/lock_outline.svg");
+    --icon-link-right: url("../../assets/remove_red_eye.svg");
     --bg-color: none;
     --color: black;
   }

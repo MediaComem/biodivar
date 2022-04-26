@@ -15,11 +15,9 @@
   dialog {
     border-radius: 1rem;
     border: 0;
-    margin: 0;
     overflow-y: auto;
     width: calc(100% - 1rem);
-    max-width: var(--max-width);
-    left: calc(50% - calc(100% - 1rem) / 2);
+    max-width: 640px;
   }
 
   [data-role="close"] {
@@ -41,7 +39,6 @@
   }
 
   .input {
-    max-width: var(--max-width);
     top: 25%;
     height: 50%;
     background-color: #F2F2F2;

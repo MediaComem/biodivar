@@ -5,12 +5,7 @@
   import TheLoginConnection from './TheLoginConnection.vue';
   import TheLoginFooter from './TheLoginFooter.vue';
 
-  import licenseAggreement from "../../assets/text/license.json";
-
   const page = ref('connexion');
-
-  const showAggreement = ref(false);
-  const forgotPassword = ref(false);
 
 </script>
 
@@ -32,25 +27,11 @@
       </button>
     </base-radio>
 
-    <the-login-connection v-if="page === 'connexion'" @forgot-password="forgotPassword = true" @register="page = 'inscription'" />
+    <the-login-connection v-if="page === 'connexion'" @register="page = 'inscription'" />
 
-    <the-login-register v-if="page === 'inscription'" @connection="page = 'connexion'" @register="page = connexion" @aggreement="showAggreement = true"/>
+    <the-login-register v-if="page === 'inscription'" @connection="page = 'connexion'" @register="page = connexion"/>
     
     <the-login-footer></the-login-footer>
-
-    <base-dialog class="text-only" v-if="showAggreement" @close="showAggreement = false">
-      <img src="../../assets/aggreement-icon.svg" alt="aggreement">
-      <header>{{ $t('TheLogin.license.general') }}</header>
-      <p v-for="(element, index) in licenseAggreement" :key="index">{{ element }}</p>
-    </base-dialog>
-    <base-dialog class="input" v-if="forgotPassword" @close="forgotPassword = false">
-      <img src="../../assets/memory.svg" alt="memory">
-      <header>{{ $t('TheLogin.reset.title') }}</header>
-      <p>{{ $t('TheLogin.reset.description') }}</p>
-      <base-input class="dialog-input-color">
-        <input class="email-link" type="text" v-model="email" placeholder="email utilisateur">
-      </base-input>
-    </base-dialog>
   </div>
 </template>
 
@@ -74,11 +55,4 @@
     font-size: 1rem;
     margin: 0 0 4rem 0;
   }
-
-  .email-link {
-    --icon-link: url("../../assets/email.svg");
-    --bg-color: none;
-    --color: black;
-  }
-
 </style>

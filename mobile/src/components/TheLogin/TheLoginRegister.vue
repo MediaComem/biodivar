@@ -4,7 +4,7 @@
   import { useStore } from '../../composables/store.js';
   import { emailRegex } from '../../utils/validation.js';
 
-  const { username } = useStore();
+  const { username, showAggreement } = useStore();
 
   const email = ref('');
   const password = ref('');
@@ -13,7 +13,7 @@
   const aggreement = ref(false);
   const error = ref(0);
 
-  const emit = defineEmits(['aggreement', 'register', 'connection'])
+  const emit = defineEmits(['register', 'connection'])
 
   async function registerUser() {
     if (validateEmail() && validatePassword() && validateAggreement()) {
@@ -91,9 +91,9 @@
       </base-input>
       <base-checkbox>
         <input type="checkbox" v-model="aggreement">
-        <label>{{ $t('TheLogin.aggree') }} <a @click="emit('aggreement')">{{ $t('TheLogin.license.link') }}</a></label>
+        <label>{{ $t('TheLogin.aggree') }} <a @click="showAggreement = true">{{ $t('TheLogin.license.link') }}</a></label>
       </base-checkbox>
-      <button><img src="../../assets/person_add.svg" />{{ $t('TheLogin.creation') }}</button>
+      <base-button><img src="../../assets/person_add.svg" />{{ $t('TheLogin.creation') }}</base-button>
     </base-form>
 </template>
 

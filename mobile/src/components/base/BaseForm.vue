@@ -24,26 +24,6 @@
     margin: 0 auto;
   }
 
-  form :slotted(button) {
-    width: calc(100% - 4rem);
-    border-radius: 1rem;
-    border: none;
-    background: var(--highlight-color);
-    color: var(--link-color);
-    font-size: 0.8rem;
-    padding: 0.5rem;
-    margin: 1rem auto 2rem auto;
-    text-transform: uppercase;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  form :slotted(button>img) {
-    padding-right: 0.5rem;
-  }
-
   form :slotted(p) {
     color: var(--color);
     font-size: 1rem;

@@ -10,8 +10,12 @@ const biovers = ref([]);
 
 const username = ref('');
 
+const showAggreement = ref(false);
+
+const forgotPassword = ref(false);
+
 export function useStore() {
 
-  return { isAuth, section, biovers, username };
+  return { isAuth, section, biovers, username, showAggreement, forgotPassword };
 
 }
