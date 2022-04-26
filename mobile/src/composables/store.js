@@ -1,5 +1,4 @@
 import { ref } from '@vue/reactivity';
-import { watchEffect } from 'vue';
 
 // global states
 const isAuth = ref(false);

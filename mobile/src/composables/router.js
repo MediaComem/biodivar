@@ -3,8 +3,6 @@ import {ref, computed} from '@vue/reactivity';
 import Home from '../pages/Home.vue';
 import Biovers from '../pages/Biovers.vue';
 
-import { useEventListener } from './event'
-
 const routes = {
   '#home': Home,
   '#biovers': Biovers,
