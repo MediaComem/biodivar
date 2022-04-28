@@ -34,7 +34,10 @@
       </base-input>
       <base-input class="password">
         <input :type="showPassword ? 'text' : 'password'" v-model="password" :placeholder="$t('TheLogin.placeholder.login.password')">
-        <span @click="showPassword = !showPassword"><img src="../../assets/remove_red_eye.svg"></span>
+        <span @click="showPassword = !showPassword">
+          <img v-if="showPassword" src="../../assets/visibility_off.svg">
+          <img v-else src="../../assets/remove_red_eye.svg">
+        </span>
       </base-input>
       <base-button><img src="../../assets/connexion.svg" />
       {{ $t('TheLogin.button.connexion') }}
@@ -52,7 +55,6 @@
 
   .password {
     --icon-link: url("../../assets/lock_outline.svg");
-    --icon-link-right: url("../../assets/remove_red_eye.svg");
     --bg-color: none;
     --color: black;
   }

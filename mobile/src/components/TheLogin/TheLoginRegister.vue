@@ -88,11 +88,17 @@
       </base-input>
       <base-input class="password">
         <input :type="showPassword ? 'text' : 'password'" v-model="password" :placeholder="$t('TheLogin.placeholder.register.password')">
-        <span @click="showPassword = !showPassword"><img src="../../assets/remove_red_eye.svg"></span>
+        <span @click="showPassword = !showPassword">
+          <img v-if="showPassword" src="../../assets/visibility_off.svg">
+          <img v-else src="../../assets/remove_red_eye.svg">
+        </span>
       </base-input>
       <base-input class="password">
         <input :type="showConfirmPassword ? 'text' : 'password'" v-model="confirmPassword" :placeholder="$t('TheLogin.placeholder.register.confirm')">
-        <span @click="showConfirmPassword = !showConfirmPassword"><img src="../../assets/remove_red_eye.svg"></span>
+        <span @click="showConfirmPassword = !showConfirmPassword">
+          <img v-if="showConfirmPassword" src="../../assets/visibility_off.svg">
+          <img v-else src="../../assets/remove_red_eye.svg">
+        </span>
       </base-input>
       <base-checkbox>
         <input type="checkbox" v-model="aggreement">

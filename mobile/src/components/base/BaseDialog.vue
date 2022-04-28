@@ -28,7 +28,6 @@
   }
 
   [data-role="slot"] {
-    max-height: 95%;
     overflow-y: auto;
   }
 
@@ -36,21 +35,14 @@
     text-align: center;
     color: var(--color);
     font-size: 1.5rem;
-    margin: 1rem 0 4rem 0;
+    margin: 1rem 0 2rem 0;
   }
 
-  dialog :slotted(span) {
-    color: var(--color);
-    font-size: 0.7rem;
-    position: absolute;
-    width: 100%;
-    height: 5%;
-    left: 0;
-    bottom: 0;
-    background-color: rgba(237, 47, 47, 0.75);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  dialog :slotted(img.sent-margin) {
+    margin: 1rem 0 3rem 0;
+  }
+  dialog :slotted(p.sent-margin) {
+    margin: 1rem 0 5rem 0;
   }
   
   .text-only {

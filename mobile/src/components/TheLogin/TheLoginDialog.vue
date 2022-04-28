@@ -32,18 +32,20 @@
             <img src="../../assets/memory.svg" alt="memory">
             <header>{{ $t('TheLogin.reset.title') }}</header>
             <p>{{ $t('TheLogin.reset.description') }}</p>
+            <base-message data-type="error" v-if="error">
+              {{ $t('TheLogin.error.mail-not-found') }}
+            </base-message>
             <base-input class="dialog-input-color">
                 <input class="email" type="text" v-model="email" placeholder="email utilisateur">
             </base-input>
             <base-button class="reset" @click="passwordReset()">
                 <img src="../../assets/refresh.svg" />{{ $t('TheLogin.reset-password') }}
             </base-button>
-            <span v-if="error"><img src="../../assets/report_problem.svg" /> {{ $t('TheLogin.error.mail-not-found') }}</span>
         </base-dialog>
 
         <base-dialog v-if="send" class="result" @close="send = false">
-            <img src="../../assets/mark_email_unread.svg" alt="memory">
-            <p>{{ $t('TheLogin.email-send') }}</p>
+            <img class="sent-margin" src="../../assets/mark_email_unread.svg" alt="memory">
+            <p class="sent-margin">{{ $t('TheLogin.email-send') }}</p>
             <base-button class="home" @click="send= false">
                 <img src="../../assets/home.svg" />{{ $t('TheLogin.button.home') }}
             </base-button>
