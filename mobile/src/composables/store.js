@@ -15,8 +15,11 @@ const forgotPassword = ref(false);
 
 const send = ref(false);
 
+const isMobileOrTablet = ref(AFRAME.utils.device.isMobile() || AFRAME.utils.device.isTablet());
+const isIOS = ref(AFRAME.utils.device.isIOS());
+
 export function useStore() {
 
-  return { isAuth, section, biovers, username, showAggreement, forgotPassword, send };
+  return { isAuth, section, biovers, username, showAggreement, forgotPassword, send, isMobileOrTablet, isIOS };
 
 }

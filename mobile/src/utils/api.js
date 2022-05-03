@@ -22,3 +22,7 @@ export function resetEmail(email) {
   console.log(email);
   return true;
 }
+
+export function logout() {
+  return fetchJson(API + 'logout');
+}

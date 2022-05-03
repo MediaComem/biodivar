@@ -47,7 +47,7 @@
             <img class="sent-margin" src="../../assets/mark_email_unread.svg" alt="memory">
             <p class="sent-margin">{{ $t('TheLogin.email-send') }}</p>
             <base-button class="home" @click="send= false">
-                <img src="../../assets/home.svg" />{{ $t('TheLogin.button.home') }}
+                <img src="../../assets/shared/home.svg" />{{ $t('TheLogin.button.home') }}
             </base-button>
         </base-dialog>
     </div>
