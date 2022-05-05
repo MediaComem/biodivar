@@ -1,10 +1,10 @@
 <template>
     <div data-role="footer">
       <div class="heig">
-        <img class="image" src="../../assets/Logo_HEIG-VD_MEI.svg" alt="heig">
+        <img class="image" src="../../assets/login/Logo_HEIG-VD_MEI.svg" alt="heig">
       </div>
       <div class="hes">
-        <img class="image" src="../../assets/Logo_HES-SO_Couleurs.svg" alt="hes">
+        <img class="image" src="../../assets/login/Logo_HES-SO_Couleurs.svg" alt="hes">
       </div>
     </div>
 </template>

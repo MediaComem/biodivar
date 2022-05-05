@@ -35,11 +35,11 @@
       <base-input class="password">
         <input :type="showPassword ? 'text' : 'password'" v-model="password" :placeholder="$t('TheLogin.placeholder.login.password')">
         <span @click="showPassword = !showPassword">
-          <img v-if="showPassword" src="../../assets/visibility_off.svg">
-          <img v-else src="../../assets/remove_red_eye.svg">
+          <img v-if="showPassword" src="../../assets/login/visibility_off.svg">
+          <img v-else src="../../assets/login/remove_red_eye.svg">
         </span>
       </base-input>
-      <base-button><img src="../../assets/connexion.svg" />
+      <base-button><img src="../../assets/login/connexion.svg" />
       {{ $t('TheLogin.button.connexion') }}
       </base-button>
       <a style="display: block" @click="forgotPassword = true">{{ $t('TheLogin.forgot-password') }}</a>
@@ -48,13 +48,13 @@
 
 <style scoped>
   .user {
-    --icon-link: url("../../assets/perm_identity.svg");
+    --icon-link: url("../../assets/login/perm_identity.svg");
     --bg-color: none;
     --color: black;
   }
 
   .password {
-    --icon-link: url("../../assets/lock_outline.svg");
+    --icon-link: url("../../assets/login/lock_outline.svg");
     --bg-color: none;
     --color: black;
   }

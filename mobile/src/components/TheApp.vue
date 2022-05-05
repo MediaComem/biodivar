@@ -29,22 +29,23 @@
 <template>
 
   <div v-if="section == 'menu'">
-    <base-modal>
-      <header>
-        <div class="logo" @click="menu = false">
-          <img alt="Biodivar" src="../assets/logo.svg" />
-        </div>
-        <div class="account">
-          <img class="acount-image" alt="Account" src="../assets/account_circle.svg" @click="menu = !menu">
-          <ul v-if="menu">
-            <li class="menu-item-devider"><img class="menu-item" alt="Pencil" src="../assets/edit.svg"> modifier profil</li>
-            <li @click="disconnect()"><img class="menu-item" alt="Disconnect" src="../assets/logout.svg"> déconnexion</li>
-          </ul>
-        </div>
-      </header>
+    <base-modal style="text-align: center;">
+      <div data-role="screen">
+        <header>
+          <div class="logo" @click="menu = false">
+            <img alt="Biodivar" src="../assets/shared/logo.svg" />
+          </div>
+          <div class="account">
+            <img class="acount-image" alt="Account" src="../assets/shared/account_circle.svg" @click="menu = !menu">
+            <ul v-if="menu">
+              <li class="menu-item-devider"><img class="menu-item" alt="Pencil" src="../assets/shared/edit.svg"> modifier profil</li>
+              <li @click="disconnect()"><img class="menu-item" alt="Disconnect" src="../assets/shared/logout.svg"> déconnexion</li>
+            </ul>
+          </div>
+        </header>
+        <component :is="page" @click="menu = false" />
+      </div>
       <Footer v-if="isMobileOrTablet" @click="menu = false"/>
-      <component :is="page" @click="menu = false"/>
-      
     </base-modal>
   </div>
 
@@ -68,7 +69,6 @@
     display: block;
     position: absolute;
     top: 2.2rem;
-    right: 10px;
     z-index: 100;
     background-color: #F2F2F2;
     list-style: none;
@@ -91,9 +91,18 @@
     mix-blend-mode: multiply;
   }
 
+  [data-role="screen"] {
+    display: inline-block;
+    max-width: 1280px;
+    min-height: 100%;
+    width: 100%;
+  }
+
   .logo {
     height: 22px;
     width: 75%;
+    justify-content: flex-start;
+    display: flex;
   }
 
   .account {

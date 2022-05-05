@@ -89,40 +89,40 @@
       <base-input class="password">
         <input :type="showPassword ? 'text' : 'password'" v-model="password" :placeholder="$t('TheLogin.placeholder.register.password')">
         <span @click="showPassword = !showPassword">
-          <img v-if="showPassword" src="../../assets/visibility_off.svg">
-          <img v-else src="../../assets/remove_red_eye.svg">
+          <img v-if="showPassword" src="../../assets/login/visibility_off.svg">
+          <img v-else src="../../assets/login/remove_red_eye.svg">
         </span>
       </base-input>
       <base-input class="password">
         <input :type="showConfirmPassword ? 'text' : 'password'" v-model="confirmPassword" :placeholder="$t('TheLogin.placeholder.register.confirm')">
         <span @click="showConfirmPassword = !showConfirmPassword">
-          <img v-if="showConfirmPassword" src="../../assets/visibility_off.svg">
-          <img v-else src="../../assets/remove_red_eye.svg">
+          <img v-if="showConfirmPassword" src="../../assets/login/visibility_off.svg">
+          <img v-else src="../../assets/login/remove_red_eye.svg">
         </span>
       </base-input>
       <base-checkbox>
         <input type="checkbox" v-model="aggreement">
         <label>{{ $t('TheLogin.aggree') }} <a @click="showAggreement = true">{{ $t('TheLogin.license.link') }}</a></label>
       </base-checkbox>
-      <base-button><img src="../../assets/person_add.svg" />{{ $t('TheLogin.creation') }}</base-button>
+      <base-button><img src="../../assets/login/person_add.svg" />{{ $t('TheLogin.creation') }}</base-button>
     </base-form>
 </template>
 
 <style scoped>
   .user {
-    --icon-link: url("../../assets/perm_identity.svg");
+    --icon-link: url("../../assets/login/perm_identity.svg");
     --bg-color: none;
     --color: black;
   }
 
   .password {
-    --icon-link: url("../../assets/lock_outline.svg");
+    --icon-link: url("../../assets/login/lock_outline.svg");
     --bg-color: none;
     --color: black;
   }
 
   .email {
-    --icon-link: url("../../assets/email.svg");
+    --icon-link: url("../../assets/login/email.svg");
     --bg-color: none;
     --color: black;
   }

@@ -12,7 +12,7 @@
 <template>
 
   <div>
-    <img data-role="header" alt="Biodivar" src="../../assets/logo.svg" />
+    <img data-role="header" alt="Biodivar" src="../../assets/shared/logo.svg" />
 
     <h1 data-role="title">
       {{ $t('TheLogin.title') }}

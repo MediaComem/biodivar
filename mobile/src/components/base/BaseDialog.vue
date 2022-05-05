@@ -5,7 +5,7 @@
 <template>
   <dialog open>
     <div data-role="close" >
-      <img src="../../assets/cross.svg" alt="cross" @click="emit('close')">
+      <img src="../../assets/shared/cross.svg" alt="cross" @click="emit('close')">
     </div>
     <div data-role="slot">
       <slot></slot>

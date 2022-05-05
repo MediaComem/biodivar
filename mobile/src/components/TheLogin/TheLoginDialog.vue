@@ -23,13 +23,13 @@
 <template>
     <div>
         <base-dialog class="text-only" v-if="showAggreement" @close="showAggreement = false">
-            <img src="../../assets/aggreement-icon.svg" alt="aggreement">
+            <img src="../../assets/login/aggreement-icon.svg" alt="aggreement">
             <header>{{ $t('TheLogin.license.general') }}</header>
             <p v-for="(element, index) in licenseAggreement" :key="index">{{ element }}</p>
         </base-dialog>
 
         <base-dialog class="input" v-if="forgotPassword && !send" @close="forgotPassword = false">
-            <img src="../../assets/memory.svg" alt="memory">
+            <img src="../../assets/login/memory.svg" alt="memory">
             <header>{{ $t('TheLogin.reset.title') }}</header>
             <p>{{ $t('TheLogin.reset.description') }}</p>
             <base-message data-type="error" v-if="error">
@@ -39,12 +39,12 @@
                 <input class="email" type="text" v-model="email" placeholder="email utilisateur">
             </base-input>
             <base-button class="reset" @click="passwordReset()">
-                <img src="../../assets/refresh.svg" />{{ $t('TheLogin.reset-password') }}
+                <img src="../../assets/login/refresh.svg" />{{ $t('TheLogin.reset-password') }}
             </base-button>
         </base-dialog>
 
         <base-dialog v-if="send" class="result" @close="send = false">
-            <img class="sent-margin" src="../../assets/mark_email_unread.svg" alt="memory">
+            <img class="sent-margin" src="../../assets/login/mark_email_unread.svg" alt="memory">
             <p class="sent-margin">{{ $t('TheLogin.email-send') }}</p>
             <base-button class="home" @click="send= false">
                 <img src="../../assets/shared/home.svg" />{{ $t('TheLogin.button.home') }}
@@ -55,7 +55,7 @@
 
 <style scoped>
   .email {
-    --icon-link: url("../../assets/email.svg");
+    --icon-link: url("../../assets/login/email.svg");
     --bg-color: white;
     --color: black;
   }
