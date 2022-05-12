@@ -2,26 +2,29 @@
   const props = defineProps({
       src: String,
       title: String,
-      description: String 
+      description: String,
+      link: String, 
   });
 </script>
 
 <template>
-  <div class="container container-width">
-    <img :src="props.src">
-    <h3>{{ props.title }}</h3>
-    <p>{{ props.description }}</p>
-  </div>
+  <a :href="props.link">
+    <div class="container container-width">
+      <img :src="props.src">
+      <h3>{{ props.title }}</h3>
+      <p>{{ props.description }}</p>
+    </div>
+  </a>
 </template>
 
 <style scoped>
 .container {
-    display: block;
-    text-align: center;
-    min-height: 165px;
-    border: solid black 1px;
-    border-radius: 1rem;
-    cursor: pointer;
+  display: block;
+  text-align: center;
+  min-height: 165px;
+  border: solid black 1px;
+  border-radius: 1rem;
+  cursor: pointer;
 }
 
 @media only screen and (min-width: 20px) and (max-width: 320px) {
@@ -56,24 +59,29 @@
 
 
 img {
-    margin-top: 12.5px;
-    height: 80px;
-    width: 80px;
+  margin-top: 12.5px;
+  height: 80px;
+  width: 80px;
 }
 
 h3 {
-    margin: 0;
-    max-width: 125px;
-    margin-left: calc((100% - 125px) / 2);
-    font-size: 16px;
-    margin-top: 4px;
+  margin: 0;
+  max-width: 125px;
+  margin-left: calc((100% - 125px) / 2);
+  font-size: 16px;
+  margin-top: 4px;
 }
 
 p {
-    margin: 0;
-    font-size: 8px;
-    max-width: 125px;
-    margin-left: calc((100% - 125px) / 2);
-    margin-top: 2px
+  margin: 0;
+  font-size: 8px;
+  max-width: 125px;
+  margin-left: calc((100% - 125px) / 2);
+  margin-top: 2px
+}
+
+a {
+  color: black;
+  text-decoration: none;
 }
 </style>

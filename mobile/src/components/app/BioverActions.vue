@@ -123,6 +123,7 @@
     align-items: center;
     width: 120px;
     height: 36px;
+    cursor: pointer;
   }
 
   [data-role="action-element"] {

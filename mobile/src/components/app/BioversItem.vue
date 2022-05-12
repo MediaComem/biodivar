@@ -9,14 +9,19 @@
   import More from '../../assets/vue-svg/More.vue';
 
   import BioversInformation from './BioversInformation.vue';
+  import BioverMoreAction from './BioverMoreAction.vue';
 
   const isOpen = ref(false);
 
   const pushPin = ref(false);
   const stars = ref(false);
   const architecture = ref(false);
-  const redEye = ref(false);
-  const edit = ref(false);
+
+  const more = ref(false);
+
+  const props = defineProps({
+      biover: Object,
+  }) 
 </script>
 
 <template>
@@ -25,31 +30,32 @@
         <div data-role="left" @click="isOpen = !isOpen">
             <img :class="{rotate: isOpen}" class="img-transition" src="../../assets/shared/language.svg" alt="Language">
             <div class="align text">
-                <p>BIOVERS 1 AAAAAAaaaadfdjfaj fdjhfjdsfhasdkfhdsfdsajk fdsjfhsdafsdajfjdsfhdsalf fjdkhfsadjfds gfgjjkdkgsdfékgsdjgjgsjfds</p>
+                <p>{{ props.biover.name }}</p>
             </div>
         </div>
         <div data-role="right">
             <div class="align">
-              <PushPin :color="pushPin ? 'white' : '#666666'" @click="pushPin = !pushPin"/>
+              <PushPin :color="pushPin ? 'white' : '#666666'"/>
             </div>
             <div class="align">
-                <Stars :color="stars ? 'white' : '#666666'" @click="stars = !stars" />
+                <Stars :color="stars ? 'white' : '#666666'"/>
             </div>
             <div class="align">
-                <Architecture :color="architecture ? 'white' : '#666666'" @click="architecture = !architecture" />
+                <Architecture :color="architecture ? 'white' : '#666666'"/>
             </div>
             <div class="align">
-                <RedEye :color="redEye ? 'white' : '#666666'" @click="redEye = !redEye" />
+                <RedEye :color="props.biover.is_public ? 'white' : '#666666'" />
             </div>
             <div class="align">
-                <Edit :color="edit ? 'white' : '#666666'" @click="edit = !edit" />
+                <Edit :color="props.biover.isEditable ? 'white' : '#666666'" />
             </div>
-            <div class="align">
-                <More :color="'white'" />
+            <div class="align wrap">
+                <More :color="'white'" @click="more = !more"/>
             </div>
         </div>
     </div>
-  <BioversInformation v-if="isOpen" />
+  <BioversInformation v-if="isOpen" :biover="props.biover" />
+  <BioverMoreAction :enabled="more" :biover="props.biover" />
   </div>
 </template>
 
@@ -79,6 +85,10 @@
     display: flex;
     align-items: center;
     margin-right: 4px;
+  }
+
+  .wrap {
+    flex-wrap: wrap;
   }
 
   .text {

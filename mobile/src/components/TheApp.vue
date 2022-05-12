@@ -10,17 +10,16 @@
   import { logout } from '../utils/api.js';
 
 
-  const { section, isMobileOrTablet } = useStore();
-
-  const menu = ref(false);
+  const { section, isMobileOrTablet, isAuth } = useStore();
 
   const { page, route } = useRouter();
+
+  const menu = ref(false);
 
   async function disconnect() {
     const resp = await logout();
     if (resp?.statusCode === 200) {
       isAuth.value = false;
-      
     }
   }
 
@@ -38,7 +37,7 @@
           <div class="account">
             <img class="acount-image" alt="Account" src="../assets/shared/account_circle.svg" @click="menu = !menu">
             <ul v-if="menu">
-              <li class="menu-item-devider"><img class="menu-item" alt="Pencil" src="../assets/shared/edit.svg"> modifier profil</li>
+              <li class="menu-item-divider"><img class="menu-item" alt="Pencil" src="../assets/shared/edit.svg"> modifier profil</li>
               <li @click="disconnect()"><img class="menu-item" alt="Disconnect" src="../assets/shared/logout.svg"> déconnexion</li>
             </ul>
           </div>
@@ -121,7 +120,7 @@
     padding-right: 10px;
   }
 
-  .menu-item-devider {
+  .menu-item-divider {
     border-bottom: 1px solid #BDBDBD
   }
 </style>

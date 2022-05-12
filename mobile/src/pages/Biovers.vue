@@ -1,3 +1,5 @@
 <template>
-  Biovers
+  <div>
+    Biovers
+  </div>
 </template>

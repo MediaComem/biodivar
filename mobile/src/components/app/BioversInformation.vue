@@ -1,5 +1,16 @@
 <script setup>
   import BioverActions from './BioverActions.vue';
+  import { useStore } from '../../composables/store.js';
+
+  const { isMobileOrTablet, isWebXRAvailable, section } = useStore();
+
+  const props = defineProps({
+    biover: Object
+  });
+
+  function enterAR() {
+    section.value = 'ar';
+  }
 </script>
 
 <template>
@@ -22,35 +33,36 @@
         </div>
         <div class="element">
             <img src="../../assets/shared/create.svg" alt="Create">
-            <p class="information-text">Dernière édition le 31/03/2022 à 8h51</p>
+            <p v-if="props.biover.update_date" class="information-text">Dernière édition le {{ props.biover.update_date }}</p>
+            <p v-else class="information-text">Pas d'édition effectué sur ce biover</p>
         </div>
         <div class="element">
             <img src="../../assets/shared/architecture.svg" alt="Architecture">
-            <p class="information-text">créé le 05/03/2022 à 16h12 par julien.mercier</p>
+            <p class="information-text">créé le {{ props.biover.creation_date }} par julien.mercier</p>
         </div>
         <div class="element">
             <img src="../../assets/shared/location_on.svg" alt="LocationOn">
-            <p class="information-text">15 points d'intérêts</p>
+            <p class="information-text">{{ props.biover.Poi.length }} points d'intérêt</p>
         </div>
         <div class="element">
             <img src="../../assets/shared/gesture.svg" alt="Gesture">
-            <p class="information-text">3 traces</p>
+            <p class="information-text">{{ props.biover.Path.length }} traces</p>
         </div>
-        <div class="element">
+        <!--div class="element">
             <img src="../../assets/shared/local_florist.svg" alt="Gesture">
             <p class="information-text">7 espèces identifiées</p>
         </div>
         <div class="element">
             <img src="../../assets/shared/visibility.svg" alt="Gesture">
             <p class="information-text">41 vues</p>
-        </div>
+        </div-->
          <div class="element">
             <img src="../../assets/shared/storage.svg" alt="Gesture">
             <p class="information-text">15.3 MB</p>
         </div>
     </div>
-    <div class="button">
-        <base-button class="enter">
+    <div v-if="isWebXRAvailable && isMobileOrTablet" class="button">
+        <base-button class="enter" @click="enterAR()">
           <img src="../../assets/shared/home.svg" />ENTRER
         </base-button>
     </div>
@@ -59,30 +71,32 @@
 
 <style scoped>
   p {
-      color: white;
-      font-size: 12px;
+    color: white;
+    font-size: 12px;
   }
 
   .item {
-      display: flex;
-      margin-bottom: 1rem;
+    display: flex;
+    margin-bottom: 1rem;
   }
 
   .element {
-      display: flex;
-      text-align: start;
-      margin: 0 0 0 2rem;
+    display: flex;
+    text-align: start;
+    margin: 0 0 0 2rem;
   }
 
   .information-text {
-      color: #BDBDBD;
-      margin: 0;
-      margin-left: 4px;
-      user-select: none;
+    color: #BDBDBD;
+    margin: 0;
+    margin-left: 4px;
+    user-select: none;
   }
 
   .button {
-    width: 310px;
+    min-width: 240px;
+    width: 100%;
+    max-width: 310px;
     height: 38px;
     justify-items: center;
     display: inline-block;
