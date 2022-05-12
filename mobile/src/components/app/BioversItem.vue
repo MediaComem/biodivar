@@ -10,6 +10,11 @@
 
   import BioversInformation from './BioversInformation.vue';
   import BioverMoreAction from './BioverMoreAction.vue';
+  import BioverTitleDialog from './Dialog/BioverTitleDialog.vue';
+  import BioverDuplicateDialog from './Dialog/BioverDuplicateDialog.vue';
+  import BioverDeleteDialog from './Dialog/BioverDeleteDialog.vue';
+  import BioverVisibilityDialog from './Dialog/BioverVisibilityDialog.vue';
+  import BioverEditableDialog from './Dialog/BioverEditableDialog.vue';
 
   const isOpen = ref(false);
 
@@ -19,9 +24,41 @@
 
   const more = ref(false);
 
+  const editTitleDialog = ref(false);
+  const duplicateBioverDialog = ref(false);
+  const deleteBioverDialog = ref(false);
+  const visibilityDialog = ref(false);
+  const editableDialog = ref(false);
+
   const props = defineProps({
-      biover: Object,
-  }) 
+    biover: Object,
+  })
+
+  function saveTitle(newTitle) {
+    props.biover.name = newTitle;
+    editTitleDialog.value = false;
+  }
+
+  function duplicate(newTitle) {
+    console.log(newTitle)
+    duplicateBioverDialog.value = false;
+  }
+
+  function deleteBiover() {
+    console.log('DELETE');
+    deleteBioverDialog.value = false;
+  }
+
+  function changeVisibility(state) {
+    props.biover.is_public = state;
+    visibilityDialog.value = false;
+  }
+
+  function changeEdition(state) {
+    console.log(props.biover);
+    props.biover.is_editable = state;
+    editableDialog.value = false;
+  }
 </script>
 
 <template>
@@ -47,7 +84,7 @@
                 <RedEye :color="props.biover.is_public ? 'white' : '#666666'" />
             </div>
             <div class="align">
-                <Edit :color="props.biover.isEditable ? 'white' : '#666666'" />
+                <Edit :color="props.biover.is_editable ? 'white' : '#666666'" />
             </div>
             <div class="align wrap">
                 <More :color="'white'" @click="more = !more"/>
@@ -55,7 +92,12 @@
         </div>
     </div>
   <BioversInformation v-if="isOpen" :biover="props.biover" />
-  <BioverMoreAction :enabled="more" :biover="props.biover" />
+  <BioverMoreAction :enabled="more" :biover="props.biover" @edit="editTitleDialog = true" @duplicate="duplicateBioverDialog = true" @delete="deleteBioverDialog = true" @visibility="visibilityDialog = true" @editable="editableDialog = true" />
+  <BioverTitleDialog v-if="editTitleDialog" :biover="props.biover" @close="editTitleDialog = false" @save="saveTitle" />
+  <BioverDuplicateDialog v-if="duplicateBioverDialog" :biover="props.biover" @close="duplicateBioverDialog = false" @duplicate="duplicate" />
+  <BioverDeleteDialog v-if="deleteBioverDialog" :biover="props.biover" @close="deleteBioverDialog = false" @delete="deleteBiover()" />
+  <BioverVisibilityDialog v-if="visibilityDialog" :biover="props.biover" :current-visibility="props.biover.is_public" @close="visibilityDialog = false" @visibility="changeVisibility"/>
+  <BioverEditableDialog v-if="editableDialog" :biover="props.biover" :current-editable="props.biover.is_editable" @close="editableDialog = false" @editable="changeEdition"/>
   </div>
 </template>
 

@@ -9,6 +9,8 @@
     biover: Object,
  });
 
+ const emit = defineEmits(['edit', 'duplicate', 'delete', 'visibility', 'editable'])
+
 </script>
 
 
@@ -18,14 +20,16 @@
         <ul>
             <li v-if="isMobileOrTablet && isWebXRAvailable" @click="section = 'ar'"><img alt="OpenAR" src="../../assets/shared/more/view_in_ar.svg"> ouvrir dans la RA [mobile]</li>
             <li><img alt="Map" src="../../assets/shared/more/map.svg"> ouvrir dans la carte [desktop]</li>
-            <li><img alt="Title" src="../../assets/shared/more/edit.svg"> modifier titre/sous-titre</li>
-            <li><img alt="Copy" src="../../assets/shared/more/file_copy.svg"> dupliquer ce biovers</li>
-            <li><img alt="Delete" src="../../assets/shared/more/delete.svg"> supprimer ce biovers</li>
-            <li><img alt="Visibility" src="../../assets/shared/more/visibility_off.svg"> rendre privé</li>
-            <li><img alt="Edit" src="../../assets/shared/more/edit_off.svg"> rendre non-éditable</li>
+            <li @click="emit('edit')"><img alt="Title" src="../../assets/shared/more/edit.svg"> modifier titre</li>
+            <li @click="emit('duplicate')"><img alt="Copy" src="../../assets/shared/more/file_copy.svg"> dupliquer ce biovers</li>
+            <li @click="emit('delete')"><img alt="Delete" src="../../assets/shared/more/delete.svg"> supprimer ce biovers</li>
+            <li v-if="props.biover.is_public" @click="emit('visibility')"><img alt="Visibility" src="../../assets/shared/more/remove_red_eye.svg"> rendre privé</li>
+            <li v-if="!props.biover.is_public" @click="emit('visibility')"><img alt="Visibility" src="../../assets/shared/more/visibility_off.svg"> rendre public</li>
+            <li v-if="props.biover.is_editable" @click="emit('editable')"><img alt="Edit" src="../../assets/shared/more/edit.svg"> rendre non-éditable</li>
+            <li v-if="!props.biover.is_editable" @click="emit('editable')"><img alt="Edit" src="../../assets/shared/more/edit_off.svg"> rendre éditable</li>
             <li><img alt="Star" src="../../assets/shared/more/star_border.svg"> retirer des favoris</li>
             <li><img alt="PushPin" src="../../assets/shared/more/push_pin.svg"> retirer l'épingle</li>
-            <li><img alt="Share" src="../../assets/shared/more/share.svg"> partager ce biovers</li>
+            <!--li><img alt="Share" src="../../assets/shared/more/share.svg"> partager ce biovers</li-->
         </ul>
     </div>
 </template>

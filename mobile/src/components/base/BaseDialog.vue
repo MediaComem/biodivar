@@ -52,6 +52,12 @@
     text-align: center;
   }
 
+  .edit-element{
+    top: 5%;
+    background-color: #F2F2F2;
+    text-align: center;
+  }
+
   .input {
     top: 25%;
     height: 50%;
