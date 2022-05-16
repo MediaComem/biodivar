@@ -1,7 +1,9 @@
 <script setup>
-  import { ref, computed } from '@vue/reactivity';
+  import { onMounted } from 'vue';
+  import { ref } from '@vue/reactivity';
 
   const bioverName = ref('');
+  const bioverDescription = ref('');
 
   const props = defineProps({
       biover: Object,
@@ -9,13 +11,9 @@
 
   const emit = defineEmits(['close', 'save'])
 
-  const title = computed({
-    get() {
-      return props.biover.name;
-    },
-    set(value) {
-      bioverName.value = value;
-    }
+  onMounted(() => {
+    bioverName.value = props.biover.name;
+    bioverDescription.value = props.biover.description;
   })
 </script>
 
@@ -24,8 +22,9 @@
     <img src="../../../assets/shared/more/edit.svg">
     <header>{{ $t('TheMenu.Dialog.TitleHeader') }}</header>
     <base-input class="dialog-input-color">
-      <input type="text" v-model="title" :placeholder="$t('TheMenu.Dialog.TitlePlaceholder')">
-      <base-button class="edit" @click="emit('save', bioverName)">
+      <input type="text" v-model="bioverName" :placeholder="$t('TheMenu.Dialog.TitlePlaceholder')">
+      <input type="text" v-model="bioverDescription" :placeholder="$t('TheMenu.Dialog.DescriptionPlaceholder')">
+      <base-button class="edit" @click="emit('save', { title: bioverName, description: bioverDescription })">
         <img src="../../../assets/login/refresh.svg" />{{ $t('TheMenu.Dialog.Save') }}
       </base-button>
     </base-input>

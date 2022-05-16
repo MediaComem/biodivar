@@ -22,7 +22,7 @@
     <div>
         <div class="element">
             <img src="../../assets/shared/help.svg" alt="Help">
-            <p class="information-text">Biovers proche de la HEIG-VD, site de St-Roch. Ouvert et visible par tous·tes. </p>
+            <p class="information-text">{{ props.biover.description }}</p>
         </div>
         <div class="element">
             <img src="../../assets/shared/my_location.svg" alt="Location">

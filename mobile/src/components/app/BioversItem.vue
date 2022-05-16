@@ -34,8 +34,33 @@
     biover: Object,
   })
 
-  function saveTitle(newTitle) {
-    props.biover.name = newTitle;
+  function closeAllDialog() {
+    editTitleDialog.value = false;
+    duplicateBioverDialog.value = false;
+    deleteBioverDialog.value = false;
+    visibilityDialog.value = false;
+    editableDialog.value = false;
+  }
+
+  function openDialog(dialog) {
+    closeAllDialog();
+    switch (dialog) {
+      case 'title':       editTitleDialog.value = true;
+                          break;
+      case 'duplicate':   duplicateBioverDialog.value = true;
+                          break;
+      case 'delete':      deleteBioverDialog.value = true;
+                          break;      
+      case 'visibility':  visibilityDialog.value = true;
+                          break;
+      case 'edition':     editableDialog.value = true;
+                          break;                                    
+    }
+  }
+
+  function saveTitle(modification) {
+    props.biover.name = modification.title;
+    props.biover.description = modification.description;
     editTitleDialog.value = false;
   }
 
@@ -86,13 +111,13 @@
             <div class="align">
                 <Edit :color="props.biover.is_editable ? 'white' : '#666666'" />
             </div>
-            <div class="align wrap">
+            <div class="align more">
                 <More :color="'white'" @click="more = !more"/>
             </div>
         </div>
     </div>
   <BioversInformation v-if="isOpen" :biover="props.biover" />
-  <BioverMoreAction :enabled="more" :biover="props.biover" @edit="editTitleDialog = true" @duplicate="duplicateBioverDialog = true" @delete="deleteBioverDialog = true" @visibility="visibilityDialog = true" @editable="editableDialog = true" @close="more = false"/>
+  <BioverMoreAction :enabled="more" :biover="props.biover" @edit="openDialog('title')" @duplicate="openDialog('duplicate')" @delete="openDialog('delete')" @visibility="openDialog('visibility')" @editable="openDialog('edition')" @close="more = false"/>
   <BioverTitleDialog v-if="editTitleDialog" :biover="props.biover" @close="editTitleDialog = false" @save="saveTitle" />
   <BioverDuplicateDialog v-if="duplicateBioverDialog" :biover="props.biover" @close="duplicateBioverDialog = false" @duplicate="duplicate" />
   <BioverDeleteDialog v-if="deleteBioverDialog" :biover="props.biover" @close="deleteBioverDialog = false" @delete="deleteBiover()" />
@@ -115,6 +140,7 @@
     width: calc(100% - 140px);
     display: inline-flex;
     align-items: center;
+    cursor: pointer;
   }
 
   [data-role="right"] {
@@ -129,8 +155,8 @@
     margin-right: 4px;
   }
 
-  .wrap {
-    flex-wrap: wrap;
+  .more {
+    cursor: pointer;
   }
 
   .text {

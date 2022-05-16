@@ -1,42 +1,45 @@
 <script setup>
-
+  import { ref } from 'vue';
   import { useStore } from '../../composables/store.js';
 
   const { isMobileOrTablet, isWebXRAvailable, section } = useStore();
 
- const props = defineProps({
+  const props = defineProps({
     enabled: Boolean,
-    biover: Object,
- });
+    biover: Object ,
+  });
 
- const emit = defineEmits(['edit', 'duplicate', 'delete', 'visibility', 'editable', 'close'])
+  const emit = defineEmits(['edit', 'duplicate', 'delete', 'visibility', 'editable', 'close'])
 
 </script>
 
 
 <template>
-    <div data-role="menu" class="transition" :class="{enable: props.enabled, disable: !props.enabled}">
-        <div data-role="header">
-          <p data-role="header-text">{{ props.biover.name }}</p>
-          <div data-role="header-cross">
-            <img src="../../assets/shared/cross.svg" alt="cross" @click="emit('close')">
-          </div>
+  <div>
+    <div data-role="menu" class="transition" :class="{enable: props.enabled, disable: !props.enabled}" >
+      <div data-role="header">
+        <p data-role="header-text">{{ props.biover.name }}</p>
+        <div data-role="header-cross">
+          <img src="../../assets/shared/cross.svg" alt="cross" @click="emit('close')">
         </div>
-        <ul>
-          <li v-if="isMobileOrTablet && isWebXRAvailable" @click="section = 'ar'"><img alt="OpenAR" src="../../assets/shared/more/view_in_ar.svg"> {{ $t('TheMenu.More.AR') }}</li>
-          <li><img alt="Map" src="../../assets/shared/more/map.svg"> {{ $t('TheMenu.More.Desktop') }}</li>
-          <li @click="emit('edit')"><img alt="Title" src="../../assets/shared/more/edit.svg"> {{ $t('TheMenu.More.Title') }}</li>
-          <li @click="emit('duplicate')"><img alt="Copy" src="../../assets/shared/more/file_copy.svg"> {{ $t('TheMenu.More.Duplicate') }}</li>
-          <li @click="emit('delete')"><img alt="Delete" src="../../assets/shared/more/delete.svg"> {{ $t('TheMenu.More.Delete') }}</li>
-          <li v-if="props.biover.is_public" @click="emit('visibility')"><img alt="Visibility" src="../../assets/shared/more/remove_red_eye.svg"> {{ $t('TheMenu.More.Private') }}</li>
-          <li v-if="!props.biover.is_public" @click="emit('visibility')"><img alt="Visibility" src="../../assets/shared/more/visibility_off.svg"> {{ $t('TheMenu.More.Publique') }}</li>
-          <li v-if="props.biover.is_editable" @click="emit('editable')"><img alt="Edit" src="../../assets/shared/more/edit.svg"> {{ $t('TheMenu.More.ToUnEdit') }}</li>
-          <li v-if="!props.biover.is_editable" @click="emit('editable')"><img alt="Edit" src="../../assets/shared/more/edit_off.svg"> {{ $t('TheMenu.More.ToEdit') }}</li>
-          <li><img alt="Star" src="../../assets/shared/more/star_border.svg"> {{ $t('TheMenu.More.ToFavorite') }}</li>
-          <li><img alt="PushPin" src="../../assets/shared/more/push_pin.svg"> {{ $t('TheMenu.More.ToPin') }}</li>
-          <!--li><img alt="Share" src="../../assets/shared/more/share.svg"> partager ce biovers</li-->
-        </ul>
+      </div>
+      <ul>
+        <li v-if="isMobileOrTablet && isWebXRAvailable" @click="section = 'ar'"><img alt="OpenAR" src="../../assets/shared/more/view_in_ar.svg"> {{ $t('TheMenu.More.AR') }}</li>
+        <li><img alt="Map" src="../../assets/shared/more/map.svg"> {{ $t('TheMenu.More.Desktop') }}</li>
+        <li @click="emit('edit')"><img alt="Title" src="../../assets/shared/more/edit.svg"> {{ $t('TheMenu.More.Title') }}</li>
+        <li @click="emit('duplicate')"><img alt="Copy" src="../../assets/shared/more/file_copy.svg"> {{ $t('TheMenu.More.Duplicate') }}</li>
+        <li @click="emit('delete')"><img alt="Delete" src="../../assets/shared/more/delete.svg"> {{ $t('TheMenu.More.Delete') }}</li>
+        <li v-if="props.biover.is_public" @click="emit('visibility')"><img alt="Visibility" src="../../assets/shared/more/remove_red_eye.svg"> {{ $t('TheMenu.More.Private') }}</li>
+        <li v-if="!props.biover.is_public" @click="emit('visibility')"><img alt="Visibility" src="../../assets/shared/more/visibility_off.svg"> {{ $t('TheMenu.More.Publique') }}</li>
+        <li v-if="props.biover.is_editable" @click="emit('editable')"><img alt="Edit" src="../../assets/shared/more/edit.svg"> {{ $t('TheMenu.More.ToUnEdit') }}</li>
+        <li v-if="!props.biover.is_editable" @click="emit('editable')"><img alt="Edit" src="../../assets/shared/more/edit_off.svg"> {{ $t('TheMenu.More.ToEdit') }}</li>
+        <li><img alt="Star" src="../../assets/shared/more/star_border.svg"> {{ $t('TheMenu.More.ToFavorite') }}</li>
+        <li><img alt="PushPin" src="../../assets/shared/more/push_pin.svg"> {{ $t('TheMenu.More.ToPin') }}</li>
+        <!--li><img alt="Share" src="../../assets/shared/more/share.svg"> partager ce biovers</li-->
+      </ul>
     </div>
+    <div v-if="props.enabled" class="outside" @click="emit('close')"/>  
+  </div>
 </template>
 
 <style scoped>
@@ -60,10 +63,19 @@
         z-index: 100;
         background-color: #F2F2F2;
     }
+
+    .outside {
+      height: 100vh;
+      width: calc(100% - 500px);
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
   }
 
   [data-role="header"] {
     display: flex;
+    border-bottom: solid 1px #BDBDBD;
   }
 
   [data-role="header-text"] {
@@ -92,7 +104,7 @@
   li {
     display: flex;
     align-items: center;
-    border: #F2F2F2 solid 1px;
+    border-bottom: solid 1px #BDBDBD;
     height: 40px;
     padding-left: 1rem;
     padding-right: 1rem;
