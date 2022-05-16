@@ -12,7 +12,7 @@
   const emit = defineEmits(['edit', 'duplicate', 'delete', 'visibility', 'editable', 'close'])
 
   function couldEdit() {
-    return username === props.biover.User.username;
+    return username.value === props.biover.User.username;
   }
 
 </script>
