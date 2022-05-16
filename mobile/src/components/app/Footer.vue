@@ -17,27 +17,27 @@
     <div data-role="footer">
         <div class="container">
           <img src="../../assets/shared/home.svg" alt="home">
-          <p>Accueil</p>
+          <p>{{ $t('Footer.Homepage') }}</p>
         </div>
         <div class="container" v-if="!isIOS && isWebXRAvailable">
           <img src="../../assets/footer/biovers.svg" alt="home">
-          <p>biovers</p>
+          <p>{{ $t('Footer.Biover') }}</p>
         </div>
         <div class="container">
           <img src="../../assets/footer/new-biovers.svg" alt="home">
-          <p>nouveau</p>
+          <p>{{ $t('Footer.New') }}</p>
         </div>
         <div class="container">
           <img src="../../assets/footer/visualisation.svg" alt="home">
-          <p>visualisation</p>
+          <p>{{ $t('Footer.Visualize') }}</p>
         </div>
         <div class="container">
           <img src="../../assets/footer/settings.svg" alt="home">
-          <p>réglages</p>
+          <p>{{ $t('Footer.Settings') }}</p>
         </div>
         <div class="container" @click="disconnect()">
           <img src="../../assets/footer/logout.svg" alt="home">
-          <p>déconnexion</p>
+          <p>{{ $t('Footer.Logout') }}</p>
         </div>
     </div>
 </template>

@@ -92,7 +92,7 @@
         </div>
     </div>
   <BioversInformation v-if="isOpen" :biover="props.biover" />
-  <BioverMoreAction :enabled="more" :biover="props.biover" @edit="editTitleDialog = true" @duplicate="duplicateBioverDialog = true" @delete="deleteBioverDialog = true" @visibility="visibilityDialog = true" @editable="editableDialog = true" />
+  <BioverMoreAction :enabled="more" :biover="props.biover" @edit="editTitleDialog = true" @duplicate="duplicateBioverDialog = true" @delete="deleteBioverDialog = true" @visibility="visibilityDialog = true" @editable="editableDialog = true" @close="more = false"/>
   <BioverTitleDialog v-if="editTitleDialog" :biover="props.biover" @close="editTitleDialog = false" @save="saveTitle" />
   <BioverDuplicateDialog v-if="duplicateBioverDialog" :biover="props.biover" @close="duplicateBioverDialog = false" @duplicate="duplicate" />
   <BioverDeleteDialog v-if="deleteBioverDialog" :biover="props.biover" @close="deleteBioverDialog = false" @delete="deleteBiover()" />
@@ -162,7 +162,7 @@
   }
 
   .rotate {
-    transform: rotate(-90deg);
+    transform: rotate(90deg);
   }
 
   .img-transition {

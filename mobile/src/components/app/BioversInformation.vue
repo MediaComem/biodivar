@@ -2,13 +2,14 @@
   import BioverActions from './BioverActions.vue';
   import { useStore } from '../../composables/store.js';
 
-  const { isMobileOrTablet, isWebXRAvailable, section } = useStore();
+  const { isMobileOrTablet, isWebXRAvailable, section, selectedBiovers } = useStore();
 
   const props = defineProps({
     biover: Object
   });
 
   function enterAR() {
+    selectedBiovers.value = props.biover;
     section.value = 'ar';
   }
 </script>
@@ -42,11 +43,11 @@
         </div>
         <div class="element">
             <img src="../../assets/shared/location_on.svg" alt="LocationOn">
-            <p class="information-text">{{ props.biover.Poi.length }} points d'intérêt</p>
+            <p class="information-text">{{ props.biover.Poi.length }} {{ $t('TheMenu.Information.POI') }}</p>
         </div>
         <div class="element">
             <img src="../../assets/shared/gesture.svg" alt="Gesture">
-            <p class="information-text">{{ props.biover.Path.length }} traces</p>
+            <p class="information-text">{{ props.biover.Path.length }} {{ $t('TheMenu.Information.Traces') }}</p>
         </div>
         <!--div class="element">
             <img src="../../assets/shared/local_florist.svg" alt="Gesture">
@@ -63,7 +64,7 @@
     </div>
     <div v-if="isWebXRAvailable && isMobileOrTablet" class="button">
         <base-button class="enter" @click="enterAR()">
-          <img src="../../assets/shared/home.svg" />ENTRER
+          <img src="../../assets/shared/home.svg" />{{ $t('TheMenu.Information.Enter') }}
         </base-button>
     </div>
   </div>

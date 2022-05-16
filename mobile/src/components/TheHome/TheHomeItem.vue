@@ -8,13 +8,13 @@
 </script>
 
 <template>
-  <a :href="props.link">
-    <div class="container container-width">
+  <div class="container container-width">
+    <a :href="props.link">
       <img :src="props.src">
       <h3>{{ props.title }}</h3>
       <p>{{ props.description }}</p>
-    </div>
-  </a>
+    </a>
+  </div>
 </template>
 
 <style scoped>

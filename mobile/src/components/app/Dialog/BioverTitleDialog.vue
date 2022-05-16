@@ -21,12 +21,12 @@
 
 <template>
   <base-dialog class="edit-element"  @close="emit('close')">
-    <img src="../../../assets/shared/more/edit.svg" alt="aggreement">
-    <header>Modification du titre</header>
+    <img src="../../../assets/shared/more/edit.svg">
+    <header>{{ $t('TheMenu.Dialog.TitleHeader') }}</header>
     <base-input class="dialog-input-color">
-      <input type="text" v-model="title" placeholder="biover name">
+      <input type="text" v-model="title" :placeholder="$t('TheMenu.Dialog.TitlePlaceholder')">
       <base-button class="edit" @click="emit('save', bioverName)">
-        <img src="../../../assets/login/refresh.svg" />Save
+        <img src="../../../assets/login/refresh.svg" />{{ $t('TheMenu.Dialog.Save') }}
       </base-button>
     </base-input>
   </base-dialog>

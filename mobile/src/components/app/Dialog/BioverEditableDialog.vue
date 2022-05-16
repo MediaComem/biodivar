@@ -9,19 +9,19 @@
 
 <template>
   <base-dialog class="edit-element"  @close="emit('close')">
-    <img src="../../../assets/shared/more/edit.svg" alt="aggreement">
-    <header>Changer le droit de modification du biover {{ props.biover.name }}</header>
+    <img src="../../../assets/shared/more/edit.svg">
+    <header>{{ $t('TheMenu.Dialog.EditableHeader') }} {{ props.biover.name }}</header>
     <base-radio>
       <button :class="{ 'active': currentEditable }" @click="currentEditable = !currentEditable">
-        Editable
+        {{ $t('TheMenu.Dialog.Editable') }}
       </button>
       <button :class="{ 'active': !currentEditable }" @click="currentEditable = !currentEditable">
-        Non-Editable
+        {{ $t('TheMenu.Dialog.NotEditable') }}
       </button>
     </base-radio>
     <base-input class="dialog-input-color">
       <base-button class="editable" @click="emit('editable', currentEditable)">
-        <img src="../../../assets/shared/more/edit.svg" />Update
+        <img src="../../../assets/shared/more/edit.svg" />{{ $t('TheMenu.Dialog.Update') }}
       </base-button>
     </base-input>
   </base-dialog>

@@ -67,40 +67,40 @@
       </div>
       <div v-if="pushPin" class="element-menu" @click="pushPinAction()">
         <PushPin :color="'black'" />
-        <span>détacher</span>
+        <span>{{ $t('TheMenu.Action.Unpin') }}</span>
       </div>
     </div>
     <div data-role="action">
       <div data-role="action-element" @click="openAction('stars')">
         <Stars :color="'black'" />
-        <p>favori</p>
+        <p>{{ $t('TheMenu.Action.Star') }}</p>
         <img src="../../assets/shared/arrow_drop_down.svg" alt="Arrow">
       </div>
       <div v-if="stars" class="element-menu" @click="starsAction()">
         <Stars :color="'black'" />
-        <span>retirer des favoris</span>
+        <span>{{ $t('TheMenu.Action.UnStar') }}</span>
       </div>
     </div>
     <div data-role="action">
       <div data-role="action-element" @click="openAction('redEye')">
         <RedEye :color="'black'" />
-        <p>public</p>
+        <p>{{ $t('TheMenu.Shared.Public') }}</p>
         <img src="../../assets/shared/arrow_drop_down.svg" alt="Arrow">
       </div>
       <div v-if="redEye" class="element-menu" @click="redEyeAction()">
         <RedEye :color="'black'" />
-        <span>rendre public</span>
+        <span>{{ $t('TheMenu.Action.ToPublic') }}</span>
       </div>
     </div>
     <div data-role="action">
       <div data-role="action-element" @click="openAction('edit')">
         <Edit :color="'black'" />
-        <p>éditable</p>
+        <p>{{ $t('TheMenu.Action.Edit') }}</p>
         <img src="../../assets/shared/arrow_drop_down.svg" alt="Arrow">
       </div>
       <div v-if="edit" class="element-menu" @click="editAction()">
         <Edit :color="'black'" />
-        <span>rendre éditable</span>
+        <span>{{ $t('TheMenu.Action.ToEdit') }}</span>
       </div>
     </div>
   </div>

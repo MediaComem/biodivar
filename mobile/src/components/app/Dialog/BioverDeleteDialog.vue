@@ -8,12 +8,12 @@
 
 <template>
   <base-dialog class="edit-element"  @close="emit('close')">
-    <img src="../../../assets/shared/more/delete.svg" alt="aggreement">
-    <header>Suppression du biover {{ props.biover.name }}</header>
-    <p>Etes-vous sûr de vouloir supprimer ce biover?</p>
+    <img src="../../../assets/shared/more/delete.svg">
+    <header>{{ $t('TheMenu.Dialog.DeleteHeader') }} {{ props.biover.name }}</header>
+    <p>{{ $t('TheMenu.Dialog.DeleteText') }}</p>
     <base-input class="dialog-input-color">
       <base-button class="delete" @click="emit('delete')">
-        <img src="../../../assets/shared/more/delete.svg" />Save
+        <img src="../../../assets/shared/more/delete.svg" />{{ $t('TheMenu.Dialog.DeleteButton')}}
       </base-button>
     </base-input>
   </base-dialog>

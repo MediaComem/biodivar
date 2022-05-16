@@ -9,19 +9,19 @@
 
 <template>
   <base-dialog class="edit-element"  @close="emit('close')">
-    <img src="../../../assets/shared/more/remove_red_eye.svg" alt="aggreement">
-    <header>Changer la visibilité du biover {{ props.biover.name }}</header>
+    <img src="../../../assets/shared/more/remove_red_eye.svg">
+    <header>{{ $t('TheMenu.Dialog.VisibilityHeader') }} {{ props.biover.name }}</header>
     <base-radio>
       <button :class="{ 'active': currentVisibility }" @click="currentVisibility = !currentVisibility">
-        Public
+        {{ $t('TheMenu.Shared.Public') }}
       </button>
       <button :class="{ 'active': !currentVisibility }" @click="currentVisibility = !currentVisibility">
-        Privé
+        {{ $t('TheMenu.Dialog.Private') }}
       </button>
     </base-radio>
     <base-input class="dialog-input-color">
       <base-button class="visibility" @click="emit('visibility', currentVisibility)">
-        <img src="../../../assets/shared/more/remove_red_eye_white.svg" />Update
+        <img src="../../../assets/shared/more/remove_red_eye_white.svg" />{{ $t('TheMenu.Dialog.Update') }}
       </base-button>
     </base-input>
   </base-dialog>

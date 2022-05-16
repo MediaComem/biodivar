@@ -56,6 +56,7 @@
     top: 5%;
     background-color: #F2F2F2;
     text-align: center;
+    z-index: 200;
   }
 
   .input {

@@ -37,8 +37,8 @@
           <div class="account">
             <img class="acount-image" alt="Account" src="../assets/shared/account_circle.svg" @click="menu = !menu">
             <ul v-if="menu">
-              <li class="menu-item-divider"><img class="menu-item" alt="Pencil" src="../assets/shared/edit.svg"> modifier profil</li>
-              <li @click="disconnect()"><img class="menu-item" alt="Disconnect" src="../assets/shared/logout.svg"> déconnexion</li>
+              <li class="menu-item-divider"><img class="menu-item" alt="Pencil" src="../assets/shared/edit.svg"> {{ $t('Header.Modify') }}</li>
+              <li @click="disconnect()"><img class="menu-item" alt="Disconnect" src="../assets/shared/logout.svg"> {{ $t('Header.Logout') }}</li>
             </ul>
           </div>
         </header>
