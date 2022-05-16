@@ -2,6 +2,8 @@
   import BioverActions from './BioverActions.vue';
   import { useStore } from '../../composables/store.js';
 
+  import { dateFormatter, hourFormatter } from '../../utils/formatter';
+
   const { isMobileOrTablet, isWebXRAvailable, section, selectedBiovers } = useStore();
 
   const props = defineProps({
@@ -30,16 +32,16 @@
         </div>
         <div class="element">
             <img src="../../assets/shared/restore.svg" alt="Restore">
-            <p class="information-text">Dernière connection le 31/03/2022 à 8h51</p>
+            <p class="information-text">{{ $t('TheMenu.Information.LastConnection') }} 31/03/2022, 8h51</p>
         </div>
         <div class="element">
             <img src="../../assets/shared/create.svg" alt="Create">
-            <p v-if="props.biover.update_date" class="information-text">Dernière édition le {{ props.biover.update_date }}</p>
-            <p v-else class="information-text">Pas d'édition effectué sur ce biover</p>
+            <p v-if="props.biover.update_date" class="information-text">{{ $t('TheMenu.Information.LastEdition') }} {{ dateFormatter(props.biover.update_date) }}&#8239;: {{ hourFormatter(props.biover.update_date) }} </p>
+            <p v-else class="information-text">{{ $t('TheMenu.Information.NoUpdate') }}</p>
         </div>
         <div class="element">
             <img src="../../assets/shared/architecture.svg" alt="Architecture">
-            <p class="information-text">créé le {{ props.biover.creation_date }} par julien.mercier</p>
+            <p class="information-text">{{ $t('TheMenu.Information.Create') }} {{ dateFormatter(props.biover.creation_date) }}&#8239;: {{ hourFormatter(props.biover.creation_date) }} {{ $t('TheMenu.Information.By') }} {{ props.biover.User.username }}</p>
         </div>
         <div class="element">
             <img src="../../assets/shared/location_on.svg" alt="LocationOn">

@@ -1,5 +1,7 @@
 <script setup>
   import { ref } from '@vue/reactivity';
+
+  import { useStore } from '../../composables/store';
   
   import PushPin from '../../assets/vue-svg/PushPin.vue';
   import Stars from '../../assets/vue-svg/Stars.vue';
@@ -15,6 +17,8 @@
   import BioverDeleteDialog from './Dialog/BioverDeleteDialog.vue';
   import BioverVisibilityDialog from './Dialog/BioverVisibilityDialog.vue';
   import BioverEditableDialog from './Dialog/BioverEditableDialog.vue';
+
+  const { username } = useStore();
 
   const isOpen = ref(false);
 
@@ -103,7 +107,7 @@
                 <Stars :color="stars ? 'white' : '#666666'"/>
             </div>
             <div class="align">
-                <Architecture :color="architecture ? 'white' : '#666666'"/>
+                <Architecture :color="username === props.biover.User.username ? 'white' : '#666666'"/>
             </div>
             <div class="align">
                 <RedEye :color="props.biover.is_public ? 'white' : '#666666'" />

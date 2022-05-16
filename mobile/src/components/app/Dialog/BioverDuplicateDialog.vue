@@ -17,7 +17,7 @@
     <base-input class="dialog-input-color">
       <input type="text" v-model="duplicateBioverName" :placeholder="$t('TheMenu.Dialog.DuplicatePlaceholder')">
       <base-button class="duplicate" @click="emit('duplicate', duplicateBioverName)">
-        <img src="../../../assets/shared/more/file_copy.svg" />{{ $t('TheMenu.Dialog.DuplicateButton') }}
+        <img src="../../../assets/shared/more/file_copy_white.svg" />{{ $t('TheMenu.Dialog.DuplicateButton') }}
       </base-button>
     </base-input>
   </base-dialog>

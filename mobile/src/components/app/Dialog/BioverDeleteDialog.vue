@@ -13,7 +13,7 @@
     <p>{{ $t('TheMenu.Dialog.DeleteText') }}</p>
     <base-input class="dialog-input-color">
       <base-button class="delete" @click="emit('delete')">
-        <img src="../../../assets/shared/more/delete.svg" />{{ $t('TheMenu.Dialog.DeleteButton')}}
+        <img src="../../../assets/shared/more/delete_white.svg" />{{ $t('TheMenu.Dialog.DeleteButton')}}
       </base-button>
     </base-input>
   </base-dialog>

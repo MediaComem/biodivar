@@ -109,7 +109,12 @@
         "Information": {
             "POI": "points d'intérêt",
             "Traces": "traces",
-            "Enter": "ENTRER"
+            "Enter": "ENTRER",
+            "NoUpdate": "Pas d'édition effectué sur ce biover",
+            "Create": "créé le",
+            "LastConnection": "Dernière connection le",
+            "LastEdition": "Dernière édition le",
+            "By": "par"
         }
     },
     "Header": {

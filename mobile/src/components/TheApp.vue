@@ -23,6 +23,9 @@
     }
   }
 
+  function closeDialog() {
+    menu.value = false;
+  }
 </script>
 
 <template>
@@ -40,6 +43,7 @@
               <li class="menu-item-divider"><img class="menu-item" alt="Pencil" src="../assets/shared/edit.svg"> {{ $t('Header.Modify') }}</li>
               <li @click="disconnect()"><img class="menu-item" alt="Disconnect" src="../assets/shared/logout.svg"> {{ $t('Header.Logout') }}</li>
             </ul>
+            <div v-if="menu" class="dialog-overlay" @click="closeDialog()"/>
           </div>
         </header>
         <component :is="page" @click="menu = false" />
@@ -122,5 +126,13 @@
 
   .menu-item-divider {
     border-bottom: 1px solid #BDBDBD
+  }
+
+  .dialog-overlay {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
   }
 </style>

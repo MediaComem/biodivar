@@ -25,7 +25,7 @@
       <input type="text" v-model="bioverName" :placeholder="$t('TheMenu.Dialog.TitlePlaceholder')">
       <input type="text" v-model="bioverDescription" :placeholder="$t('TheMenu.Dialog.DescriptionPlaceholder')">
       <base-button class="edit" @click="emit('save', { title: bioverName, description: bioverDescription })">
-        <img src="../../../assets/login/refresh.svg" />{{ $t('TheMenu.Dialog.Save') }}
+        <img style="width:25px; height:25px" src="../../../assets/shared/more/save_alt.svg" />{{ $t('TheMenu.Dialog.Save') }}
       </base-button>
     </base-input>
   </base-dialog>

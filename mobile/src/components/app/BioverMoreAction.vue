@@ -2,7 +2,7 @@
   import { ref } from 'vue';
   import { useStore } from '../../composables/store.js';
 
-  const { isMobileOrTablet, isWebXRAvailable, section } = useStore();
+  const { isMobileOrTablet, isWebXRAvailable, section, username } = useStore();
 
   const props = defineProps({
     enabled: Boolean,
@@ -10,6 +10,10 @@
   });
 
   const emit = defineEmits(['edit', 'duplicate', 'delete', 'visibility', 'editable', 'close'])
+
+  function couldEdit() {
+    return username === props.biover.User.username;
+  }
 
 </script>
 
@@ -26,13 +30,13 @@
       <ul>
         <li v-if="isMobileOrTablet && isWebXRAvailable" @click="section = 'ar'"><img alt="OpenAR" src="../../assets/shared/more/view_in_ar.svg"> {{ $t('TheMenu.More.AR') }}</li>
         <li><img alt="Map" src="../../assets/shared/more/map.svg"> {{ $t('TheMenu.More.Desktop') }}</li>
-        <li @click="emit('edit')"><img alt="Title" src="../../assets/shared/more/edit.svg"> {{ $t('TheMenu.More.Title') }}</li>
+        <li :class="{'not-allowed': !couldEdit()}" @click="couldEdit() ? emit('edit') : ''"><img alt="Title" src="../../assets/shared/more/edit.svg"> {{ $t('TheMenu.More.Title') }}</li>
         <li @click="emit('duplicate')"><img alt="Copy" src="../../assets/shared/more/file_copy.svg"> {{ $t('TheMenu.More.Duplicate') }}</li>
-        <li @click="emit('delete')"><img alt="Delete" src="../../assets/shared/more/delete.svg"> {{ $t('TheMenu.More.Delete') }}</li>
-        <li v-if="props.biover.is_public" @click="emit('visibility')"><img alt="Visibility" src="../../assets/shared/more/remove_red_eye.svg"> {{ $t('TheMenu.More.Private') }}</li>
-        <li v-if="!props.biover.is_public" @click="emit('visibility')"><img alt="Visibility" src="../../assets/shared/more/visibility_off.svg"> {{ $t('TheMenu.More.Publique') }}</li>
-        <li v-if="props.biover.is_editable" @click="emit('editable')"><img alt="Edit" src="../../assets/shared/more/edit.svg"> {{ $t('TheMenu.More.ToUnEdit') }}</li>
-        <li v-if="!props.biover.is_editable" @click="emit('editable')"><img alt="Edit" src="../../assets/shared/more/edit_off.svg"> {{ $t('TheMenu.More.ToEdit') }}</li>
+        <li :class="{'not-allowed': !couldEdit()}" @click="couldEdit() ? emit('delete') : ''"><img alt="Delete" src="../../assets/shared/more/delete.svg"> {{ $t('TheMenu.More.Delete') }}</li>
+        <li v-if="props.biover.is_public" :class="{'not-allowed': !couldEdit()}" @click="couldEdit() ? emit('visibility') : ''"><img alt="Visibility" src="../../assets/shared/more/remove_red_eye.svg"> {{ $t('TheMenu.More.Private') }}</li>
+        <li v-if="!props.biover.is_public" :class="{'not-allowed': !couldEdit()}" @click="couldEdit() ? emit('visibility') : ''"><img alt="Visibility" src="../../assets/shared/more/visibility_off.svg"> {{ $t('TheMenu.More.Publique') }}</li>
+        <li v-if="props.biover.is_editable" :class="{'not-allowed': !couldEdit()}" @click="couldEdit() ?emit('editable') : ''"><img alt="Edit" src="../../assets/shared/more/edit.svg"> {{ $t('TheMenu.More.ToUnEdit') }}</li>
+        <li v-if="!props.biover.is_editable" :class="{'not-allowed': !couldEdit()}" @click="couldEdit() ?emit('editable') : ''"><img alt="Edit" src="../../assets/shared/more/edit_off.svg"> {{ $t('TheMenu.More.ToEdit') }}</li>
         <li><img alt="Star" src="../../assets/shared/more/star_border.svg"> {{ $t('TheMenu.More.ToFavorite') }}</li>
         <li><img alt="PushPin" src="../../assets/shared/more/push_pin.svg"> {{ $t('TheMenu.More.ToPin') }}</li>
         <!--li><img alt="Share" src="../../assets/shared/more/share.svg"> partager ce biovers</li-->
@@ -108,6 +112,7 @@
     height: 40px;
     padding-left: 1rem;
     padding-right: 1rem;
+    cursor: pointer;
   }
 
   img {
@@ -129,6 +134,15 @@
 
  .transition {
     transition: right 0.4s ease;
+ }
+
+ .not-allowed {
+   cursor: not-allowed;
+   opacity: 0.5;
+ }
+
+ .not-allowed:hover {
+    background-color: #F2F2F2;
  }
 </style>
 

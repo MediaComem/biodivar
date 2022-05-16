@@ -21,7 +21,7 @@
     </base-radio>
     <base-input class="dialog-input-color">
       <base-button class="editable" @click="emit('editable', currentEditable)">
-        <img src="../../../assets/shared/more/edit.svg" />{{ $t('TheMenu.Dialog.Update') }}
+        <img style="width:25px; height:25px" src="../../../assets/shared/more/save_alt.svg" />{{ $t('TheMenu.Dialog.Update') }}
       </base-button>
     </base-input>
   </base-dialog>
