@@ -6,101 +6,80 @@
   import RedEye from '../../assets/vue-svg/RedEye.vue';
   import Edit from '../../assets/vue-svg/Edit.vue';
 
+  import { couldEdit } from '../../utils/authorization.js';
+  import { useStore } from '../../composables/store.js';
+
+
+  const { isInFavori, favori } = useStore();
+
+  const props = defineProps({
+    biover: Object,
+  })
+
   const pushPin = ref(false);
-  const stars = ref(false);
-  const redEye = ref(false);
-  const edit = ref(false);
 
-  function closeAll() {
-    pushPin.value = false;
-    stars.value = false;
-    redEye.value = false;
-    edit.value = false;
-  }
+  const editableRight = ref(couldEdit(props.biover));
 
-  function openAction(action) {
-    let newVal = false;
-    switch (action) {
-      case 'pin':     newVal = !pushPin.value;
-                      closeAll();
-                      pushPin.value = newVal;
-                      break;
-      case 'stars':   newVal = !stars.value;
-                      closeAll();
-                      stars.value = newVal;
-                      break;
-      case 'redEye':  newVal = !redEye.value;
-                      closeAll();
-                      redEye.value = newVal;
-                      break;
-      case 'edit':    newVal = !edit.value;
-                      closeAll();
-                      edit.value = newVal;
-                      break;
-    }
-  }
-
-  function pushPinAction() {
-    pushPin.value = false;
-  }
-
-  function starsAction() {
-    stars.value = false;
-  }
-
-  function redEyeAction() {
-    redEye.value = false;
-  }
-
-  function editAction() {
-    edit.value = false;
-  }
+  const emit = defineEmits(['visibility', 'editable', 'favori'])
 </script>
 
 <template>
+  <!-- Pin -->
   <div data-role="actions">
     <div data-role="action">
-      <div data-role="action-element" @click="openAction('pin')">
+      <div data-role="action-element">
         <PushPin :color="'black'" />
         <p style="width:80%">épinglé</p>
         <img src="../../assets/shared/arrow_drop_down.svg" alt="Arrow">
       </div>
-      <div v-if="pushPin" class="element-menu" @click="pushPinAction()">
+      <div v-if="pushPin" class="element-menu">
         <PushPin :color="'black'" />
         <span>{{ $t('TheMenu.Action.Unpin') }}</span>
       </div>
     </div>
-    <div data-role="action">
-      <div data-role="action-element" @click="openAction('stars')">
-        <Stars :color="'black'" />
+    <!-- Favori -->
+    <div v-if="isInFavori(props.biover.id)" data-role="action">
+      <div data-role="action-element" @click="emit('favori')">
+        <img src="../../assets/shared/more/star.svg" alt="Arrow">
         <p>{{ $t('TheMenu.Action.Star') }}</p>
         <img src="../../assets/shared/arrow_drop_down.svg" alt="Arrow">
       </div>
-      <div v-if="stars" class="element-menu" @click="starsAction()">
-        <Stars :color="'black'" />
-        <span>{{ $t('TheMenu.Action.UnStar') }}</span>
+    </div>
+    <div v-else data-role="action">
+      <div ref="star" data-role="action-element" @click="emit('favori')">
+        <img src="../../assets/shared/more/star_border.svg" alt="Arrow">
+        <p>Non-Favori</p>
+        <img src="../../assets/shared/arrow_drop_down.svg" alt="Arrow">
       </div>
     </div>
-    <div data-role="action">
-      <div data-role="action-element" @click="openAction('redEye')">
-        <RedEye :color="'black'" />
+    <!-- Visibility -->
+    <div v-if="props.biover.is_public" data-role="action" :class="{'not-allowed': !editableRight}">
+      <div data-role="action-element" @click="editableRight ? emit('visibility') : ''">
+        <img alt="Visibility" src="../../assets/shared/more/remove_red_eye.svg">
         <p>{{ $t('TheMenu.Shared.Public') }}</p>
-        <img src="../../assets/shared/arrow_drop_down.svg" alt="Arrow">
-      </div>
-      <div v-if="redEye" class="element-menu" @click="redEyeAction()">
-        <RedEye :color="'black'" />
-        <span>{{ $t('TheMenu.Action.ToPublic') }}</span>
+        <img v-if="editableRight" src="../../assets/shared/arrow_drop_down.svg" alt="Arrow">
       </div>
     </div>
-    <div data-role="action">
-      <div data-role="action-element" @click="openAction('edit')">
-        <Edit :color="'black'" />
-        <p>{{ $t('TheMenu.Action.Edit') }}</p>
-        <img src="../../assets/shared/arrow_drop_down.svg" alt="Arrow">
+    <div v-else data-role="action" :class="{'not-allowed': !editableRight}">
+      <div data-role="action-element" @click="editableRight ? emit('visibility') : ''">
+        <img alt="Visibility" src="../../assets/shared/more/visibility_off.svg">
+        <p>{{ $t('TheMenu.Shared.Private') }}</p>
+        <img v-if="editableRight" src="../../assets/shared/arrow_drop_down.svg" alt="Arrow">
       </div>
-      <div v-if="edit" class="element-menu" @click="editAction()">
-        <Edit :color="'black'" />
-        <span>{{ $t('TheMenu.Action.ToEdit') }}</span>
+    </div>
+    <!-- Edition -->
+    <div v-if="!props.biover.is_editable" data-role="action" :class="{'not-allowed': !editableRight}">
+      <div data-role="action-element" @click="editableRight ? emit('editable') : ''">
+        <img alt="Edit" src="../../assets/shared/more/edit_off.svg">
+        <p>{{ $t('TheMenu.Action.Unedit') }}</p>
+        <img v-if="editableRight" src="../../assets/shared/arrow_drop_down.svg" alt="Arrow">
+      </div>
+    </div>
+    <div v-else data-role="action" :class="{'not-allowed': !editableRight}">
+      <div data-role="action-element" @click="editableRight ? emit('editable') : ''">
+        <img alt="Edit" src="../../assets/shared/more/edit.svg">
+        <p>{{ $t('TheMenu.Action.Edit') }}</p>
+        <img v-if="editableRight" src="../../assets/shared/arrow_drop_down.svg" alt="Arrow">
       </div>
     </div>
   </div>
@@ -113,15 +92,11 @@
   }
 
   [data-role="action"] {
-    display: flex;
-    flex-wrap: wrap;
     background-color: #8DC26F;
     border: solid 1px #8DC26F;
     border-radius: 2rem;
     margin: 1rem 1rem 0 1rem;
     padding: 0.5rem 1rem 0.5rem 1rem;
-    align-items: center;
-    width: 120px;
     height: 36px;
     cursor: pointer;
   }
@@ -129,6 +104,11 @@
   [data-role="action-element"] {
     display: flex;
     align-items: center;
+  }
+
+  .not-allowed {
+    cursor: not-allowed;
+    opacity: 0.5;
   }
 
   p {
@@ -141,7 +121,7 @@
     display: flex;
     background-color: #F2F2F2;
     margin-top: 8px;
-    min-width: 120px;
+    min-width: 180px;
     min-height: 36px;
     z-index: 100;
     border: solid 1px #F2F2F2;

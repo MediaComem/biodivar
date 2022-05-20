@@ -63,7 +63,8 @@
             "HelpDescription": "à propos du projet BiodivAR"     
         },
         "Shared": {
-            "Public": "Publique"
+            "Public": "Publique",
+            "Private": "Privé"
         },
         "Dialog": {
             "DeleteHeader": "Suppression du biovers ",
@@ -90,8 +91,11 @@
             "Star": "Favori",
             "UnStar": "Retirer des favoris",
             "ToPublic": "Rendre publique",
-            "Edit": "éditable",
-            "ToEdit": "rendre éditable"
+            "ToPrivate": "Rendre privé",
+            "Edit": "Editable",
+            "Unedit": "Non-éditable",
+            "ToEdit": "rendre éditable",
+            "ToUnedit": "rendre non-éditable"
         },
         "More": {
             "AR": "ouvrir dans la RA [mobile]",

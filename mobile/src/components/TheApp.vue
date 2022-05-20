@@ -7,10 +7,13 @@
   import TheHud from './TheHud.vue';
   import { useRouter } from '../composables/router.js';
   import { useStore } from '../composables/store.js';
+  import { storage } from '../composables/localStorage.js';
   import { logout } from '../utils/api.js';
 
 
   const { section, isMobileOrTablet, isAuth } = useStore();
+
+  const { removeUser } = storage();
 
   const { page, route } = useRouter();
 
@@ -20,6 +23,7 @@
     const resp = await logout();
     if (resp?.statusCode === 200) {
       isAuth.value = false;
+      removeUser();
     }
   }
 

@@ -5,16 +5,23 @@
 
   import { ref } from '@vue/reactivity';
   import { useStore } from './composables/store.js';
+  import { storage } from './composables/localStorage.js';
   import { isLogged } from './utils/api.js';
 
-  const { isAuth, showAggreement, forgotPassword, send } = useStore();
+  const { isAuth, showAggreement, forgotPassword, send, username } = useStore();
+  const { getUser, removeUser } = storage();
 
   const isLoading = ref(true);
 
   isLogged().then(resp => {
     isLoading.value = false;
-    if (resp?.statusCode !== 200) return;
+    if (resp?.statusCode !== 200) {
+      isAuth.value = false;
+      removeUser();
+      return;
+    } 
     isAuth.value = true;
+    username.value = getUser();
   });
 
 </script>

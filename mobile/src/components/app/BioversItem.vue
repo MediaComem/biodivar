@@ -17,8 +17,9 @@
   import BioverDeleteDialog from './Dialog/BioverDeleteDialog.vue';
   import BioverVisibilityDialog from './Dialog/BioverVisibilityDialog.vue';
   import BioverEditableDialog from './Dialog/BioverEditableDialog.vue';
+  import BioverFavoriDialog from './Dialog/BioverFavoriDialog.vue';
 
-  const { username } = useStore();
+  const { username, isInFavori, favori } = useStore();
 
   const isOpen = ref(false);
 
@@ -33,6 +34,7 @@
   const deleteBioverDialog = ref(false);
   const visibilityDialog = ref(false);
   const editableDialog = ref(false);
+  const favoriDialog = ref(false);
 
   const props = defineProps({
     biover: Object,
@@ -44,6 +46,7 @@
     deleteBioverDialog.value = false;
     visibilityDialog.value = false;
     editableDialog.value = false;
+    favoriDialog.value = false;
   }
 
   function openDialog(dialog) {
@@ -58,8 +61,11 @@
       case 'visibility':  visibilityDialog.value = true;
                           break;
       case 'edition':     editableDialog.value = true;
-                          break;                                    
+                          break;      
+      case 'favori':      favoriDialog.value = true;
+                          break;                              
     }
+    more.value = false;
   }
 
   function saveTitle(modification) {
@@ -84,9 +90,20 @@
   }
 
   function changeEdition(state) {
-    console.log(props.biover);
     props.biover.is_editable = state;
     editableDialog.value = false;
+  }
+
+  function favoriEdition(state) {
+    if (state) {
+      const index = favori.value.findIndex((f) => f === props.biover.id);
+      if (index === -1) favori.value.push(props.biover.id);  
+    }
+    else {
+      const index = favori.value.findIndex((f) => f === props.biover.id);
+      if (index > -1) favori.value.splice(index, 1);
+    }
+    favoriDialog.value = false;
   }
 </script>
 
@@ -101,32 +118,34 @@
         </div>
         <div data-role="right">
             <div class="align">
-              <PushPin :color="pushPin ? 'white' : '#666666'"/>
+              <PushPin :stroke="pushPin ? 'white' : '#666666'" :color="pushPin ? 'white' : 'none'"/>
             </div>
             <div class="align">
-                <Stars :color="stars ? 'white' : '#666666'"/>
+                <Stars :stroke="isInFavori(props.biover.id) ? 'white' : '#666666'" :color="isInFavori(props.biover.id) ? 'white' : 'none'"/>
             </div>
             <div class="align">
                 <Architecture :color="username === props.biover.User.username ? 'white' : '#666666'"/>
             </div>
             <div class="align">
-                <RedEye :color="props.biover.is_public ? 'white' : '#666666'" />
+                <RedEye :fill="props.biover.is_public" />
             </div>
             <div class="align">
-                <Edit :color="props.biover.is_editable ? 'white' : '#666666'" />
+                <Edit :fill="props.biover.is_editable"/>
             </div>
             <div class="align more">
                 <More :color="'white'" @click="more = !more"/>
             </div>
         </div>
     </div>
-  <BioversInformation v-if="isOpen" :biover="props.biover" />
-  <BioverMoreAction :enabled="more" :biover="props.biover" @edit="openDialog('title')" @duplicate="openDialog('duplicate')" @delete="openDialog('delete')" @visibility="openDialog('visibility')" @editable="openDialog('edition')" @close="more = false"/>
+  <BioversInformation v-if="isOpen" :biover="props.biover" @visibility="openDialog('visibility')" @editable="openDialog('edition')" @favori="openDialog('favori')"/>
+  <BioverMoreAction :enabled="more" :biover="props.biover" @edit="openDialog('title')" @duplicate="openDialog('duplicate')" @delete="openDialog('delete')" @visibility="openDialog('visibility')" @editable="openDialog('edition')" @favori="openDialog('favori')" @close="more = false"/>
   <BioverTitleDialog v-if="editTitleDialog" :biover="props.biover" @close="editTitleDialog = false" @save="saveTitle" />
   <BioverDuplicateDialog v-if="duplicateBioverDialog" :biover="props.biover" @close="duplicateBioverDialog = false" @duplicate="duplicate" />
   <BioverDeleteDialog v-if="deleteBioverDialog" :biover="props.biover" @close="deleteBioverDialog = false" @delete="deleteBiover()" />
   <BioverVisibilityDialog v-if="visibilityDialog" :biover="props.biover" :current-visibility="props.biover.is_public" @close="visibilityDialog = false" @visibility="changeVisibility"/>
   <BioverEditableDialog v-if="editableDialog" :biover="props.biover" :current-editable="props.biover.is_editable" @close="editableDialog = false" @editable="changeEdition"/>
+  <BioverFavoriDialog v-if="favoriDialog" :biover="props.biover" :favori-state="isInFavori(props.biover.id)" @close="favoriDialog = false" @favori-action="favoriEdition" />
+  <div v-if="editTitleDialog || duplicateBioverDialog || deleteBioverDialog || visibilityDialog || editableDialog || favoriDialog" class="dialog-overlay" @click="closeAllDialog()" />
   </div>
 </template>
 
@@ -212,5 +231,15 @@
     width: 18px;
     height: 18px;
     margin-left: 1rem;
+  }
+
+  .dialog-overlay {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #8DC26F;
+    opacity: 0.5;
   }
 </style>

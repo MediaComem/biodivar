@@ -2,8 +2,11 @@
   import { login } from '../../utils/api.js';
   import { ref } from '@vue/reactivity';
   import { useStore } from '../../composables/store.js';
+  import { storage } from '../../composables/localStorage.js';
 
   const { isAuth, username, forgotPassword } = useStore();
+
+  const { storeUser } = storage();
 
   const error = ref(false);
 
@@ -17,6 +20,7 @@
     const resp = await login(username.value, password.value);
     if (resp?.statusCode === 200) {
       isAuth.value = true;
+      storeUser(username.value);
     } else {
       error.value = true;
     }

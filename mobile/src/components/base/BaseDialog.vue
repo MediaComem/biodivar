@@ -53,7 +53,7 @@
   }
 
   .edit-element{
-    top: 5%;
+    top: 25%;
     background-color: #F2F2F2;
     text-align: center;
     z-index: 200;

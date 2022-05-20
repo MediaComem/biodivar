@@ -2,9 +2,11 @@
   import BioverActions from './BioverActions.vue';
   import { useStore } from '../../composables/store.js';
 
-  import { dateFormatter, hourFormatter } from '../../utils/formatter';
+  import { dateFormatter, hourFormatter } from '../../utils/formatter.js';
 
   const { isMobileOrTablet, isWebXRAvailable, section, selectedBiovers } = useStore();
+
+  const emit = defineEmits(['visibility', 'editable', 'favori'])
 
   const props = defineProps({
     biover: Object
@@ -19,7 +21,7 @@
 <template>
   <div>
     <div class="item">
-        <BioverActions />
+        <BioverActions :biover="props.biover" @visibility="emit('visibility')" @editable="emit('editable')" @favori="emit('favori')" />
     </div>
     <div>
         <div class="element">

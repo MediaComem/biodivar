@@ -1,9 +1,17 @@
-import { useStore } from './store.js';
-import { watchEffect } from 'vue';
+const storeUser = (username) => { localStorage.setItem('username', username) };
+const getUser = () => { return localStorage.getItem('username') };
+const removeUser = () => { localStorage.removeItem('username') };
 
-const { username } = useStore();
+const storeFavori = (favori) => { localStorage.setItem('favori', favori)};
+const getFavori = () => { 
+  const favories = localStorage.getItem('favori');
+  if (favories) return favories.split(',').map((str) => Number(str));
+  return [];
+};
 
-watchEffect(() => {
-  console.log("save the username in local storage (but dont!): ", username.value);
-});
+export function storage() {
+
+  return { storeUser, getUser, removeUser, storeFavori, getFavori };
+
+}
 
