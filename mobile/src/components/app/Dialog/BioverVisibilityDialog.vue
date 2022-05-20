@@ -11,6 +11,7 @@
   <base-dialog class="edit-element"  @close="emit('close')">
     <img src="../../../assets/shared/more/remove_red_eye.svg">
     <header>{{ $t('TheMenu.Dialog.VisibilityHeader') }} {{ props.biover.name }}</header>
+    <p>{{ $t('TheMenu.Dialog.VisibilityDescription') }}</p>
     <base-radio>
       <button :class="{ 'active': currentVisibility }" @click="currentVisibility = !currentVisibility">
         {{ $t('TheMenu.Shared.Public') }}

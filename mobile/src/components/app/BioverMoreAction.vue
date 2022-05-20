@@ -37,7 +37,7 @@
         <li v-if="props.biover.is_editable" :class="{'not-allowed': !editableRight}" @click="editableRight ?emit('editable') : ''"><img alt="Edit" src="../../assets/shared/more/edit.svg"> {{ $t('TheMenu.More.ToUnEdit') }}</li>
         <li v-if="!props.biover.is_editable" :class="{'not-allowed': !editableRight}" @click="editableRight ?emit('editable') : ''"><img alt="Edit" src="../../assets/shared/more/edit_off.svg"> {{ $t('TheMenu.More.ToEdit') }}</li>
         <li v-if="isInFavori(props.biover.id)" @click="emit('favori')"><img alt="Star" src="../../assets/shared/more/star.svg"> {{ $t('TheMenu.More.ToFavorite') }}</li>
-        <li v-if="!isInFavori(props.biover.id)" @click="emit('favori')"><img alt="Star" src="../../assets/shared/more/star_border.svg"> Ajouter au favori</li>
+        <li v-if="!isInFavori(props.biover.id)" @click="emit('favori')"><img alt="Star" src="../../assets/shared/more/star_border.svg"> {{ $t('TheMenu.Dialog.FavoriAdd') }}</li>
         <li><img alt="PushPin" src="../../assets/shared/more/push_pin.svg"> {{ $t('TheMenu.More.ToPin') }}</li>
         <!--li><img alt="Share" src="../../assets/shared/more/share.svg"> partager ce biovers</li-->
       </ul>

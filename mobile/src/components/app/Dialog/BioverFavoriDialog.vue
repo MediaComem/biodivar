@@ -10,13 +10,14 @@
 <template>
   <base-dialog class="edit-element"  @close="emit('close')">
     <img src="../../../assets/shared/more/edit.svg">
-    <header>Ajouter le {{ props.biover.name }} au favori</header>
+    <header>{{ $t('TheMenu.Dialog.FavoriHeader_1') }} {{ props.biover.name }} {{ $t('TheMenu.Dialog.FavoriHeader_2') }}</header>
+    <p>{{ $t('TheMenu.Dialog.FavoriDescription') }}</p>
     <base-radio>
       <button :class="{ 'active': favoriState }" @click="favoriState = !favoriState">
-        Ajouter au favori
+        {{ $t('TheMenu.Dialog.FavoriAdd') }}
       </button>
       <button :class="{ 'active': !favoriState }" @click="favoriState = !favoriState">
-        Retirer des favori
+        {{ $t('TheMenu.Dialog.FavoriRemove') }}
       </button>
     </base-radio>
     <base-input class="dialog-input-color">

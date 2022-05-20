@@ -14,6 +14,7 @@
   <base-dialog class="edit-element"  @close="emit('close')">
     <img src="../../../assets/shared/more/file_copy.svg">
     <header>{{ $t('TheMenu.Dialog.DuplicateHeader') }} {{ props.biover.name }}</header>
+    <p>{{ $t('TheMenu.Dialog.DuplicationDescription') }} </p>
     <base-input class="dialog-input-color">
       <input type="text" v-model="duplicateBioverName" :placeholder="$t('TheMenu.Dialog.DuplicatePlaceholder')">
       <base-button class="duplicate" @click="emit('duplicate', duplicateBioverName)">

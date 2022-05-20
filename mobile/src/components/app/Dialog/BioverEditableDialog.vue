@@ -11,6 +11,7 @@
   <base-dialog class="edit-element"  @close="emit('close')">
     <img src="../../../assets/shared/more/edit.svg">
     <header>{{ $t('TheMenu.Dialog.EditableHeader') }} {{ props.biover.name }}</header>
+    <p>{{ $t('TheMenu.Dialog.EditableDescription') }}</p>
     <base-radio>
       <button :class="{ 'active': currentEditable }" @click="currentEditable = !currentEditable">
         {{ $t('TheMenu.Dialog.Editable') }}

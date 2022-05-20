@@ -21,6 +21,7 @@
   <base-dialog class="edit-element"  @close="emit('close')">
     <img src="../../../assets/shared/more/edit.svg">
     <header>{{ $t('TheMenu.Dialog.TitleHeader') }}</header>
+    <p>{{ $t('TheMenu.Dialog.TitleDescription') }}</p>
     <base-input class="dialog-input-color">
       <input type="text" v-model="bioverName" :placeholder="$t('TheMenu.Dialog.TitlePlaceholder')">
       <input type="text" v-model="bioverDescription" :placeholder="$t('TheMenu.Dialog.DescriptionPlaceholder')">
