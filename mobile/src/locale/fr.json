@@ -47,6 +47,7 @@
         }
     },
     "TheMenu": {
+        "Pin": "biovers épinglé·s :",
         "Unsuported": "Cet appareil ne supportant pas webXR, vous ne pouvez l'utiliser avec cette application",
         "Item": {
             "BioverTitle": "Biovers",

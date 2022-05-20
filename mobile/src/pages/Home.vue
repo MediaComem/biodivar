@@ -21,6 +21,7 @@
 
 <template>
 <div v-if="!isIOS">
+  <p v-if="biovers.length > 0" style="text-align: start">{{ $t('TheMenu.Pin') }}</p>
   <div v-for="(biover, index) in biovers" :key="index">
     <BioversItem :biover="biover" />
   </div>
