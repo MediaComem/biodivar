@@ -19,14 +19,30 @@
     <div v-for="(biover, index) in pins" :key="index">
       <BioversItem :biover="biover" />
     </div>
-    <a v-if="biovers.length > 0" class="link" href="#menu">BIOVERS</a>
+    <div class="return"><a v-if="biovers.length > 0" class="link" href="#menu"><img src="../assets/shared/arrow_back.svg"/></a><p class="text">BIOVERS</p></div>
     <BioversLayout :biovers="biovers" />
   </div>
 </template>
 
 <style scoped>
+  a {
+    color: black;
+    text-decoration: none;
+  }
+
+  img {
+    padding-right: 1rem;
+  }
+
   .link {
-    display: flex;
     padding-bottom: 1rem;
+  }
+
+  .return {
+    display: flex;
+  }
+
+  .text {
+    margin: 0;
   }
 </style>

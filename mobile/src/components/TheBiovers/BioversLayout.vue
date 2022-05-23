@@ -15,17 +15,17 @@
   const search = ref('');
 
   const own = computed(() => {
-    return props.biovers.filter((b) => b.User.username === username.value);
+    return props.biovers.filter((b) => b.User.username === username.value && b.name.toLowerCase().includes(search.value.toLowerCase()));
   })
 
   const publicBiovers = computed(() => {
-    return props.biovers.filter((b) => b.is_public);
+    return props.biovers.filter((b) => b.is_public && b.name.toLowerCase().includes(search.value.toLowerCase()));
   })
 
   const favoriBiovers = computed(() => {
     const biovers = [];
     favori.value.forEach(f => {
-        const element = props.biovers.find((b) => b.id === f);
+        const element = props.biovers.find((b) => b.id === f && b.name.toLowerCase().includes(search.value.toLowerCase()));
         if (element) {
             biovers.push(element);
         }
@@ -38,7 +38,7 @@
 <template>
     <div data-role="layout">
       <base-input class="search">
-        <input type="text" v-model="search" >
+        <input type="text" v-model="search">
       </base-input>
       <hr>
       <Accordeon class="own" :header="`mes biovers (${own.length})`">
@@ -78,7 +78,11 @@
       --icon-link: url("../../assets/biovers/search.svg");
       padding-top: 1rem;
       --bg-color: #E0E0E0;
-      border-color: var(--bg-color);
+      
+  }
+
+  .search input {
+    border-color: #E0E0E0 !important;
   }
 
   .own {
