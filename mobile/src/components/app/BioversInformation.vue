@@ -6,7 +6,7 @@
 
   const { isMobileOrTablet, isWebXRAvailable, section, selectedBiovers } = useStore();
 
-  const emit = defineEmits(['visibility', 'editable', 'favori'])
+  const emit = defineEmits(['visibility', 'editable', 'favori', 'pin'])
 
   const props = defineProps({
     biover: Object
@@ -21,7 +21,7 @@
 <template>
   <div>
     <div class="item">
-        <BioverActions :biover="props.biover" @visibility="emit('visibility')" @editable="emit('editable')" @favori="emit('favori')" />
+        <BioverActions :biover="props.biover" @visibility="emit('visibility')" @editable="emit('editable')" @favori="emit('favori')" @pin="emit('pin')" />
     </div>
     <div>
         <div class="element">

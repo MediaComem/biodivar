@@ -18,8 +18,9 @@
   import BioverVisibilityDialog from './Dialog/BioverVisibilityDialog.vue';
   import BioverEditableDialog from './Dialog/BioverEditableDialog.vue';
   import BioverFavoriDialog from './Dialog/BioverFavoriDialog.vue';
+  import BioverPinDialog from './Dialog/BioverPinDialog.vue';
 
-  const { username, isInFavori, favori } = useStore();
+  const { username, isInFavori, isInPins, favori, pins } = useStore();
 
   const isOpen = ref(false);
 
@@ -35,6 +36,7 @@
   const visibilityDialog = ref(false);
   const editableDialog = ref(false);
   const favoriDialog = ref(false);
+  const pinDialog = ref(false);
 
   const props = defineProps({
     biover: Object,
@@ -63,7 +65,9 @@
       case 'edition':     editableDialog.value = true;
                           break;      
       case 'favori':      favoriDialog.value = true;
-                          break;                              
+                          break;           
+      case 'pin':         pinDialog.value = true;
+                          break;                            
     }
     more.value = false;
   }
@@ -105,6 +109,19 @@
     }
     favoriDialog.value = false;
   }
+
+  function pinEdition(state) {
+    console.log(state)
+    if (state) {
+      const index = pins.value.findIndex((p) => p === props.biover.id);
+      if (index === -1) pins.value.push(props.biover.id);  
+    }
+    else {
+      const index = pins.value.findIndex((p) => p === props.biover.id);
+      if (index > -1) pins.value.splice(index, 1);
+    }
+    pinDialog.value = false;
+  }
 </script>
 
 <template>
@@ -118,7 +135,7 @@
         </div>
         <div data-role="right">
             <div class="align">
-              <PushPin :stroke="pushPin ? 'white' : '#666666'" :color="pushPin ? 'white' : 'none'"/>
+              <PushPin :stroke="isInPins(props.biover.id) ? 'white' : '#666666'" :color="isInPins(props.biover.id) ? 'white' : 'none'"/>
             </div>
             <div class="align">
                 <Stars :stroke="isInFavori(props.biover.id) ? 'white' : '#666666'" :color="isInFavori(props.biover.id) ? 'white' : 'none'"/>
@@ -137,15 +154,16 @@
             </div>
         </div>
     </div>
-  <BioversInformation v-if="isOpen" :biover="props.biover" @visibility="openDialog('visibility')" @editable="openDialog('edition')" @favori="openDialog('favori')"/>
-  <BioverMoreAction :enabled="more" :biover="props.biover" @edit="openDialog('title')" @duplicate="openDialog('duplicate')" @delete="openDialog('delete')" @visibility="openDialog('visibility')" @editable="openDialog('edition')" @favori="openDialog('favori')" @close="more = false"/>
+  <BioversInformation v-if="isOpen" :biover="props.biover" @visibility="openDialog('visibility')" @editable="openDialog('edition')" @favori="openDialog('favori')" @pin="openDialog('pin')"/>
+  <BioverMoreAction :enabled="more" :biover="props.biover" @edit="openDialog('title')" @duplicate="openDialog('duplicate')" @delete="openDialog('delete')" @visibility="openDialog('visibility')" @editable="openDialog('edition')" @favori="openDialog('favori')" @pin="openDialog('pin')" @close="more = false"/>
   <BioverTitleDialog v-if="editTitleDialog" :biover="props.biover" @close="editTitleDialog = false" @save="saveTitle" />
   <BioverDuplicateDialog v-if="duplicateBioverDialog" :biover="props.biover" @close="duplicateBioverDialog = false" @duplicate="duplicate" />
   <BioverDeleteDialog v-if="deleteBioverDialog" :biover="props.biover" @close="deleteBioverDialog = false" @delete="deleteBiover()" />
   <BioverVisibilityDialog v-if="visibilityDialog" :biover="props.biover" :current-visibility="props.biover.is_public" @close="visibilityDialog = false" @visibility="changeVisibility"/>
   <BioverEditableDialog v-if="editableDialog" :biover="props.biover" :current-editable="props.biover.is_editable" @close="editableDialog = false" @editable="changeEdition"/>
   <BioverFavoriDialog v-if="favoriDialog" :biover="props.biover" :favori-state="isInFavori(props.biover.id)" @close="favoriDialog = false" @favori-action="favoriEdition" />
-  <div v-if="editTitleDialog || duplicateBioverDialog || deleteBioverDialog || visibilityDialog || editableDialog || favoriDialog" class="dialog-overlay" @click="closeAllDialog()" />
+  <BioverPinDialog v-if="pinDialog" :biover="props.biover" :pin-state="isInPins(props.biover.id)" @close="pinDialog = false" @pin-action="pinEdition" />
+  <div v-if="editTitleDialog || duplicateBioverDialog || deleteBioverDialog || visibilityDialog || editableDialog || favoriDialog || pinDialog" class="dialog-overlay" @click="closeAllDialog()" />
   </div>
 </template>
 

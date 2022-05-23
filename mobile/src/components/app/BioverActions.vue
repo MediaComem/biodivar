@@ -10,7 +10,7 @@
   import { useStore } from '../../composables/store.js';
 
 
-  const { isInFavori, favori } = useStore();
+  const { isInFavori, favori, isInPins } = useStore();
 
   const props = defineProps({
     biover: Object,
@@ -20,21 +20,24 @@
 
   const editableRight = ref(couldEdit(props.biover));
 
-  const emit = defineEmits(['visibility', 'editable', 'favori'])
+  const emit = defineEmits(['visibility', 'editable', 'favori', 'pin'])
 </script>
 
 <template>
   <!-- Pin -->
   <div data-role="actions">
-    <div data-role="action">
-      <div data-role="action-element">
+    <div v-if="isInPins(props.biover.id)" data-role="action">
+      <div data-role="action-element" @click="emit('pin')">
         <PushPin :color="'black'" />
         <p style="width:80%">épinglé</p>
         <img src="../../assets/shared/arrow_drop_down.svg" alt="Arrow">
       </div>
-      <div v-if="pushPin" class="element-menu">
-        <PushPin :color="'black'" />
-        <span>{{ $t('TheMenu.Action.Unpin') }}</span>
+    </div>
+    <div v-else data-role="action">
+      <div data-role="action-element" @click="emit('pin')">
+        <PushPin :stroke="'black'" :color="'none'" />
+        <p style="width:80%">non-épinglé</p>
+        <img src="../../assets/shared/arrow_drop_down.svg" alt="Arrow">
       </div>
     </div>
     <!-- Favori -->

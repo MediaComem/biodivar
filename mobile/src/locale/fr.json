@@ -93,7 +93,12 @@
             "FavoriHeader_2": "au favori",
             "FavoriDescription": "Description",
             "FavoriAdd": "Ajouter au favori",
-            "FavoriRemove": "Retirer des favori"
+            "FavoriRemove": "Retirer des favori",
+            "PinHeader_1": "Ajouter le ",
+            "PinHeader_2": "au épinglé",
+            "PinDescription": "Description",
+            "PinAdd": "Ajouter au épinglé",
+            "PinRemove": "Retirer des épinglés"
         },
         "Action": {
             "Pin": "Epingler",
@@ -118,7 +123,8 @@
             "ToEdit": "rendre éditable",
             "ToUnEdit": "rendre non-éditable",
             "ToFavorite": "retirer des favoris",
-            "ToPin": "retirer l'épingle"
+            "ToPin": "retirer l'épingle",
+            "FromUnPin": "Ajouter au éplingé"
         },
         "Information": {
             "POI": "points d'intérêt",

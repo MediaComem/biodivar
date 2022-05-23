@@ -9,9 +9,16 @@ const getFavori = () => {
   return [];
 };
 
+const storePins = (pins) => { localStorage.setItem('pins', pins)};
+const getPins = () => { 
+  const pins = localStorage.getItem('pins');
+  if (pins) return pins.split(',').map((str) => Number(str));
+  return [];
+};
+
 export function storage() {
 
-  return { storeUser, getUser, removeUser, storeFavori, getFavori };
+  return { storeUser, getUser, removeUser, storeFavori, getFavori, storePins, getPins };
 
 }
 

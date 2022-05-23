@@ -3,7 +3,7 @@
   import { useStore } from '../../composables/store.js';
   import { couldEdit } from '../../utils/authorization.js';
 
-  const { isMobileOrTablet, isWebXRAvailable, section, username, isInFavori } = useStore();
+  const { isMobileOrTablet, isWebXRAvailable, section, username, isInFavori, isInPins } = useStore();
 
   const editableRight = ref(couldEdit(props.biover));
 
@@ -12,7 +12,7 @@
     biover: Object ,
   });
 
-  const emit = defineEmits(['edit', 'duplicate', 'delete', 'visibility', 'editable', 'favori', 'close'])
+  const emit = defineEmits(['edit', 'duplicate', 'delete', 'visibility', 'editable', 'favori', 'pin', 'close'])
 
 </script>
 
@@ -38,7 +38,8 @@
         <li v-if="!props.biover.is_editable" :class="{'not-allowed': !editableRight}" @click="editableRight ?emit('editable') : ''"><img alt="Edit" src="../../assets/shared/more/edit_off.svg"> {{ $t('TheMenu.More.ToEdit') }}</li>
         <li v-if="isInFavori(props.biover.id)" @click="emit('favori')"><img alt="Star" src="../../assets/shared/more/star.svg"> {{ $t('TheMenu.More.ToFavorite') }}</li>
         <li v-if="!isInFavori(props.biover.id)" @click="emit('favori')"><img alt="Star" src="../../assets/shared/more/star_border.svg"> {{ $t('TheMenu.Dialog.FavoriAdd') }}</li>
-        <li><img alt="PushPin" src="../../assets/shared/more/push_pin.svg"> {{ $t('TheMenu.More.ToPin') }}</li>
+        <li v-if="isInPins(props.biover.id)" @click="emit('pin')"><img alt="PushPin" src="../../assets/shared/more/push_pin_fill.svg"> {{ $t('TheMenu.More.ToPin') }}</li>
+        <li v-if="!isInPins(props.biover.id)" @click="emit('pin')"><img alt="PushPin" src="../../assets/shared/more/push_pin.svg"> {{ $t('TheMenu.More.FromUnPin') }}</li>
         <!--li><img alt="Share" src="../../assets/shared/more/share.svg"> partager ce biovers</li-->
       </ul>
     </div>

@@ -1,5 +1,5 @@
 <script setup>
-  import { ref } from '@vue/reactivity';
+  import { ref, onMounted } from 'vue'
 
   import Footer from './app/Footer.vue';
 
@@ -8,10 +8,10 @@
   import { useRouter } from '../composables/router.js';
   import { useStore } from '../composables/store.js';
   import { storage } from '../composables/localStorage.js';
-  import { logout } from '../utils/api.js';
+  import { logout, getBiovers } from '../utils/api.js';
 
 
-  const { section, isMobileOrTablet, isAuth } = useStore();
+  const { section, isMobileOrTablet, isAuth, biovers } = useStore();
 
   const { removeUser } = storage();
 
@@ -30,6 +30,14 @@
   function closeDialog() {
     menu.value = false;
   }
+
+  onMounted(() => {
+    getBiovers().then((resp) => {
+      resp.data.forEach((biover) => {
+        biovers.value.push(biover);
+      })
+    })
+  });
 </script>
 
 <template>

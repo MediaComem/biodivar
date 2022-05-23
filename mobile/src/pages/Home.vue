@@ -1,28 +1,21 @@
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { computed } from 'vue'
 
   import TheHomeItem from '../components/TheHome/TheHomeItem.vue';
   import BioversItem from '../components/app/BioversItem.vue';
   import { useStore } from '../composables/store.js';
 
-  import { getBiovers } from '../utils/api.js';
+  const { isIOS, biovers, getPinsBiovers } = useStore();
 
-  const { isIOS } = useStore();
-  const biovers = ref([]);
-
-  onMounted(() => {
-    getBiovers().then((resp) => {
-      resp.data.forEach((biover) => {
-        biovers.value.push(biover);
-      })
-    })
-  });
+  const pins = computed(() => {
+    return getPinsBiovers();
+  })
 </script>
 
 <template>
 <div v-if="!isIOS">
-  <p v-if="biovers.length > 0" style="text-align: start">{{ $t('TheMenu.Pin') }}</p>
-  <div v-for="(biover, index) in biovers" :key="index">
+  <p v-if="pins.length > 0" style="text-align: start">{{ $t('TheMenu.Pin') }}</p>
+  <div v-for="(biover, index) in pins" :key="index">
     <BioversItem :biover="biover" />
   </div>
   <div data-role="item">
