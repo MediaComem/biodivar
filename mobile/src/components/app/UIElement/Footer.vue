@@ -1,8 +1,8 @@
 <script setup>
-  import { logout } from '../../utils/api.js';
-  import { useStore } from '../../composables/store.js';
+  import { logout } from '../../../utils/api.js';
+  import { useStore } from '../../../composables/store.js';
 
-  const { isIOS } = useStore();
+  const { isIOS, isWebXRAvailable } = useStore();
 
   async function disconnect() {
     const resp = await logout();
@@ -15,28 +15,32 @@
 
 <template>
     <div data-role="footer">
+      <a href="#menu">
         <div class="container">
-          <img src="../../assets/shared/home.svg" alt="home">
+          <img src="../../../assets/shared/home.svg" alt="home">
           <p>{{ $t('Footer.Homepage') }}</p>
         </div>
+      </a>
+      <a href="#biovers">
         <div class="container" v-if="!isIOS && isWebXRAvailable">
-          <img src="../../assets/footer/biovers.svg" alt="home">
+          <img src="../../../assets/footer/biovers.svg" alt="home">
           <p>{{ $t('Footer.Biover') }}</p>
         </div>
+      </a>
         <div class="container">
-          <img src="../../assets/footer/new-biovers.svg" alt="home">
+          <img src="../../../assets/footer/new-biovers.svg" alt="new">
           <p>{{ $t('Footer.New') }}</p>
         </div>
         <div class="container">
-          <img src="../../assets/footer/visualisation.svg" alt="home">
+          <img src="../../../assets/footer/visualisation.svg" alt="visualize">
           <p>{{ $t('Footer.Visualize') }}</p>
         </div>
         <div class="container">
-          <img src="../../assets/footer/settings.svg" alt="home">
+          <img src="../../../assets/footer/settings.svg" alt="settings">
           <p>{{ $t('Footer.Settings') }}</p>
         </div>
         <div class="container" @click="disconnect()">
-          <img src="../../assets/footer/logout.svg" alt="home">
+          <img src="../../../assets/footer/logout.svg" alt="disconnect">
           <p>{{ $t('Footer.Logout') }}</p>
         </div>
     </div>

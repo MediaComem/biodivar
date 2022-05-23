@@ -3,6 +3,7 @@
 
   const props = defineProps({
       header: String,
+      length: Number,
   })
 
   const open = ref(false);
@@ -16,7 +17,7 @@
         <p class="text">{{ props.header }}</p>
     </div>
   
-  <div data-role="accordeon" class="transition" :style="{display: open ? 'block' : 'none'}">
+  <div data-role="accordeon" class="transition" :style="{'max-height': open ? `${props.length * 64}px` : '0'}">
     <slot></slot>
   </div>
 </div>
@@ -25,6 +26,8 @@
 <style scoped>
   [data-role="accordeon"] {
       width: 100%;
+      overflow: hidden;
+      display: block;
   }
 
   .title {
@@ -51,7 +54,7 @@
   }
 
   .transition {
-      transition: all 0.5s ease;
+      transition: all 0.25s ease;
   }
 
   .text {

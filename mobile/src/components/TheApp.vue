@@ -1,7 +1,7 @@
 <script setup>
   import { ref, onMounted } from 'vue'
 
-  import Footer from './app/Footer.vue';
+  import Footer from './app/UIElement/Footer.vue';
 
   import TheAframe from './TheAframe.vue';
   import TheHud from './TheHud.vue';

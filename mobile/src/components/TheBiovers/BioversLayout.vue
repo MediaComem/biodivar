@@ -1,7 +1,7 @@
 <script setup>
   import {ref, computed} from '@vue/reactivity';
 
-  import Accordeon from '../app/Accordeon.vue';
+  import Accordeon from '../app/UIElement/Accordeon.vue';
   import BioversItem from '../app/BioversItem.vue';
 
   import { useStore } from '../../composables/store';
@@ -41,19 +41,19 @@
         <input type="text" v-model="search">
       </base-input>
       <hr>
-      <Accordeon class="own" :header="`mes biovers (${own.length})`">
+      <Accordeon class="own" :header="`mes biovers (${own.length})`" :length="own.length">
           <div v-for="(item, index) in own" :key="index">
               <BioversItem :biover="item" />
           </div>
       </Accordeon>
       <hr>
-      <Accordeon class="favori" :header="`favoris (${favoriBiovers.length})`">
+      <Accordeon class="favori" :header="`favoris (${favoriBiovers.length})`" :length="favoriBiovers.length">
           <div v-for="(item, index) in favoriBiovers" :key="index">
               <BioversItem :biover="item" />
           </div>
       </Accordeon>
       <hr>
-      <Accordeon class="public" :header="`publiques (${publicBiovers.length})`">
+      <Accordeon class="public" :header="`publiques (${publicBiovers.length})`" :length="publicBiovers.length">
           <div v-for="(item, index) in publicBiovers" :key="index">
               <BioversItem :biover="item" />
           </div>
