@@ -26,3 +26,15 @@ export function resetEmail(email) {
 export function logout() {
   return fetchJson(API + 'logout');
 }
+
+export function duplicateBiovers(biovers) {
+  return postJson(API + 'biovers/duplicate', biovers);
+}
+
+export function updateBiovers(biovers) {
+  return postJson(API + 'biovers/update', biovers)
+}
+
+export function deleteBiovers(biovers) {
+  return postJson(API + 'biovers/delete', biovers);
+}

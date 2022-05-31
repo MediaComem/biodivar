@@ -17,7 +17,7 @@
         <p class="text">{{ props.header }}</p>
     </div>
   
-  <div data-role="accordeon" class="transition" :style="{'max-height': open ? `${props.length * 64}px` : '0'}">
+  <div data-role="accordeon" class="transition" :style="{'max-height': open ? `${props.length * 450}px` : '0'}">
     <slot></slot>
   </div>
 </div>

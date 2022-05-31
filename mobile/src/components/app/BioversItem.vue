@@ -2,6 +2,8 @@
   import { ref } from '@vue/reactivity';
 
   import { useStore } from '../../composables/store';
+
+  import { duplicateBiovers, updateBiovers, deleteBiovers } from '../../utils/api.js';
   
   import PushPin from '../../assets/vue-svg/PushPin.vue';
   import Stars from '../../assets/vue-svg/Stars.vue';
@@ -20,7 +22,11 @@
   import BioverFavoriDialog from './Dialog/BioverFavoriDialog.vue';
   import BioverPinDialog from './Dialog/BioverPinDialog.vue';
 
-  const { username, isInFavori, isInPins, favori, pins } = useStore();
+  import Notification from './UIElement/Notification.vue';
+
+  import { deepClone } from '../../utils/duplicate.js';
+
+  const { username, isInFavori, isInPins, favori, pins, biovers } = useStore();
 
   const isOpen = ref(false);
 
@@ -37,6 +43,10 @@
   const editableDialog = ref(false);
   const favoriDialog = ref(false);
   const pinDialog = ref(false);
+
+  const notificationMessage = ref('');
+  const shouldDisplayNotification = ref(false);
+  const notificationType = ref('');
 
   const props = defineProps({
     biover: Object,
@@ -72,19 +82,52 @@
     more.value = false;
   }
 
-  function saveTitle(modification) {
+  function setupNotification(text, type) {
+    notificationMessage.value = text;
+    notificationType.value = type;
+    shouldDisplayNotification.value = true;
+    setTimeout(() => {
+      notificationMessage.value = '';
+      notificationType.value = '';
+      shouldDisplayNotification.value = false;
+    }, 2000)
+  }
+
+  async function saveTitle(modification) {
     props.biover.name = modification.title;
     props.biover.description = modification.description;
+    const resp = await updateBiovers(props.biover);
+    if (resp?.statusCode === 200) {
+      setupNotification(`Le biovers ${props.biover.name} a été mis à jour avec succès`, 'success')
+    } else {
+      setupNotification(`Une erreur s'est produite durant la mise à jour du biovers ${props.biover.name}`, 'error')
+    }
     editTitleDialog.value = false;
   }
 
-  function duplicate(newTitle) {
-    console.log(newTitle)
+  async function duplicate(newTitle) {
+    const newBiovers = deepClone(props.biover);
+    newBiovers.name = newTitle;
+    newBiovers.owner = -1;
+    const resp = await duplicateBiovers(newBiovers);
+    if (resp?.statusCode === 200) {
+      setupNotification(`Le biovers ${props.biover.name} a été dupliqué avec succès`, 'success')
+      biovers.value.push(resp.data);
+    } else {
+      setupNotification(`Une erreur s'est produite durant la dupplication du biovers ${props.biover.name}`, 'error')
+    }
     duplicateBioverDialog.value = false;
   }
 
-  function deleteBiover() {
-    console.log('DELETE');
+  async function deleteBiover() {
+    const resp = await deleteBiovers(props.biover);
+    if (resp?.statusCode === 200) {
+      setupNotification(`Le biovers ${props.biover.name} a été supprimé avec succès`, 'success')
+      const index = biovers.value.findIndex((b) => b.id === props.biover.id);
+      biovers.value.splice(index, 1);
+    } else {
+      setupNotification(`Une erreur s'est produite durant la suppréssion du biovers ${props.biover.name}`, 'error')
+    }
     deleteBioverDialog.value = false;
   }
 
@@ -111,7 +154,6 @@
   }
 
   function pinEdition(state) {
-    console.log(state)
     if (state) {
       const index = pins.value.findIndex((p) => p === props.biover.id);
       if (index === -1) pins.value.push(props.biover.id);  
@@ -164,6 +206,9 @@
   <BioverFavoriDialog v-if="favoriDialog" :biover="props.biover" :favori-state="isInFavori(props.biover.id)" @close="favoriDialog = false" @favori-action="favoriEdition" />
   <BioverPinDialog v-if="pinDialog" :biover="props.biover" :pin-state="isInPins(props.biover.id)" @close="pinDialog = false" @pin-action="pinEdition" />
   <div v-if="editTitleDialog || duplicateBioverDialog || deleteBioverDialog || visibilityDialog || editableDialog || favoriDialog || pinDialog" class="dialog-overlay" @click="closeAllDialog()" />
+  <Notification v-if="shouldDisplayNotification" :data-type="notificationType">
+    {{ notificationMessage }}
+  </Notification>
   </div>
 </template>
 
