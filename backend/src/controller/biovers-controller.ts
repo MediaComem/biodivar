@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import winston from 'winston';
 import { BioversModel } from '../types/biovers-model';
 
@@ -15,6 +15,11 @@ export const getBioversByUser = async (
       id: 'asc',
     },
     include: {
+      User: {
+        select: {
+          username: true,
+        }
+      },
       Poi: {
         where: {
           deleted_date: null,
@@ -80,6 +85,11 @@ export const getBioversById = async (
         ],
       },
       include: {
+        User: {
+          select: {
+            username: true,
+          }
+        },
         Poi: {
           where: {
             deleted_date: null,
@@ -141,6 +151,11 @@ export const getPublicBiovers = async (
         id: 'asc',
       },
       include: {
+        User: {
+          select: {
+            username: true,
+          }
+        },
         Poi: {
           where: {
             deleted_date: null,
@@ -195,8 +210,20 @@ export const createBiovers = async (
   try {
     biovers.creation_date = new Date();
     return await prisma.biovers.create({
-      data: biovers,
+      data: {
+        name: biovers.name,
+        description: biovers.description,
+        owner: biovers.owner,
+        is_public: biovers.is_public,
+        is_editable: biovers.is_editable,
+        creation_date: new Date(),
+      },
       include: {
+        User: {
+          select: {
+            username: true,
+          }
+        },
         Poi: {
           include: {
             coordinate: true,
@@ -255,6 +282,11 @@ export const updateBiovers = async (
           update_date: new Date(),
         },
         include: {
+          User: {
+            select: {
+              username: true,
+            }
+          },
           Poi: {
             include: {
               coordinate: true,

@@ -4,7 +4,7 @@ import { init } from "../../src/server";
 import { setupConfig } from "../config/config";
 import {
   getUserById,
-  getUserByName,
+  getUserByNameOrEmail,
   createUser,
   reactivateUser,
   updateUser,
@@ -37,8 +37,8 @@ describe("Test users controller", () => {
   });
 
   it("Find user by username", async () => {
-    const existingUser = await getUserByName(server.app.prisma, "Rich");
-    const notExistingUser = await getUserByName(server.app.prisma, "TEST");
+    const existingUser = await getUserByNameOrEmail(server.app.prisma, "Rich");
+    const notExistingUser = await getUserByNameOrEmail(server.app.prisma, "TEST");
     expect(existingUser?.id).toEqual(1);
     expect(notExistingUser).toBeNull();
   });
@@ -90,15 +90,15 @@ describe("Test users controller", () => {
   });
 
   it("Reactivate user", async () => {
-    const user = await getUserByName(server.app.prisma, "Roch");
+    const user = await getUserByNameOrEmail(server.app.prisma, "Roch");
     expect(user).toBeNull();
     await reactivateUser(server.app.prisma, "Roch", server.app.logger);
-    const reactivate_user = await getUserByName(server.app.prisma, "Roch");
+    const reactivate_user = await getUserByNameOrEmail(server.app.prisma, "Roch");
     expect(reactivate_user).toBeDefined();
   });
 
   it("Delete user", async () => {
-    const user = await getUserByName(server.app.prisma, "Roch");
+    const user = await getUserByNameOrEmail(server.app.prisma, "Roch");
     if (user) {
       await deleteUser(server.app.prisma, user as UserModel, server.app.logger);
       const deleted_user = await getUserById(server.app.prisma, user.id);

@@ -33,10 +33,12 @@ export const createPath = async (
 ) => {
   try {
     const coordiantes: Array<Prisma.CoordinateCreateWithoutPathInput> = [];
-    path.coordinate?.forEach((coordiante) => {
-      coordiante.creation_date = new Date();
-      coordiantes.push(coordiante as Prisma.CoordinateCreateWithoutPathInput);
-    });
+    if (path.coordinate) {
+      path.coordinate.forEach((coordiante) => {
+        coordiante.creation_date = new Date();
+        coordiantes.push(coordiante as Prisma.CoordinateCreateWithoutPathInput);
+      });
+    }
     return await prisma.path.create({
       data: {
         author: path.author,

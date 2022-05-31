@@ -2,11 +2,16 @@ import Hapi from "@hapi/hapi";
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-    service: 'Hotmail',
+    port: Number(process.env.EMAIL_PORT),
+    host: process.env.HOST_PROVIDER,
+    secure: true,
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASSWORD
-    }
+    },
+    tls: {
+      rejectUnauthorized: false 
+    },
 });
 
 declare module "@hapi/hapi" {

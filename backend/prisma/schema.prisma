@@ -29,6 +29,7 @@ model User {
 model Biovers {
   id                      Int         @id @default(autoincrement())
   name                    String
+  description             String?
   owner                   Int
   creation_date           DateTime
   update_date             DateTime?

@@ -79,13 +79,21 @@ export const resetPassword = async (request: Request, h: ResponseToolkit) => {
     request.server.app.logger
   );
   const mailOptions = {
-    from: process.env.EMAIL_USER,
+    from: process.env.EMAIL_MAIL,
     to: account.email,
     subject: 'BiodivAR reset password link',
     text: `${process.env.CHANGE_PASSWORD_LINK}${token}`
   };
-  await request.server.app.email.sendMail(mailOptions);
-  return successWithoutContentResponse(h, 'Email Sent');
+  try {
+    const result = await request.server.app.email.sendMail(mailOptions);
+    console.log(result);
+    return successWithoutContentResponse(h, 'Email Sent');
+  } catch (error){
+    console.log(error)
+    return failureResponse(h, 'Email Sent');
+  }
+  
+  
 };
 
 export const authChangePassword = async (request: Request, h: ResponseToolkit) => {
