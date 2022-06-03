@@ -53,7 +53,6 @@
     font-family: 'BiodivAR Bold';
     font-size: 16px;
     line-height: 16px;
-
     margin: 1rem 0 5rem 0;
   }
   

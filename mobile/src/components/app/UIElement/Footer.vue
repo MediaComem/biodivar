@@ -2,13 +2,12 @@
   import { logout } from '../../../utils/api.js';
   import { useStore } from '../../../composables/store.js';
 
-  const { isIOS, isWebXRAvailable } = useStore();
+  const { isIOS, isWebXRAvailable, isAuth } = useStore();
 
   async function disconnect() {
     const resp = await logout();
     if (resp?.statusCode === 200) {
       isAuth.value = false;
-      
     }
   }
 </script>
