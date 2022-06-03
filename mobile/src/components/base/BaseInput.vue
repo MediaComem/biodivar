@@ -15,16 +15,18 @@
   }
 
   [data-role="input"] :slotted(input) {
+    font-family: 'BiodivAR Medium';
+    font-size: 14px;
+    line-height: 14px;
     width: calc(100% - 2rem);
     max-width: var(--max-width);
     padding: 1rem 1rem;
     box-sizing: border-box;
     border: 1px solid black;
     border-radius: 3rem;
-    font-size: 16px;
     background-color: var(--bg-color);
     background-image: var(--icon-link);
-    background-position: 1rem 0.9rem;
+    background-position: 1rem 0.7rem;
     background-repeat: no-repeat;
     padding-left: 3rem;
     margin: 0 1rem 1rem 1rem;

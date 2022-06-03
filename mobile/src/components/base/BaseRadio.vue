@@ -19,18 +19,23 @@
   }
 
   [data-role="radio"] :slotted(button) {
+    font-family: 'BiodivAR Medium';
+    font-size: 14px;
+    line-height: 14px;
     width: 49%;
     border-radius: 1rem;
     border: none;
     background: var(--highlight-color);
     color: var(--bg-color);
-    font-size: 0.8rem;
     padding: 0.5rem;
     cursor: pointer;
     margin: 0.5%;
   }
 
   [data-role="radio"] :slotted(.active) {
+    font-family: 'BiodivAR Bold';
+    font-size: 14px;
+    line-height: 14px;
     background: black;
     color: white;
   }

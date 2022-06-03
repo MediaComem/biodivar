@@ -46,7 +46,7 @@
       <base-button><img src="../../assets/login/connexion.svg" />
       {{ $t('TheLogin.button.connexion') }}
       </base-button>
-      <a style="display: block" @click="forgotPassword = true">{{ $t('TheLogin.forgot-password') }}</a>
+      <a class="link" @click="forgotPassword = true">{{ $t('TheLogin.forgot-password') }}</a>
     </base-form>
 </template>
 
@@ -61,5 +61,12 @@
     --icon-link: url("../../assets/login/lock_outline.svg");
     --bg-color: none;
     --color: black;
+  }
+
+  .link {
+    display: block;
+    font-family: 'BiodivAR Medium';
+    font-size: 14px;
+    line-height: 14px;
   }
 </style>

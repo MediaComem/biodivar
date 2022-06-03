@@ -33,7 +33,6 @@
   form :slotted(input:checked::after) {
     content: 'X';
     color: black;
-    font-size: 1rem;
     display: flex;
     align-content: center;
     justify-content: center;
@@ -41,13 +40,17 @@
 
   form :slotted(label) {
     color: var(--color);
-    font-size: 1rem;
+    font-family: 'BiodivAR Medium';
+    font-size: 14px;
+    line-height: 14px;
     margin: 1rem auto 1rem auto;
   }
 
   form :slotted(a) {
     color: var(--link-color);
-    font-size: 1rem;
+    font-family: 'BiodivAR Medium';
+    font-size: 14px;
+    line-height: 14px;
     cursor: pointer;
     margin: 1rem auto 1rem auto;
   }

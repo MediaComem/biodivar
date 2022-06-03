@@ -25,14 +25,18 @@
   }
 
   form :slotted(p) {
+    font-family: 'BiodivAR Medium';
+    font-size: 14px;
+    line-height: 14px;
     color: var(--color);
-    font-size: 1rem;
     margin: 1rem auto 1rem auto;
   }
 
   form :slotted(a) {
+    font-family: 'BiodivAR Medium';
+    font-size: 14px;
+    line-height: 14px;
     color: var(--link-color);
-    font-size: 1rem;
     cursor: pointer;
     margin: 1rem auto 1rem auto;
   }

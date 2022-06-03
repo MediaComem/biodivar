@@ -52,8 +52,8 @@
           <div class="account">
             <img class="acount-image" alt="Account" src="../assets/shared/account_circle.svg" @click="menu = !menu">
             <ul v-if="menu">
-              <li class="menu-item-divider"><img class="menu-item" alt="Pencil" src="../assets/shared/edit.svg"> {{ $t('Header.Modify') }}</li>
-              <li @click="disconnect()"><img class="menu-item" alt="Disconnect" src="../assets/shared/logout.svg"> {{ $t('Header.Logout') }}</li>
+              <li class="menu-item-divider font"><img class="menu-item" alt="Pencil" src="../assets/shared/edit.svg"> {{ $t('Header.Modify') }}</li>
+              <li @click="disconnect()" class="font"><img class="menu-item" alt="Disconnect" src="../assets/shared/logout.svg"> {{ $t('Header.Logout') }}</li>
             </ul>
             <div v-if="menu" class="dialog-overlay" @click="closeDialog()"/>
           </div>
@@ -146,5 +146,11 @@
     position: fixed;
     top: 0;
     left: 0;
+  }
+
+  .font {
+    font-family: 'BiodivAR Medium';
+    font-size: 16px;
+    line-height: 16px;
   }
 </style>

@@ -84,6 +84,9 @@
   }
 
   [data-role="header-text"] {
+    font-family: 'BiodivAR Round Medium';
+    font-size: 18px;
+    line-height: 16px;
     margin-left: 1rem;
     padding-right: 1rem;
     display: block;
@@ -107,6 +110,9 @@
   }
 
   li {
+    font-family: 'BiodivAR Medium';
+    font-size: 16px;
+    line-height: 16px;
     display: flex;
     align-items: center;
     border-bottom: solid 1px #BDBDBD;

@@ -58,6 +58,9 @@
   }
 
   .text {
+      font-family: 'BiodivAR Medium';
+      font-size: 14px;
+      line-height: 14px;
       margin: 0;
       padding-left: 0.5rem;
   }

@@ -32,16 +32,28 @@
   }
 
   dialog :slotted(header) {
+    font-family: 'BiodivAR Bold';
     text-align: center;
     color: var(--color);
-    font-size: 1.5rem;
+    font-size: 16px;
+    line-height: 16px;
     margin: 1rem 0 2rem 0;
+  }
+
+  dialog :slotted(p) {
+    font-family: 'BiodivAR Book';
+    font-size: 12px;
+    line-height: 12px;
   }
 
   dialog :slotted(img.sent-margin) {
     margin: 1rem 0 3rem 0;
   }
   dialog :slotted(p.sent-margin) {
+    font-family: 'BiodivAR Bold';
+    font-size: 16px;
+    line-height: 16px;
+
     margin: 1rem 0 5rem 0;
   }
   

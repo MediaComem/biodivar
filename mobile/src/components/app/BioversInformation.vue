@@ -76,8 +76,10 @@
 
 <style scoped>
   p {
-    color: white;
+    font-family: 'BiodivAR Book';
     font-size: 12px;
+    line-height: 12px;
+    color: white;
   }
 
   .item {

@@ -246,6 +246,9 @@
   }
 
   .text {
+    font-family: 'BiodivAR Round Medium';
+    font-size: 18px;
+    line-height: 16px;
     width: calc(100% - 20px);
   }
 

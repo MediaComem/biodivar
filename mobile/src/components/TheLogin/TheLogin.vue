@@ -50,9 +50,12 @@
   }
 
   [data-role="title"] {
+    font-family: 'BiodivAR Round Medium';
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
     text-align: center;
     color: var(--color);
-    font-size: 1rem;
     margin: 0 0 4rem 0;
   }
 </style>

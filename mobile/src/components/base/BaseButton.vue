@@ -10,18 +10,20 @@
 
 <style scoped>
   [data-role="button"] {
+    font-family: 'BiodivAR Bold';
+    font-size: 16px;
+    line-height: 16px;
     width: calc(100% - 2rem);
     border-radius: 1rem;
     border: none;
     background: var(--highlight-color);
     color: var(--link-color);
-    font-size: 1rem;
     padding: 0.5rem;
     margin: 1rem auto 1rem auto;
     text-transform: uppercase;
     cursor: pointer;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
   }
 

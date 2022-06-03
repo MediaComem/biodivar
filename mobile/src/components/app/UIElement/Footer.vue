@@ -76,6 +76,8 @@
   p {
     margin: 0;
     color: #F2F2F2;
+    font-family: 'BiodivAR Book';
     font-size: 8px;
+    line-height: 8px;
   }
 </style>

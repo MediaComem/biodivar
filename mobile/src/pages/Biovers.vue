@@ -15,7 +15,7 @@
 
 <template>
   <div>
-    <p v-if="biovers.length > 0" style="text-align: start">{{ $t('TheMenu.Pin') }}</p>
+    <p v-if="pins.length > 0" style="text-align: start">{{ $t('TheMenu.Pin') }}</p>
     <div v-for="(biover, index) in pins" :key="index">
       <BioversItem :biover="biover" />
     </div>
@@ -28,6 +28,12 @@
   a {
     color: black;
     text-decoration: none;
+  }
+
+  p {
+    font-family: 'BiodivAR Medium';
+    font-size: 14px;
+    line-height: 14px;
   }
 
   img {

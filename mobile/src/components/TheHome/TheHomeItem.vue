@@ -57,7 +57,6 @@
   }
 }
 
-
 img {
   margin-top: 12.5px;
   height: 80px;
@@ -65,16 +64,21 @@ img {
 }
 
 h3 {
+  font-family: 'BiodivAR Round Medium';
+  font-size: 16px;
+  line-height: 16px;
   margin: 0;
   max-width: 125px;
   margin-left: calc((100% - 125px) / 2);
-  font-size: 16px;
   margin-top: 4px;
 }
 
 p {
-  margin: 0;
+  font-family: 'BiodivAR Round Medium';
   font-size: 8px;
+  line-height: 8px;
+  color: #666666;
+  margin: 0;
   max-width: 125px;
   margin-left: calc((100% - 125px) / 2);
   margin-top: 2px
