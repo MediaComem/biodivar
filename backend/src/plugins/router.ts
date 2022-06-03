@@ -26,9 +26,14 @@ export const routerPlugin: Plugin<null> = {
     server.route({
       method: '*',
       path: '/{any*}',
-      handler: function (request, h) {
-        return NotFoundResponse(h, '404 Error! Page Not Found!');
-      },
+      options: {
+        auth: {
+          mode: 'try',
+        },
+        handler: function (request, h) {
+          return NotFoundResponse(h, '404 Error! Page Not Found!');
+        },
+      }
     });
   },
 };

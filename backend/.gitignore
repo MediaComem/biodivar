@@ -7,3 +7,4 @@ prisma/dev.db-journal
 prisma/test.db
 prisma/test.db-journal
 build
+coverage
