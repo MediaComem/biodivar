@@ -7,7 +7,8 @@ export const setupUsers = async (prisma: PrismaClient) => {
             username: 'Rich',
             email: 'rich@test.com',
             password: '$2a$10$NEqPoYNnZ4lVXjADNUOhQuqmkXFy9/dn9GUntjhi4JOguNBVvwq1K',
-            creation_date: new Date('2021-01-25T03:24:00').toISOString()
+            creation_date: new Date('2021-01-25T03:24:00').toISOString(),
+            token: 'abcd'
         }   
     });
     await prisma.user.create({
@@ -16,7 +17,8 @@ export const setupUsers = async (prisma: PrismaClient) => {
             username: 'Rach',
             email: 'rach@test.com',
             password: '$2a$10$NEqPoYNnZ4lVXjADNUOhQuqmkXFy9/dn9GUntjhi4JOguNBVvwq1K', // test
-            creation_date: new Date('2021-01-25T03:24:00').toISOString()
+            creation_date: new Date('2021-01-25T03:24:00').toISOString(),
+            token: 'fffff'
         }   
     });
     await prisma.user.create({
@@ -27,6 +29,7 @@ export const setupUsers = async (prisma: PrismaClient) => {
             password: '$2a$10$NEqPoYNnZ4lVXjADNUOhQuqmkXFy9/dn9GUntjhi4JOguNBVvwq1K', // test
             creation_date: new Date('2021-01-25T03:24:00').toISOString(),
             deleted_date: new Date('2021-01-25T04:24:00').toISOString(),
+            token: 'dsfdsfafdfsdaf'
         }   
     });
 };

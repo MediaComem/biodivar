@@ -3,9 +3,6 @@ import { Server } from "@hapi/hapi";
 import { init } from "../../src/server";
 import { setupConfig } from "../config/config";
 import { dropUsers, setupUsers } from "../data/model/users";
-import {
-  getUserById,
-} from "../../src/controller/users-controller";
 import { UserModel } from "../../src/types/user-model";
 import { responseModel } from "../../src/types/response";
 

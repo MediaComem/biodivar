@@ -12,6 +12,7 @@ import {
   deleteBiovers,
   getBioversByUser,
   getPublicBiovers,
+  getBioversById,
   updateBiovers,
 } from '../../src/controller/biovers-controller';
 import { BioversModel } from '../../src/types/biovers-model';
@@ -35,6 +36,11 @@ describe('Test biovers controller', () => {
     await dropBiovers(server.app.prisma);
     await dropUsers(server.app.prisma);
     await server.stop();
+  });
+
+  it('Get Biovers by ID', async () => {
+    const biovers = await getBioversById(server.app.prisma, 1, 1, server.app.logger);
+    expect(biovers?.name).toEqual('Biovers 1');
   });
 
   it('Get all biovers for a dedicated user', async () => {
@@ -78,11 +84,34 @@ describe('Test biovers controller', () => {
       expect(newBiovers.name).toEqual(biovers.name);
       expect(newBiovers.is_public).toBeTruthy();
       expect(newBiovers.owner).toEqual(2);
-      expect(newBiovers.creation_date).toEqual(biovers.creation_date);
+      expect(newBiovers.creation_date).toBeDefined();
       expect(newBiovers.update_date).toBeNull();
       expect(newBiovers.deleted_date).toBeNull();
     } else {
       throw new Error('The biovers cannot be created.');
+    }
+  });
+
+  it('Update a biovers', async () => {
+    const biovers: BioversModel = {
+      id: 2,
+      name: 'Updated Biovers',
+      owner: 2,
+      creation_date: new Date(),
+    };
+    const updated_biovers = await updateBiovers(
+      server.app.prisma,
+      biovers,
+      server.app.logger
+    );
+    if (updated_biovers) {
+      expect(updated_biovers.name).toEqual(biovers.name);
+      expect(updated_biovers.is_public).toBeTruthy();
+      expect(updated_biovers.owner).toEqual(2);
+      expect(updated_biovers.update_date).toBeDefined();
+      expect(updated_biovers.deleted_date).toBeNull();
+    } else {
+      throw new Error('The biovers cannot be updated.');
     }
   });
 

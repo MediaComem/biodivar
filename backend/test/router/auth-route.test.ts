@@ -3,8 +3,11 @@ import { Server } from "@hapi/hapi";
 import { init } from "../../src/server";
 import { setupConfig } from "../config/config";
 import { setupUsers, dropUsers } from "../data/model/users";
-import { UserModel } from "../../src/types/user-model";
 import { responseModel } from "../../src/types/response";
+
+import {
+  getUserById,
+} from "../../src/controller/users-controller";
 
 describe("Test Auth Routes", () => {
   let server: Server;
@@ -64,4 +67,19 @@ describe("Test Auth Routes", () => {
     });
     expect(res.statusCode).toEqual(200);
   });
+
+  it ('change password', async () => {
+    const before = await getUserById(server.app.prisma, 1);
+    const res = await server.inject({
+      method: "POST",
+      url: "/api/v1/change-password",
+      payload: {
+        password: "aaaabbbb",
+        toker: "abcd",
+      },
+    });
+    expect(res.statusCode).toEqual(204);
+    const user = await getUserById(server.app.prisma, 1);
+    expect(user?.password).not.toEqual(before?.password);
+  })
 });

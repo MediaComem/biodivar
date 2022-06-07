@@ -48,7 +48,6 @@ export const registerUser = async function (
     } else {
       return errorResponse(h, error as string);
     }
-    
   }
 };
 
