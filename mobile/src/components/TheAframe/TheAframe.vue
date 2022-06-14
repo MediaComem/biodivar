@@ -1,9 +1,14 @@
 <script setup>
-  import './aframe/gps-position';
-  import './aframe/faces-north';
-  import './aframe/pitch-roll-look-controls';
-  import './aframe/look-at-roll-yaw';
-  import './aframe/hit-test-marker';
+  import { useStore } from '../../composables/store.js';
+
+  import '../aframe/gps-position';
+  import '../aframe/faces-north';
+  import '../aframe/pitch-roll-look-controls';
+  import '../aframe/look-at-roll-yaw';
+  import '../aframe/hit-test-marker';
+  import '../aframe/visible-from';
+
+  const { selectedBiovers } = useStore();
 </script>
 
 <template>
@@ -22,33 +27,13 @@
     </a-assets>
 
     <a-entity faces-north>
-
-      <a-entity
-        position="0 1 -3"
-        mixin="marker"
-      ></a-entity>
-
-      <a-entity
-        position="2 1 -5"
-        mixin="marker"
-      ></a-entity>
-
-      <a-entity
-        gps-position="latitude: 46.260020; longitude: 6.149050"
-        mixin="marker"
-      ></a-entity>
-
-      <a-entity
-        gps-position="latitude: 46.780761; longitude: 6.648570"
-        mixin="marker"
-        scale="10 10 10"
-      ></a-entity>
-
-      <a-entity
-        gps-position="latitude: 46.55470184333333; longitude: 6.63291133"
-        mixin="marker"
-      ></a-entity>
-
+      <template v-for="poi of selectedBiovers.Poi">
+        <a-entity
+          :gps-position="`latitude: ${poi.coordinate.lat}; longitude: ${poi.coordinate.long}`"
+          :visible-from="`distance: ${poi.visible_from}`"
+          mixin="marker"
+        ></a-entity>
+      </template>
     </a-entity>
 
     <a-sphere id="origin" radius="0.3" color="green"></a-sphere>

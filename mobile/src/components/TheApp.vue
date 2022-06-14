@@ -3,8 +3,8 @@
 
   import Footer from './app/UIElement/Footer.vue';
 
-  import TheAframe from './TheAframe.vue';
-  import TheHud from './TheHud.vue';
+  import TheAframe from './TheAframe/TheAframe.vue';
+  import TheHud from './TheHud/TheHud.vue';
   import { useRouter } from '../composables/router.js';
   import { useStore } from '../composables/store.js';
   import { storage } from '../composables/localStorage.js';
@@ -126,7 +126,7 @@
     justify-content: flex-end;
     cursor: pointer;
   }
-  
+
   .account-image {
     width: 24px;
     height: 24px;

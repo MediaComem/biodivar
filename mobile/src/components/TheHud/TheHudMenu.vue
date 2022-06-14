@@ -1,17 +1,19 @@
 <script setup>
   import { ref } from "@vue/reactivity";
   import { watch } from "@vue/runtime-core";
+  import { useStore } from '../../composables/store.js';
 
-  const count= ref(0);
-  watch(count, (val, oldVal) => {
-    console.log(`${oldVal} => ${val}`);
-  });
+  const { section } = useStore();
+
+  function backToMenu() {
+    section.value = 'menu';
+  }
 
 </script>
 
 <template>
   <svg
-    @click="count++"
+    @click="backToMenu()"
     version="1.0"
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink"
