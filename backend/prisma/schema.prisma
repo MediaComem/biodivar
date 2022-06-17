@@ -127,6 +127,8 @@ model Symbol {
   creation_date           DateTime
   update_date             DateTime?
   deleted_date            DateTime?
+  width                   Int?
+  height                  Int?
   poi_id                  Int?
   poi                     Poi?         @relation(fields: [poi_id], references: [id])
 }

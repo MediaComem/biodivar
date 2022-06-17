@@ -25,9 +25,9 @@ symbolRoutes.push({
       +request.query.id
     );
     if (symbol) {
-      return successResponse(h, 'Get Symbol done successfully', symbol);
+      return h.file(symbol);
     } else {
-      return successWithoutContentResponse(h, 'Get Symbol done successfully');
+      return errorResponse(h, 'Get Symbol done successfully');
     }
   },
 });

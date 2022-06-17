@@ -55,7 +55,16 @@ export const createPoi = async (
                 creation_date: new Date(),
               },
             }
-          : undefined,
+          : {
+              create: {
+                media_type: '',
+                url: '',
+                elevation_ground: 0,
+                is_facing_user: true,
+                is_visible: true,
+                creation_date: new Date(),
+            },
+          },
       },
       include: {
         coordinate: true,

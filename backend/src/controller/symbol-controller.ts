@@ -1,14 +1,18 @@
 import { PrismaClient } from '@prisma/client';
 import winston from 'winston';
 import { SymbolModel } from '../types/symbol-model';
-
+ 
 export const getSymbolById = async (prisma: PrismaClient, id: number) => {
-  return await prisma.symbol.findFirst({
+  const symbol = await prisma.symbol.findFirst({
     where: {
       id: id,
       deleted_date: null,
     },
   });
+  if (symbol && symbol.url) {
+    return symbol.url;
+  }
+  return '';
 };
 
 export const createSymbol = async (
