@@ -239,6 +239,7 @@ export const bioversStore = {
   actions: {
     async getBiovers({ dispatch, commit, state }) {
       const ownerBiovers = await bioversApi.getBioversByUser();
+      console.log(ownerBiovers);
       const publicB = await bioversApi.getPublicBiovers();
       const difference = publicB.data.data.filter(
         (x) => !ownerBiovers.data.data.some((present) => present.id === x.id),
@@ -433,6 +434,13 @@ export const bioversStore = {
         return 'public';
       }
       return 'own';
+    },
+    bioverIsEditable: (state) => (bioverId) => {
+      const index = state.publicBiovers.findIndex((b) => b.id === bioverId);
+      if (index === -1) {
+        return true;
+      }
+      return state.publicBiovers[index].is_editable;
     },
   },
 };

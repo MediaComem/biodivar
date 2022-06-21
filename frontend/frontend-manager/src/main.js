@@ -1,3 +1,5 @@
+import { TroisJSVuePlugin } from 'troisjs';
+
 import { createApp } from 'vue';
 
 import ElementPlus from 'element-plus';
@@ -13,4 +15,5 @@ createApp(App)
   .use(store)
   .use(router)
   .use(i18n)
+  .use(TroisJSVuePlugin)
   .mount('#app');

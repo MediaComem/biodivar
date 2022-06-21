@@ -110,6 +110,59 @@
           </el-option>
         </el-select>
       </el-form-item>
+      <el-form-item label="Elevation du symbole"
+      :label-width="formLabelWidth">
+        <el-input-number v-model="form.symbol.elevation_ground" :precision="2" :step="1"/>
+      </el-form-item>
+      <el-form-item label="is_facing_user" :label-width="formLabelWidth">
+        <div>
+          <el-radio v-model="form.symbol.is_facing_user" :label="true" size="large">
+            {{ $t('poi.configurator.yes') }}
+          </el-radio>
+          <el-radio v-model="form.symbol.is_facing_user" :label="false" size="large">
+            {{ $t('poi.configurator.no') }}
+          </el-radio>
+        </div>
+      </el-form-item>
+      <el-form-item label="is_visible" :label-width="formLabelWidth">
+        <div>
+          <el-radio v-model="form.symbol.is_visible" :label="true" size="large">
+            {{ $t('poi.configurator.yes') }}
+          </el-radio>
+          <el-radio v-model="form.symbol.is_visible" :label="false" size="large">
+            {{ $t('poi.configurator.no') }}
+          </el-radio>
+        </div>
+      </el-form-item>
+      <el-form-item label="Hauteur du symbole"
+      :label-width="formLabelWidth">
+        <el-input-number v-model="form.symbol.height" :precision="2" :step="1"/>
+      </el-form-item>
+      <el-form-item label="Largeur du symbole"
+      :label-width="formLabelWidth">
+        <el-input-number v-model="form.symbol.width" :precision="2" :step="1"/>
+      </el-form-item>
+      <el-form-item>
+        <input ref="file" type="file" name="file" accept=".png, .svg, .gltf, .glb, .mp3, .m4a, .wav"
+        @change="handleFileUpload"/>
+      </el-form-item>
+      <Renderer v-if="arFile" ref="renderer" antialias :orbit-ctrl="{ enableDamping: true }"
+       >
+        <Camera :position="{ x: 3, y: 1, z: 3 }" />
+        <Scene>
+          <AmbientLight></AmbientLight>
+          <GltfModel :src="arFile" ref="gltf"/>
+        </Scene>
+      </Renderer>
+      <div id="ar-image" v-if="arImage" :style="{ 'background-image': `url(${arImage})` }" />
+      <audio controls v-if="arSound" ref="audio">
+        <source :src="arSound">
+      </audio>
+      <el-form-item>
+        <input ref="symbol" type="file" name="file" accept=".png, .svg"
+        @change="handleFileUploadSymbol"/>
+      </el-form-item>
+      <div id="ar-image" v-if="symbolImage" :style="{ 'background-image': `url(${symbolImage})`}"/>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
@@ -126,21 +179,30 @@
 
 <script>
 import { mapActions } from 'vuex';
+
+import {
+  AmbientLight,
+  Camera,
+  GltfModel,
+  Renderer,
+  Scene,
+} from 'troisjs';
+
 import poi from '../../../api/poi';
+import symbol from '../../../api/symbol';
 
 export default {
   emits: ['closeDialog'],
-  watch: {
-    showDialog(newVal) {
-      this.dialogVisible = newVal;
-    },
-    poi(newVal) {
-      this.form = JSON.parse(JSON.stringify(newVal.poi));
-    },
-  },
   props: {
     poi: Object,
     showDialog: Boolean,
+  },
+  components: {
+    AmbientLight,
+    Camera,
+    GltfModel,
+    Renderer,
+    Scene,
   },
   data() {
     return {
@@ -164,15 +226,109 @@ export default {
       }],
       original: {},
       form: {},
+      upload: null,
+      uploadSymbol: null,
+      symbolFile: null,
+      symbolImage: null,
+      arSymbol: null,
+      arFile: null,
+      arImage: null,
+      arSound: null,
     };
   },
   methods: {
+    handleFileUploadSymbol(event) {
+      const files = event.target.files;
+      if (files) {
+        this.symbolFile = files[0];
+        const lastDot = this.symbolFile.name.lastIndexOf('.');
+        const ext = this.symbolFile.name.substring(lastDot + 1);
+        this.symbolImage = URL.createObjectURL(this.symbolFile);
+        this.form.symbol.media_type = ext;
+      }
+    },
+    handleFileUpload(event) {
+      const files = event.target.files;
+      if (files) {
+        this.arSymbol = files[0];
+        const lastDot = this.arSymbol.name.lastIndexOf('.');
+        const ext = this.arSymbol.name.substring(lastDot + 1);
+        if (ext === 'gltf' || ext === 'glb') {
+          this.arFile = null;
+          this.arImage = null;
+          this.arSound = null;
+          this.$nextTick(() => {
+            this.arFile = URL.createObjectURL(this.arSymbol);
+          });
+        } else if (ext === 'mp3' || ext === 'm4a' || ext === 'wav') {
+          this.arFile = null;
+          this.arImage = null;
+          this.arSound = null;
+          this.$nextTick(() => {
+            this.arSound = URL.createObjectURL(this.arSymbol);
+          });
+        } else {
+          this.arFile = null;
+          this.arSound = null;
+          this.arImage = URL.createObjectURL(this.arSymbol);
+        }
+        this.form.symbol.media_type_ar = ext;
+      }
+    },
     async save() {
+      if (this.arSymbol) {
+        const formData = new FormData();
+        formData.append('file', this.arSymbol);
+        const path = await symbol.save(formData);
+        if (path.data.data) {
+          this.form.symbol.ar_url = path.data.data;
+        }
+      }
+      if (this.symbolFile) {
+        const formData = new FormData();
+        formData.append('file', this.symbolFile);
+        const path = await symbol.save(formData);
+        if (path.data.data) {
+          this.form.symbol.url = path.data.data;
+        }
+      }
       const updatedPoi = await poi.updatePoi(this.form);
       this.updatePoi(updatedPoi.data.data);
       this.$emit('closeDialog');
     },
     ...mapActions('biovers', ['updatePoi']),
   },
+  mounted() {
+    this.upload = this.$refs.upload;
+    this.uploadSymbol = this.$refs.symbol;
+    this.form = JSON.parse(JSON.stringify(this.poi.poi));
+    const symbolExtension = this.form.symbol.media_type_ar;
+    if (symbolExtension) {
+      const path = symbol.getSymbolAr(this.form.symbol);
+      if (symbolExtension === 'gltf' || symbolExtension === 'glb') {
+        this.arFile = path;
+      } else if (symbolExtension === 'mp3' || symbolExtension === 'm4a' || symbolExtension === 'wav') {
+        this.arSound = path;
+      } else {
+        this.arImage = path;
+      }
+    }
+    if (this.form.symbol.media_type) {
+      this.symbolImage = symbol.getSymbol(this.form.symbol);
+    }
+    this.dialogVisible = this.showDialog;
+  },
 };
 </script>
+
+<style scoped>
+#ar-image {
+  width: 200px;
+  height: 200px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>

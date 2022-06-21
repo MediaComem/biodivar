@@ -51,7 +51,12 @@
       </template>
     </el-table-column>
   </el-table>
-  <PoiEdition :poi="poiToEdit" :showDialog="showDialog" @close-dialog="showDialog = false" />
+  <PoiEdition
+    v-if="showDialog"
+    :poi="poiToEdit"
+    :showDialog="showDialog"
+    @close-dialog="showDialog = false"
+  />
 </template>
 
 <script>
@@ -98,7 +103,7 @@ export default {
       return this.getPoisByBiover(this.bioverId).filter((e) => e.element.is_public);
     },
     ...mapState('biovers', ['poisModification']),
-    ...mapGetters('biovers', ['getPoisByBiover', 'ownOrPublic']),
+    ...mapGetters('biovers', ['getPoisByBiover', 'ownOrPublic', 'bioverIsEditable']),
   },
   methods: {
     creationDate(row) {
@@ -123,7 +128,7 @@ export default {
       }
     },
     couldUpdate(row) {
-      return (this.ownOrPublic(row.element.biovers) === 'public' && !row.element.is_editable) || row.import;
+      return (this.ownOrPublic(row.element.biovers) === 'public' && !this.bioverIsEditable(row.element.biovers)) || row.import;
     },
     handleEdit(row) {
       if (this.couldUpdate(row)) {

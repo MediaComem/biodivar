@@ -12,16 +12,13 @@
             || (ownOrPublic(poi.element.biovers) === 'public'
             && poi.element.is_public)) && poi.element.coordinate"
             :poi="poi"
-            :iconHeight="40"
-            :iconWidth="25"
-            :icon="'https://placekitten.com'"
             @update-poi="openPoiEdition"
           />
       </div>
     </l-map>
     <PoiCreator :showDialog="showCreationDialog" :coordinate="latlng"
     @close-dialog="showCreationDialog = false" />
-    <PoiEdition :poi="poiToUpdate" :showDialog="showEditionDialog"
+    <PoiEdition v-if="showEditionDialog" :poi="poiToUpdate" :showDialog="showEditionDialog"
     @close-dialog="showEditionDialog = false" />
 </template>
 

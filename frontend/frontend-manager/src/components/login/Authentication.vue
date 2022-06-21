@@ -25,9 +25,9 @@
           v-model="form.password"
         />
       </el-form-item>
-      <el-form-item class="">
+      <!--el-form-item class="">
         <router-link to="/forgot">{{ $t('authentication.forgot') }}</router-link>
-      </el-form-item>
+      </el-form-item-->
       <el-form-item class="layout">
         <el-button
           :disabled="!error"
