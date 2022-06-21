@@ -325,3 +325,15 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#ar-image {
+  width: 200px;
+  height: 200px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
