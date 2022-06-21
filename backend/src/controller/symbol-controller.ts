@@ -15,6 +15,19 @@ export const getSymbolById = async (prisma: PrismaClient, id: number) => {
   return '';
 };
 
+export const getSymbolArById = async (prisma: PrismaClient, id: number) => {
+  const symbol = await prisma.symbol.findFirst({
+    where: {
+      id: id,
+      deleted_date: null,
+    },
+  });
+  if (symbol && symbol.ar_url) {
+    return symbol.ar_url;
+  }
+  return '';
+};
+
 export const createSymbol = async (
   prisma: PrismaClient,
   symbol: SymbolModel,

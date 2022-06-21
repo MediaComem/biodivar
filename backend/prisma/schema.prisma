@@ -121,6 +121,8 @@ model Symbol {
   id                      Int          @id @default(autoincrement())
   media_type              String
   url                     String
+  media_type_ar           String?
+  ar_url                  String?
   elevation_ground        Float
   is_facing_user          Boolean
   is_visible              Boolean
