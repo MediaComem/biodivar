@@ -5,6 +5,8 @@
   import TheLoginConnection from './TheLoginConnection.vue';
   import TheLoginFooter from './TheLoginFooter.vue';
 
+  import World from '../../assets/shared/world.vue';
+
   const page = ref('connexion');
 
 </script>
@@ -17,6 +19,8 @@
     <h1 data-role="title">
       {{ $t('TheLogin.title') }}
     </h1>
+
+    <World />
 
     <base-radio>
       <button :class="{ 'active': page === 'connexion' }" @click="page = 'connexion'">

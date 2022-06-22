@@ -12,6 +12,7 @@
     biover: Object
   });
 
+
   function enterAR() {
     selectedBiovers.value = props.biover;
     section.value = 'ar';

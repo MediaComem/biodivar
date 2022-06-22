@@ -20,6 +20,7 @@
     overflow-y: auto;
     width: calc(100% - 1rem);
     max-width: 640px;
+    position: fixed;
   }
 
   [data-role="close"] {
