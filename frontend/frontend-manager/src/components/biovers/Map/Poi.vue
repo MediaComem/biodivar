@@ -31,6 +31,14 @@ export default {
   props: {
     poi: Object,
   },
+  watch: {
+    poi: {
+      deep: true,
+      handler() {
+        this.url = Symbol.getSymbol(this.poi.element.symbol);
+      },
+    },
+  },
   components: {
     LCircle,
     LMarker,
@@ -38,9 +46,14 @@ export default {
     LTooltip,
   },
   emits: ['updatePoi'],
+  data() {
+    return {
+      url: '',
+    };
+  },
   computed: {
     iconUrl() {
-      return Symbol.getSymbol(this.poi.element.symbol);
+      return this.url;
     },
     iconSize() {
       return [this.poi.element.symbol.width, this.poi.element.symbol.height];
@@ -58,6 +71,9 @@ export default {
     test() {
       console.log(this.poi);
     },
+  },
+  mounted() {
+    this.url = Symbol.getSymbol(this.poi.element.symbol);
   },
 };
 </script>
