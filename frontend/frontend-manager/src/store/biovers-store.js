@@ -239,7 +239,6 @@ export const bioversStore = {
   actions: {
     async getBiovers({ dispatch, commit, state }) {
       const ownerBiovers = await bioversApi.getBioversByUser();
-      console.log(ownerBiovers);
       const publicB = await bioversApi.getPublicBiovers();
       const difference = publicB.data.data.filter(
         (x) => !ownerBiovers.data.data.some((present) => present.id === x.id),
