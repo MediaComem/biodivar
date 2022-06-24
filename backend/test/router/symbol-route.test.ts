@@ -1,13 +1,10 @@
 import { Server } from '@hapi/hapi';
-import fs from 'fs';
-import FormData from 'form-data';
 
 import { init } from '../../src/server';
 import { setupConfig } from '../config/config';
 import { setupSymbol, dropSymbol, symbol_test } from '../data/model/symbol';
 import { SymbolModel } from '../../src/types/symbol-model';
 import { responseModel } from '../../src/types/response';
-import { getSymbolById } from '../../src/controller/symbol-controller';
 
 describe('Test Symbol Routes', () => {
   let server: Server;
