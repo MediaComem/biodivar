@@ -28,8 +28,7 @@ describe('Test Symbol Controller', () => {
     await setupSymbol(server.app.prisma);
     const symbol = await getSymbolById(server.app.prisma, 2);
     expect(symbol).toBeDefined();
-    expect(symbol?.media_type).toEqual('Video');
-    expect(symbol?.url).toEqual('/specific/path');
+    expect(symbol).toEqual(`${process.env.SYMBOL_PATH}/default/symbol.txt`);
   });
 
   it('Create Symbol', async () => {
@@ -40,36 +39,34 @@ describe('Test Symbol Controller', () => {
     );
     expect(symbol).toBeDefined();
     expect(symbol.media_type).toEqual('Video');
-    expect(symbol.url).toEqual('/specific/path');
+    expect(symbol.url).toEqual(`${process.env.SYMBOL_PATH}/default/symbol.txt`);
   });
 
   it('Update Symbol', async () => {
     await setupSymbol(server.app.prisma);
-    const getSymbol = await getSymbolById(server.app.prisma, 2);
-    if (getSymbol) {
-      getSymbol.media_type = 'TEST';
-      const symbol = await updateSymbol(
-        server.app.prisma,
-        getSymbol as SymbolModel,
-        server.app.logger
-      );
-      expect(symbol).toBeDefined();
-      expect(symbol.media_type).toEqual('TEST');
-      expect(symbol.url).toEqual('/specific/path');
-    }
+    const getSymbol = JSON.parse(JSON.stringify(symbol_test));
+    getSymbol.id = 2;
+    getSymbol.media_type = 'TEST';
+    const symbol = await updateSymbol(
+      server.app.prisma,
+      getSymbol as SymbolModel,
+      server.app.logger
+    );
+    expect(symbol).toBeDefined();
+    expect(symbol.media_type).toEqual('TEST');
+    expect(symbol.url).toEqual(`${process.env.SYMBOL_PATH}/default/symbol.txt`);
   });
 
   it('Delete Symbol', async () => {
     await setupSymbol(server.app.prisma);
-    const getSymbol = await getSymbolById(server.app.prisma, 2);
-    if (getSymbol) {
-      const symbol = await deleteSymbol(
-        server.app.prisma,
-        getSymbol as SymbolModel,
-        server.app.logger
-      );
-      expect(symbol).toBeDefined();
-      expect(symbol?.deleted_date).toBeDefined();
-    }
+    const getSymbol = JSON.parse(JSON.stringify(symbol_test));
+    getSymbol.id = 2;
+    const symbol = await deleteSymbol(
+      server.app.prisma,
+      getSymbol as SymbolModel,
+      server.app.logger
+    );
+    expect(symbol).toBeDefined();
+    expect(symbol?.deleted_date).toBeDefined();
   });
 });

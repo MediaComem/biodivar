@@ -86,7 +86,7 @@ describe('Test poi controller', () => {
     expect(new_poi).toBeDefined();
     expect(new_poi?.title).toEqual('POI 1');
     expect(new_poi?.last_contributor).toEqual(1);
-    expect(new_poi?.symbol?.url).toEqual('/specific/path');
+    expect(new_poi?.symbol?.url).toEqual(`${process.env.SYMBOL_PATH}/default/symbol.txt`);
     expect(new_poi?.symbol?.creation_date).toBeDefined();
   });
 
@@ -148,7 +148,7 @@ describe('Test poi controller', () => {
       expect(update_poi?.id).toEqual(poi.id);
       expect(update_poi?.style_stroke_width).toEqual(155.5);
       expect(update_poi?.update_date).toBeDefined();
-      expect(update_poi?.symbol?.url).toEqual('/specific/path');
+      expect(update_poi?.symbol?.url).toEqual(`${process.env.SYMBOL_PATH}/default/symbol.txt`);
       expect(update_poi?.symbol?.creation_date).toBeDefined();
     } else {
       throw new Error('Cannot find POI to update');
