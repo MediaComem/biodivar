@@ -22,9 +22,13 @@ const send = ref(false);
 
 const selectedBiovers = ref(new Object);
 
-const isMobileOrTablet = ref(AFRAME.utils.device.isMobile() || AFRAME.utils.device.isTablet());
+// TODO DEBUG: AFrame.utils.device doesn't work as expected on some devices
+// const isMobileOrTablet = ref(AFRAME.utils.device.isMobile() || AFRAME.utils.device.isTablet());
+// const isWebXRAvailable = ref(AFRAME.utils.device.isWebXRAvailable);
+const isMobileOrTablet = ref(true);
+const isWebXRAvailable = ref(true);
+
 const isIOS = ref(AFRAME.utils.device.isIOS());
-const isWebXRAvailable = ref(AFRAME.utils.device.isWebXRAvailable);
 
 const favori = ref(getFavori());
 
@@ -34,7 +38,7 @@ watch(favori, (val) => {
   storeFavori(favori.value);
 }, { deep: true } );
 
-const isInFavori = (id) => { 
+const isInFavori = (id) => {
   return favori.value.find((f) => f === id) ? true : false;
 };
 
@@ -42,7 +46,7 @@ watch(pins, (val) => {
   storePins(pins.value);
 }, { deep: true } );
 
-const isInPins = (id) => { 
+const isInPins = (id) => {
   return pins.value.find((p) => p === id) ? true : false;
 };
 

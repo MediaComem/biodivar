@@ -7,8 +7,13 @@
   import '../aframe/look-at-roll-yaw';
   import '../aframe/hit-test-marker';
   import '../aframe/visible-from';
+  import '../aframe/enter-ar-on-init';
+  import { getSymbolUrl } from '../../utils/api.js';
 
   const { selectedBiovers } = useStore();
+
+  console.log(selectedBiovers.value);
+
 </script>
 
 <template>
@@ -16,22 +21,23 @@
     renderer="colorManagement: true"
     gps-position="minAccuracy: 100; minDistance: 2; cam3DoF: true"
     webxr="requiredFeatures: hit-test,unbounded,dom-overlay; overlayElement: [data-role='hud']; referenceSpaceType: unbounded"
-    ar-hit-test
+    ar-hit-test="src: assets/ar-hit-test-marker.png"
     hit-test-marker
     vr-mode-ui="enabled: false"
+    enter-ar-on-init
   >
-    <a-assets>
+    <!-- PRELOAD OR NOT ?<a-assets>
       <a-asset-item id="marker-1" src="assets/marker1.gltf"></a-asset-item>
       <a-asset-item id="marker-2" src="assets/marker2.gltf"></a-asset-item>
-      <a-mixin id="marker" gltf-model="#marker-1" look-at-roll-yaw></a-mixin>
-    </a-assets>
+    </a-assets> -->
 
     <a-entity faces-north>
       <template v-for="poi of selectedBiovers.Poi">
         <a-entity
           :gps-position="`latitude: ${poi.coordinate.lat}; longitude: ${poi.coordinate.long}`"
           :visible-from="`distance: ${poi.visible_from}`"
-          mixin="marker"
+          :gltf-model="`url(${getSymbolUrl(poi.symbol.id)})`"
+          :look-at-roll-yaw="`enabled: ${poi.symbol.is_facing_user ? 'true' : 'false'}`"
         ></a-entity>
       </template>
     </a-entity>
