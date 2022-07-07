@@ -60,11 +60,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('biovers', ['getPois', 'getPaths', 'ownOrPublic']),
+    ...mapGetters('biovers', ['getPois', 'getPaths', 'ownOrPublic', 'getCurrentBioverId', 'bioverIsEditable']),
   },
   methods: {
     getPosition(event) {
-      if (event.latlng) {
+      if (event.latlng && this.getCurrentBioverId !== -1) {
+        if ((this.ownOrPublic(this.getCurrentBioverId) === 'public' && !this.bioverIsEditable(this.getCurrentBioverId))) {
+          return;
+        }
         this.latlng = event.latlng;
         this.showCreationDialog = true;
       }

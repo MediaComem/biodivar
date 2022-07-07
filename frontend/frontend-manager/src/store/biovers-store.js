@@ -388,6 +388,9 @@ export const bioversStore = {
     },
   },
   getters: {
+    getCurrentBioverId(state) {
+      return state.currentBioversId;
+    },
     getPoisByBiover: (state) => (id) => {
       const index = state.pois.findIndex((poi) => poi.bioverId === id);
       if (index === -1) {
