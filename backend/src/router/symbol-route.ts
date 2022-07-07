@@ -75,7 +75,6 @@ symbolRoutes.push({
     }
   },
   handler: async function (request, h) {
-    console.log("TEST");
     try {
       const payload: any = request.payload;
       const file = payload.file;

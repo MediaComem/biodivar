@@ -277,6 +277,7 @@ export const updateBiovers = async (
         },
         data: {
           name: biovers.name,
+          description: biovers.description,
           is_public: biovers.is_public,
           is_editable: biovers.is_editable,
           update_date: new Date(),
