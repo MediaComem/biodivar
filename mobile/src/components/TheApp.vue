@@ -9,9 +9,10 @@
   import { useStore } from '../composables/store.js';
   import { storage } from '../composables/localStorage.js';
   import { logout, getBiovers } from '../utils/api.js';
+  import { isMobileDevice } from '../utils/device.js';
 
 
-  const { section, isMobileOrTablet, isAuth, biovers } = useStore();
+  const { section, isMobileOrTablet, isIOS, isAuth, biovers } = useStore();
 
   const { removeUser } = storage();
 
@@ -32,6 +33,9 @@
   }
 
   onMounted(() => {
+    isMobileOrTablet.value = isMobileDevice();
+    isIOS.value = AFRAME.utils.device.isIOS();
+
     getBiovers().then((resp) => {
       resp.data.forEach((biover) => {
         biovers.value.push(biover);

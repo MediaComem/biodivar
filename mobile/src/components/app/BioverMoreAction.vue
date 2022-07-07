@@ -3,7 +3,7 @@
   import { useStore } from '../../composables/store.js';
   import { couldEdit } from '../../utils/authorization.js';
 
-  const { isMobileOrTablet, isWebXRAvailable, section, username, isInFavori, isInPins } = useStore();
+  const { isMobileOrTablet, section, username, isInFavori, isInPins } = useStore();
 
   const editableRight = ref(couldEdit(props.biover));
 
@@ -27,7 +27,7 @@
         </div>
       </div>
       <ul>
-        <li v-if="isMobileOrTablet && isWebXRAvailable" @click="section = 'ar'"><img alt="OpenAR" src="../../assets/shared/more/view_in_ar.svg"> {{ $t('TheMenu.More.AR') }}</li>
+        <li v-if="isMobileOrTablet" @click="section = 'ar'"><img alt="OpenAR" src="../../assets/shared/more/view_in_ar.svg"> {{ $t('TheMenu.More.AR') }}</li>
         <li><img alt="Map" src="../../assets/shared/more/map.svg"> {{ $t('TheMenu.More.Desktop') }}</li>
         <li :class="{'not-allowed': !editableRight}" @click="editableRight ? emit('edit') : ''"><img alt="Title" src="../../assets/shared/more/edit.svg"> {{ $t('TheMenu.More.Title') }}</li>
         <li @click="emit('duplicate')"><img alt="Copy" src="../../assets/shared/more/file_copy.svg"> {{ $t('TheMenu.More.Duplicate') }}</li>

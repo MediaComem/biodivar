@@ -1,18 +1,27 @@
 <script setup>
-    import { ref, onMounted } from 'vue';
+    import { ref, watch } from 'vue';
+
+	const props = defineProps({
+		animate: Boolean,
+	});
 
 	const sequence = ref(0);
+	let interval = null;
     
-    onMounted(() => {
-		setInterval(() => {
-			if (sequence.value === 11) {
-				sequence.value = 0;
-			}
-			else {
-				sequence.value = sequence.value + 1;
-			}
-		}, 150);
-    });
+    watch(() => props.animate, (val) => {
+		if (props.animate) {
+			interval = setInterval(() => {
+				if (sequence.value === 11) {
+					sequence.value = 0;
+				}
+				else  {
+					sequence.value = sequence.value + 1;
+				}
+			}, 150);
+		} else {
+			clearInterval(interval);
+		}
+	});
 </script>
 
 
