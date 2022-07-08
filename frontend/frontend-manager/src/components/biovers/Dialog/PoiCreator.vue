@@ -118,8 +118,12 @@
       :label-width="formLabelWidth">
         <el-input-number v-model="form.symbol.width" :precision="2" :step="1"/>
       </el-form-item>
-      <el-form-item>
-        <input ref="file" type="file" name="file" accept=".png, .svg, .gltf, .glb, .mp3, .m4a, .wav"
+      <el-form-item label="Symbol pour l'AR" :label-width="formLabelWidth">
+        <input
+        ref="file"
+        type="file"
+        name="file"
+        accept=".png, .jpg, .svg, .gltf, .glb, .mp3, .m4a, .wav"
         @change="handleFileUpload"/>
       </el-form-item>
       <Renderer v-if="arFile" ref="renderer" antialias :orbit-ctrl="{ enableDamping: true }"
@@ -134,11 +138,70 @@
       <audio controls v-if="arSound" ref="audio">
         <source :src="arSound">
       </audio>
-      <el-form-item>
-        <input ref="symbol" type="file" name="file" accept=".png, .svg"
+      <el-form-item label="Symbol pour la carte" :label-width="formLabelWidth">
+        <input ref="symbol" type="file" name="file" accept=".png, .svg, .jpg"
         @change="handleFileUploadSymbol"/>
       </el-form-item>
       <div id="ar-image" v-if="symbolImage" :style="{ 'background-image': `url(${symbolImage})`}"/>
+      <el-form-item label="Titre du media" :label-width="formLabelWidth">
+        <el-input v-model="form.media[0].caption" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('poi.configurator.title_is_visible')" :label-width="formLabelWidth">
+        <div>
+          <el-radio v-model="form.media[0].caption_visible" :label="true" size="large">
+            {{ $t('poi.configurator.yes') }}
+          </el-radio>
+          <el-radio v-model="form.media[0].caption_visible" :label="false" size="large">
+            {{ $t('poi.configurator.no') }}
+          </el-radio>
+        </div>
+      </el-form-item>
+      <el-form-item label="Elevation du media"
+      :label-width="formLabelWidth">
+        <el-input-number v-model="form.media[0].elevation_ground" :precision="2" :step="1"/>
+      </el-form-item>
+      <el-form-item label="is_facing_user" :label-width="formLabelWidth">
+        <div>
+          <el-radio v-model="form.media[0].is_facing_user" :label="true" size="large">
+            {{ $t('poi.configurator.yes') }}
+          </el-radio>
+          <el-radio v-model="form.media[0].is_facing_user" :label="false" size="large">
+            {{ $t('poi.configurator.no') }}
+          </el-radio>
+        </div>
+      </el-form-item>
+      <el-form-item label="is_visible" :label-width="formLabelWidth">
+        <div>
+          <el-radio v-model="form.media[0].is_visible" :label="true" size="large">
+            {{ $t('poi.configurator.yes') }}
+          </el-radio>
+          <el-radio v-model="form.media[0].is_visible" :label="false" size="large">
+            {{ $t('poi.configurator.no') }}
+          </el-radio>
+        </div>
+      </el-form-item>
+      <el-form-item label="Media" :label-width="formLabelWidth">
+        <input
+        ref="media"
+        type="file"
+        name="media"
+        accept=".png, .jpg, .svg, .gltf, .glb, .mp3, .m4a, .wav"
+        @change="handleFileMediaUpload"/>
+      </el-form-item>
+      <Renderer v-if="mediaFile" ref="media-renderer"
+      antialias :orbit-ctrl="{ enableDamping: true }"
+       >
+        <Camera :position="{ x: 3, y: 1, z: 3 }" />
+        <Scene>
+          <AmbientLight></AmbientLight>
+          <GltfModel :src="mediaFile" ref="gltf"/>
+        </Scene>
+      </Renderer>
+      <div id="ar-image" v-if="mediaImage"
+      :style="{ 'background-image': `url(${mediaImage})` }" />
+      <audio controls v-if="mediaSound" ref="media-audio">
+        <source :src="mediaSound">
+      </audio>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
@@ -166,6 +229,7 @@ import {
 
 import poi from '../../../api/poi';
 import symbol from '../../../api/symbol';
+import media from '../../../api/media';
 
 export default {
   emits: ['closeDialog'],
@@ -241,6 +305,17 @@ export default {
           width: 50,
           height: 40,
         },
+        media: [
+          {
+            media_type: '',
+            url: '',
+            elevation_ground: 0,
+            is_facing_user: false,
+            is_visible: true,
+            caption: 'Test',
+            caption_visible: true,
+          },
+        ],
       },
       upload: null,
       uploadSymbol: null,
@@ -250,6 +325,10 @@ export default {
       arFile: null,
       arImage: null,
       arSound: null,
+      mediaInput: null,
+      mediaFile: null,
+      mediaImage: null,
+      mediaSound: null,
     };
   },
   computed: {
@@ -294,6 +373,34 @@ export default {
         this.form.symbol.media_type_ar = ext;
       }
     },
+    handleFileMediaUpload(event) {
+      const files = event.target.files;
+      if (files) {
+        this.mediaInput = files[0];
+        const lastDot = this.mediaInput.name.lastIndexOf('.');
+        const ext = this.mediaInput.name.substring(lastDot + 1);
+        if (ext === 'gltf' || ext === 'glb') {
+          this.mediaFile = null;
+          this.mediaImage = null;
+          this.mediaSound = null;
+          this.$nextTick(() => {
+            this.mediaFile = URL.createObjectURL(this.mediaInput);
+          });
+        } else if (ext === 'mp3' || ext === 'm4a' || ext === 'wav') {
+          this.mediaFile = null;
+          this.mediaImage = null;
+          this.mediaSound = null;
+          this.$nextTick(() => {
+            this.mediaSound = URL.createObjectURL(this.mediaInput);
+          });
+        } else {
+          this.mediaFile = null;
+          this.mediaSound = null;
+          this.mediaImage = URL.createObjectURL(this.mediaInput);
+        }
+        this.form.media[0].media_type = ext;
+      }
+    },
     async save() {
       if (this.arSymbol) {
         const formData = new FormData();
@@ -311,6 +418,14 @@ export default {
           this.form.symbol.url = path.data.data;
         }
       }
+      if (this.mediaInput) {
+        const formData = new FormData();
+        formData.append('file', this.mediaInput);
+        const path = await media.save(formData);
+        if (path.data.data) {
+          this.form.media[0].url = path.data.data;
+        }
+      }
       this.form.biovers = this.currentBioversId;
       const newPoi = await poi.savePoi(this.form);
       this.addNewPoi(newPoi.data.data);
@@ -322,6 +437,7 @@ export default {
   mounted() {
     this.upload = this.$refs.upload;
     this.uploadSymbol = this.$refs.symbol;
+    this.uploadMedia = this.$refs.media;
   },
 };
 </script>

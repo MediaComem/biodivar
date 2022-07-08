@@ -12,7 +12,8 @@
       <p v-if="poi.element.title_is_visible">{{ poi.element.title }}</p>
       <p v-if="poi.element.subtitle_is_visible">{{ poi.element.subtitle }}</p>
     </l-tooltip>
-    <l-icon v-if="poi.element.symbol" :icon-url="iconUrl" :icon-size="iconSize"/>
+    <l-icon v-if="poi.element.symbol && poi.element.symbol.url !== ''"
+    :icon-url="iconUrl" :icon-size="iconSize"/>
   </l-marker>
 </template>
 
