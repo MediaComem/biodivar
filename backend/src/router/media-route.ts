@@ -5,6 +5,7 @@ import {
   updateMedia,
   deleteMedia,
   getMediaById,
+  getMediaUrlById,
 } from '../controller/media-controller';
 import { MediaModel } from '../types/media_model';
 
@@ -23,17 +24,22 @@ export const mediaRoutes: ServerRoute[] = [];
 mediaRoutes.push({
   method: 'GET',
   path: '/media/id',
-  handler: async function (request, h) {
-    const media = await getMediaById(
-      request.server.app.prisma,
-      +request.query.id
-    );
-    if (media) {
-      return successResponse(h, 'Get Media done successfully', media);
-    } else {
-      return successWithoutContentResponse(h, 'Get Media done successfully');
-    }
-  },
+  options: {
+    handler: async function (request, h) {
+      const url = await getMediaUrlById(
+        request.server.app.prisma,
+        +request.query.id
+      );
+      if (url) {
+        return h.file(url);
+      } else {
+        return successWithoutContentResponse(h, 'Get Media done successfully');
+      }
+    },
+    auth: {
+      mode: 'try',
+    },
+  }
 });
 
 mediaRoutes.push({

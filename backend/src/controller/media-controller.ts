@@ -23,6 +23,19 @@ export const getMediaById = async (prisma: PrismaClient, id: number) => {
   });
 };
 
+export const getMediaUrlById = async (prisma: PrismaClient, id: number) => {
+  const media = await prisma.media.findFirst({
+    where: {
+      id: id,
+      deleted_date: null,
+    },
+  });
+  if (media && media.url) {
+    return media.url;
+  }
+  return '';
+};
+
 export const getMediasByPoi = async (prisma: PrismaClient, id: number) => {
   return await prisma.media.findMany({
     where: {
