@@ -14,18 +14,22 @@ import {
   errorResponse,
 } from '../utils/response';
 
+import {
+  storeSymbol
+} from '../utils/symbol-storing';
+
 export const mediaRoutes: ServerRoute[] = [];
 
 mediaRoutes.push({
   method: 'GET',
   path: '/media/id',
   handler: async function (request, h) {
-    const symbol = await getMediaById(
+    const media = await getMediaById(
       request.server.app.prisma,
       +request.query.id
     );
-    if (symbol) {
-      return successResponse(h, 'Get Media done successfully', symbol);
+    if (media) {
+      return successResponse(h, 'Get Media done successfully', media);
     } else {
       return successWithoutContentResponse(h, 'Get Media done successfully');
     }
@@ -35,21 +39,20 @@ mediaRoutes.push({
 mediaRoutes.push({
   method: 'POST',
   path: '/media/create',
+  options: {
+    payload: {
+      maxBytes: 1000 * 1000 * 15,
+      parse: true,
+      allow: 'multipart/form-data',
+      multipart: { output: 'stream' },
+    }
+  },
   handler: async function (request, h) {
     try {
-      const symbol = await createMedia(
-        request.server.app.prisma,
-        request.payload as MediaModel,
-        request.server.app.logger
-      );
-      if (symbol) {
-        return successResponse(h, 'Media creation done successfully', symbol);
-      } else {
-        return successWithoutContentResponse(
-          h,
-          'Media creation done successfully'
-        );
-      }
+      const payload: any = request.payload;
+      const file = payload.file;
+      const path = await storeSymbol(request.state.biodivar.id as number, file.hapi.filename, file._data, request.server.app.logger);
+      return successResponse(h, 'Symbol creation done successfully', path);
     } catch (error) {
       return errorResponse(h, error as string);
     }
@@ -61,13 +64,13 @@ mediaRoutes.push({
   path: '/media/update',
   handler: async function (request, h) {
     try {
-      const symbol = await updateMedia(
+      const media = await updateMedia(
         request.server.app.prisma,
         request.payload as MediaModel,
         request.server.app.logger
       );
-      if (symbol) {
-        return successResponse(h, 'Media update done successfully', symbol);
+      if (media) {
+        return successResponse(h, 'Media update done successfully', media);
       } else {
         return successWithoutContentResponse(
           h,
@@ -85,13 +88,13 @@ mediaRoutes.push({
   path: '/media/delete',
   handler: async function (request, h) {
     try {
-      const symbol = await deleteMedia(
+      const media = await deleteMedia(
         request.server.app.prisma,
         request.payload as MediaModel,
         request.server.app.logger
       );
-      if (symbol) {
-        return successResponse(h, 'Media deletion done successfully', symbol);
+      if (media) {
+        return successResponse(h, 'Media deletion done successfully', media);
       } else {
         return successWithoutContentResponse(
           h,

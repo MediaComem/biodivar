@@ -1,6 +1,9 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
 import winston from 'winston';
+import { MediaModel, MediaModels } from '../types/media_model';
 import { PoiModel } from '../types/poi-model';
+
+import { getMediaById, updateMedia, createMedia, getMediasByPoi, deleteMedia, onlyInLeft, inTheTwoArrays } from './media-controller';
 
 export const createPoi = async (
   prisma: PrismaClient,
@@ -8,6 +11,15 @@ export const createPoi = async (
   logger: winston.Logger
 ) => {
   try {
+
+    const medias: Array<Prisma.MediaCreateWithoutPoiInput> = [];
+    if (poi.media) {
+      poi.media.forEach((media) => {
+        media.creation_date = new Date();
+        medias.push(media as Prisma.MediaCreateWithoutPoiInput);
+      });
+    }
+
     return await prisma.poi.create({
       data: {
         title: poi.title,
@@ -73,11 +85,18 @@ export const createPoi = async (
                 height: 30,
             },
           },
+        media: {
+            create: medias,
+        },
       },
       include: {
         coordinate: true,
         symbol: true,
-        media: true,
+        media: {
+          where: {
+            deleted_date: null,
+          }
+        },
         User: {
           select: {
             username: true,
@@ -105,7 +124,11 @@ export const getPoiById = async (prisma: PrismaClient, id: number) => {
     include: {
       coordinate: true,
       symbol: true,
-      media: true,
+      media: {
+        where: {
+          deleted_date: null,
+        }
+      },
       User: {
         select: {
           username: true,
@@ -129,7 +152,11 @@ export const getPoiByTitle = async (prisma: PrismaClient, name: string) => {
     include: {
       coordinate: true,
       symbol: true,
-      media: true,
+      media: {
+        where: {
+          deleted_date: null,
+        }
+      },
       User: {
         select: {
           username: true,
@@ -154,6 +181,30 @@ export const updatePoi = async (
       poi.update_date = new Date();
       if (poi.coordinate === null) {
         poi.coordinate = undefined;
+      }
+      if (poi.media && poi.media.length > 0) {
+        const inDB = await getMediasByPoi(prisma, poi.id);
+        const toBeCreated = onlyInLeft(poi.media, inDB as MediaModels);
+        const toBeDeleted = onlyInLeft(inDB as MediaModels, poi.media);
+        const toBeUpdated = inTheTwoArrays(poi.media, inDB as MediaModels);
+
+        for (let i = 0; i < toBeDeleted.length; i++) {
+          await deleteMedia(prisma, toBeDeleted[i] as MediaModel, logger);
+        };
+
+        for (let i = 0; i < toBeCreated.length; i++) {
+          toBeCreated[i].poi_id = poi.id;
+          await createMedia(prisma, toBeCreated[i], logger);
+        }
+
+        for (let i = 0; i < toBeUpdated.length; i++) {
+            await updateMedia(prisma, toBeUpdated[i], logger);
+        }
+      } else {
+        const medias = await getMediasByPoi(prisma, poi.id);
+        for (let i = 0; i < medias.length; i++) {
+          await deleteMedia(prisma, medias[i] as MediaModel, logger);
+        };
       }
       return await prisma.poi.update({
         where: {
@@ -234,7 +285,11 @@ export const updatePoi = async (
         include: {
           coordinate: true,
           symbol: true,
-          media: true,
+          media: {
+            where: {
+              deleted_date: null,
+            }
+          },
           User: {
             select: {
               username: true,
