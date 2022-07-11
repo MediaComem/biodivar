@@ -64,7 +64,7 @@
 - Route: /biovers
 - Example: `/biovers`
 - Return:
-    - When content: `{statusCode: 200, message: "Get public biovers done successfully", data:[{"id":1,"name":"name","owner":id,"creation_date":"date","update_date":null,"deleted_date":null,"is_public":true,"Poi":[{"id":1,"title":"POI 1","title_is_visible":true,"subtitle":null,"subtitle_is_visible":false,"author":1,"creation_date":"2022-01-26T13:43:01.892Z","update_date":null,"deleted_date":null,"last_contributor":null,"is_public":true,"is_editable":false,"biovers":1,"radius":15.5,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_fill":false,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"trigger_mode":"location","metadata":null,"coordinate":null},{"id":2,"title":"POI 1","title_is_visible":true,"subtitle":null,"subtitle_is_visible":false,"author":1,"creation_date":"2022-01-26T13:43:01.892Z","update_date":null,"deleted_date":null,"last_contributor":null,"is_public":true,"is_editable":false,"biovers":1,"radius":15.5,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_fill":false,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"trigger_mode":"location","metadata":null,"coordinate":null}]}`
+    - When content: `{statusCode: 200, message: "Get public biovers done successfully", data:[{"id":1,"name":"name","owner":id,"creation_date":"date","update_date":null,"deleted_date":null,"is_public":true,"Poi":[{"id":1,"title":"POI 1","title_is_visible":true,"subtitle":null,"subtitle_is_visible":false,"author":1,"creation_date":"2022-01-26T13:43:01.892Z","update_date":null,"deleted_date":null,"last_contributor":null,"is_public":true,"is_editable":false,"biovers":1,"radius":15.5,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_fill":false,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"trigger_mode":"location","metadata":null,"coordinate":null,"UserTrace":[],"Event":[]},{"id":2,"title":"POI 1","title_is_visible":true,"subtitle":null,"subtitle_is_visible":false,"author":1,"creation_date":"2022-01-26T13:43:01.892Z","update_date":null,"deleted_date":null,"last_contributor":null,"is_public":true,"is_editable":false,"biovers":1,"radius":15.5,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_fill":false,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"trigger_mode":"location","metadata":null,"coordinate":null,"UserTrace":[],"Event":[]}]}`
     - Without content: `{statusCode: 204, message: "Get public biovers done successfully"}`
 - Error:
     - Internal: `{"error": "Internal server error","message": "Cannot get public biovers due to error","statusCode": 500}`
@@ -158,7 +158,6 @@
 - Example: `/poi/create`
 - Return: `{statusCode: 200, message: "POI creation done successfully", data:  {"id":46,"title":"POI 1","title_is_visible":true,"subtitle":null,"subtitle_is_visible":false,"author":1,"creation_date":"2022-01-26T15:13:20.478Z","update_date":null,"deleted_date":null,"last_contributor":1,"is_public":true,"is_editable":false,"biovers":1,"radius":15.5,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_fill":false,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"trigger_mode":"location","metadata":null},"symbol":{"id":44,"media_type":"Video","url":"/specific/path","elevation_ground":355.36,"is_facing_user":false,"is_visible":true,"creation_date":"2022-01-31T16:43:18.570Z","update_date":null,"deleted_date":null,"poi_id":392}}`
 - Error: 
-    - Validation: `{"error": "Bad Request","message": "Mandatory fields are not provided","statusCode": 400}`
     - Internal: `{"error": "Internal server error","message": "Cannot create poi due to error","statusCode": 500}`
 
 ### POI Update
@@ -170,7 +169,6 @@
 - Example: `/poi/update`
 - Return: `{statusCode: 200, message: "POI update done successfully", data:{"id":46,"title":"POI 1","title_is_visible":true,"subtitle":null,"subtitle_is_visible":false,"author":1,"creation_date":"2022-01-26T15:13:20.478Z","update_date":"2022-01-26T15:13:20.478Z","deleted_date":null,"last_contributor":1,"is_public":true,"is_editable":false,"biovers":1,"radius":15.5,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_fill":false,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"trigger_mode":"location","metadata":null},"symbol":{"id":44,"media_type":"Video","url":"/specific/path","elevation_ground":355.36,"is_facing_user":false,"is_visible":true,"creation_date":"2022-01-31T16:43:18.570Z","update_date":"2022-01-31T16:43:18.570Z","deleted_date":null,"poi_id":392}}`
 - Error: 
-    - Validation: `{"error": "Bad Request","message": "Mandatory fields are not provided","statusCode": 400}`
     - Internal: `{"error": "Internal server error","message": "Cannot update poi due to error","statusCode": 500}`
 
 ### POI Deletion
@@ -182,7 +180,6 @@
 - Example: `/poi/delete`
 - Return: `{statusCode: 200, message: "POI deletion done successfully", data:{"id":1,"title":"POI 1","title_is_visible":true,"subtitle":null,"subtitle_is_visible":false,"author":1,"creation_date":"2022-01-24T15:13:20.478Z","update_date":"2022-01-25T15:13:20.478Z","deleted_date":"2022-01-26T15:13:20.478Z","last_contributor":1,"is_public":true,"is_editable":false,"biovers":1,"radius":15.5,"style_type":"sphere","style_stroke":true,"style_stroke_width":1.2,"style_fill":false,"style_elevation":16.4,"style_elevation_ground":32.4,"style_noise":22.3,"style_is_visible":true,"visible_from":455.5,"trigger_mode":"location","metadata":null},"symbol":{"id":44,"media_type":"Video","url":"/specific/path","elevation_ground":355.36,"is_facing_user":false,"is_visible":true,"creation_date":"2022-01-31T16:43:18.570Z","update_date":null,"deleted_date":"2022-01-31T16:43:18.570Z","poi_id":392}}`
 - Error: 
-    - Validation: `{"error": "Bad Request","message": "Mandatory fields are not provided","statusCode": 400}`
     - Internal: `{"error": "Internal server error","message": "Cannot delete poi due to error","statusCode": 500}`
 
 ## PATH
@@ -250,7 +247,18 @@
 - Query Parameter: `id=id`
 - Example: `/symbol/id?id=2`
 - Return: 
-    - When content: `{statusCode: 200,message: 'Get Symbol done successfully',data: {id: 2,media_type: 'Video',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: null,deleted_date: null,poi_id: 2}}`
+    - When content: `Transmits a file from the file system. The 'Content-Type' header defaults to the matching mime type based on filename extension.`
+- Error:
+    - Internal: `{"error": "Internal server error","message": "Cannot get symbol due to error","statusCode": 500}`
+
+### Get Symbol AR by ID
+
+- HTTP method: GET
+- Route: /symbol_ar/id
+- Query Parameter: `id=id`
+- Example: `/symbol/id?id=2`
+- Return: 
+    - When content: `Transmits a file from the file system. The 'Content-Type' header defaults to the matching mime type based on filename extension.`
 - Error:
     - Internal: `{"error": "Internal server error","message": "Cannot get symbol due to error","statusCode": 500}`
 
@@ -258,9 +266,9 @@
 
 - HTTP method: POST
 - Route: /symbol/create
-- Payload: `{media_type: 'Video',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: null,deleted_date: null,poi_id: 2}`
+- Payload: `File content in DataForm format`
 - Example: `/symbol/create`
-- Return: `{statusCode: 200,message: 'Symbol creation done successfully',data: {id: 2,media_type: 'Video',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: null,deleted_date: null,poi_id: 2}}`
+- Return: `Location path of the symbol on the file system`
 - Error:
     - Internal: `{"error": "Internal server error","message": "Cannot create symbol due to error","statusCode": 500}`
 
@@ -293,7 +301,7 @@
 - Query Parameter: `id=id`
 - Example: `/media/id?id=2`
 - Return: 
-    - When content: `{statusCode: 200,message: 'Get Media done successfully',data: {id: 2,media_type: 'Video',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,caption:'test',caption_is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: null,deleted_date: null,poi_id: 2}}`
+    - When content: `Transmits a file from the file system. The 'Content-Type' header defaults to the matching mime type based on filename extension.`
 - Error:
     - Internal: `{"error": "Internal server error","message": "Cannot get media due to error","statusCode": 500}`
 
@@ -301,9 +309,9 @@
 
 - HTTP method: POST
 - Route: /media/create
-- Payload: `{media_type: 'Video',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,caption:'test',caption_is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: null,deleted_date: null,poi_id: 2}`
+- Payload: `File content in DataForm format`
 - Example: `/media/create`
-- Return: `{statusCode: 200,message: 'Media creation done successfully',data: {id: 2,media_type: 'Video',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,caption:'test',caption_is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: null,deleted_date: null,poi_id: 2}}`
+- Return: `Location path of the symbol on the file system`
 - Error:
     - Internal: `{"error": "Internal server error","message": "Cannot create media due to error","statusCode": 500}`
 
@@ -321,8 +329,52 @@
 
 - HTTP method: POST
 - Route: /media/delete
-- Payload: `{id: 2, media_type: 'Test',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,caption:'test',caption_is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: null,deleted_date: null,poi_id: 2}`
+- Payload: `{id: 1, media_type: 'Test',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,caption:'test',caption_is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: null,deleted_date: null,poi_id: 2}`
 - Example: `/media/delete`
 - Return: `{statusCode: 200,message: 'Media update done successfully',data: {id: 2,media_type: 'Test',url: '/specific/path',elevation_ground: 355.36,is_facing_user: false,is_visible: true,caption:'test',caption_is_visible: true,creation_date: 2022-03-03T15:47:33.368Z,update_date: 2022-03-04T15:47:33.368Z,deleted_date: 2022-03-05T15:47:33.368Z,poi_id: 2}}`
 - Error:
     - Internal: `{"error": "Internal server error","message": "Cannot delete media due to error","statusCode": 500}`
+
+## User Trace
+
+### User Trace Creation
+
+- HTTP method: POST
+- Route: /user_trace/create
+- Payload: `{id: 2, gps_accuracy: 13.3, author: 1, biovers: 1, is_public}`
+- Example: `/media/delete`
+- Return: `{statusCode: 200,message: 'User trace creation done successfully',data: {id: 7,creation_date: 2022-07-11T10:01:29.303Z,update_date: null,deleted_date: null,author: 1,is_public: true,gps_accuracy: 2.3,biovers: 1,coordinate: {id: 221,long: 13.3,lat: 12.2,alt: 14.4,creation_date: 2022-07-11T10:01:29.303Z,update_date: null,deleted_date: null,poi_id: null,path_id: null,user_trace_id: 7}}`
+- Error:
+    - Internal: `{"error": "Internal server error","message": "Cannot create user trace due to error","statusCode": 500}`
+
+### User Trace Deletion
+
+- HTTP method: POST
+- Route: /user_trace/delete
+- Payload: `{id: 1,creation_date: 2022-07-11T10:01:29.359Z,update_date: null,deleted_date: 2022-07-11T10:01:29.365Z,author: 1,is_public: true,gps_accuracy: 2.3,biovers: 1}`
+- Example: `/media/delete`
+- Return: ` {statusCode: 200,message: 'User trace deletion done successfully',data: {id: 1,creation_date: 2022-07-11T10:01:29.359Z,update_date: null,deleted_date: 2022-07-11T10:01:29.365Z,author: 1,is_public: true,gps_accuracy: 2.3,biovers: 1}}`
+- Error:
+    - Internal: `{"error": "Internal server error","message": "Cannot delete user trace due to error","statusCode": 500}`
+
+## Event
+
+### Event Creation
+
+- HTTP method: POST
+- Route: /event/create
+- Payload: `{author: 1, biovers: 1, data: '{Event: "Open Biovers"}'}`
+- Example: `/event/create`
+- Return: `{statusCode: 200,message: 'User trace creation done successfully',data: {id: 5,creation_date: 2022-07-11T10:56:06.693Z,deleted_date: null,author: 1,biovers: 1,data: '{Event: "Open Biovers"}'}}`
+- Error:
+    - Internal: `{"error": "Internal server error","message": "Cannot create event due to error","statusCode": 500}`
+
+### Event Deletion
+
+- HTTP method: POST
+- Route: /event/delete
+- Payload: `{id: 1, author: 1, biovers: 1, data: '{Event: "Open Biovers"}'}`
+- Example: `/event/delete`
+- Return: `{statusCode: 200,message: 'User trace deletion done successfully',data: {id: 1,creation_date: 2022-07-11T10:56:06.750Z,deleted_date: 2022-07-11T10:56:06.755Z,author: 1,biovers: 1,data: '{Event: "Open Biovers"}'}}`
+- Error:
+    - Internal: `{"error": "Internal server error","message": "Cannot delete event due to error","statusCode": 500}`

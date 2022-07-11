@@ -18,7 +18,7 @@ export const createEvent = async (
     });
   } catch (error) {
     logger.error(error);
-    throw new Error('Cannot update poi due to error');
+    throw new Error('Cannot create event due to error');
   }
 };
 
@@ -41,6 +41,6 @@ export const deleteEvent = async (
     return undefined;
   } catch (error) {
     logger.error(error);
-    return new Error('Cannot delete the user trace due to error');
+    return new Error('Cannot delete event due to error');
   }
 };
