@@ -8,6 +8,7 @@ import { pathRoutes } from '../router/path-route';
 import { userTraceRoutes } from '../router/user_trace-route';
 import { symbolRoutes } from '../router/symbol-route';
 import { mediaRoutes } from '../router/media-route';
+import { eventRoutes } from '../router/event-route';
 
 import { NotFoundResponse } from '../utils/response';
 
@@ -22,6 +23,7 @@ export const routerPlugin: Plugin<null> = {
     server.route(userTraceRoutes);
     server.route(symbolRoutes);
     server.route(mediaRoutes);
+    server.route(eventRoutes);
 
     server.route({
       method: '*',

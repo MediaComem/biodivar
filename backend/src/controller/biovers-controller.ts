@@ -71,6 +71,15 @@ export const getBioversByUser = async (
           },
         }
       },
+      Event: {
+        include: {
+          User: {
+            select: {
+              username: true,
+            }
+          },
+        }
+      },
     },
   });
 };
@@ -147,6 +156,15 @@ export const getBioversById = async (
           },
           include: {
             coordinate: true,
+            User: {
+              select: {
+                username: true,
+              }
+            },
+          }
+        },
+        Event: {
+          include: {
             User: {
               select: {
                 username: true,
@@ -233,6 +251,15 @@ export const getPublicBiovers = async (
             },
           }
         },
+        Event: {
+          include: {
+            User: {
+              select: {
+                username: true,
+              }
+            },
+          }
+        },
       },
     });
   } catch (error) {
@@ -301,6 +328,15 @@ export const createBiovers = async (
           },
           include: {
             coordinate: true,
+            User: {
+              select: {
+                username: true,
+              }
+            },
+          }
+        },
+        Event: {
+          include: {
             User: {
               select: {
                 username: true,
@@ -378,6 +414,15 @@ export const updateBiovers = async (
             },
             include: {
               coordinate: true,
+              User: {
+                select: {
+                  username: true,
+                }
+              },
+            }
+          },
+          Event: {
+            include: {
               User: {
                 select: {
                   username: true,
