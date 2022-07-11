@@ -13,6 +13,7 @@ export const createUserTrace = async (
         author: user_trace.author,
         creation_date: new Date(),
         is_public: user_trace.is_public,
+        gps_accuracy: user_trace.gps_accuracy,
         biovers: user_trace.biovers,
         coordinate: {
           create: {

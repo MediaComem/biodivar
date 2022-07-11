@@ -23,6 +23,7 @@ model User {
   last_contrubutor_poi    Poi[]       @relation(name: "poi_last_contributor")
   author_path             Path[]      @relation(name: "path_author")
   last_contrubutor_path   Path[]      @relation(name: "path_last_contributor")
+  author_trace            UserTrace[] @relation(name: "trace_author")
   token                   String?
 }
 
@@ -142,9 +143,11 @@ model UserTrace {
   deleted_date            DateTime?
   author                  Int
   is_public               Boolean     @default(true)
+  gps_accuracy            Float
   coordinate              Coordinate?
   biovers                 Int
   biovers_fk              Biovers     @relation(fields: [biovers], references: [id])
+  User                    User        @relation(name: "trace_author", fields: [author], references: [id])
 }
 
 model Media {

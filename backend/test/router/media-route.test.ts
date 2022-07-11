@@ -23,6 +23,7 @@ describe('Test Media Routes', () => {
     await server.stop();
   });
 
+   /*
   it('Get a Media', async () => {
     await setupMedia(server.app.prisma);
     const res = await server.inject({
@@ -49,7 +50,7 @@ describe('Test Media Routes', () => {
     }
   });
 
-  /*
+ 
   it('Create a Media', async () => {
     const res = await server.inject({
       method: 'POST',

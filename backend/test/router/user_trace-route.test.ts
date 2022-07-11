@@ -44,6 +44,7 @@ describe('Test User Trace Controller', () => {
       is_public: true,
       biovers: 1,
       coordinate: coordinate,
+      gps_accuracy: 2.3,
     };
     const res = await server.inject({
       method: 'POST',

@@ -43,6 +43,7 @@ describe('Test User Trace Controller', () => {
       author: 1,
       is_public: true,
       biovers: 1,
+      gps_accuracy: 2.3,
       coordinate: coordinate,
     };
     const newUserTrace = await createUserTrace(

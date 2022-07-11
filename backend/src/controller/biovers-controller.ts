@@ -58,6 +58,19 @@ export const getBioversByUser = async (
           }
         },
       },
+      UserTrace: {
+        where: {
+          deleted_date: null,
+        },
+        include: {
+          coordinate: true,
+          User: {
+            select: {
+              username: true,
+            }
+          },
+        }
+      },
     },
   });
 };
@@ -128,6 +141,19 @@ export const getBioversById = async (
             }
           },
         },
+        UserTrace: {
+          where: {
+            deleted_date: null,
+          },
+          include: {
+            coordinate: true,
+            User: {
+              select: {
+                username: true,
+              }
+            },
+          }
+        },
       },
     });
   } catch (error) {
@@ -194,6 +220,19 @@ export const getPublicBiovers = async (
             }
           },
         },
+        UserTrace: {
+          where: {
+            deleted_date: null,
+          },
+          include: {
+            coordinate: true,
+            User: {
+              select: {
+                username: true,
+              }
+            },
+          }
+        },
       },
     });
   } catch (error) {
@@ -255,6 +294,19 @@ export const createBiovers = async (
               }
             }
           },
+        },
+        UserTrace: {
+          where: {
+            deleted_date: null,
+          },
+          include: {
+            coordinate: true,
+            User: {
+              select: {
+                username: true,
+              }
+            },
+          }
         },
       },
     });
@@ -319,6 +371,19 @@ export const updateBiovers = async (
                 }
               }
             },
+          },
+          UserTrace: {
+            where: {
+              deleted_date: null,
+            },
+            include: {
+              coordinate: true,
+              User: {
+                select: {
+                  username: true,
+                }
+              },
+            }
           },
         },
       });
