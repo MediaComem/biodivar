@@ -109,6 +109,8 @@ export default {
         this.addBioverToDisplay(event);
         this.addPoiToDisplay(event.id);
         this.addPathToDisplay(event.id);
+        this.addTraceToDisplay(event.id);
+        this.addEventToDisplay(event.id);
       } else {
         this.removeBioverToDisplay(event.id);
       }
@@ -121,7 +123,7 @@ export default {
         this.setCurrentBiover(0);
       }
     },
-    ...mapActions('biovers', ['addBioverToDisplay', 'removeBioverToDisplay', 'addPoiToDisplay', 'addPathToDisplay', 'setCurrentBiover']),
+    ...mapActions('biovers', ['addBioverToDisplay', 'removeBioverToDisplay', 'addPoiToDisplay', 'addPathToDisplay', 'addTraceToDisplay', 'addEventToDisplay', 'setCurrentBiover']),
   },
   deactivated() {
     this.data[0].children = [];

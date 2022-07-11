@@ -20,6 +20,12 @@
       >
         <TraceTable :bioverId="bioverId" />
       </el-tab-pane>
+      <el-tab-pane
+      label="Event"
+      name="4"
+      >
+        <EventTable :bioverId="bioverId" />
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -30,16 +36,22 @@ import { ref } from 'vue';
 import PoiTable from './PoiTable.vue';
 import PathTable from './PathTable.vue';
 import TraceTable from './TraceTable.vue';
+import EventTable from './EventTable.vue';
 
 export default {
   props: {
     biovers: Object,
     bioverId: Number,
   },
-  components: { PoiTable, PathTable, TraceTable },
+  components: {
+    PoiTable,
+    PathTable,
+    TraceTable,
+    EventTable,
+  },
   data() {
     return {
-      editableTabs: [{ title: 'POI', name: '1' }, { title: 'PATH', name: '2' }, { title: 'TRACE', name: '3' }],
+      editableTabs: [{ title: 'POI', name: '1' }, { title: 'PATH', name: '2' }, { title: 'TRACE', name: '3' }, { title: 'Event', name: '4' }],
       editableTabsValue: ref('1'),
     };
   },

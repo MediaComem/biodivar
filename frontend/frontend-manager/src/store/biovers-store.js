@@ -17,6 +17,7 @@ export const bioversStore = {
       paths: [],
       pathsModification: {},
       traces: [],
+      events: [],
       uploadInProgress: false,
       uploadDone: false,
       filter: '',
@@ -60,6 +61,8 @@ export const bioversStore = {
       state.paths.splice(pathsIndex, 1);
       const tracesIndex = state.traces.findIndex((e) => e.bioverId === bioverId);
       state.traces.splice(tracesIndex, 1);
+      const eventIndex = state.events.findIndex((e) => e.bioverId === bioverId);
+      state.events.splice(eventIndex, 1);
     },
     SAVE_POI_TO_DISPLAY(state, payload) {
       state.pois.push({ bioverId: payload.id, pois: payload.pois });
@@ -88,6 +91,9 @@ export const bioversStore = {
     },
     SAVE_TRACE_TO_DISPLAY(state, payload) {
       state.traces.push({ bioverId: payload.id, traces: payload.traces });
+    },
+    SAVE_EVENT_TO_DISPLAY(state, payload) {
+      state.events.push({ bioverId: payload.id, events: payload.events });
     },
     ADD_INTO_POI(state, poi) {
       const index = state.pois.findIndex((e) => e.bioverId === state.currentBioversId);
@@ -260,6 +266,7 @@ export const bioversStore = {
           dispatch('addPoiToDisplay', biover.id);
           dispatch('addPathToDisplay', biover.id);
           dispatch('addTraceToDisplay', biover.id);
+          dispatch('addEventToDisplay', biover.id);
         } else {
           bioverIndex = difference.findIndex((biover) => biover.id === pref);
           if (bioverIndex !== -1) {
@@ -268,6 +275,7 @@ export const bioversStore = {
             dispatch('addPoiToDisplay', biover.id);
             dispatch('addPathToDisplay', biover.id);
             dispatch('addTraceToDisplay', biover.id);
+            dispatch('addEventToDisplay', biover.id);
           }
         }
       });
@@ -372,6 +380,32 @@ export const bioversStore = {
         traces: data,
       });
     },
+    addEventToDisplay({ commit, state }, bioverId) {
+      let index = state.ownBiovers.findIndex((biovers) => biovers.id === bioverId);
+      let events = [];
+      let bioverName = '';
+      if (index === -1) {
+        index = state.publicBiovers.findIndex((biovers) => biovers.id === bioverId);
+        events = state.publicBiovers[index].Event;
+        bioverName = state.publicBiovers[index].name;
+      } else {
+        events = state.ownBiovers[index].Event;
+        bioverName = state.ownBiovers[index].name;
+      }
+      const data = [];
+      events.forEach((eventElement) => {
+        data.push({
+          name: bioverName,
+          element: eventElement,
+          display: true,
+          import: false,
+        });
+      });
+      commit('SAVE_EVENT_TO_DISPLAY', {
+        id: bioverId,
+        events: data,
+      });
+    },
     addNewPoi({ commit }, poi) {
       commit('ADD_INTO_POI', poi);
       commit('ADD_POI_INTO_BIOVER', poi);
@@ -456,6 +490,13 @@ export const bioversStore = {
         return [];
       }
       return state.traces[index].traces;
+    },
+    getEventByBiovers: (state) => (id) => {
+      const index = state.events.findIndex((event) => event.bioverId === id);
+      if (index === -1) {
+        return [];
+      }
+      return state.events[index].events;
     },
     getPois(state) {
       const poisToDisplay = [];
