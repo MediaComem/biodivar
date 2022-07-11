@@ -16,6 +16,7 @@ export const bioversStore = {
       poisModification: {},
       paths: [],
       pathsModification: {},
+      traces: [],
       uploadInProgress: false,
       uploadDone: false,
       filter: '',
@@ -57,6 +58,8 @@ export const bioversStore = {
       state.pois.splice(poisIndex, 1);
       const pathsIndex = state.paths.findIndex((e) => e.bioverId === bioverId);
       state.paths.splice(pathsIndex, 1);
+      const tracesIndex = state.traces.findIndex((e) => e.bioverId === bioverId);
+      state.traces.splice(tracesIndex, 1);
     },
     SAVE_POI_TO_DISPLAY(state, payload) {
       state.pois.push({ bioverId: payload.id, pois: payload.pois });
@@ -82,6 +85,9 @@ export const bioversStore = {
         .findIndex((e) => e.element.id === payload.path.element.id);
       state.paths[pathsIndex].paths[pathIndex].display = !state.paths[pathsIndex]
         .paths[pathIndex].display;
+    },
+    SAVE_TRACE_TO_DISPLAY(state, payload) {
+      state.traces.push({ bioverId: payload.id, traces: payload.traces });
     },
     ADD_INTO_POI(state, poi) {
       const index = state.pois.findIndex((e) => e.bioverId === state.currentBioversId);
@@ -229,6 +235,7 @@ export const bioversStore = {
       state.pois = [];
       state.poisModification = {};
       state.paths = [];
+      state.traces = [];
       state.uploadInProgress = false;
       state.uploadDone = false;
     },
@@ -252,6 +259,7 @@ export const bioversStore = {
           commit('SELECT_BIOVER', biover);
           dispatch('addPoiToDisplay', biover.id);
           dispatch('addPathToDisplay', biover.id);
+          dispatch('addTraceToDisplay', biover.id);
         } else {
           bioverIndex = difference.findIndex((biover) => biover.id === pref);
           if (bioverIndex !== -1) {
@@ -259,6 +267,7 @@ export const bioversStore = {
             commit('SELECT_BIOVER', biover);
             dispatch('addPoiToDisplay', biover.id);
             dispatch('addPathToDisplay', biover.id);
+            dispatch('addTraceToDisplay', biover.id);
           }
         }
       });
@@ -337,6 +346,32 @@ export const bioversStore = {
     updatePathToDisplay({ commit }, payload) {
       commit('UPDATE_PATH_TO_DISPLAY', payload);
     },
+    addTraceToDisplay({ commit, state }, bioverId) {
+      let index = state.ownBiovers.findIndex((biovers) => biovers.id === bioverId);
+      let traces = [];
+      let bioverName = '';
+      if (index === -1) {
+        index = state.publicBiovers.findIndex((biovers) => biovers.id === bioverId);
+        traces = state.publicBiovers[index].UserTrace;
+        bioverName = state.publicBiovers[index].name;
+      } else {
+        traces = state.ownBiovers[index].UserTrace;
+        bioverName = state.ownBiovers[index].name;
+      }
+      const data = [];
+      traces.forEach((traceElement) => {
+        data.push({
+          name: bioverName,
+          element: traceElement,
+          display: true,
+          import: false,
+        });
+      });
+      commit('SAVE_TRACE_TO_DISPLAY', {
+        id: bioverId,
+        traces: data,
+      });
+    },
     addNewPoi({ commit }, poi) {
       commit('ADD_INTO_POI', poi);
       commit('ADD_POI_INTO_BIOVER', poi);
@@ -414,6 +449,13 @@ export const bioversStore = {
       return state.paths[index].paths.filter((path) => (
         filterUtils.pathFilter(path, state.filter)
       ));
+    },
+    getTraceByBiovers: (state) => (id) => {
+      const index = state.traces.findIndex((trace) => trace.bioverId === id);
+      if (index === -1) {
+        return [];
+      }
+      return state.traces[index].traces;
     },
     getPois(state) {
       const poisToDisplay = [];

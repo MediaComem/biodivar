@@ -18,7 +18,7 @@
       :label="$t('table.trace')"
       name="3"
       >
-        USER TRACE
+        <TraceTable :bioverId="bioverId" />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -29,13 +29,14 @@ import { ref } from 'vue';
 
 import PoiTable from './PoiTable.vue';
 import PathTable from './PathTable.vue';
+import TraceTable from './TraceTable.vue';
 
 export default {
   props: {
     biovers: Object,
     bioverId: Number,
   },
-  components: { PoiTable, PathTable },
+  components: { PoiTable, PathTable, TraceTable },
   data() {
     return {
       editableTabs: [{ title: 'POI', name: '1' }, { title: 'PATH', name: '2' }, { title: 'TRACE', name: '3' }],
