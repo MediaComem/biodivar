@@ -23,3 +23,7 @@
         props.coordinate.long], {icon: markerIcon}).addTo(map.value);
   })
 </script>
+
+<template>
+  
+</template>

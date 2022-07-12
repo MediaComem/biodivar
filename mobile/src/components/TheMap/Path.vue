@@ -17,3 +17,7 @@
       L.polyline(latlngs, {color: 'red'}).addTo(map.value);
   })
 </script>
+
+<template>
+    
+</template>

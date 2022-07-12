@@ -20,4 +20,4 @@ export function mapStore() {
 
     return { map, position, yaw };
 
-  }
+}

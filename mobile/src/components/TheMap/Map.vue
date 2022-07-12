@@ -1,5 +1,5 @@
 <script setup>
-  import { onMounted, onUnmounted, ref } from '@vue/runtime-core';
+  import { onMounted, onUnmounted } from '@vue/runtime-core';
 
   import { mapStore } from '../../composables/map';
   import { useStore } from '../../composables/store';
@@ -8,14 +8,12 @@
   import POI from './POI.vue';
   import Path from './Path.vue';
 
-  const { map } = mapStore();
+  const { map, position } = mapStore();
 
   const { selectedBiovers } = useStore();
 
   onMounted(() => {
-    map.value = L.map('map').setView([
-        46.7809153620790993954869918525218963623046875,
-        6.64862875164097832936249687918461859226226806640625], 18);
+    map.value = L.map('map').setView(position.value, 18);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         minZoom: 1,
         maxZoom: 19,
