@@ -42,3 +42,7 @@ export function deleteBiovers(biovers) {
 export function getSymbolUrl(id) {
   return API + 'symbol_ar/id?id=' + id;
 }
+
+export function getIcon(symbol) {
+  return `${API}symbol/id?id=${symbol.id}`;
+}

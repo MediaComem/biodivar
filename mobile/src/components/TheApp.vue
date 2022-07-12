@@ -9,9 +9,11 @@
   import { useStore } from '../composables/store.js';
   import { storage } from '../composables/localStorage.js';
   import { logout, getBiovers } from '../utils/api.js';
+  import { isMobileDevice } from '../utils/device.js';
 
+  import Map from './TheMap/Map.vue';
 
-  const { section, isMobileOrTablet, isAuth, biovers } = useStore();
+  const { section, isMobileOrTablet, isIOS, isAuth, biovers, mapOpen } = useStore();
 
   const { removeUser } = storage();
 
@@ -32,6 +34,9 @@
   }
 
   onMounted(() => {
+    isMobileOrTablet.value = isMobileDevice();
+    isIOS.value = AFRAME.utils.device.isIOS();
+
     getBiovers().then((resp) => {
       resp.data.forEach((biover) => {
         biovers.value.push(biover);
@@ -67,12 +72,13 @@
   <div v-else-if="section == 'ar'">
     <the-aframe></the-aframe>
     <the-hud></the-hud>
+    <Map v-if="mapOpen" />
+    <div v-if="mapOpen" class="dialog-map-overlay" @click="mapOpen = false"></div>
   </div>
 
 </template>
 
 <style scoped>
-
   header {
     border-bottom: solid black 1px;
     margin-bottom: 1rem;
@@ -146,6 +152,17 @@
     position: fixed;
     top: 0;
     left: 0;
+  }
+
+
+  .dialog-map-overlay {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: black;
+    opacity: 0.5;
   }
 
   .font {

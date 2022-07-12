@@ -4,13 +4,14 @@
 
   import { dateFormatter, hourFormatter } from '../../utils/formatter.js';
 
-  const { isMobileOrTablet, isWebXRAvailable, section, selectedBiovers } = useStore();
+  const { isMobileOrTablet, section, selectedBiovers } = useStore();
 
   const emit = defineEmits(['visibility', 'editable', 'favori', 'pin'])
 
   const props = defineProps({
     biover: Object
   });
+
 
   function enterAR() {
     selectedBiovers.value = props.biover;
@@ -66,7 +67,7 @@
             <p class="information-text">15.3 MB</p>
         </div>
     </div>
-    <div v-if="isWebXRAvailable && isMobileOrTablet" class="button">
+    <div class="button">
         <base-button class="enter" @click="enterAR()">
           <img src="../../assets/shared/home.svg" />{{ $t('TheMenu.Information.Enter') }}
         </base-button>

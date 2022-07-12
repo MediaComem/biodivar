@@ -2,7 +2,7 @@
   import { logout } from '../../../utils/api.js';
   import { useStore } from '../../../composables/store.js';
 
-  const { isIOS, isWebXRAvailable, isAuth } = useStore();
+  const { isIOS, isAuth } = useStore();
 
   async function disconnect() {
     const resp = await logout();
@@ -21,7 +21,7 @@
         </div>
       </a>
       <a href="#biovers">
-        <div class="container" v-if="!isIOS && isWebXRAvailable">
+        <div class="container" v-if="!isIOS">
           <img src="../../../assets/footer/biovers.svg" alt="home">
           <p>{{ $t('Footer.Biover') }}</p>
         </div>

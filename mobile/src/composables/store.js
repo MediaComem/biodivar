@@ -22,17 +22,14 @@ const send = ref(false);
 
 const selectedBiovers = ref(new Object);
 
-// TODO DEBUG: AFrame.utils.device doesn't work as expected on some devices
-// const isMobileOrTablet = ref(AFRAME.utils.device.isMobile() || AFRAME.utils.device.isTablet());
-// const isWebXRAvailable = ref(AFRAME.utils.device.isWebXRAvailable);
 const isMobileOrTablet = ref(true);
-const isWebXRAvailable = ref(true);
-
-const isIOS = ref(AFRAME.utils.device.isIOS());
+const isIOS = ref(false);
 
 const favori = ref(getFavori());
 
 const pins = ref(getPins());
+
+const mapOpen = ref(false);
 
 watch(favori, (val) => {
   storeFavori(favori.value);
@@ -63,6 +60,6 @@ const getPinsBiovers = () => {
 
 export function useStore() {
 
-  return { isAuth, section, biovers, username, showAggreement, forgotPassword, send, isMobileOrTablet, isIOS, isWebXRAvailable, selectedBiovers, pins, favori, isInFavori, isInPins, getPinsBiovers };
+  return { isAuth, section, biovers, username, showAggreement, forgotPassword, send, isMobileOrTablet, isIOS, selectedBiovers, pins, mapOpen, favori, isInFavori, isInPins, getPinsBiovers };
 
 }

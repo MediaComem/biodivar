@@ -136,6 +136,16 @@
     url(./assets/fonts/webfont/biodivar-sans-UltralightItalic.woff2) format("woff2");
   }
 
+   @font-face {
+    font-family: "BiodivAR Title";
+    src: local("ttf"),
+    url(./assets/fonts/desktop/biodivar-title.ttf) format('truetype');
+  }
+
   * { box-sizing: border-box }
-  #app { height: 100% }
+  #app {
+    height: 100%;
+    font-feature-settings: "calt" 0;
+    font-variant-ligatures: no-contextual;
+  }
 </style>

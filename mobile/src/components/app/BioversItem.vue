@@ -1,6 +1,8 @@
 <script setup>
   import { ref } from '@vue/reactivity';
 
+  import Splitting from 'splitting';
+
   import { useStore } from '../../composables/store';
 
   import { duplicateBiovers, updateBiovers, deleteBiovers } from '../../utils/api.js';
@@ -11,6 +13,7 @@
   import RedEye from '../../assets/vue-svg/RedEye.vue';
   import Edit from '../../assets/vue-svg/Edit.vue';
   import More from '../../assets/vue-svg/More.vue';
+  import World from '../../assets/shared/world.vue';
 
   import BioversInformation from './BioversInformation.vue';
   import BioverMoreAction from './BioverMoreAction.vue';
@@ -47,6 +50,8 @@
   const notificationMessage = ref('');
   const shouldDisplayNotification = ref(false);
   const notificationType = ref('');
+
+  Splitting();
 
   const props = defineProps({
     biover: Object,
@@ -131,13 +136,25 @@
     deleteBioverDialog.value = false;
   }
 
-  function changeVisibility(state) {
+  async function changeVisibility(state) {
     props.biover.is_public = state;
+    const resp = await updateBiovers(props.biover);
+    if (resp?.statusCode === 200) {
+      setupNotification(`Le biovers ${props.biover.name} a été mis à jour avec succès`, 'success')
+    } else {
+      setupNotification(`Une erreur s'est produite durant la mise à jour du biovers ${props.biover.name}`, 'error')
+    }
     visibilityDialog.value = false;
   }
 
-  function changeEdition(state) {
+  async function changeEdition(state) {
     props.biover.is_editable = state;
+    const resp = await updateBiovers(props.biover);
+    if (resp?.statusCode === 200) {
+      setupNotification(`Le biovers ${props.biover.name} a été mis à jour avec succès`, 'success')
+    } else {
+      setupNotification(`Une erreur s'est produite durant la mise à jour du biovers ${props.biover.name}`, 'error')
+    }
     editableDialog.value = false;
   }
 
@@ -170,9 +187,9 @@
   <div :class="{'menu-open': isOpen, 'menu-close': !isOpen}" class="menu menu-transition" style="display: inline-block">
     <div data-role="item">
         <div data-role="left" @click="isOpen = !isOpen">
-            <img :class="{rotate: isOpen}" class="img-transition" src="../../assets/shared/language.svg" alt="Language">
+            <World :animate="isOpen"/>
             <div class="align text">
-                <p>{{ props.biover.name }}</p>
+                <p data-splitting>{{ props.biover.name }}</p>
             </div>
         </div>
         <div data-role="right">
@@ -246,10 +263,12 @@
   }
 
   .text {
-    font-family: 'BiodivAR Round Medium';
+    font-family: 'BiodivAR Title';
     font-size: 18px;
     line-height: 16px;
     width: calc(100% - 20px);
+    margin-left: 0.5rem;
+    margin-bottom: 0.5rem;
   }
 
   .menu {
@@ -287,10 +306,23 @@
   p {
     user-select: none;
     color: white;
-    margin: 0.5rem;
     text-overflow: ellipsis;
-    overflow: hidden; 
     white-space: nowrap;
+    font-variation-settings: "wdth" 13.6885, "wght" 89.8896;
+  }
+
+  p .char {
+    --delay: calc((var(--char-index) + 1) * 400ms);
+    animation: variable 6000ms infinite both;
+    animation-delay: var(--delay);
+  }
+
+  @keyframes variable {
+    0% {font-variation-settings: 'wght' 60, 'wdth' 10}
+    25% {font-variation-settings: 'wght' 90, 'wdth' 40}
+    50% {font-variation-settings: 'wght' 60, 'wdth' 60}
+    75% {font-variation-settings: 'wght' 80, 'wdth' 40}
+    100% {font-variation-settings: 'wght' 60, 'wdth' 10}
   }
 
   img {
