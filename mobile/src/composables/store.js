@@ -35,7 +35,7 @@ watch(favori, (val) => {
   storeFavori(favori.value);
 }, { deep: true } );
 
-const isInFavori = (id) => { 
+const isInFavori = (id) => {
   return favori.value.find((f) => f === id) ? true : false;
 };
 
@@ -43,7 +43,7 @@ watch(pins, (val) => {
   storePins(pins.value);
 }, { deep: true } );
 
-const isInPins = (id) => { 
+const isInPins = (id) => {
   return pins.value.find((p) => p === id) ? true : false;
 };
 
