@@ -1,6 +1,7 @@
 <script setup>
   import theHudMenu from './TheHudMenu.vue';
   import theHudEdit from './TheHudEdit.vue';
+  import theHudMap from './TheHubMap.vue';
 </script>
 
 <template>
@@ -8,6 +9,7 @@
     <div data-role="hud-grid">
       <the-hud-menu data-role="hud-grid-menu"></the-hud-menu>
       <the-hud-edit data-role="hud-grid-edit"></the-hud-edit>
+      <the-hud-map data-role="hud-grid-map"></the-hud-map>
       <div data-role="hud-grid-debug"></div>
     </div>
   </div>
@@ -22,6 +24,7 @@
   [data-role="hud-grid-menu"] {grid-area: m}
   [data-role="hud-grid-edit"] {grid-area: e}
   [data-role="hud-grid-debug"]  {grid-area: d}
+  [data-role="hud-grid-map"]  {grid-area: c}
 
   [data-role="hud-grid"] {
     display: grid;
@@ -33,7 +36,7 @@
     grid-template-areas:
       "m . ."
       "d . ."
-      ". . e"
+      "c . e"
     ;
   }
 </style>

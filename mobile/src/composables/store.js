@@ -29,6 +29,8 @@ const favori = ref(getFavori());
 
 const pins = ref(getPins());
 
+const mapOpen = ref(false);
+
 watch(favori, (val) => {
   storeFavori(favori.value);
 }, { deep: true } );
@@ -58,6 +60,6 @@ const getPinsBiovers = () => {
 
 export function useStore() {
 
-  return { isAuth, section, biovers, username, showAggreement, forgotPassword, send, isMobileOrTablet, isIOS, selectedBiovers, pins, favori, isInFavori, isInPins, getPinsBiovers };
+  return { isAuth, section, biovers, username, showAggreement, forgotPassword, send, isMobileOrTablet, isIOS, selectedBiovers, pins, mapOpen, favori, isInFavori, isInPins, getPinsBiovers };
 
 }

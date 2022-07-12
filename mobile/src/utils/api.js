@@ -38,3 +38,7 @@ export function updateBiovers(biovers) {
 export function deleteBiovers(biovers) {
   return postJson(API + 'biovers/delete', biovers);
 }
+
+export function getIcon(symbol) {
+  return `${API}symbol/id?id=${symbol.id}`;
+}
