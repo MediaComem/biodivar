@@ -13,7 +13,7 @@ window.addEventListener('gps-position-update', evt => {
 window.addEventListener('deviceorientationabsolute', event => {
   if (!event.alpha) return;
   if (!event.absolute) return;
-  yaw.value = computeCompass(event.alpha, event.beta, event.gamma) * 180 / Math.PI;
+  yaw.value = computeCompass(event.alpha, event.beta, event.gamma);
 });
 
 export function mapStore() {
