@@ -1,11 +1,45 @@
 import { PrismaClient } from '@prisma/client';
 import winston from 'winston';
-import { MediaModel } from '../types/media_model';
+import { MediaModel, MediaModels } from '../types/media_model';
+
+export const onlyInLeft = (left: MediaModels, right: MediaModels) => {
+  return left.filter(leftValue =>
+    !right.some(rightValue => 
+     leftValue.id === rightValue.id));
+};
+
+export const inTheTwoArrays = (left: MediaModels, right: MediaModels) => {
+  return left.filter(leftValue =>
+    right.some(rightValue => 
+     leftValue.id === rightValue.id));
+};
 
 export const getMediaById = async (prisma: PrismaClient, id: number) => {
   return await prisma.media.findFirst({
     where: {
       id: id,
+      deleted_date: null,
+    },
+  });
+};
+
+export const getMediaUrlById = async (prisma: PrismaClient, id: number) => {
+  const media = await prisma.media.findFirst({
+    where: {
+      id: id,
+      deleted_date: null,
+    },
+  });
+  if (media && media.url) {
+    return media.url;
+  }
+  return '';
+};
+
+export const getMediasByPoi = async (prisma: PrismaClient, id: number) => {
+  return await prisma.media.findMany({
+    where: {
+      poi_id: id,
       deleted_date: null,
     },
   });
@@ -27,6 +61,7 @@ export const createMedia = async (
         caption: media.caption,
         caption_visible: media.caption_visible,
         creation_date: new Date(),
+        poi_id: media.poi_id,
       },
     });
   } catch (error) {

@@ -8,5 +8,6 @@ export interface UserTraceModel {
   author: number;
   is_public: boolean;
   coordinate: CoordinateModel;
+  gps_accuracy: number;
   biovers: number;
 }

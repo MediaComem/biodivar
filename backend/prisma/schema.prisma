@@ -23,6 +23,8 @@ model User {
   last_contrubutor_poi    Poi[]       @relation(name: "poi_last_contributor")
   author_path             Path[]      @relation(name: "path_author")
   last_contrubutor_path   Path[]      @relation(name: "path_last_contributor")
+  author_trace            UserTrace[] @relation(name: "trace_author")
+  author_event            Event[] @relation(name: "event_author")
   token                   String?
 }
 
@@ -40,6 +42,7 @@ model Biovers {
   Poi                     Poi[]
   Path                    Path[]
   UserTrace               UserTrace[]
+  Event                   Event[]
 }
 
 model Poi {
@@ -142,9 +145,11 @@ model UserTrace {
   deleted_date            DateTime?
   author                  Int
   is_public               Boolean     @default(true)
+  gps_accuracy            Float
   coordinate              Coordinate?
   biovers                 Int
   biovers_fk              Biovers     @relation(fields: [biovers], references: [id])
+  User                    User        @relation(name: "trace_author", fields: [author], references: [id])
 }
 
 model Media {
@@ -161,4 +166,15 @@ model Media {
   deleted_date            DateTime?
   poi_id                  Int?
   poi                     Poi?         @relation(fields: [poi_id], references: [id])
+}
+
+model Event {
+  id                      Int          @id @default(autoincrement())
+  creation_date           DateTime
+  deleted_date            DateTime?
+  author                  Int
+  biovers                 Int
+  data                    String
+  biovers_fk              Biovers     @relation(fields: [biovers], references: [id])
+  User                    User        @relation(name: "event_author", fields: [author], references: [id])
 }

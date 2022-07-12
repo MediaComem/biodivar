@@ -9,6 +9,7 @@ import {
   createMedia,
   updateMedia,
   deleteMedia,
+  onlyInLeft,
 } from '../../src/controller/media-controller';
 import { MediaModel } from '../../src/types/media_model';
 

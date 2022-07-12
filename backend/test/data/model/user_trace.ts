@@ -15,6 +15,7 @@ export const userTrace: UserTraceModel = {
   is_public: true,
   biovers: 1,
   coordinate: coordinate,
+  gps_accuracy: 2.3,
 };
 
 export const setupUserTrace = async (prisma: PrismaClient) => {
@@ -24,6 +25,7 @@ export const setupUserTrace = async (prisma: PrismaClient) => {
       author: userTrace.author,
       creation_date: new Date(),
       is_public: userTrace.is_public,
+      gps_accuracy: userTrace.gps_accuracy,
       biovers: userTrace.biovers,
       coordinate: {
         create: {

@@ -13,6 +13,7 @@ export const createUserTrace = async (
         author: user_trace.author,
         creation_date: new Date(),
         is_public: user_trace.is_public,
+        gps_accuracy: user_trace.gps_accuracy,
         biovers: user_trace.biovers,
         coordinate: {
           create: {
@@ -29,7 +30,7 @@ export const createUserTrace = async (
     });
   } catch (error) {
     logger.error(error);
-    throw new Error('Cannot update poi due to error');
+    throw new Error('Cannot create user trace due to error');
   }
 };
 
@@ -52,6 +53,6 @@ export const deleteUserTrace = async (
     return undefined;
   } catch (error) {
     logger.error(error);
-    return new Error('Cannot delete the user trace due to error');
+    return new Error('Cannot delete user trace due to error');
   }
 };
