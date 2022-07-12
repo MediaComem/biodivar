@@ -8,7 +8,7 @@
   import POI from './POI.vue';
   import Path from './Path.vue';
 
-  let { map } = mapStore();
+  const { map } = mapStore();
 
   const { selectedBiovers } = useStore();
 
@@ -31,16 +31,16 @@
 
 <template>
     <div id="map" style="z-index: 1000">
-        <!--RotateMarker v-if="map" /-->
+        <RotateMarker v-if="map" />
         <div v-if="map">
             <div v-for="(poi, index) of selectedBiovers.Poi" :key="index">
-                <POI :coordinate="poi.coordinate" :symbol="poi.symbol"/> 
-            </div> 
+                <POI :coordinate="poi.coordinate" :symbol="poi.symbol"/>
+            </div>
         </div>
         <div v-if="map">
             <div v-for="(path, index) of selectedBiovers.Path" :key="index">
-                <Path :coordinate="path.coordinate"/> 
-            </div> 
+                <Path :coordinate="path.coordinate"/>
+            </div>
         </div>
     </div>
 </template>
