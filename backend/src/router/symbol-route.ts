@@ -30,10 +30,11 @@ symbolRoutes.push({
         request.server.app.prisma,
         +request.query.id
       );
+      console.log(symbol);
       if (symbol) {
         return h.file(symbol);
       } else {
-        return errorResponse(h, 'Get Symbol done successfully');
+        return h.file(process.env.DEFAULT_SYMBOL_PATH || '');
       }
     },
     auth: {
@@ -51,10 +52,11 @@ symbolRoutes.push({
         request.server.app.prisma,
         +request.query.id
       );
+      console.log(symbol);
       if (symbol) {
         return h.file(symbol);
       } else {
-        return errorResponse(h, 'Get Symbol done successfully');
+        return h.file(process.env.DEFAULT_AR_SYMBOL_PATH || '');
       }
     },
     auth: {
