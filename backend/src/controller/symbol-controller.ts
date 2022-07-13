@@ -12,7 +12,7 @@ export const getSymbolById = async (prisma: PrismaClient, id: number) => {
   if (symbol && symbol.url) {
     return symbol.url;
   }
-  return '';
+  return null;
 };
 
 export const getSymbolArById = async (prisma: PrismaClient, id: number) => {
@@ -25,7 +25,7 @@ export const getSymbolArById = async (prisma: PrismaClient, id: number) => {
   if (symbol && symbol.ar_url) {
     return symbol.ar_url;
   }
-  return '';
+  return null;
 };
 
 export const createSymbol = async (
