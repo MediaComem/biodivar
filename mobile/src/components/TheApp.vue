@@ -11,7 +11,7 @@
   import { logout, getBiovers } from '../utils/api.js';
   import { isMobileDevice } from '../utils/device.js';
 
-  import Map from './TheMap/Map.vue';
+  import BaseMap from './TheMap/BaseMap.vue';
 
   const { section, isMobileOrTablet, isIOS, isAuth, biovers, mapOpen } = useStore();
 
@@ -72,7 +72,7 @@
   <div v-else-if="section == 'ar'">
     <the-aframe></the-aframe>
     <the-hud></the-hud>
-    <Map v-if="mapOpen" />
+    <BaseMap v-if="mapOpen" />
     <div v-if="mapOpen" class="dialog-map-overlay" @click="mapOpen = false"></div>
   </div>
 

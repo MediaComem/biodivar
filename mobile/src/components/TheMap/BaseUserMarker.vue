@@ -19,7 +19,7 @@
     if (marker) {
       marker.setLatLng(position.value);
     }
-  });
+  }, { deep: true } );
 
   onMounted(() => {
     marker = L.rotatedMarker(position.value, {
