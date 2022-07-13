@@ -30,7 +30,6 @@ symbolRoutes.push({
         request.server.app.prisma,
         +request.query.id
       );
-      console.log(symbol);
       if (symbol) {
         return h.file(symbol);
       } else {
@@ -52,7 +51,6 @@ symbolRoutes.push({
         request.server.app.prisma,
         +request.query.id
       );
-      console.log(symbol);
       if (symbol) {
         return h.file(symbol);
       } else {
