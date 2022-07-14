@@ -15,7 +15,7 @@
   const search = ref('');
 
   const own = computed(() => {
-    return props.biovers.filter((b) => b.User.username === username.value && b.name.toLowerCase().includes(search.value.toLowerCase()));
+    return props.biovers.filter((b) => b.User.username.toLowerCase() === username.value.toLowerCase() && b.name.toLowerCase().includes(search.value.toLowerCase()));
   })
 
   const publicBiovers = computed(() => {

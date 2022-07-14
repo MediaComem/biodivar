@@ -13,7 +13,7 @@
     if (marker) {
       marker.setRotationAngle(yaw.value);
     }
-  });
+  }, { deep: true });
 
   watch(() => position, () => {
     if (marker) {

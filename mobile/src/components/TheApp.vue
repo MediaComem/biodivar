@@ -37,6 +37,8 @@
     isMobileOrTablet.value = isMobileDevice();
     isIOS.value = AFRAME.utils.device.isIOS();
 
+    biovers.value = [];
+
     getBiovers().then((resp) => {
       resp.data.forEach((biover) => {
         biovers.value.push(biover);
