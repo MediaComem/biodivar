@@ -1,41 +1,43 @@
 <template>
-  <el-upload
-    ref="upload"
-    class="upload-demo"
-    style="display: flex;"
-    accept=".json,.geojson"
-    action="https://jsonplaceholder.typicode.com/posts/"
-    :auto-upload="false"
-    :on-change="handleExceed"
-  >
-    <template #trigger>
+  <div>
+    <el-upload
+      ref="upload"
+      class="upload-demo"
+      style="display: flex;"
+      accept=".json,.geojson"
+      action="https://jsonplaceholder.typicode.com/posts/"
+      :auto-upload="false"
+      :on-change="handleExceed"
+    >
+      <template #trigger>
+        <el-button
+          class="ml-3"
+          type="info"
+        >
+        {{ $t('import.select') }}
+        </el-button>
+      </template>
       <el-button
         class="ml-3"
-        type="info"
+        type="primary"
+        @click="sent"
+        :disabled="upload && upload.uploadFiles.length === 0"
       >
-      {{ $t('import.select') }}
+      {{ $t('import.upload') }}
       </el-button>
+      <el-button
+        class="ml-3"
+        type="success"
+        @click="save"
+        :disabled="!uploadDone"
+      >
+      {{ $t('import.save') }}
+      </el-button>
+    </el-upload>
+    <template v-if="saveDone">
+      <el-alert :title="$t('import.result')" type="success" />
     </template>
-    <el-button
-      class="ml-3"
-      type="primary"
-      @click="sent"
-      :disabled="upload && upload.uploadFiles.length === 0"
-    >
-    {{ $t('import.upload') }}
-    </el-button>
-    <el-button
-      class="ml-3"
-      type="success"
-      @click="save"
-      :disabled="!uploadDone"
-    >
-    {{ $t('import.save') }}
-    </el-button>
-  </el-upload>
-  <template v-if="saveDone">
-    <el-alert :title="$t('import.result')" type="success" />
-  </template>
+  </div>
 </template>
 
 <script>

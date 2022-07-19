@@ -1,35 +1,30 @@
+<script setup>
+import { onMounted } from 'vue';
+import Layout from '@/views/Layout.vue';
+import axios from 'axios';
+import { useStore } from 'vuex';
+
+const store = useStore();
+
+async function checkLoggin() {
+  try {
+    await axios.get(`${process.env.VUE_APP_URL}/login`, { withCredentials: true });
+  } catch (error) {
+    store.dispatch('auth/authenticate', {
+      isAuthenticate: false,
+      username: '',
+    });
+  }
+}
+
+onMounted(() => {
+  checkLoggin();
+});
+</script>
+
 <template>
   <Layout />
 </template>
-
-<script>
-import Layout from '@/views/Layout.vue';
-import axios from 'axios';
-import { mapActions } from 'vuex';
-
-export default {
-  name: 'Home',
-  components: {
-    Layout,
-  },
-  methods: {
-    async checkLoggin() {
-      try {
-        await axios.get(`${process.env.VUE_APP_URL}/login`, { withCredentials: true });
-      } catch (error) {
-        this.authenticate({
-          isAuthenticate: false,
-          username: '',
-        });
-      }
-    },
-    ...mapActions('auth', ['authenticate']),
-  },
-  mounted() {
-    this.checkLoggin();
-  },
-};
-</script>
 
 <style>
 #app {

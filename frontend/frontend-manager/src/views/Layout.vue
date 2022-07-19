@@ -1,9 +1,13 @@
+<script setup>
+import Header from '@/views/Header.vue';
+</script>
+
 <template>
   <div>
     <el-container class="is-vertical">
     <Header />
-      <el-main>
-        <router-view v-slot="{ Component }">
+    <el-main class="main-layout">
+      <router-view v-slot="{ Component }">
           <keep-alive>
             <component :is="Component" />
           </keep-alive>
@@ -13,19 +17,13 @@
   </div>
 </template>
 
-<script>
-import Header from '@/views/Header.vue';
-
-export default {
-  name: 'Layout',
-  components: {
-    Header,
-  },
-};
-</script>
-
-<style scoped>
+<style  lang="scss" scoped>
 .is-vertical {
   flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-layout {
+  background-color: RGB(141, 194, 111);
 }
 </style>
