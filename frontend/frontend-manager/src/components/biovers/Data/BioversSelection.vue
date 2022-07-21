@@ -1,143 +1,214 @@
-<template>
-  <el-tabs v-model="editableTabsValue"
-    type="card" class="demo-tabs"
-    @tab-click="selectTab">
-      <el-tab-pane
-      label="BIOVERS"
-      name="1"
-      >
-      <el-tree ref="tree" node-key="id" :data="data" show-checkbox @check="selectedBiovers"/>
-      <el-button style="display: flex;" @click="showDialog = true">
-        {{ $t('biover.create') }}
-      </el-button>
-    </el-tab-pane>
-    <el-tab-pane
-      v-for="item in bioversToDisplay"
-      :key="item.name"
-      :label="item.title"
-      :name="item.name"
-      >
-        <DataTab :biovers="item.biover"
-        :bioverId="item.biover.id" />
-      </el-tab-pane>
-  </el-tabs>
-  <BioverCreator :showDialog="showDialog" @close-dialog="showDialog = false"/>
-</template>
-
-<script>
-import { ref } from 'vue';
-import { mapState, mapActions } from 'vuex';
+<script setup>
+import {
+  ref,
+  watch,
+  computed,
+  onDeactivated,
+  nextTick,
+} from 'vue';
+import { useStore } from 'vuex';
 
 import DataTab from './DataTab.vue';
 import BioverCreator from '../Dialog/BioverCreator.vue';
+import World from '../../../assets/tables/world.vue';
 
-export default {
-  components: { DataTab, BioverCreator },
-  watch: {
-    ownBiovers: {
-      deep: true,
-      handler(newVal) {
-        if (newVal.length !== this.data[0].length) {
-          const diff = newVal.filter((x) => !this.data[0].children
-            .some((child) => child.id === x.id));
-          diff.forEach((element) => {
-            this.data[0].children.push({
-              label: element.name,
-              id: element.id,
-            });
-          });
-        }
-      },
-    },
-    publicBiovers: {
-      deep: true,
-      handler(newVal) {
-        if (newVal.length !== this.data[1].length) {
-          const diff = newVal.filter((x) => !this.data[1].children
-            .some((child) => child.id === x.id));
-          diff.forEach((element) => {
-            this.data[1].children.push({
-              label: element.name,
-              id: element.id,
-            });
-          });
-        }
-      },
-    },
-    bioversToDisplay: {
-      deep: true,
-      handler(newVal) {
-        if (this.addBioversInTab && newVal.length > 0) {
-          this.editableTabsValue = ref(newVal[newVal.length - 1].name);
-          const checked = [];
-          newVal.forEach((val) => {
-            checked.push(val.biover.id);
-          });
-          this.$nextTick(() => {
-            this.$refs.tree.setCheckedKeys(checked, false);
-          });
-        }
-      },
-    },
-  },
-  data() {
-    return {
-      data: [{
-        id: 0,
-        label: 'Mes Biovers',
-        children: [],
-        disabled: true,
-      },
-      {
-        id: -1,
-        label: 'Biovers Publiques',
-        children: [],
-        disabled: true,
-      },
-      ],
-      editableTabsValue: ref('1'),
-      showDialog: false,
-    };
-  },
-  computed: {
-    ...mapState('biovers', ['ownBiovers', 'publicBiovers', 'bioversToDisplay', 'addBioversInTab']),
-  },
-  methods: {
-    selectedBiovers(event) {
-      const index = this.bioversToDisplay.findIndex((biovers) => biovers.biover.id === event.id);
-      if (index === -1) {
-        this.addBioverToDisplay(event);
-        this.addPoiToDisplay(event.id);
-        this.addPathToDisplay(event.id);
-        this.addTraceToDisplay(event.id);
-        this.addEventToDisplay(event.id);
-      } else {
-        this.removeBioverToDisplay(event.id);
-      }
-    },
-    selectTab(event) {
-      const tabIndex = this.bioversToDisplay.findIndex((b) => b.name === event.props.name);
-      if (tabIndex !== -1) {
-        this.setCurrentBiover(this.bioversToDisplay[tabIndex].biover.id);
-      } else {
-        this.setCurrentBiover(0);
-      }
-    },
-    ...mapActions('biovers', ['addBioverToDisplay', 'removeBioverToDisplay', 'addPoiToDisplay', 'addPathToDisplay', 'addTraceToDisplay', 'addEventToDisplay', 'setCurrentBiover']),
-  },
-  deactivated() {
-    this.data[0].children = [];
-    this.data[1].children = [];
-  },
-};
+const store = useStore();
+
+const tree = ref(null);
+
+const ownBiovers = computed(() => store.state.biovers.ownBiovers);
+const publicBiovers = computed(() => store.state.biovers.publicBiovers);
+const bioversToDisplay = computed(() => store.state.biovers.bioversToDisplay);
+const currentBioversId = computed(() => store.state.biovers.currentBioversId);
+
+const data = ref([{
+  id: 0,
+  label: 'Mes Biovers',
+  children: [],
+  disabled: true,
+},
+{
+  id: -1,
+  label: 'Biovers Publiques',
+  children: [],
+  disabled: true,
+}]);
+const showDialog = ref(false);
+
+function addBioverToDisplay(event) {
+  store.dispatch('biovers/addBioverToDisplay', event);
+}
+
+function removeBioverToDisplay(id) {
+  store.dispatch('biovers/removeBioverToDisplay', id);
+}
+
+function addPoiToDisplay(id) {
+  store.dispatch('biovers/addPoiToDisplay', id);
+}
+
+function addPathToDisplay(id) {
+  store.dispatch('biovers/addPathToDisplay', id);
+}
+
+function addTraceToDisplay(id) {
+  store.dispatch('biovers/addTraceToDisplay', id);
+}
+
+function addEventToDisplay(id) {
+  store.dispatch('biovers/addEventToDisplay', id);
+}
+
+function setCurrentBiover(id) {
+  store.dispatch('biovers/setCurrentBiover', id);
+}
+
+function setOpenBiovers(biovers) {
+  const checked = [];
+  biovers.value.forEach((val) => {
+    checked.push(val.biover.id);
+  });
+  nextTick(() => {
+    if (tree.value) {
+      tree.value.setCheckedKeys(checked, false);
+    }
+  });
+}
+
+function selectedBiovers(event) {
+  const index = bioversToDisplay.value.findIndex((biovers) => biovers.biover.id === event.id);
+  if (index === -1) {
+    addBioverToDisplay(event);
+    addPoiToDisplay(event.id);
+    addPathToDisplay(event.id);
+    addTraceToDisplay(event.id);
+    addEventToDisplay(event.id);
+  } else {
+    removeBioverToDisplay(event.id);
+  }
+}
+
+function selectTab(id) {
+  const tabIndex = bioversToDisplay.value.findIndex((biovers) => biovers.biover.id === id);
+  if (tabIndex !== -1) {
+    setCurrentBiover(bioversToDisplay.value[tabIndex].biover.id);
+  } else {
+    setCurrentBiover(0);
+    setOpenBiovers(bioversToDisplay);
+  }
+}
+
+function closeTab(id) {
+  removeBioverToDisplay(id);
+  setCurrentBiover(bioversToDisplay.value[bioversToDisplay.value.length - 1].biover.id);
+}
+
+watch(() => ownBiovers, (newVal) => {
+  if (newVal.value.length !== data.value[0].length) {
+    const diff = newVal.value.filter((x) => !data.value[0].children
+      .some((child) => child.id === x.id));
+    diff.forEach((element) => {
+      data.value[0].children.push({
+        label: element.name,
+        id: element.id,
+      });
+    });
+  }
+}, { deep: true });
+
+watch(() => publicBiovers, (newVal) => {
+  if (newVal.value.length !== data.value[1].length) {
+    const diff = newVal.value.filter((x) => !data.value[1].children
+      .some((child) => child.id === x.id));
+    diff.forEach((element) => {
+      data.value[1].children.push({
+        label: element.name,
+        id: element.id,
+      });
+    });
+  }
+}, { deep: true });
+
+watch(() => bioversToDisplay, (newVal) => {
+  if (newVal.value.length > 0) {
+    setOpenBiovers(newVal);
+  }
+}, { deep: true });
+
+onDeactivated(() => {
+  data.value[0].children = [];
+  data.value[1].children = [];
+});
 </script>
 
+<template>
+  <div>
+    <div style="display: flex; flex-wrap: wrap">
+      <div>
+        <button class="button-layout button-selection" @click="selectTab(0)">
+          <img class="text-margin" src="../../../assets/tables/biovers.svg" alt="biovers">
+          <p class="text-margin">Biovers</p>
+        </button>
+      </div>
+      <div v-for="biovers in bioversToDisplay" :key="biovers.name">
+        <button
+          class="button-layout button-biovers"
+        >
+            <World :animate="biovers.biover.id === currentBioversId"/>
+            <p class="text-margin" @click="selectTab(biovers.biover.id)">{{ biovers.title }}</p>
+            <img src="../../../assets/tables/cross.svg" alt="close" @click="closeTab(biovers.biover.id)">
+        </button>
+      </div>
+    </div>
+    <div>
+      <div v-show="currentBioversId === 0">
+        <el-tree ref="tree" node-key="id" :data="data" show-checkbox @check="selectedBiovers"/>
+        <el-button style="display: flex;" @click="showDialog = true">
+          {{ $t('biover.create') }}
+        </el-button>
+      </div>
+      <div v-for="biovers in bioversToDisplay" :key="biovers.name" class="data-layout">
+        <DataTab
+          v-show="currentBioversId === biovers.biover.id"
+          :bioverId="biovers.biover.id" />
+      </div>
+    </div>
+    <BioverCreator :showDialog="showDialog" @close-dialog="showDialog = false"/>
+  </div>
+</template>
+
 <style scoped>
-.demo-tabs > .el-tabs__content {
-  padding: 32px;
-  background-color: #f4f5f7;
-  color: #6b778c;
-  font-size: 32px;
-  font-weight: 600;
+.button-layout {
+  width: auto;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.button-selection {
+  background-color: #F2F2F2;
+  border-width: 1px 1px 0px 1px;
+  border-style: solid;
+  border-color: #FFFFFF;
+  border-radius: 2px 2px 0px 0px;
+}
+
+.button-biovers {
+  color: white;
+  background-color: black;
+  border-width: 1px 1px 0px 1px;
+  border-style: solid;
+  border-color: white;
+  border-radius: 2px 2px 0px 0px;
+}
+
+.text-margin {
+  margin-right: 8px;
+}
+
+.data-layout {
+  background-color: black;
 }
 </style>

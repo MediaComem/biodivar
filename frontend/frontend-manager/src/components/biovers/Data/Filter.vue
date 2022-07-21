@@ -1,27 +1,24 @@
+<script setup>
+import { ref } from 'vue';
+import { useStore } from 'vuex';
+
+const store = useStore();
+const filterInput = ref('');
+
+function filter(key) {
+  store.dispatch('biovers/filter', key);
+}
+
+function filtering() {
+  filter(filterInput.value);
+}
+</script>
+
 <template>
   <el-input
-    v-model="filter_input"
+    v-model="filterInput"
     placeholder="Filter"
     @input="filtering"
     clearable
   />
 </template>
-
-<script>
-import { mapActions } from 'vuex';
-
-export default {
-  name: 'Filter',
-  data() {
-    return {
-      filter_input: '',
-    };
-  },
-  methods: {
-    filtering() {
-      this.filter(this.filter_input);
-    },
-    ...mapActions('biovers', ['filter']),
-  },
-};
-</script>
