@@ -163,9 +163,6 @@ onDeactivated(() => {
     <div>
       <div v-show="currentBioversId === 0">
         <el-tree ref="tree" node-key="id" :data="data" show-checkbox @check="selectedBiovers"/>
-        <el-button style="display: flex;" @click="showDialog = true">
-          {{ $t('biover.create') }}
-        </el-button>
       </div>
       <div v-for="biovers in bioversToDisplay" :key="biovers.name" class="data-layout">
         <DataTab

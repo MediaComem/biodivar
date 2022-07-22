@@ -2,13 +2,13 @@
 import {
   ref,
   defineProps,
-  onMounted,
   computed,
   watch,
 } from 'vue';
 import { useStore } from 'vuex';
 
 import format from '../../../utils/formatter';
+import sort from '../../../utils/sort';
 import PoiEdition from '../Dialog/PoiEdition.vue';
 
 const props = defineProps({
@@ -21,7 +21,9 @@ const globalChecked = ref(true);
 const poiToEdit = ref({});
 const showDialog = ref(false);
 
-const poisModification = computed(() => store.state.biovers.poisModification);
+const sortElement = ref('');
+const orderElement = ref(false);
+
 const getPoisByBiover = computed(() => store.getters['biovers/getPoisByBiover']);
 const ownOrPublic = computed(() => store.getters['biovers/ownOrPublic']);
 const bioverIsEditable = computed(() => store.getters['biovers/bioverIsEditable']);
@@ -80,6 +82,17 @@ function handleEdit(row) {
   poiToEdit.value = { poi: row.element };
   showDialog.value = true;
 }
+
+function setSort(value) {
+  if (sortElement.value === value) {
+    orderElement.value = !orderElement.value;
+  } else {
+    orderElement.value = false;
+  }
+  sortElement.value = value;
+}
+
+const getSortedData = computed(() => sort.sort(getData, sortElement, orderElement));
 </script>
 
 <template>
@@ -90,21 +103,110 @@ function handleEdit(row) {
           <th class="first-column first-column-header">
             <input type="checkbox" :checked="globalChecked" @click="selectAll">
           </th>
-          <th class="column second-column">#</th>
-          <th class="column">COORDONNEES</th>
-          <th class="column">TITRE</th>
-          <th class="column">SOUS-TITRE</th>
+          <th class="column second-column">
+            <div class="header-value">
+              <p>#</p>
+              <img
+                class="transition"
+                :class="{'change-icon': sortElement === 'id' && !orderElement}"
+                src="../../../assets/tables/sort-arrow.svg"
+                alt="sort"
+                @click="setSort('id')">
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p>COORDONNEES</p>
+              <!--img src="../../../assets/tables/sort-arrow.svg" alt="sort"-->
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p>TITRE</p>
+              <img
+                class="transition"
+                :class="{'change-icon': sortElement === 'title' && !orderElement}"
+                src="../../../assets/tables/sort-arrow.svg"
+                alt="sort"
+                @click="setSort('title')">
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p>SOUS-TITRE</p>
+              <img
+                class="transition"
+                :class="{'change-icon': sortElement === 'subtitle' && !orderElement}"
+                src="../../../assets/tables/sort-arrow.svg"
+                alt="sort"
+                @click="setSort('subtitle')">
+            </div>
+          </th>
           <th class="column">MEDIAS</th>
-          <th class="column">RAYON</th>
-          <th class="column">VISIBILITE</th>
-          <th class="column">CREER LE</th>
-          <th class="column">AUTEUR-E</th>
-          <th class="column before-last-column">MODIFIER LE</th>
+          <th class="column">
+            <div class="header-value">
+              <img src="../../../assets/tables/rayon.svg" alt="rayon">
+              <p>RAYON</p>
+              <img
+                class="transition"
+                :class="{'change-icon': sortElement === 'radius' && !orderElement}"
+                src="../../../assets/tables/sort-arrow.svg"
+                alt="sort"
+                @click="setSort('radius')">
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <img src="../../../assets/tables/visibility.svg" alt="visibility">
+              <p>VISIBILITE</p>
+              <img
+                class="transition"
+                :class="{'change-icon': sortElement === 'visible_from' && !orderElement}"
+                src="../../../assets/tables/sort-arrow.svg"
+                alt="sort"
+                @click="setSort('visible_from')">
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p>CREER LE</p>
+              <img
+                class="transition"
+                :class="{'change-icon': sortElement === 'creation_date' && !orderElement}"
+                src="../../../assets/tables/sort-arrow.svg"
+                alt="sort"
+                @click="setSort('creation_date')">
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <img src="../../../assets/tables/architecte.svg" alt="architecte">
+              <p>AUTEUR-E</p>
+              <img
+                class="transition"
+                :class="{'change-icon': sortElement === 'username' && !orderElement}"
+                src="../../../assets/tables/sort-arrow.svg"
+                alt="sort"
+                @click="setSort('username')">
+            </div>
+          </th>
+          <th class="column before-last-column">
+            <div class="header-value">
+              <img src="../../../assets/tables/edit.svg" alt="edit">
+              <p>MODIFIER LE</p>
+              <img
+                class="transition"
+                :class="{'change-icon': sortElement === 'update_date' && !orderElement}"
+                src="../../../assets/tables/sort-arrow.svg"
+                alt="sort"
+                @click="setSort('update_date')">
+            </div>
+          </th>
           <th class="last-column last-column-header">
             <img src="../../../assets/tables/more.svg" alt="more">
           </th>
         </tr>
-        <tr v-for="(poi, index) in getData" :key="index">
+        <tr v-for="(poi, index) in getSortedData" :key="index">
           <td class="first-column">
             <input type="checkbox" :checked="poi.display" @click="selectElement(poi)">
           </td>
@@ -127,80 +229,6 @@ function handleEdit(row) {
   </div>
 </template>
 
-<style>
-table {
-  border-collapse: collapse;
-  margin-left: 8px;
-  margin-right: 8px;
-  color: white;
-}
-
-.tr-header {
-  border-bottom: 1px solid white;
-  margin-left: 40px;
-  margin-right: 40px;
-}
-
-.column {
-  border-right: 1px solid white;
-  padding-left: 8px;
-  padding-right: 8px;
-  white-space: nowrap;
-}
-
-.end-align {
-  text-align: end;
-}
-
-.table-layout {
-  margin-left: 8px;
-  margin-right: 8px;
-  padding-top: 9px;
-  border-width: 0px 1px 1px 1px;
-  border-style: solid;
-  border-color: white;
-}
-
-.scrolling-table {
-  margin-left: 40px;
-  width: calc(100% - 95px);
-  overflow-x: scroll;
-  padding-bottom: 8px;
-}
-
-.first-column-header {
-  padding-bottom: 1px;
-  border-bottom: 1px solid white;
-}
-
-.first-column {
-  position: absolute;
-  width: 22px;
-  left: 38px;
-  top: auto;
-  border-right: 1px solid white;
-  padding-right: 5px;
-}
-
-.second-column {
-  padding-left: 8px;
-}
-
-.before-last-column {
-  border: 0;
-}
-
-.last-column-header {
-  padding-bottom: 1px;
-  border-bottom: 1px solid white;
-}
-
-.last-column {
-  position: absolute;
-  width: 40px;
-  right: 40px;
-  top: auto;
-  border-left: 1px solid white;
-  height: 22px;
-}
+<style scoped>
+@import './table.css';
 </style>

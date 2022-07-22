@@ -4,8 +4,8 @@ import { useStore } from 'vuex';
 
 import PoiTable from './PoiTable.vue';
 import PathTable from './PathTable.vue';
-import TraceTable from './TraceTable.vue';
-import EventTable from './EventTable.vue';
+import ParameterTable from './ParameterTable.vue';
+import MetadataTable from './MetadataTable.vue';
 
 const props = defineProps({
   bioverId: Number,
@@ -59,8 +59,8 @@ function selectTab(tabId) {
     <div class="data-table-layout">
       <PoiTable v-show="currentTab === 1" :bioverId="props.bioverId" />
       <PathTable v-show="currentTab === 2" :bioverId="props.bioverId" />
-      <TraceTable v-show="currentTab === 3" :bioverId="props.bioverId" />
-      <EventTable v-show="currentTab === 4" :bioverId="props.bioverId" />
+      <ParameterTable v-show="currentTab === 3" :bioverId="props.bioverId" />
+      <MetadataTable v-show="currentTab === 4" :bioverId="props.bioverId" />
     </div>
   </div>
 </template>

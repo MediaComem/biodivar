@@ -10,12 +10,10 @@
       :on-change="handleExceed"
     >
       <template #trigger>
-        <el-button
-          class="ml-3"
-          type="info"
-        >
-        {{ $t('import.select') }}
-        </el-button>
+        <BaseButton class="button">
+          <img src="../../../assets/body/add.svg" alt="add">
+          ADD
+        </BaseButton>
       </template>
       <el-button
         class="ml-3"
@@ -183,4 +181,9 @@ export default {
 .el-upload {
   padding-right: 15px;
 }
+
+.button {
+    --link-color: white;
+    --highlight-color: #2F80ED;
+  }
 </style>
