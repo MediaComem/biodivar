@@ -1,13 +1,90 @@
+<script setup>
+import { ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+import { useStore } from 'vuex';
+import axios from 'axios';
+import { ElNotification } from 'element-plus';
+
+const store = useStore();
+const router = useRouter();
+const { t } = useI18n();
+
+const authenticateRef = ref(null);
+const error = ref(false);
+const form = ref({
+  username: '',
+  password: '',
+});
+const rules = ref({
+  username: [{
+    required: true,
+    message: t('validation.username'),
+  }],
+  password: [{
+    required: true,
+    message: t('validation.password'),
+  }],
+});
+
+watch(() => form, () => {
+  if (authenticateRef.value) {
+    authenticateRef.value.validate((valid) => {
+      error.value = valid;
+    });
+  }
+}, { deep: true, immediate: true });
+
+function authenticate(information) {
+  store.dispatch('auth/authenticate', information);
+}
+
+function login() {
+  authenticateRef.value.validate((valid) => {
+    if (valid) {
+      axios.post(
+        `${process.env.VUE_APP_URL}/login`,
+        {
+          username: form.value.username,
+          password: form.value.password,
+        },
+        { withCredentials: true },
+      ).then((response) => {
+        authenticate({
+          isAuthenticate: true,
+          username: response.data.data,
+        });
+        router.push('Biovers');
+      }).catch((err) => {
+        authenticate({
+          isAuthenticate: false,
+          username: '',
+        });
+        let errorMessage = '';
+        if (err.response.data.statusCode === 400) {
+          errorMessage = 'Username or password is wrong';
+        }
+        ElNotification({
+          title: 'Authentication failure',
+          message: errorMessage,
+          type: 'error',
+        });
+      });
+    }
+  });
+}
+</script>
+
 <template>
   <el-row :gutter="20" :justify="'center'" :align="'middle'">
     <el-col :span="8">
       <el-form
-        ref="register"
+        ref="authenticateRef"
         :model="form"
         :rules="rules"
         :label-position="'right'"
         label-width="auto"
-        @keyup.enter="authentication"
+        @keyup.enter="login"
       >
         <el-form-item class="layout">
           <h3>{{ $t('title') }}</h3>
@@ -32,7 +109,7 @@
           <el-button
             :disabled="!error"
             type="primary"
-            @click="authentication"
+            @click="login"
           >
           {{ $t('authentication.submit') }}
           </el-button>
@@ -41,85 +118,6 @@
     </el-col>
   </el-row>
 </template>
-
-<script>
-import axios from 'axios';
-import { mapActions } from 'vuex';
-import { ElNotification } from 'element-plus';
-
-export default {
-  watch: {
-    form: {
-      deep: true,
-      immediate: true,
-      handler() {
-        if (this.$refs && this.$refs.register) {
-          this.$refs.register.validate((valid) => {
-            this.error = valid;
-          });
-        }
-      },
-    },
-  },
-  methods: {
-    authentication() {
-      this.$refs.register.validate((valid) => {
-        if (valid) {
-          axios.post(
-            `${process.env.VUE_APP_URL}/login`,
-            {
-              username: this.form.username,
-              password: this.form.password,
-            },
-            { withCredentials: true },
-          ).then((response) => {
-            this.authenticate({
-              isAuthenticate: true,
-              username: response.data.data,
-            });
-            this.$router.push('Biovers');
-          }).catch((error) => {
-            this.authenticate({
-              isAuthenticate: false,
-              username: '',
-            });
-            let errorMessage = '';
-            if (error.response.data.statusCode === 400) {
-              errorMessage = 'Username or password is wrong';
-            }
-            ElNotification({
-              title: 'Authentication failure',
-              message: errorMessage,
-              type: 'error',
-            });
-          });
-        }
-      });
-    },
-    ...mapActions('auth', ['authenticate']),
-  },
-  name: 'Login',
-  data() {
-    return {
-      error: false,
-      form: {
-        username: '',
-        password: '',
-      },
-      rules: {
-        username: [{
-          required: true,
-          message: this.$i18n.t('validation.username'),
-        }],
-        password: [{
-          required: true,
-          message: this.$i18n.t('validation.password'),
-        }],
-      },
-    };
-  },
-};
-</script>
 
 <style scoped>
 .layout {

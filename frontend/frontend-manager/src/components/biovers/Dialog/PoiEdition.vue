@@ -1,3 +1,216 @@
+<script setup>
+import {
+  ref,
+  defineProps,
+  defineEmits,
+  nextTick,
+  onMounted,
+} from 'vue';
+import { useStore } from 'vuex';
+import { useI18n } from 'vue-i18n';
+
+import {
+  AmbientLight,
+  Camera,
+  GltfModel,
+  Renderer,
+  Scene,
+} from 'troisjs';
+
+import poi from '../../../api/poi';
+import symbolUtils from '../../../api/symbol';
+import mediaUtils from '../../../api/media';
+
+const emit = defineEmits(['closeDialog']);
+
+const props = defineProps({
+  poi: Object,
+  showDialog: Boolean,
+});
+
+const { t } = useI18n();
+
+const store = useStore();
+
+const dialogVisible = ref(false);
+const formLabelWidth = ref('160px');
+const styleOption = ref([{
+  value: 'sphere',
+  label: t('poi.configurator.action.sphere'),
+},
+{
+  value: 'circle',
+  label: t('poi.configurator.action.circle'),
+}]);
+const triggerOption = ref([{
+  value: 'location',
+  label: t('poi.configurator.action.location'),
+},
+{
+  value: 'touch',
+  label: t('poi.configurator.action.touch'),
+}]);
+const original = ref({});
+const form = ref({});
+const upload = ref(null);
+const symbol = ref(null);
+const symbolFile = ref(null);
+const symbolImage = ref(null);
+const arSymbol = ref(null);
+const arFile = ref(null);
+const arImage = ref(null);
+const arSound = ref(null);
+const media = ref(null);
+const mediaInput = ref(null);
+const mediaFile = ref(null);
+const mediaImage = ref(null);
+const mediaSound = ref(null);
+
+function updatePoi(updatedPoi) {
+  store.dispatch('biovers/updatePoi', updatedPoi);
+}
+
+function handleFileUploadSymbol(event) {
+  const files = event.target.files;
+  if (files) {
+    symbolFile.value = files[0];
+    const lastDot = symbolFile.value.name.lastIndexOf('.');
+    const ext = symbolFile.value.name.substring(lastDot + 1);
+    symbolImage.value = URL.createObjectURL(symbolFile.value);
+    form.value.symbol.media_type = ext;
+  }
+}
+
+function handleFileUpload(event) {
+  const files = event.target.files;
+  if (files) {
+    arSymbol.value = files[0];
+    const lastDot = arSymbol.value.name.lastIndexOf('.');
+    const ext = arSymbol.value.name.substring(lastDot + 1);
+    if (ext === 'gltf' || ext === 'glb') {
+      arFile.value = null;
+      arImage.value = null;
+      arSound.value = null;
+      nextTick(() => {
+        arFile.value = URL.createObjectURL(arSymbol.value);
+      });
+    } else if (ext === 'mp3' || ext === 'm4a' || ext === 'wav') {
+      arFile.value = null;
+      arImage.value = null;
+      arSound.value = null;
+      nextTick(() => {
+        arSound.value = URL.createObjectURL(arSymbol.value);
+      });
+    } else {
+      arFile.value = null;
+      arSound.value = null;
+      arImage.value = URL.createObjectURL(arSymbol.value);
+    }
+    form.value.symbol.media_type_ar = ext;
+  }
+}
+
+function handleFileMediaUpload(event) {
+  const files = event.target.files;
+  if (files) {
+    mediaInput.value = files[0];
+    const lastDot = mediaInput.value.name.lastIndexOf('.');
+    const ext = mediaInput.value.name.substring(lastDot + 1);
+    if (ext === 'gltf' || ext === 'glb') {
+      mediaFile.value = null;
+      mediaImage.value = null;
+      mediaSound.value = null;
+      nextTick(() => {
+        mediaFile.value = URL.createObjectURL(mediaInput.value);
+      });
+    } else if (ext === 'mp3' || ext === 'm4a' || ext === 'wav') {
+      mediaFile.value = null;
+      mediaImage.value = null;
+      mediaSound.value = null;
+      nextTick(() => {
+        mediaSound.value = URL.createObjectURL(mediaInput.value);
+      });
+    } else {
+      mediaFile.value = null;
+      mediaSound.value = null;
+      mediaImage.value = URL.createObjectURL(mediaInput.value);
+    }
+    form.value.media[0].media_type = ext;
+  }
+}
+
+async function save() {
+  if (arSymbol.value) {
+    const formData = new FormData();
+    formData.append('file', arSymbol.value);
+    const path = await symbolUtils.save(formData);
+    if (path.data.data) {
+      form.value.symbol.ar_url = path.data.data;
+    }
+  }
+  if (symbolFile.value) {
+    const formData = new FormData();
+    formData.append('file', symbolFile.value);
+    const path = await symbolUtils.save(formData);
+    if (path.data.data) {
+      form.value.symbol.url = path.data.data;
+    }
+  }
+  if (mediaInput.value) {
+    const formData = new FormData();
+    formData.append('file', mediaInput.value);
+    const path = await mediaUtils.save(formData);
+    if (path.data.data) {
+      form.value.media[0].url = path.data.data;
+    }
+  }
+  const updatedPoi = await poi.updatePoi(form.value);
+  updatePoi(updatedPoi.data.data);
+  emit('closeDialog');
+}
+
+onMounted(() => {
+  form.value = JSON.parse(JSON.stringify(props.poi.poi));
+  if (form.value.media.length === 0) {
+    form.value.media.push({
+      media_type: '',
+      url: '',
+      elevation_ground: 0,
+      is_facing_user: false,
+      is_visible: true,
+      caption: 'Test',
+      caption_visible: true,
+    });
+  }
+  const symbolExtension = form.value.symbol.media_type_ar;
+  if (symbolExtension) {
+    const path = symbolUtils.getSymbolAr(form.value.symbol);
+    if (symbolExtension === 'gltf' || symbolExtension === 'glb') {
+      arFile.value = path;
+    } else if (symbolExtension === 'mp3' || symbolExtension === 'm4a' || symbolExtension === 'wav') {
+      arSound.value = path;
+    } else {
+      arImage.value = path;
+    }
+  }
+  if (form.value.symbol.media_type) {
+    symbolImage.value = symbolUtils.getSymbol(form.value.symbol);
+  }
+  if (form.value.media.url !== '') {
+    const mediaExtension = form.value.media[0].media_type;
+    const path = mediaUtils.getMedia(form.value.media[0]);
+    if (mediaExtension === 'gltf' || mediaExtension === 'glb') {
+      mediaFile.value = path;
+    } else if (mediaExtension === 'mp3' || mediaExtension === 'm4a' || mediaExtension === 'wav') {
+      mediaSound.value = path;
+    } else {
+      mediaImage.value = path;
+    }
+  }
+  dialogVisible.value = props.showDialog;
+});
+</script>
+
 <template>
   <el-dialog v-model="dialogVisible" :title="$t('poi.configurator.page_edition')"
   @close="$emit('closeDialog')">
@@ -41,7 +254,7 @@
       <el-form-item :label="$t('poi.configurator.style_type')" :label-width="formLabelWidth">
         <el-select v-model="form.style_type" class="m-2">
           <el-option
-            v-for="item in style_option"
+            v-for="item in styleOption"
             :key="item.value"
             :label="item.label"
             :value="item.value"
@@ -102,7 +315,7 @@
       <el-form-item :label="$t('poi.configurator.trigger')" :label-width="formLabelWidth">
         <el-select v-model="form.trigger_mode" class="m-2">
           <el-option
-            v-for="item in trigger_option"
+            v-for="item in triggerOption"
             :key="item.value"
             :label="item.label"
             :value="item.value"
@@ -239,215 +452,6 @@
     </template>
   </el-dialog>
 </template>
-
-<script>
-import { mapActions } from 'vuex';
-
-import {
-  AmbientLight,
-  Camera,
-  GltfModel,
-  Renderer,
-  Scene,
-} from 'troisjs';
-
-import poi from '../../../api/poi';
-import symbol from '../../../api/symbol';
-import media from '../../../api/media';
-
-export default {
-  emits: ['closeDialog'],
-  props: {
-    poi: Object,
-    showDialog: Boolean,
-  },
-  components: {
-    AmbientLight,
-    Camera,
-    GltfModel,
-    Renderer,
-    Scene,
-  },
-  data() {
-    return {
-      dialogVisible: false,
-      formLabelWidth: '160px',
-      style_option: [{
-        value: 'sphere',
-        label: this.$i18n.t('poi.configurator.action.sphere'),
-      },
-      {
-        value: 'circle',
-        label: this.$i18n.t('poi.configurator.action.circle'),
-      }],
-      trigger_option: [{
-        value: 'location',
-        label: this.$i18n.t('poi.configurator.action.location'),
-      },
-      {
-        value: 'touch',
-        label: this.$i18n.t('poi.configurator.action.touch'),
-      }],
-      original: {},
-      form: {},
-      upload: null,
-      uploadSymbol: null,
-      symbolFile: null,
-      symbolImage: null,
-      arSymbol: null,
-      arFile: null,
-      arImage: null,
-      arSound: null,
-      uploadMedia: null,
-      mediaInput: null,
-      mediaFile: null,
-      mediaImage: null,
-      mediaSound: null,
-    };
-  },
-  methods: {
-    handleFileUploadSymbol(event) {
-      const files = event.target.files;
-      if (files) {
-        this.symbolFile = files[0];
-        const lastDot = this.symbolFile.name.lastIndexOf('.');
-        const ext = this.symbolFile.name.substring(lastDot + 1);
-        this.symbolImage = URL.createObjectURL(this.symbolFile);
-        this.form.symbol.media_type = ext;
-      }
-    },
-    handleFileUpload(event) {
-      const files = event.target.files;
-      if (files) {
-        this.arSymbol = files[0];
-        const lastDot = this.arSymbol.name.lastIndexOf('.');
-        const ext = this.arSymbol.name.substring(lastDot + 1);
-        if (ext === 'gltf' || ext === 'glb') {
-          this.arFile = null;
-          this.arImage = null;
-          this.arSound = null;
-          this.$nextTick(() => {
-            this.arFile = URL.createObjectURL(this.arSymbol);
-          });
-        } else if (ext === 'mp3' || ext === 'm4a' || ext === 'wav') {
-          this.arFile = null;
-          this.arImage = null;
-          this.arSound = null;
-          this.$nextTick(() => {
-            this.arSound = URL.createObjectURL(this.arSymbol);
-          });
-        } else {
-          this.arFile = null;
-          this.arSound = null;
-          this.arImage = URL.createObjectURL(this.arSymbol);
-        }
-        this.form.symbol.media_type_ar = ext;
-      }
-    },
-    handleFileMediaUpload(event) {
-      const files = event.target.files;
-      if (files) {
-        this.mediaInput = files[0];
-        const lastDot = this.mediaInput.name.lastIndexOf('.');
-        const ext = this.mediaInput.name.substring(lastDot + 1);
-        if (ext === 'gltf' || ext === 'glb') {
-          this.mediaFile = null;
-          this.mediaImage = null;
-          this.mediaSound = null;
-          this.$nextTick(() => {
-            this.mediaFile = URL.createObjectURL(this.mediaInput);
-          });
-        } else if (ext === 'mp3' || ext === 'm4a' || ext === 'wav') {
-          this.mediaFile = null;
-          this.mediaImage = null;
-          this.mediaSound = null;
-          this.$nextTick(() => {
-            this.mediaSound = URL.createObjectURL(this.mediaInput);
-          });
-        } else {
-          this.mediaFile = null;
-          this.mediaSound = null;
-          this.mediaImage = URL.createObjectURL(this.mediaInput);
-        }
-        this.form.media[0].media_type = ext;
-      }
-    },
-    async save() {
-      if (this.arSymbol) {
-        const formData = new FormData();
-        formData.append('file', this.arSymbol);
-        const path = await symbol.save(formData);
-        if (path.data.data) {
-          this.form.symbol.ar_url = path.data.data;
-        }
-      }
-      if (this.symbolFile) {
-        const formData = new FormData();
-        formData.append('file', this.symbolFile);
-        const path = await symbol.save(formData);
-        if (path.data.data) {
-          this.form.symbol.url = path.data.data;
-        }
-      }
-      if (this.mediaInput) {
-        const formData = new FormData();
-        formData.append('file', this.mediaInput);
-        const path = await media.save(formData);
-        if (path.data.data) {
-          this.form.media[0].url = path.data.data;
-        }
-      }
-      const updatedPoi = await poi.updatePoi(this.form);
-      this.updatePoi(updatedPoi.data.data);
-      this.$emit('closeDialog');
-    },
-    ...mapActions('biovers', ['updatePoi']),
-  },
-  mounted() {
-    this.upload = this.$refs.upload;
-    this.uploadSymbol = this.$refs.symbol;
-    this.uploadMedia = this.$refs.media;
-    this.form = JSON.parse(JSON.stringify(this.poi.poi));
-    if (this.form.media.length === 0) {
-      this.form.media.push({
-        media_type: '',
-        url: '',
-        elevation_ground: 0,
-        is_facing_user: false,
-        is_visible: true,
-        caption: 'Test',
-        caption_visible: true,
-      });
-    }
-    const symbolExtension = this.form.symbol.media_type_ar;
-    if (symbolExtension) {
-      const path = symbol.getSymbolAr(this.form.symbol);
-      if (symbolExtension === 'gltf' || symbolExtension === 'glb') {
-        this.arFile = path;
-      } else if (symbolExtension === 'mp3' || symbolExtension === 'm4a' || symbolExtension === 'wav') {
-        this.arSound = path;
-      } else {
-        this.arImage = path;
-      }
-    }
-    if (this.form.symbol.media_type) {
-      this.symbolImage = symbol.getSymbol(this.form.symbol);
-    }
-    if (this.form.media.url !== '') {
-      const mediaExtension = this.form.media[0].media_type;
-      const path = media.getMedia(this.form.media[0]);
-      if (mediaExtension === 'gltf' || mediaExtension === 'glb') {
-        this.mediaFile = path;
-      } else if (mediaExtension === 'mp3' || mediaExtension === 'm4a' || mediaExtension === 'wav') {
-        this.mediaSound = path;
-      } else {
-        this.mediaImage = path;
-      }
-    }
-    this.dialogVisible = this.showDialog;
-  },
-};
-</script>
 
 <style scoped>
 #ar-image {

@@ -1,8 +1,124 @@
+<script setup>
+import {
+  ref,
+  watch,
+} from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+import axios from 'axios';
+import { ElNotification } from 'element-plus';
+
+const store = useStore();
+const router = useRouter();
+const { t } = useI18n();
+
+const formRef = ref(null);
+const error = ref(false);
+const form = ref({
+  username: '',
+  email: '',
+  password: '',
+  confirm: '',
+});
+const reg = ref(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/);
+
+function validateEmail(rule, value, callback) {
+  if (value === '') {
+    callback(new Error(t('validation.email')));
+  } else if (!reg.value.test(value)) {
+    callback(new Error(t('validation.validEmail')));
+  } else {
+    callback();
+  }
+}
+
+function validateConfirm(rule, value, callback) {
+  if (value === '') {
+    callback(new Error(t('validation.confirm')));
+  } else if (value !== form.value.password) {
+    callback(new Error(t('validation.match')));
+  } else {
+    callback();
+  }
+}
+
+const rules = ref({
+  username: [{
+    required: true,
+    message: t('validation.username'),
+  }],
+  email: [{
+    required: true,
+    validator: validateEmail,
+  }],
+  password: [{
+    required: true,
+    min: 4,
+    message: t('validation.password'),
+  }],
+  confirm: [{
+    required: true,
+    validator: validateConfirm,
+  }],
+});
+
+watch(() => form, () => {
+  if (formRef.value) {
+    formRef.value.validate((valid) => {
+      error.value = valid;
+    });
+  }
+}, { deep: true, immediate: true });
+
+function authenticate(information) {
+  store.dispatch('auth/authenticate', information);
+}
+
+function createUser() {
+  formRef.value.validate((valid) => {
+    if (valid) {
+      axios.post(
+        `${process.env.VUE_APP_URL}/register`,
+        {
+          username: form.value.username,
+          email: form.value.email,
+          password: form.value.password,
+        },
+        { withCredentials: true },
+      ).then((response) => {
+        authenticate({
+          isAuthenticate: true,
+          username: response.data.data,
+        });
+        router.push('Biovers');
+      }).catch((err) => {
+        authenticate({
+          isAuthenticate: false,
+          username: '',
+        });
+        let errorMessage = '';
+        if (err.response.status === 400) {
+          errorMessage = err.response.data.message;
+        } else {
+          errorMessage = 'The user cannot be create for unknow reason. Please contact an administator to solve the problem';
+        }
+        ElNotification({
+          title: 'Authentication failure',
+          message: errorMessage,
+          type: 'error',
+        });
+      });
+    }
+  });
+}
+</script>
+
 <template>
 <el-row :gutter="20" :justify="'center'" :align="'middle'">
   <el-col :span="8">
     <el-form
-      ref="form"
+      ref="formRef"
       :model="form"
       :rules="rules"
       :label-position="'right'"
@@ -47,119 +163,6 @@
   </el-col>
 </el-row>
 </template>
-
-<script>
-import axios from 'axios';
-import { ElNotification } from 'element-plus';
-
-export default {
-  watch: {
-    form: {
-      deep: true,
-      immediate: true,
-      handler() {
-        if (this.$refs && this.$refs.form) {
-          this.$refs.form.validate((valid) => {
-            this.error = valid;
-          });
-        }
-      },
-    },
-  },
-  methods: {
-    validateEmail(rule, value, callback) {
-      if (value === '') {
-        callback(new Error(this.$i18n.t('validation.email')));
-      } else if (!this.reg.test(value)) {
-        callback(new Error(this.$i18n.t('validation.validEmail')));
-      } else {
-        callback();
-      }
-    },
-    validateConfirm(rule, value, callback) {
-      if (value === '') {
-        callback(new Error(this.$i18n.t('validation.confirm')));
-      } else if (value !== this.form.password) {
-        callback(new Error(this.$i18n.t('validation.match')));
-      } else {
-        callback();
-      }
-    },
-    createUser() {
-      this.$refs.form.validate((valid) => {
-        if (valid) {
-          axios.post(
-            `${process.env.VUE_APP_URL}/register`,
-            {
-              username: this.form.username,
-              email: this.form.email,
-              password: this.form.password,
-            },
-            { withCredentials: true },
-          ).then((response) => {
-            this.$store.dispatch('authenticate', {
-              isAuthenticate: true,
-              username: response.data.data,
-            });
-            this.$router.push('Biovers');
-          }).catch((error) => {
-            this.$store.dispatch('authenticate', {
-              isAuthenticate: false,
-              username: '',
-            });
-            let errorMessage = '';
-            if (error.response.status === 400) {
-              errorMessage = error.response.data.message;
-            } else {
-              errorMessage = 'The user cannot be create for unknow reason. Please contact an administator to solve the problem';
-            }
-            ElNotification({
-              title: 'Authentication failure',
-              message: errorMessage,
-              type: 'error',
-            });
-          });
-        }
-      });
-    },
-  },
-  name: 'Register',
-  data() {
-    return {
-      error: false,
-      form: {
-        username: '',
-        email: '',
-        password: '',
-        confirm: '',
-      },
-      reg: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
-      rules: {
-        username: [{
-          required: true,
-          message: this.$i18n.t('validation.username'),
-        }],
-        email: [{
-          required: true,
-          validator: this.validateEmail,
-        }],
-        password: [{
-          required: true,
-          min: 4,
-          message: this.$i18n.t('validation.password'),
-        }],
-        confirm: [{
-          required: true,
-          validator: this.validateConfirm,
-        }],
-      },
-    };
-  },
-  mounted() {
-    this.$refs.form.validate();
-  },
-};
-</script>
 
 <style scoped>
 .layout {

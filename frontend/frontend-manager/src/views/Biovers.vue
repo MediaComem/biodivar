@@ -5,7 +5,6 @@ import { useStore } from 'vuex';
 import Map from '../components/biovers/Map/Map.vue';
 import BioversSelection from '../components/biovers/Data/BioversSelection.vue';
 import GlobalAction from '../components/biovers/Action/GlobalAction.vue';
-import Filter from '../components/biovers/Data/Filter.vue';
 
 import { mapStore } from '../composables/map';
 
