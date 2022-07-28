@@ -46,3 +46,7 @@ export function getSymbolUrl(id) {
 export function getIcon(symbol) {
   return `${API}symbol/id?id=${symbol.id}`;
 }
+
+export function getMediaUrl(media) {
+  return `${API}media/id?id=${media.id}`;
+}

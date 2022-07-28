@@ -1,0 +1,77 @@
+{
+  "id": 928,
+  "title": "Synnf1",
+  "title_is_visible": true,
+  "subtitle": "synnf1 sub title",
+  "subtitle_is_visible": true,
+  "author": 6,
+  "creation_date": "2022-07-28T12:40:03.226Z",
+  "update_date": null,
+  "deleted_date": null,
+  "last_contributor": 6,
+  "is_public": true,
+  "is_editable": false,
+  "biovers": 18,
+  "radius": 2,
+  "style_type": "Sphere",
+  "style_stroke": false,
+  "style_stroke_width": 1.5,
+  "style_fill": false,
+  "style_elevation": 2,
+  "style_elevation_ground": 1,
+  "style_noise": 22,
+  "style_is_visible": true,
+  "visible_from": 455.3,
+  "trigger_mode": "location",
+  "metadata": null,
+  "coordinate": {
+      "id": 968,
+      "long": 6.148843467235566,
+      "lat": 46.26026603787433,
+      "alt": 550,
+      "creation_date": "2022-07-28T12:40:03.226Z",
+      "update_date": null,
+      "deleted_date": null,
+      "poi_id": 928,
+      "path_id": null,
+      "user_trace_id": null
+  },
+  "symbol": {
+      "id": 928,
+      "media_type": "",
+      "url": "",
+      "media_type_ar": "",
+      "ar_url": "",
+      "elevation_ground": 0,
+      "is_facing_user": false,
+      "is_visible": false,
+      "creation_date": "2022-07-28T12:40:03.226Z",
+      "update_date": null,
+      "deleted_date": null,
+      "width": 50,
+      "height": 40,
+      "poi_id": 928
+  },
+  "media": [
+      {
+          "id": 4,
+          "media_type": "mp3",
+          "url": "/var/www/api_biodivar/src/images/6/song18.mp3",
+          "elevation_ground": 0,
+          "is_facing_user": true,
+          "is_visible": true,
+          "caption": "Test",
+          "caption_visible": true,
+          "creation_date": "2022-07-28T12:40:03.226Z",
+          "update_date": null,
+          "deleted_date": null,
+          "poi_id": 928
+      }
+  ],
+  "User": {
+      "username": "nicolas"
+  },
+  "last_contributor_fk": {
+      "username": "nicolas"
+  }
+}
