@@ -37,8 +37,7 @@
     <a-entity faces-north>
       <template v-for="poi of selectedBiovers.Poi">
         <a-entity
-          position="0 0 -5"
-          :gps-position="`latitude: ${poi.coordinate.lat}; longitude: ${poi.coordinate.long}`"
+          :agps-position="`latitude: ${poi.coordinate.lat}; longitude: ${poi.coordinate.long}`"
           :visible-from="`distance: ${poi.visible_from}`"
           :poi-radius="`
             radius: ${poi.radius};
@@ -47,7 +46,6 @@
             visible: ${poi.style_is_visible};
             groundElevation: ${poi.style_elevation_ground};
           `"
-          animation="property: position.z; dur: 4000; to: -2; easing: linear"
         >
 
           <a-entity
