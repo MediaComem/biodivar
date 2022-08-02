@@ -92,6 +92,10 @@ function setSort(value) {
   sortElement.value = value;
 }
 
+function userFormatter(user) {
+  return user && user.username ? user.username : '';
+}
+
 const getSortedData = computed(() => sort.sort(getData, sortElement, orderElement));
 </script>
 
@@ -218,7 +222,7 @@ const getSortedData = computed(() => sort.sort(getData, sortElement, orderElemen
           <td class="column end-align">{{ poi.element.radius }} M</td>
           <td class="column end-align">{{ poi.element.visible_from }} M</td>
           <td class="column">{{ dateFormatter(poi.element.creation_date) }}</td>
-          <td class="column">{{ poi.element.User.username }}</td>
+          <td class="column">{{ userFormatter(poi.element.User) }}</td>
           <td class="column before-last-column">{{ dateFormatter(poi.element.update_date) }}</td>
           <td class="last-column">
             <img src="../../../assets/tables/more.svg" alt="more">
