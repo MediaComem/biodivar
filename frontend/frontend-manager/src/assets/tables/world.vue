@@ -1,5 +1,10 @@
 <script setup>
-import { ref, watch, defineProps } from 'vue';
+import {
+  ref,
+  watch,
+  defineProps,
+  onMounted,
+} from 'vue';
 
 const props = defineProps({
   animate: Boolean,
@@ -19,6 +24,18 @@ watch(() => props.animate, () => {
     }, 150);
   } else {
     clearInterval(interval);
+  }
+});
+
+onMounted(() => {
+  if (props.animate) {
+    interval = setInterval(() => {
+      if (sequence.value === 11) {
+        sequence.value = 0;
+      } else {
+        sequence.value += 1;
+      }
+    }, 150);
   }
 });
 </script>

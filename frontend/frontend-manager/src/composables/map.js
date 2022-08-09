@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 
-const mapOpen = ref(false);
+const mapOpen = ref(true);
 
 export function mapStore() {
   return { mapOpen };

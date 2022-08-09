@@ -19,7 +19,7 @@ const poiToUpdate = ref({});
 const latlng = ref({});
 const zoom = ref(15);
 const minZoom = ref(1);
-const maxZoom = ref(19);
+const maxZoom = ref(22);
 const center = ref([46.7809153620790993954869918525218963623046875,
   6.64862875164097832936249687918461859226226806640625]);
 
@@ -30,6 +30,8 @@ const getPaths = computed(() => store.getters['biovers/getPaths']);
 const ownOrPublic = computed(() => store.getters['biovers/ownOrPublic']);
 const getCurrentBioverId = computed(() => store.getters['biovers/getCurrentBioverId']);
 const bioverIsEditable = computed(() => store.getters['biovers/bioverIsEditable']);
+
+const mapUrl = computed(() => `https://api.maptiler.com/maps/50a99959-5522-4b4a-8489-28de9d3af0ed/{z}/{x}/{y}.png?key=${process.env.VUE_APP_MAP_KEY}`);
 
 function getPosition(event) {
   if (event.latlng && getCurrentBioverId.value !== -1) {
@@ -51,7 +53,7 @@ function openPoiEdition(event) {
   <div class="map-layout">
     <l-map :min-zoom="minZoom" :max-zoom="maxZoom" v-model="zoom" :zoom="zoom"
       :center="center" @click="getPosition">
-      <l-tile-layer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'></l-tile-layer>
+      <l-tile-layer :url='mapUrl'></l-tile-layer>
       <div v-for="(path, index) in getPaths" :key="index">
         <Path v-if="path.display" :path="path" />
       </div>

@@ -18,7 +18,7 @@ onActivated(async () => {
 
 <template>
   <div>
-    <div v-if="mapOpen" style="height: 50vh">
+    <div v-if="mapOpen" style="height: 65vh">
       <Map />
     </div>
     <div class="upload-layout">

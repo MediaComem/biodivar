@@ -143,7 +143,6 @@ function handleExceed() {
 }
 
 async function save() {
-  console.log('TEST');
   if (pois.value.length > 0) {
     const createdPois = await poiAPI.savePois(pois.value);
     updateImportPois(createdPois.data.data);

@@ -143,24 +143,25 @@ onDeactivated(() => {
 
 <template>
   <div>
-    <div style="display: flex; flex-wrap: wrap">
-      <div>
+    <div style="display: flex; flex-wrap: wrap; border-bottom: 1px solid white">
+      <div class="button-border-layout">
         <button class="button-layout button-selection" @click="selectTab(0)">
           <img class="text-margin" src="../../../assets/tables/biovers.svg" alt="biovers">
           <p class="text-margin">Biovers</p>
         </button>
       </div>
-      <div v-for="biovers in bioversToDisplay" :key="biovers.name">
+      <div v-for="biovers in bioversToDisplay" :key="biovers.name" class="button-border-layout" :class="{'remove-border': biovers.biover.id === currentBioversId}">
         <button
+          :class="{'button-unfocus': biovers.biover.id !== currentBioversId}"
           class="button-layout button-biovers"
         >
-            <World :animate="biovers.biover.id === currentBioversId"/>
+            <World :animate="biovers.biover.id === currentBioversId" @click="selectTab(biovers.biover.id)"/>
             <p class="text-margin" @click="selectTab(biovers.biover.id)">{{ biovers.title }}</p>
             <img src="../../../assets/tables/cross.svg" alt="close" @click="closeTab(biovers.biover.id)">
         </button>
       </div>
     </div>
-    <div>
+    <div class="border-element">
       <div v-show="currentBioversId === 0">
         <el-tree ref="tree" node-key="id" :data="data" show-checkbox @check="selectedBiovers"/>
       </div>
@@ -175,30 +176,43 @@ onDeactivated(() => {
 </template>
 
 <style scoped>
+.remove-border {
+  border-bottom: 1px solid black !important;
+  margin-bottom: -1px;
+}
+
+.button-unfocus {
+  background-color: #666666 !important;
+  color: white;
+}
+
+.button-border-layout {
+  border-width: 1px 1px 0px 1px;
+  border-style: solid;
+  border-color: #FFFFFF;
+  border-radius: 2px 2px 0px 0px;
+  margin-right: 5px;
+}
+
 .button-layout {
   width: auto;
   height: 40px;
   display: flex;
   align-items: center;
   cursor: pointer;
-  margin-right: 5px;
+  border: 0;
 }
 
 .button-selection {
-  background-color: #F2F2F2;
-  border-width: 1px 1px 0px 1px;
-  border-style: solid;
-  border-color: #FFFFFF;
-  border-radius: 2px 2px 0px 0px;
+  background-color: white;
+  border: 0;
 }
 
 .button-biovers {
   color: white;
   background-color: black;
-  border-width: 1px 1px 0px 1px;
   border-style: solid;
   border-color: white;
-  border-radius: 2px 2px 0px 0px;
 }
 
 .text-margin {
@@ -207,5 +221,11 @@ onDeactivated(() => {
 
 .data-layout {
   background-color: black;
+}
+
+.border-element {
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
+  border-color: #FFFFFF;
 }
 </style>

@@ -2,7 +2,10 @@ import axios from 'axios';
 
 export default {
   getSymbol(symbol) {
-    return `${process.env.VUE_APP_URL}/symbol/id?id=${symbol.id}`;
+    if (symbol && symbol.id) {
+      return `${process.env.VUE_APP_URL}/symbol/id?id=${symbol.id}`;
+    }
+    return '';
   },
 
   getSymbolAr(symbol) {
