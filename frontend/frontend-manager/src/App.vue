@@ -6,6 +6,7 @@
 import Layout from '@/views/Layout.vue';
 import axios from 'axios';
 import { mapActions } from 'vuex';
+import setupKeepAlive from './composable/keepAlive';
 
 export default {
   name: 'Home',
@@ -15,12 +16,19 @@ export default {
   methods: {
     async checkLoggin() {
       try {
-        await axios.get(`${process.env.VUE_APP_URL}/login`, { withCredentials: true });
+        const resp = await axios.get(`${process.env.VUE_APP_URL}/login`, { withCredentials: true });
+        this.authenticate({
+          isAuthenticate: true,
+          username: resp.data.data,
+        });
+        setupKeepAlive(this.authenticate, this.$router);
+        this.$router.push('Biovers');
       } catch (error) {
         this.authenticate({
           isAuthenticate: false,
           username: '',
         });
+        this.$router.push('Login');
       }
     },
     ...mapActions('auth', ['authenticate']),

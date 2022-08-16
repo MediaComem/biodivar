@@ -46,6 +46,7 @@
 import axios from 'axios';
 import { mapActions } from 'vuex';
 import { ElNotification } from 'element-plus';
+import setupKeepAlive from '../../composable/keepAlive';
 
 export default {
   watch: {
@@ -77,6 +78,7 @@ export default {
               isAuthenticate: true,
               username: response.data.data,
             });
+            setupKeepAlive(this.authenticate, this.$router);
             this.$router.push('Biovers');
           }).catch((error) => {
             this.authenticate({
