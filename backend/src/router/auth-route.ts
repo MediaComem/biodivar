@@ -34,7 +34,7 @@ authRoutes.push({
   path: '/login',
   handler: function (request, h) {
     if (request.auth.isAuthenticated) {
-      return successResponse(h, 'Login Success');
+      return successResponse(h, 'Login Success', request.auth.credentials);
     } else {
       return failureResponse(h, 'You need to be auth to make an api request')
     }

@@ -83,6 +83,9 @@ poiRoutes.push({
       const pois = request.payload as PoiModels;
       const results = [];
       for (let i = 0; i < pois.length; i++) {
+        if (!pois[i].author) {
+          pois[i].author = request.state.biodivar.id;
+        }
         const result = await createPoi(
           request.server.app.prisma,
           pois[i],

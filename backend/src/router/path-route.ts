@@ -73,6 +73,9 @@ pathRoutes.push({
       const paths = request.payload as PathModels;
       const results = [];
       for (let i = 0; i < paths.length; i++) {
+        if (!paths[i].author) {
+          paths[i].author = request.state.biodivar.id;
+        }
         const result = await createPath(
           request.server.app.prisma,
           paths[i],

@@ -56,8 +56,7 @@ export const alreadyLogged = async (request: Request, session: any) => {
   if (!account) {
     return { valid: false };
   }
-
-  return { valid: true, credentials: account };
+  return { valid: true, credentials: account.username };
 };
 
 export const resetPassword = async (request: Request, h: ResponseToolkit) => {
