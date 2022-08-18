@@ -58,7 +58,8 @@ export default {
     return {
       dialogVisible: false,
       formLabelWidth: '140px',
-      form: {
+      form: {},
+      defaultForm: {
         name: '',
         is_public: true,
         is_editable: false,
@@ -69,9 +70,13 @@ export default {
     async save() {
       const newBiover = await getData.createBiover(this.form);
       this.addNewBiover(newBiover.data.data);
+      this.form = JSON.parse(JSON.stringify(this.defaultForm));
       this.$emit('closeDialog');
     },
     ...mapActions('biovers', ['addNewBiover']),
+  },
+  mounted() {
+    this.form = JSON.parse(JSON.stringify(this.defaultForm));
   },
 };
 </script>

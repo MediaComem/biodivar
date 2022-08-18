@@ -110,6 +110,30 @@
           </el-option>
         </el-select>
       </el-form-item>
+      <el-form-item label="Elevation du symbole"
+      :label-width="formLabelWidth">
+        <el-input-number v-model="form.symbol.elevation_ground" :precision="2" :step="1"/>
+      </el-form-item>
+      <el-form-item label="is_facing_user" :label-width="formLabelWidth">
+        <div>
+          <el-radio v-model="form.symbol.is_facing_user" :label="true" size="large">
+            {{ $t('poi.configurator.yes') }}
+          </el-radio>
+          <el-radio v-model="form.symbol.is_facing_user" :label="false" size="large">
+            {{ $t('poi.configurator.no') }}
+          </el-radio>
+        </div>
+      </el-form-item>
+      <el-form-item label="is_visible" :label-width="formLabelWidth">
+        <div>
+          <el-radio v-model="form.symbol.is_visible" :label="true" size="large">
+            {{ $t('poi.configurator.yes') }}
+          </el-radio>
+          <el-radio v-model="form.symbol.is_visible" :label="false" size="large">
+            {{ $t('poi.configurator.no') }}
+          </el-radio>
+        </div>
+      </el-form-item>
       <el-form-item label="Hauteur du symbole"
       :label-width="formLabelWidth">
         <el-input-number v-model="form.symbol.height" :precision="2" :step="1"/>
@@ -273,7 +297,8 @@ export default {
         value: 'touch',
         label: this.$i18n.t('poi.configurator.action.touch'),
       }],
-      form: {
+      form: {},
+      defaultForm: {
         title: '',
         title_is_visible: true,
         subtitle: '',
@@ -284,15 +309,15 @@ export default {
           alt: 550,
         },
         radius: 2,
-        style_type: 'Sphere',
+        style_type: 'sphere',
         style_stroke: false,
         style_stroke_width: 1.5,
         style_fill: false,
-        style_elevation: 15.5,
-        style_elevation_ground: 33.3,
-        style_noise: 15.2,
+        style_elevation: 0,
+        style_elevation_ground: 0,
+        style_noise: 0,
         style_is_visible: true,
-        visible_from: 455.3,
+        visible_from: 50,
         trigger_mode: 'location',
         symbol: {
           media_type: '',
@@ -300,8 +325,8 @@ export default {
           ar_url: '',
           media_type_ar: '',
           elevation_ground: 0,
-          is_facing_user: false,
-          is_visible: false,
+          is_facing_user: true,
+          is_visible: true,
           width: 50,
           height: 40,
         },
@@ -310,7 +335,7 @@ export default {
             media_type: '',
             url: '',
             elevation_ground: 0,
-            is_facing_user: false,
+            is_facing_user: true,
             is_visible: true,
             caption: 'Test',
             caption_visible: true,
@@ -430,11 +455,13 @@ export default {
       const newPoi = await poi.savePoi(this.form);
       this.addNewPoi(newPoi.data.data);
       this.showCreationDialog = false;
+      this.form = JSON.parse(JSON.stringify(this.defaultForm));
       this.$emit('closeDialog');
     },
     ...mapActions('biovers', ['addNewPoi']),
   },
   mounted() {
+    this.form = JSON.parse(JSON.stringify(this.defaultForm));
     this.upload = this.$refs.upload;
     this.uploadSymbol = this.$refs.symbol;
     this.uploadMedia = this.$refs.media;

@@ -1,7 +1,7 @@
 <template>
   <l-map :min-zoom='minZoom' :max-zoom='maxZoom' v-model='zoom' v-model:zoom='zoom'
     :center='center' @click="getPosition">
-      <l-tile-layer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'></l-tile-layer>
+      <l-tile-layer :url="mapUrl"></l-tile-layer>
       <div v-for="(path, index) in getPaths" :key="index">
         <Path v-if="path.display" :path="path" />
       </div>
@@ -60,6 +60,9 @@ export default {
     };
   },
   computed: {
+    mapUrl() {
+      return `https://api.maptiler.com/maps/50a99959-5522-4b4a-8489-28de9d3af0ed/{z}/{x}/{y}.png?key=${process.env.VUE_APP_MAP_KEY}`;
+    },
     ...mapGetters('biovers', ['getPois', 'getPaths', 'ownOrPublic', 'getCurrentBioverId', 'bioverIsEditable']),
   },
   methods: {
