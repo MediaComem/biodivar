@@ -1,7 +1,31 @@
 <template>
   <l-map :min-zoom='minZoom' :max-zoom='maxZoom' v-model='zoom' v-model:zoom='zoom'
     :center='center' @click="getPosition">
-      <l-tile-layer :url="mapUrl"></l-tile-layer>
+    <l-tile-layer
+      url="https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg"
+      layer-type="base"
+      name="Couleurs"
+      attribution='Données &copy; <a href="https://www.swisstopo.admin.ch">Swisstopo</a>'
+    ></l-tile-layer>
+    <l-tile-layer
+      url="https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-grau/default/current/3857/{z}/{x}/{y}.jpeg"
+      layer-type="base"
+      name="Gris"
+      attribution='Données &copy; <a href="https://www.swisstopo.admin.ch">Swisstopo</a>'
+    ></l-tile-layer>
+    <l-tile-layer
+      url="https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.swissimage/default/current/3857/{z}/{x}/{y}.jpeg"
+      layer-type="base"
+      name="Sat"
+      attribution='Données &copy; <a href="https://www.swisstopo.admin.ch">Swisstopo</a>'
+    ></l-tile-layer>
+    <l-tile-layer
+      :url="mapUrl"
+      layer-type="base"
+      name="Base"
+      attribution=""
+    ></l-tile-layer>
+      <l-control-layers />
       <div v-for="(path, index) in getPaths" :key="index">
         <Path v-if="path.display" :path="path" />
       </div>
@@ -26,6 +50,7 @@
 import {
   LMap,
   LTileLayer,
+  LControlLayers,
 } from '@vue-leaflet/vue-leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -40,6 +65,7 @@ export default {
   components: {
     LMap,
     LTileLayer,
+    LControlLayers,
     Poi,
     Path,
     PoiCreator,
