@@ -6,13 +6,13 @@
   </l-circle>
   <l-marker @click="updatePoi"
   :lat-lng='[poi.element.coordinate.lat, poi.element.coordinate.long]'
-  :draggable="true" @dragstart="test" @dragend="test" @add="uploadDone">
+  :draggable="true" @add="uploadDone">
     <l-tooltip v-if="poi.element.title_is_visible || poi.element.subtitle_is_visible"
     :options="{ permanent: true, direction: 'top'}">
       <p v-if="poi.element.title_is_visible">{{ poi.element.title }}</p>
       <p v-if="poi.element.subtitle_is_visible">{{ poi.element.subtitle }}</p>
     </l-tooltip>
-    <l-icon v-if="poi.element.symbol && poi.element.symbol.url !== ''"
+    <l-icon v-if="poi.element.symbol"
     :icon-url="iconUrl" :icon-size="iconSize"/>
   </l-marker>
 </template>
@@ -69,9 +69,6 @@ export default {
       this.$emit('updatePoi', this.poi.element);
     },
     ...mapActions('biovers', ['uploadDone']),
-    test() {
-      console.log(this.poi);
-    },
   },
   mounted() {
     this.url = Symbol.getSymbol(this.poi.element.symbol);
