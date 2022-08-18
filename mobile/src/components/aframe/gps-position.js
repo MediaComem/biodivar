@@ -198,7 +198,8 @@ AFRAME.registerComponent('gps-position', {
       this._onPositionUpdate({detail: this.system.updatedPosition});
     // Otherwise hide the entity and wait for the gps pos to make it visible again
     } else {
-      this.el.setAttribute('visible', false);
+      // TODO change this, it's buggy when Vue.js reset the component
+      //this.el.setAttribute('visible', false);
     }
     window.addEventListener('gps-position-set', this._onPositionSet);
     window.addEventListener('gps-position-update', this._onPositionUpdate);

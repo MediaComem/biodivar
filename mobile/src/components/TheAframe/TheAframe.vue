@@ -15,7 +15,7 @@
 
   const { selectedBiovers } = useStore();
 
-  console.log(selectedBiovers.value);
+  // console.log(selectedBiovers.value);
 
 </script>
 
@@ -24,20 +24,17 @@
     renderer="colorManagement: true"
     gps-position="minAccuracy: 100; minDistance: 2; cam3DoF: true"
     webxr="requiredFeatures: hit-test,local-floor,dom-overlay; overlayElement: [data-role='hud']; referenceSpaceType: local-floor"
-    ar-hit-test="src: assets/ar-hit-test-marker.png"
-    hit-test-marker
+    aar-hit-test="src: assets/ar-hit-test-marker.png"
+    ahit-test-marker
     vr-mode-ui="enabled: false"
     enter-ar-on-init
   >
-    <!-- PRELOAD OR NOT ?<a-assets>
-      <a-asset-item id="marker-1" src="assets/marker1.gltf"></a-asset-item>
-      <a-asset-item id="marker-2" src="assets/marker2.gltf"></a-asset-item>
-    </a-assets> -->
 
     <a-entity faces-north>
       <template v-for="poi of selectedBiovers.Poi">
         <a-entity
-          :agps-position="`latitude: ${poi.coordinate.lat}; longitude: ${poi.coordinate.long}`"
+          position="0 0 10000"
+          :gps-position="`latitude: ${poi.coordinate.lat}; longitude: ${poi.coordinate.long}`"
           :visible-from="`distance: ${poi.visible_from}`"
           :poi-radius="`
             radius: ${poi.radius};
@@ -58,7 +55,7 @@
           <!-- todo handle other media -->
           <template v-for="media of poi.media">
             <a-entity
-              :sound="`src: url(${getMediaUrl(media)}); on: click;`"
+              :sound="`src: url(${getMediaUrl(media)}); on: click; positional: false;`"
               :emit-when-near="`distance: ${poi.radius};`"
               :position="`0 ${poi.symbol.elevation_ground} 0`"
             ></a-entity>
