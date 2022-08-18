@@ -6,10 +6,12 @@
   import { ref } from '@vue/reactivity';
   import { useStore } from './composables/store.js';
   import { storage } from './composables/localStorage.js';
+  import { keepAlive } from './composables/keepAlive.js';
   import { isLogged } from './utils/api.js';
 
   const { isAuth, showAggreement, forgotPassword, send, username } = useStore();
-  const { getUser, removeUser } = storage();
+  const { getUser, removeUser, storeUser } = storage();
+  const { setupKeepAlive } = keepAlive();
 
   const isLoading = ref(true);
 
@@ -18,10 +20,17 @@
     if (resp?.statusCode !== 200) {
       isAuth.value = false;
       removeUser();
+      username.value = '';
       return;
-    } 
+    }
     isAuth.value = true;
     username.value = getUser();
+    // In case of the login is done on the administration view
+    if (!username.value) {
+      username.value = resp.data;
+      storeUser(username.value);
+    }
+    setupKeepAlive();
   });
 
 </script>

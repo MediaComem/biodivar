@@ -29,7 +29,7 @@
 
     <the-login-connection v-if="page === 'connexion'" @register="page = 'inscription'" />
 
-    <the-login-register v-if="page === 'inscription'" @connection="page = 'connexion'" @register="page = connexion"/>
+    <the-login-register v-if="page === 'inscription'" @connection="page = 'connexion'" @register="page = 'connexion'"/>
     
     <the-login-footer></the-login-footer>
   </div>

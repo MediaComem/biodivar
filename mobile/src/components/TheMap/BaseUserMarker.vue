@@ -22,6 +22,14 @@
   }, { deep: true } );
 
   onMounted(() => {
+    const markerIconSvg = L.icon({
+      iconUrl: './assets/bluedot_D.svg',
+      iconSize: [80, 80],
+      className: 'rotated-marker-svg'
+    });
+
+    const markerElementSvg = L.marker(position.value, {icon: markerIconSvg}).addTo(map.value);
+
     marker = L.rotatedMarker(position.value, {
         rotationAngle: yaw.value,
         draggable: true,
@@ -38,3 +46,9 @@
 <template>
     
 </template>
+
+<style>
+.rotated-marker-svg {
+  z-index: 100001 !important;
+}
+</style>

@@ -6,6 +6,10 @@ export function getBiovers() {
   return fetchJson(API + 'biovers');
 }
 
+export function getBioversByUser() {
+  return fetchJson(API + 'biovers/user');
+}
+
 export function isLogged() {
   return fetchJson(API + 'login');
 }

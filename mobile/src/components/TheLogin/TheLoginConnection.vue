@@ -3,10 +3,13 @@
   import { ref } from '@vue/reactivity';
   import { useStore } from '../../composables/store.js';
   import { storage } from '../../composables/localStorage.js';
+  import { keepAlive } from '../../composables/keepAlive.js';
 
   const { isAuth, username, forgotPassword } = useStore();
 
   const { storeUser } = storage();
+
+  const { setupKeepAlive } = keepAlive();
 
   const error = ref(false);
 
@@ -20,7 +23,9 @@
     const resp = await login(username.value, password.value);
     if (resp?.statusCode === 200) {
       isAuth.value = true;
-      storeUser(username.value);
+      storeUser(resp.data);
+      username.value = resp.data;
+      setupKeepAlive();
     } else {
       error.value = true;
     }

@@ -8,12 +8,12 @@
   import { useRouter } from '../composables/router.js';
   import { useStore } from '../composables/store.js';
   import { storage } from '../composables/localStorage.js';
-  import { logout, getBiovers } from '../utils/api.js';
+  import { logout, getBiovers, getBioversByUser } from '../utils/api.js';
   import { isMobileDevice } from '../utils/device.js';
 
   import BaseMap from './TheMap/BaseMap.vue';
 
-  const { section, isMobileOrTablet, isIOS, isAuth, biovers, mapOpen } = useStore();
+  const { section, isMobileOrTablet, isIOS, isAuth, biovers, mapOpen, username } = useStore();
 
   const { removeUser } = storage();
 
@@ -26,6 +26,7 @@
     if (resp?.statusCode === 200) {
       isAuth.value = false;
       removeUser();
+      username.value = '';
     }
   }
 
@@ -33,16 +34,25 @@
     menu.value = false;
   }
 
-  onMounted(() => {
+   onMounted(async () => {
     isMobileOrTablet.value = isMobileDevice();
     isIOS.value = AFRAME.utils.device.isIOS();
 
     biovers.value = [];
 
-    getBiovers().then((resp) => {
-      resp.data.forEach((biover) => {
-        biovers.value.push(biover);
-      })
+    const publicBiovers = await getBiovers();
+    const own = await getBioversByUser();
+
+    const difference = publicBiovers.data.filter(
+      (x) => !own.data.some((present) => present.id === x.id),
+    );
+
+    own.data.forEach((biover) => {
+      biovers.value.push(biover);
+    })
+
+    difference.forEach((biover) => {
+      biovers.value.push(biover);
     })
   });
 </script>
@@ -119,6 +129,7 @@
     max-width: 1280px;
     min-height: 100%;
     width: 100%;
+    padding-bottom: 56px;
   }
 
   .logo {
