@@ -47,7 +47,7 @@ mediaRoutes.push({
   path: '/media/create',
   options: {
     payload: {
-      maxBytes: 1000 * 1000 * 15,
+      maxBytes: 1000 * 1000 * 50,
       parse: true,
       allow: 'multipart/form-data',
       multipart: { output: 'stream' },
