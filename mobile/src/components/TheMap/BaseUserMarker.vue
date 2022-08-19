@@ -28,11 +28,10 @@
       className: 'rotated-marker-svg'
     });
 
-    const markerElementSvg = L.marker(position.value, {icon: markerIconSvg}).addTo(map.value);
-
     marker = L.rotatedMarker(position.value, {
         rotationAngle: yaw.value,
         draggable: true,
+        icon: markerIconSvg,
     }).addTo(map.value);
   })
 
