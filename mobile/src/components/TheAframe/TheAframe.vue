@@ -10,6 +10,7 @@
   import '../aframe/enter-ar-on-init';
   import '../aframe/poi-radius';
   import '../aframe/emit-when-near';
+  import '../aframe/animation-mixer';
 
   import { getSymbolUrl, getMediaUrl } from '../../utils/api.js';
 
@@ -50,6 +51,7 @@
             :gltf-model="`url(${getSymbolUrl(poi.symbol.id)})`"
             :position="`0 ${poi.symbol.elevation_ground} 0`"
             :visible="`${poi.symbol.is_visible ? 'true' : 'false'}`"
+            animation-mixer
           ></a-entity>
 
           <!-- todo handle other media -->
