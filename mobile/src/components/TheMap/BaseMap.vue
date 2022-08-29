@@ -45,6 +45,7 @@
 
 <style scoped>
   #map {
+    position: absolute !important;
     height: 90vh;
     width: 90vw;
     top: 5vh;

@@ -12,6 +12,7 @@
       <the-hud-map data-role="hud-grid-map"></the-hud-map>
       <div data-role="hud-grid-debug"></div>
     </div>
+    <slot></slot>
   </div>
 </template>
 

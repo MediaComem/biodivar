@@ -10,7 +10,7 @@ AFRAME.registerSystem('gps-position', {
     },
     cam3DoF: {
       type: 'boolean',
-      default: true
+      default: false
     }
   },
 

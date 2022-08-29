@@ -83,9 +83,10 @@
 
   <div v-else-if="section == 'ar'">
     <the-aframe></the-aframe>
-    <the-hud></the-hud>
-    <BaseMap v-if="mapOpen" />
-    <div v-if="mapOpen" class="dialog-map-overlay" @click="mapOpen = false"></div>
+    <the-hud>
+      <BaseMap v-if="mapOpen" />
+      <div v-if="mapOpen" class="dialog-map-overlay" @click="mapOpen = false"></div>
+    </the-hud>
   </div>
 
 </template>
