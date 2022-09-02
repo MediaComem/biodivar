@@ -5,7 +5,7 @@
   import { storage } from '../../composables/localStorage.js';
   import { keepAlive } from '../../composables/keepAlive.js';
 
-  const { isAuth, username, forgotPassword } = useStore();
+  const { isAuth, username, forgotPassword, section } = useStore();
 
   const { storeUser } = storage();
 
@@ -22,6 +22,7 @@
   async function checkAuth() {
     const resp = await login(username.value, password.value);
     if (resp?.statusCode === 200) {
+      section.value = 'admin';
       isAuth.value = true;
       storeUser(resp.data);
       username.value = resp.data;

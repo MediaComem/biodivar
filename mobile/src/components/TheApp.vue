@@ -4,6 +4,7 @@
   import Footer from './app/UIElement/Footer.vue';
 
   import TheAframe from './TheAframe/TheAframe.vue';
+  import Biovers from './TheAdmin/Biovers.vue';
   import TheHud from './TheHud/TheHud.vue';
   import { useRouter } from '../composables/router.js';
   import { useStore } from '../composables/store.js';
@@ -79,6 +80,25 @@
       </div>
       <Footer v-if="isMobileOrTablet" @click="menu = false"/>
     </base-modal>
+  </div>
+
+  <div v-else-if="section == 'admin'">
+    <base-modal style="text-align: center;">
+      <header>
+        <div class="logo" @click="menu = false">
+          <img alt="Biodivar" src="../assets/shared/logo.svg" />
+        </div>
+        <div class="account">
+          <img class="acount-image" alt="Account" src="../assets/shared/account_circle.svg" @click="menu = !menu">
+          <ul v-if="menu">
+            <li class="menu-item-divider font"><img class="menu-item" alt="Pencil" src="../assets/shared/edit.svg"> {{ $t('Header.Modify') }}</li>
+            <li @click="disconnect()" class="font"><img class="menu-item" alt="Disconnect" src="../assets/shared/logout.svg"> {{ $t('Header.Logout') }}</li>
+          </ul>
+          <div v-if="menu" class="dialog-overlay" @click="closeDialog()"/>
+        </div>
+      </header>
+      <Biovers />
+      </base-modal>
   </div>
 
   <div v-else-if="section == 'ar'">
