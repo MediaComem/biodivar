@@ -1,29 +1,23 @@
 <template>
-  <el-row :gutter="20" style="height: 50vh">
-    <el-col :span="24">
+  <div>
+    <div style="height: 50vh">
       <Map />
-    </el-col>
-  </el-row>
-  <el-row
-    :gutter="20"
-    v-if="currentBioversId !== 0"
-    style="margin-top: 2vh; margin-bottom: 2vh; margin-left: 0px;"
-  >
-    <el-col :span="12">
-      <GeoJsonImporter
-        v-if="bioversToDisplay.length > 0 && ownBiovers.length > 0"
-        :authorId="ownBiovers[0].owner"
-      />
-    </el-col>
-    <el-col :span="12">
-      <Filter v-if="bioversToDisplay.length > 0" />
-    </el-col>
-  </el-row>
-  <el-row :gutter="20">
-    <el-col :span="24">
+    </div>
+    <div class="upload-layout">
+      <div class="import">
+        <GeoJsonImporter
+          v-if="bioversToDisplay.length > 0 && ownBiovers.length > 0"
+          :authorId="ownBiovers[0].owner"
+        />
+      </div>
+      <div class="filter">
+        <Filter v-if="bioversToDisplay.length > 0" />
+      </div>
+    </div>
+    <div>
       <BioversSelection />
-    </el-col>
-  </el-row>
+    </div>
+  </div>
 </template>
 <script>
 import { mapActions, mapState } from 'vuex';
@@ -52,4 +46,21 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.upload-layout {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.import {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+.filter {
+  grid-area: 1 / 2 / 2 / 3;
+}</style>

@@ -1,4 +1,5 @@
 <template>
+<div id="biover-selection">
   <el-tabs v-model="editableTabsValue"
     type="card" class="demo-tabs"
     @tab-click="selectTab">
@@ -22,6 +23,7 @@
       </el-tab-pane>
   </el-tabs>
   <BioverCreator :showDialog="showDialog" @close-dialog="showDialog = false"/>
+</div>
 </template>
 
 <script>
@@ -132,12 +134,57 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .demo-tabs > .el-tabs__content {
   padding: 32px;
-  background-color: #f4f5f7;
-  color: #6b778c;
+  background-color: #323232;
+  color: white;
   font-size: 32px;
   font-weight: 600;
+  border: 1px solid white;
+}
+
+.demo-tabs > .el-tabs__header {
+  margin: 0px;
+}
+
+.el-tabs__item.is-active {
+  color: white !important;
+  border-bottom: 0px !important;
+}
+
+.el-tabs__item {
+  color: white !important;
+}
+
+.el-tabs__item {
+  color: white;
+  margin-right: 20px;
+  background-color: #323232;
+}
+
+.el-tabs--card>.el-tabs__header .el-tabs__nav {
+  border: 0px !important;
+}
+
+.el-tabs--card>.el-tabs__header .el-tabs__item {
+  border-bottom: 1px solid;
+  border-bottom-color: white !important;
+  border-left: 1px solid white;
+  border-top: 1px solid white;
+  border-right: 1px solid white;
+}
+
+.el-tabs--card>.el-tabs__header .el-tabs__item:first-child {
+  border-left: 1px solid white !important;
+}
+
+.el-tabs--card>.el-tabs__header {
+  border: 0px !important;
+}
+
+#biover-selection>.el-tabs--card>.el-tabs__header .el-tabs__item:first-child {
+  background-color: #F2F2F2;
+  color: black !important;
 }
 </style>
