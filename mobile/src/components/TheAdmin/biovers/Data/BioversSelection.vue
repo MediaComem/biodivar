@@ -3,10 +3,13 @@
   <el-tabs v-model="editableTabsValue"
     type="card" class="demo-tabs"
     @tab-click="selectTab">
-      <el-tab-pane
-      label="BIOVERS"
-      name="1"
-      >
+      <el-tab-pane name="1">
+        <template #label>
+          <span class="custom-tabs-label">
+            <p class="material-symbols-sharp" style="margin:0">help</p>
+            <span>Biovers</span>
+          </span>
+        </template>
       <el-tree ref="tree" node-key="id" :data="data" show-checkbox @check="selectedBiovers"/>
       <el-button style="display: flex;" @click="showDialog = true">
         {{ $t('biover.create') }}
