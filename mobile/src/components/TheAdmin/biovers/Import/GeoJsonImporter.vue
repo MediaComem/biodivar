@@ -41,8 +41,8 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 
-import poiAPI from '../../../../api/poi';
-import pathAPI from '../../../../api/path';
+import { savePois, savePaths } from '../../../../utils/api.js';
+
 
 export default {
   name: 'GeoJsonImporter',
@@ -62,6 +62,7 @@ export default {
   },
   methods: {
     handleExceed() {
+      console.log(this.upload);
       if (this.upload.uploadFiles.length > 1) {
         this.upload.uploadFiles.splice(0, 1);
       }
@@ -153,13 +154,13 @@ export default {
     },
     async save() {
       if (this.pois.length > 0) {
-        const createdPois = await poiAPI.savePois(this.pois);
-        this.updateImportPois(createdPois.data.data);
+        const createdPois = await savePois(this.pois);
+        this.updateImportPois(createdPois.data);
       }
 
       if (this.paths.length > 0) {
-        const createdPaths = await pathAPI.savePaths(this.paths);
-        this.updateImportPaths(createdPaths.data.data);
+        const createdPaths = await savePaths(this.paths);
+        this.updateImportPaths(createdPaths.data);
       }
 
       this.resetUpload();

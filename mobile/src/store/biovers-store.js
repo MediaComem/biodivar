@@ -1,4 +1,4 @@
-import bioversApi from '../api/biovers';
+import { getBiovers, getBioversByUser } from '../utils/api.js';
 import filterUtils from '../utils/filters';
 
 export const bioversStore = {
@@ -251,17 +251,17 @@ export const bioversStore = {
   },
   actions: {
     async getBiovers({ dispatch, commit, state }) {
-      const ownerBiovers = await bioversApi.getBioversByUser();
-      const publicB = await bioversApi.getPublicBiovers();
-      const difference = publicB.data.data.filter(
-        (x) => !ownerBiovers.data.data.some((present) => present.id === x.id),
+      const ownerBiovers = await getBioversByUser();
+      const publicB = await getBiovers();
+      const difference = publicB.data.filter(
+        (x) => !ownerBiovers.data.some((present) => present.id === x.id),
       );
-      commit('SAVE_OWNER_BIOVERS', ownerBiovers.data.data);
+      commit('SAVE_OWNER_BIOVERS', ownerBiovers.data);
       commit('SAVE_PUBLIC_BIOVERS', difference);
       state.userPreference.forEach((pref) => {
-        let bioverIndex = ownerBiovers.data.data.findIndex((biover) => biover.id === pref);
+        let bioverIndex = ownerBiovers.data.findIndex((biover) => biover.id === pref);
         if (bioverIndex !== -1) {
-          const biover = ownerBiovers.data.data[bioverIndex];
+          const biover = ownerBiovers.data[bioverIndex];
           commit('SELECT_BIOVER', biover);
           dispatch('addPoiToDisplay', biover.id);
           dispatch('addPathToDisplay', biover.id);

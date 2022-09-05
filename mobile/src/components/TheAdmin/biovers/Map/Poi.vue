@@ -26,7 +26,7 @@ import {
 } from '@vue-leaflet/vue-leaflet';
 import { mapActions, mapGetters } from 'vuex';
 
-import Symbol from '../../../../api/symbol';
+import { getIcon } from '../../../../utils/api.js';
 
 export default {
   props: {
@@ -36,7 +36,7 @@ export default {
     poi: {
       deep: true,
       handler() {
-        this.url = Symbol.getSymbol(this.poi.element.symbol);
+        this.url = getIcon(this.poi.element.symbol);
       },
     },
   },
@@ -71,7 +71,7 @@ export default {
     ...mapActions('biovers', ['uploadDone']),
   },
   mounted() {
-    this.url = Symbol.getSymbol(this.poi.element.symbol);
+    this.url = getIcon(this.poi.element.symbol);
   },
 };
 </script>

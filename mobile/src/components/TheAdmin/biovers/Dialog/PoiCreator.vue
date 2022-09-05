@@ -251,9 +251,7 @@ import {
   Scene,
 } from 'troisjs';
 
-import poi from '../../../../api/poi';
-import symbol from '../../../../api/symbol';
-import media from '../../../../api/media';
+import { savePoi, saveSymbol, saveMedia } from '../../../../utils/api.js';
 
 export default {
   emits: ['closeDialog'],
@@ -430,30 +428,30 @@ export default {
       if (this.arSymbol) {
         const formData = new FormData();
         formData.append('file', this.arSymbol);
-        const path = await symbol.save(formData);
-        if (path.data.data) {
-          this.form.symbol.ar_url = path.data.data;
+        const path = await saveSymbol(formData);
+        if (path.data) {
+          this.form.symbol.ar_url = path.data;
         }
       }
       if (this.symbolFile) {
         const formData = new FormData();
         formData.append('file', this.symbolFile);
-        const path = await symbol.save(formData);
-        if (path.data.data) {
-          this.form.symbol.url = path.data.data;
+        const path = await saveSymbol(formData);
+        if (path.data) {
+          this.form.symbol.url = path.data;
         }
       }
       if (this.mediaInput) {
         const formData = new FormData();
         formData.append('file', this.mediaInput);
-        const path = await media.save(formData);
-        if (path.data.data) {
-          this.form.media[0].url = path.data.data;
+        const path = await saveMedia(formData);
+        if (path.data) {
+          this.form.media[0].url = path.data;
         }
       }
       this.form.biovers = this.currentBioversId;
-      const newPoi = await poi.savePoi(this.form);
-      this.addNewPoi(newPoi.data.data);
+      const newPoi = await savePoi(this.form);
+      this.addNewPoi(newPoi.data);
       this.showCreationDialog = false;
       this.form = JSON.parse(JSON.stringify(this.defaultForm));
       this.$emit('closeDialog');

@@ -8,14 +8,15 @@
     "preview": "vite preview --port 8080"
   },
   "dependencies": {
-    "axios": "^0.27.2",
-    "element-plus": "^2.2.15",
+    "@vue-leaflet/vue-leaflet": "^0.6.1",
+    "element-plus": "^1.3.0-beta.9",
     "splitting": "^1.0.6",
+    "three": "^0.134.0",
+    "troisjs": "^0.3.4",
     "vue": "^3.2.25",
     "vue-i18n": "^9.2.2",
     "vuex": "^4.0.2",
-    "vuex-persist": "^3.1.3",
-    "@vue-leaflet/vue-leaflet": "^0.6.1"
+    "vuex-persist": "^3.1.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.2.0",

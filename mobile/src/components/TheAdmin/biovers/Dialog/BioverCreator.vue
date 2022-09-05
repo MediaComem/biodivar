@@ -41,7 +41,7 @@
 <script>
 import { mapActions } from 'vuex';
 
-import getData from '../../../../api/biovers';
+import { createBiover } from '../../../../utils/api.js';
 
 export default {
   watch: {
@@ -68,8 +68,9 @@ export default {
   },
   methods: {
     async save() {
-      const newBiover = await getData.createBiover(this.form);
-      this.addNewBiover(newBiover.data.data);
+      const newBiover = await createBiover(this.form);
+      console.log(newBiover);
+      this.addNewBiover(newBiover.data);
       this.form = JSON.parse(JSON.stringify(this.defaultForm));
       this.$emit('closeDialog');
     },

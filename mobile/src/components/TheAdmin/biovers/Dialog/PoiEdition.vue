@@ -251,9 +251,7 @@ import {
   Scene,
 } from 'troisjs';
 
-import poi from '../../../../api/poi';
-import symbol from '../../../../api/symbol';
-import media from '../../../../api/media';
+import { updatePoi, getSymbolUrl, getIcon, saveSymbol, getMediaUrl, saveMedia } from '../../../../utils/api.js';
 
 export default {
   emits: ['closeDialog'],
@@ -376,29 +374,29 @@ export default {
       if (this.arSymbol) {
         const formData = new FormData();
         formData.append('file', this.arSymbol);
-        const path = await symbol.save(formData);
-        if (path.data.data) {
-          this.form.symbol.ar_url = path.data.data;
+        const path = await saveSymbol(formData);
+        if (path.data) {
+          this.form.symbol.ar_url = path.data;
         }
       }
       if (this.symbolFile) {
         const formData = new FormData();
         formData.append('file', this.symbolFile);
-        const path = await symbol.save(formData);
-        if (path.data.data) {
-          this.form.symbol.url = path.data.data;
+        const path = await saveSymbol(formData);
+        if (path.data) {
+          this.form.symbol.url = path.data;
         }
       }
       if (this.mediaInput) {
         const formData = new FormData();
         formData.append('file', this.mediaInput);
-        const path = await media.save(formData);
-        if (path.data.data) {
-          this.form.media[0].url = path.data.data;
+        const path = await saveMedia(formData);
+        if (path.data) {
+          this.form.media[0].url = path.data;
         }
       }
-      const updatedPoi = await poi.updatePoi(this.form);
-      this.updatePoi(updatedPoi.data.data);
+      const updatedPoi = await updatePoi(this.form);
+      this.updatePoi(updatedPoi.data);
       this.$emit('closeDialog');
     },
     ...mapActions('biovers', ['updatePoi']),
@@ -420,8 +418,8 @@ export default {
       });
     }
     const symbolExtension = this.form.symbol.media_type_ar;
-    if (symbolExtension) {
-      const path = symbol.getSymbolAr(this.form.symbol);
+    if (symbolExtension && this.form.symbol) {
+      const path = getSymbolUrl(this.form.symbol.id);
       if (symbolExtension === 'gltf' || symbolExtension === 'glb') {
         this.arFile = path;
       } else if (symbolExtension === 'mp3' || symbolExtension === 'm4a' || symbolExtension === 'wav') {
@@ -431,11 +429,11 @@ export default {
       }
     }
     if (this.form.symbol.media_type) {
-      this.symbolImage = symbol.getSymbol(this.form.symbol);
+      this.symbolImage = getIcon(this.form.symbol);
     }
     if (this.form.media.url !== '') {
       const mediaExtension = this.form.media[0].media_type;
-      const path = media.getMedia(this.form.media[0]);
+      const path = getMediaUrl(this.form.media[0]);
       if (mediaExtension === 'gltf' || mediaExtension === 'glb') {
         this.mediaFile = path;
       } else if (mediaExtension === 'mp3' || mediaExtension === 'm4a' || mediaExtension === 'wav') {

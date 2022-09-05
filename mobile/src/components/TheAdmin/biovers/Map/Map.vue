@@ -40,10 +40,10 @@
           />
       </div>
     </l-map>
-    <!--PoiCreator :showDialog="showCreationDialog" :coordinate="latlng"
+    <PoiCreator :showDialog="showCreationDialog" :coordinate="latlng"
     @close-dialog="showCreationDialog = false" />
     <PoiEdition v-if="showEditionDialog" :poi="poiToUpdate" :showDialog="showEditionDialog"
-    @close-dialog="showEditionDialog = false" /-->
+    @close-dialog="showEditionDialog = false"/>
 </template>
 
 <script>
@@ -58,6 +58,8 @@ import { mapGetters } from 'vuex';
 
 import Poi from './Poi.vue';
 import Path from './Path.vue';
+import PoiCreator from '../Dialog/PoiCreator.vue';
+import PoiEdition from '../Dialog/PoiEdition.vue';
 
 const KEY = import.meta.env.VITE_APP_MAP_KEY;
 
@@ -68,6 +70,8 @@ export default {
     LControlLayers,
     Poi,
     Path,
+    PoiCreator,
+    PoiEdition,
   },
   data() {
     return {
