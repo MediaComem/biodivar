@@ -1,6 +1,5 @@
 export default {
     sort(data, sortElement, orderElement) {
-        console.log(data);
         if (data) {
             if (sortElement === '') {
                 return data;

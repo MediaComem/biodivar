@@ -19,11 +19,6 @@
           </th>
           <th class="column">
             <div class="header-value">
-              <p>COORDONNEES</p>
-            </div>
-          </th>
-          <th class="column">
-            <div class="header-value">
               <p class="material-symbols-sharp text-margin">visibility</p>
               <p>VISIBILITE</p>
               <img
@@ -57,7 +52,7 @@
                 @click="setSort('username')">
             </div>
           </th>
-          <th class="column before-last-column">
+          <th class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">edit</p>
               <p>MODIFIER LE</p>
@@ -69,6 +64,11 @@
                 @click="setSort('update_date')">
             </div>
           </th>
+          <th class="column before-last-column">
+            <div class="header-value">
+              <p>COORDONNEES</p>
+            </div>
+          </th>
           <th class="last-column last-column-header">
              <p class="material-symbols-sharp no-margin">more_vert</p>
           </th>
@@ -78,11 +78,11 @@
             <input type="checkbox" :checked="path.display" @click="selectElement(path)">
           </td>
           <td class="column second-column">{{ path.element.id }}</td>
-          <td class="column">{{ getCoordinate(path.element.coordinate) }}</td>
           <td class="column end-align">{{ path.element.visible_from }} M</td>
           <td class="column">{{ dateFormatter(path.element.creation_date) }}</td>
           <td class="column">{{ path.element.User.username }}</td>
-          <td class="column before-last-column">{{ dateFormatter(path.element.update_date) }}</td>
+          <td class="column">{{ dateFormatter(path.element.update_date) }}</td>
+          <td class="column before-last-column">{{ getCoordinate(path.element.coordinate) }}</td>
           <td class="last-column">
              <p class="material-symbols-sharp no-margin">more_vert</p>
           </td>
