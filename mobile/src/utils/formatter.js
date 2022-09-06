@@ -20,3 +20,13 @@ export function hourFormatter(date)  {
     const minutes = dateIfAddZero(t.getMinutes());
     return `${hours}h${minutes}`;
 }
+
+export function coordinateFormatter(coordinates) {
+  let t = '[';
+  coordinates.forEach((coordinate) => {
+    t = `${t}[${coordinate.long},${coordinate.lat},${coordinate.alt}],`;
+  });
+  t = t.slice(0, -1);
+  t = `${t}]`;
+  return t;
+}

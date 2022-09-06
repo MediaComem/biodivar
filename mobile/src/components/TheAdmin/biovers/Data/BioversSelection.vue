@@ -1,42 +1,35 @@
 <template>
-<div id="biover-selection">
-  <el-tabs v-model="editableTabsValue"
-    type="card" class="demo-tabs"
-    @tab-click="selectTab">
-      <el-tab-pane name="1">
-        <template #label>
-          <span class="custom-tabs-label">
-            <div style="display: flex; height: 115%;">
-              <p class="material-symbols-sharp tab-selection-label">help</p>
-              <span>Biovers</span>
-            </div>
-          </span>
-        </template>
-      <el-tree ref="tree" node-key="id" :data="data" show-checkbox @check="selectedBiovers"/>
-      <el-button style="display: flex;" @click="showDialog = true">
-        {{ $t('biover.create') }}
-      </el-button>
-    </el-tab-pane>
-    <el-tab-pane
-      v-for="item in bioversToDisplay"
-      :key="item.name"
-      :label="item.title"
-      :name="item.name"
-      >
-        <template #label>
-          <span class="custom-tabs-label">
-            <div style="display: flex;">
-              <World class="tab-selection-label" :animate="item.biover.id === currentBioversId"/>
-              <span>{{ item.title }}</span>
-            </div>
-          </span>
-        </template>
-        <DataTab :biovers="item.biover"
-        :bioverId="item.biover.id" />
-      </el-tab-pane>
-  </el-tabs>
-  <BioverCreator :showDialog="showDialog" @close-dialog="showDialog = false"/>
-</div>
+ <div>
+    <div style="display: flex; flex-wrap: wrap; border-bottom: 1px solid white">
+      <div class="button-border-layout">
+        <button class="button-layout button-selection" @click="selectTab(0)">
+          <p class="material-symbols-sharp text-margin">apps</p>
+          <p class="text-margin">Biovers</p>
+        </button>
+      </div>
+      <div v-for="biovers in bioversToDisplay" :key="biovers.name" class="button-border-layout" :class="{'remove-border': biovers.biover.id === currentBioversId}">
+        <button
+          :class="{'button-unfocus': biovers.biover.id !== currentBioversId}"
+          class="button-layout button-biovers"
+        >
+            <World :animate="biovers.biover.id === currentBioversId" @click="selectTab(biovers.biover.id)"/>
+            <p class="text-margin" @click="selectTab(biovers.biover.id)">{{ biovers.title }}</p>
+            <p class="material-symbols-sharp" @click="closeTab(biovers.biover.id)">close</p>
+        </button>
+      </div>
+    </div>
+    <div class="border-element">
+      <div v-show="currentBioversId === 0">
+        <el-tree ref="tree" node-key="id" :data="data" show-checkbox @check="selectedBiovers"/>
+      </div>
+      <div v-for="biovers in bioversToDisplay" :key="biovers.name" class="data-layout">
+        <DataTab
+          v-show="currentBioversId === biovers.biover.id"
+          :bioverId="biovers.biover.id" />
+      </div>
+    </div>
+    <BioverCreator :showDialog="showDialog" @close-dialog="showDialog = false"/>
+  </div>
 </template>
 
 <script>
@@ -83,8 +76,7 @@ export default {
     bioversToDisplay: {
       deep: true,
       handler(newVal) {
-        if (this.addBioversInTab && newVal.length > 0) {
-          this.editableTabsValue = ref(newVal[newVal.length - 1].name);
+        if (newVal.length > 0) {
           const checked = [];
           newVal.forEach((val) => {
             checked.push(val.biover.id);
@@ -92,6 +84,8 @@ export default {
           this.$nextTick(() => {
             this.$refs.tree.setCheckedKeys(checked, false);
           });
+        } else if (newVal.length === 0) {
+          this.$refs.tree.setCheckedKeys([], false);
         }
       },
     },
@@ -131,12 +125,20 @@ export default {
         this.removeBioverToDisplay(event.id);
       }
     },
-    selectTab(event) {
-      const tabIndex = this.bioversToDisplay.findIndex((b) => b.name === event.props.name);
+    selectTab(id) {
+      const tabIndex = this.bioversToDisplay.findIndex((biovers) => biovers.biover.id === id);
       if (tabIndex !== -1) {
         this.setCurrentBiover(this.bioversToDisplay[tabIndex].biover.id);
       } else {
         this.setCurrentBiover(0);
+      }
+    },
+    closeTab(id) {
+      this.removeBioverToDisplay(id);
+      if (this.bioversToDisplay.length === 0) {
+        this.setCurrentBiover(0);
+      } else {
+        this.setCurrentBiover(this.bioversToDisplay[this.bioversToDisplay.length - 1].biover.id);
       }
     },
     ...mapActions('biovers', ['addBioverToDisplay', 'removeBioverToDisplay', 'addPoiToDisplay', 'addPathToDisplay', 'addTraceToDisplay', 'addEventToDisplay', 'setCurrentBiover']),
@@ -148,70 +150,57 @@ export default {
 };
 </script>
 
-<style>
-.demo-tabs > .el-tabs__content {
-  padding: 32px;
-  background-color: #323232;
+<style scoped>
+.remove-border {
+  border-bottom: 1px solid black !important;
+  margin-bottom: -1px;
+}
+
+.button-unfocus {
+  background-color: #666666 !important;
   color: white;
-  font-size: 32px;
-  font-weight: 600;
-  border: 1px solid white;
 }
 
-.demo-tabs > .el-tabs__header {
-  margin: 0px;
+.button-border-layout {
+  border-width: 1px 1px 0px 1px;
+  border-style: solid;
+  border-color: #FFFFFF;
+  border-radius: 2px 2px 0px 0px;
+  margin-right: 5px;
 }
 
-.el-tabs__item.is-active {
-  color: white !important;
-  border-bottom: 0px !important;
-}
-
-.el-tabs__item {
-  color: white !important;
-}
-
-.el-tabs__item {
-  color: white;
-  margin-right: 20px;
-  background-color: #323232;
-}
-
-.el-tabs--card>.el-tabs__header .el-tabs__nav {
-  border: 0px !important;
-}
-
-.el-tabs--card>.el-tabs__header .el-tabs__item {
-  border-bottom: 1px solid;
-  border-bottom-color: white !important;
-  border-left: 1px solid white;
-  border-top: 1px solid white;
-  border-right: 1px solid white;
-}
-
-.el-tabs--card>.el-tabs__header .el-tabs__item:first-child {
-  border-left: 1px solid white !important;
-}
-
-.el-tabs--card>.el-tabs__header {
-  border: 0px !important;
-}
-
-#biover-selection>.el-tabs--card>.el-tabs__header .el-tabs__item:first-child {
-  background-color: #F2F2F2;
-  color: black !important;
-}
-
-.tab-selection-label {
+.button-layout {
+  width: auto;
+  height: 40px;
   display: flex;
   align-items: center;
-  margin: 0px;
+  cursor: pointer;
+  border: 0;
+}
+
+.button-selection {
+  background-color: white;
+  border: 0;
+}
+
+.button-biovers {
+  color: white;
+  background-color: black;
+  border-style: solid;
+  border-color: white;
+}
+
+.text-margin {
   margin-right: 8px;
 }
 
-.custom-tabs-label > div > #walk {
-  display: flex;
-  align-items: center;
-  height: inherit;
+.data-layout {
+  background-color: black;
+}
+
+.border-element {
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
+  border-color: #FFFFFF;
 }
 </style>

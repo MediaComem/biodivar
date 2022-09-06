@@ -1,81 +1,179 @@
 <template>
-  <el-table ref="multipleTableRef" :data="getPathsByBiover(bioverId)" style="width: 100%"
-  @select="selectElement"
-  @select-all="selectAll">
-    <el-table-column fixed type="selection" width="55" />
-    <el-table-column property="name" :label="$t('path.biover')" width="120" sortable/>
-    <el-table-column property="element.id" :label="$t('path.id')" show-overflow-tooltip sortable/>
-    <el-table-column property="element.visible_from" :label="$t('path.visible_from')"
-    show-overflow-tooltip sortable/>
-    <el-table-column property="element.User.username" :label="$t('path.author')"
-    show-overflow-tooltip sortable/>
-     <el-table-column property="element.last_contributor_fk.username"
-     label="Edité par" show-overflow-tooltip sortable/>
-     <el-table-column property="element.is_public" :label="$t('path.is_public')"
-     show-overflow-tooltip sortable/>
-     <el-table-column property="element.is_editable" :label="$t('path.is_editable')"
-     show-overflow-tooltip sortable/>
-     <el-table-column property="element.style_type" :label="$t('path.radius_type')"
-     show-overflow-tooltip sortable/>
-     <el-table-column property="element.style_stroke.width"
-     :label="$t('path.stroke')" show-overflow-tooltip sortable/>
-     <el-table-column property="element.style_elevation"
-     :label="$t('path.elevation')" show-overflow-tooltip sortable/>
-     <el-table-column property="element.style_is_visible"
-     :label="$t('path.is_visible')" show-overflow-tooltip sortable/>
-  </el-table>
+  <div class="table-layout">
+    <div class="scrolling-table">
+      <table>
+        <tr class="tr-header">
+          <th class="first-column first-column-header">
+            <input type="checkbox" :checked="globalChecked" @click="selectAll">
+          </th>
+          <th class="column second-column">
+            <div class="header-value">
+              <p>#</p>
+              <img
+                class="transition"
+                :class="{'change-icon': sortElement === 'id' && !orderElement}"
+                src="../../../../assets/tables/sort-arrow.svg"
+                alt="sort"
+                @click="setSort('id')">
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p>COORDONNEES</p>
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p class="material-symbols-sharp text-margin">visibility</p>
+              <p>VISIBILITE</p>
+              <img
+                class="transition"
+                :class="{'change-icon': sortElement === 'visible_from' && !orderElement}"
+                src="../../../../assets/tables/sort-arrow.svg"
+                alt="sort"
+                @click="setSort('visible_from')">
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p>CREER LE</p>
+              <img
+                class="transition"
+                :class="{'change-icon': sortElement === 'creation_date' && !orderElement}"
+                src="../../../../assets/tables/sort-arrow.svg"
+                alt="sort"
+                @click="setSort('creation_date')">
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p class="material-symbols-sharp text-margin">architecture</p>
+              <p>AUTEUR-E</p>
+              <img
+                class="transition"
+                :class="{'change-icon': sortElement === 'username' && !orderElement}"
+                src="../../../../assets/tables/sort-arrow.svg"
+                alt="sort"
+                @click="setSort('username')">
+            </div>
+          </th>
+          <th class="column before-last-column">
+            <div class="header-value">
+              <p class="material-symbols-sharp text-margin">edit</p>
+              <p>MODIFIER LE</p>
+              <img
+                class="transition"
+                :class="{'change-icon': sortElement === 'update_date' && !orderElement}"
+                src="../../../../assets/tables/sort-arrow.svg"
+                alt="sort"
+                @click="setSort('update_date')">
+            </div>
+          </th>
+          <th class="last-column last-column-header">
+             <p class="material-symbols-sharp no-margin">more_vert</p>
+          </th>
+        </tr>
+        <tr v-for="(path, index) in getSortedData" :key="index">
+          <td class="first-column">
+            <input type="checkbox" :checked="path.display" @click="selectElement(path)">
+          </td>
+          <td class="column second-column">{{ path.element.id }}</td>
+          <td class="column">{{ getCoordinate(path.element.coordinate) }}</td>
+          <td class="column end-align">{{ path.element.visible_from }} M</td>
+          <td class="column">{{ dateFormatter(path.element.creation_date) }}</td>
+          <td class="column">{{ path.element.User.username }}</td>
+          <td class="column before-last-column">{{ dateFormatter(path.element.update_date) }}</td>
+          <td class="last-column">
+             <p class="material-symbols-sharp no-margin">more_vert</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
+
+import { dateFormatter, coordinateFormatter } from '../../../../utils/formatter.js';
+import sort from '../../../../utils/sort';
 
 export default {
   props: {
     bioverId: Number,
   },
-  watch: {
-    pathsModification(newVal) {
-      if (newVal) {
-        if (Array.isArray(newVal)) {
-          newVal.forEach((path) => {
-            if (path.element.element.biovers === this.bioverId) {
-              this.$refs.multipleTableRef.toggleRowSelection(path.element);
-              this.resetPathsModification();
-            }
-          });
-          return;
-        }
-        if (newVal.element && newVal.element.element.biovers === this.bioverId) {
-          this.$refs.multipleTableRef.toggleRowSelection(newVal.element);
-          this.resetPathsModification();
-        }
-      }
-    },
+  data() {
+    return {
+      globalChecked: true,
+      sortElement: '',
+      orderElement: false,
+    }
   },
   computed: {
-    ...mapState('biovers', ['pathsModification']),
-    ...mapGetters('biovers', ['getPathsByBiover']),
+    getData() {
+      if (this.ownOrPublic(this.bioverId) === 'own') {
+        return this.getPathsByBiover(this.bioverId);
+      }
+      return this.getPathsByBiover(this.bioverId).filter((e) => e.element.is_public);
+    },
+    getSortedData() {
+      return sort.sort(this.getData, this.sortElement, this.orderElement);
+    },
+    allAreUnselected() {
+      return this.getData.filter((poi) => poi.display).length === 0;
+    },
+    ...mapGetters('biovers', ['getPathsByBiover', 'ownOrPublic', 'bioverIsEditable']),
   },
   methods: {
-    selectElement(selection, row) {
-      if (row) {
-        this.updatePathToDisplay({
-          bioverId: this.bioverId,
-          path: row,
-        });
+    dateFormatter(date) {
+      return dateFormatter(date);
+    },
+    getCoordinate(coordinates) {
+      return coordinateFormatter(coordinates);
+    },
+    userFormatter(user) {
+      return user && user.username ? user.username : '';
+    },
+    setSort(value) {
+      if (this.sortElement === value) {
+        this.orderElement = !this.orderElement;
+      } else {
+        this.orderElement = false;
+      }
+      this.sortElement = value;
+    },
+    selectElement(selectedPath) {
+      this.updatePathToDisplay({
+        bioverId: this.bioverId,
+        path: selectedPath,
+      });
+      if (this.allAreUnselected) {
+        this.globalChecked = false;
+      } else {
+        this.globalChecked = true;
       }
     },
-    selectAll(event) {
-      if (event.length === 0) {
-        this.unselectAllPaths();
-      } else {
+    selectAll() {
+      this.globalChecked = !this.globalChecked;
+      if (this.globalChecked) {
         this.selectAllPaths();
+      } else {
+        this.unselectAllPaths();
       }
     },
     ...mapActions('biovers', ['updatePathToDisplay', 'selectAllPaths', 'unselectAllPaths', 'resetPathsModification']),
   },
-  mounted() {
-    this.$refs.multipleTableRef.toggleAllSelection();
-  },
 };
 </script>
+
+<style scoped>
+@import './table.css';
+
+.material-symbols-sharp {
+  font-size: 15px;
+}
+
+.no-margin {
+  margin: 0px;
+}
+</style>
