@@ -44,7 +44,6 @@
                 @click="setSort('subtitle')">
             </div>
           </th>
-          <th class="column">MEDIAS</th>
           <th class="column">
             <div class="header-value">
                <p class="material-symbols-sharp text-margin">track_changes</p>
@@ -92,7 +91,7 @@
                 @click="setSort('username')">
             </div>
           </th>
-          <th class="column before-last-column">
+          <th class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">edit</p>
               <p>MODIFIER LE</p>
@@ -102,6 +101,103 @@
                 src="../../../../assets/tables/sort-arrow.svg"
                 alt="sort"
                 @click="setSort('update_date')">
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+               <p class="material-symbols-sharp text-margin">architecture</p>
+              <p>DERNIER CONTRIBUTEUR-TRICE</p>
+              <img
+                class="transition"
+                :class="{'change-icon': sortElement === 'contributor' && !orderElement}"
+                src="../../../../assets/tables/sort-arrow.svg"
+                alt="sort"
+                @click="setSort('contributor')">
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p>STYLE ELEVATION</p>
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p>STYLE ELEVATION GROUND</p>
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p>STYLE FILL</p>
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p>STYLE IS VISIBLE</p>
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p>STYLE NOISE</p>
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p>STYLE STROKE</p>
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p>STYLE STROKE WIDTH</p>
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p>STYLE TYPE</p>
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p>TRIGGER MODE</p>
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p>SYMBOL CREATION DATE</p>
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p>SYMBOL MODITION DATE</p>
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p>AR FILE NAME</p>
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p>ICON FILE NAME</p>
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p>IS FACING USER</p>
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p>IS VISIBLE</p>
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p>SYMBOL ELEVATION GROUND</p>
+            </div>
+          </th>
+          <th class="column before-last-column">
+            <div class="header-value">
+              <p>METADATA</p>
             </div>
           </th>
           <th class="last-column last-column-header">
@@ -116,12 +212,29 @@
           <td class="column">({{ getCoordinate(poi) }})</td>
           <td class="column">{{ poi.element.title }}</td>
           <td class="column">{{ poi.element.subtitle }}</td>
-          <td class="column">Media</td>
           <td class="column end-align">{{ poi.element.radius }} M</td>
           <td class="column end-align">{{ poi.element.visible_from }} M</td>
           <td class="column">{{ dateFormatter(poi.element.creation_date) }}</td>
           <td class="column">{{ userFormatter(poi.element.User) }}</td>
-          <td class="column before-last-column">{{ dateFormatter(poi.element.update_date) }}</td>
+          <td class="column">{{ dateFormatter(poi.element.update_date) }}</td>
+          <td class="column">{{ userFormatter(poi.element.last_contributor_fk) }}</td>
+          <td class="column end-align">{{ poi.element.style_elevation }}</td>
+          <td class="column end-align">{{ poi.element.style_elevation_ground }}</td>
+          <td class="column">{{ poi.element.style_fill }}</td>
+          <td class="column">{{ poi.element.style_is_visible }}</td>
+          <td class="column end-align">{{ poi.element.style_noise }}</td>
+          <td class="column">{{ poi.element.style_stroke }}</td>
+          <td class="column end-align">{{ poi.element.style_stroke_width }}</td>
+          <td class="column">{{ poi.element.style_type }}</td>
+          <td class="column">{{ poi.element.trigger_mode }}</td>
+          <td class="column">{{ poi.element.symbol ? dateFormatter(poi.element.symbol.creation_date) : ''}}</td>
+          <td class="column">{{ poi.element.symbol && poi.element.symbol.update_date ? dateFormatter(poi.element.symbol.update_date) : ''}}</td>
+          <td class="column">{{ getARFileName(poi.element.symbol) }}</td>
+          <td class="column">{{ getIconFileName(poi.element.symbol) }}</td>
+          <td class="column">{{ poi.element.symbol.is_facing_user }}</td>
+          <td class="column">{{ poi.element.symbol.is_visible }}</td>
+           <td class="column end-align">{{ poi.element.symbol.elevation_ground }}</td>
+          <td class="column before-last-column">{{ poi.element.metadata }}</td>
           <td class="last-column">
              <p class="material-symbols-sharp no-margin">more_vert</p>
           </td>
@@ -134,7 +247,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
-import { dateFormatter } from '../../../../utils/formatter.js';
+import { fullDateFormatter } from '../../../../utils/formatter.js';
 import sort from '../../../../utils/sort';
 
 export default {
@@ -166,13 +279,25 @@ export default {
   },
   methods: {
     dateFormatter(date) {
-      return dateFormatter(date);
+      return fullDateFormatter(date);
     },
     getCoordinate(poi) {
       return poi.element.coordinate ? `${poi.element.coordinate.lat},${poi.element.coordinate.long}` : '';
     },
     userFormatter(user) {
       return user && user.username ? user.username : '';
+    },
+    getARFileName(symbol) {
+      if (symbol && symbol.ar_url) {
+        return symbol.ar_url.replace(/^.*[\\\/]/, '');
+      }
+      return '';
+    },
+    getIconFileName(symbol) {
+      if (symbol && symbol.url) {
+        return symbol.url.replace(/^.*[\\\/]/, '');
+      }
+      return '';
     },
     setSort(value) {
       if (this.sortElement === value) {

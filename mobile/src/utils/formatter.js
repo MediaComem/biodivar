@@ -21,6 +21,10 @@ export function hourFormatter(date)  {
     return `${hours}h${minutes}`;
 }
 
+export function fullDateFormatter(date)  {
+  return dateFormatter(date)+ ' ' + hourFormatter(date);
+}
+
 export function coordinateFormatter(coordinates) {
   let t = '[';
   coordinates.forEach((coordinate) => {
