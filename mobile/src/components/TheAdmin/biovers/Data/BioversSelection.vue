@@ -6,8 +6,10 @@
       <el-tab-pane name="1">
         <template #label>
           <span class="custom-tabs-label">
-            <p class="material-symbols-sharp" style="margin:0">help</p>
-            <span>Biovers</span>
+            <div style="display: flex; height: 115%;">
+              <p class="material-symbols-sharp tab-selection-label">help</p>
+              <span>Biovers</span>
+            </div>
           </span>
         </template>
       <el-tree ref="tree" node-key="id" :data="data" show-checkbox @check="selectedBiovers"/>
@@ -21,6 +23,14 @@
       :label="item.title"
       :name="item.name"
       >
+        <template #label>
+          <span class="custom-tabs-label">
+            <div style="display: flex;">
+              <World class="tab-selection-label" :animate="item.biover.id === currentBioversId"/>
+              <span>{{ item.title }}</span>
+            </div>
+          </span>
+        </template>
         <DataTab :biovers="item.biover"
         :bioverId="item.biover.id" />
       </el-tab-pane>
@@ -35,9 +45,10 @@ import { mapState, mapActions } from 'vuex';
 
 import DataTab from './DataTab.vue';
 import BioverCreator from '../Dialog/BioverCreator.vue';
+import World from '../../../../assets/shared/world.vue';
 
 export default {
-  components: { DataTab, BioverCreator },
+  components: { DataTab, BioverCreator, World },
   watch: {
     ownBiovers: {
       deep: true,
@@ -105,7 +116,7 @@ export default {
     };
   },
   computed: {
-    ...mapState('biovers', ['ownBiovers', 'publicBiovers', 'bioversToDisplay', 'addBioversInTab']),
+    ...mapState('biovers', ['ownBiovers', 'publicBiovers', 'bioversToDisplay', 'addBioversInTab', 'currentBioversId']),
   },
   methods: {
     selectedBiovers(event) {
@@ -189,5 +200,18 @@ export default {
 #biover-selection>.el-tabs--card>.el-tabs__header .el-tabs__item:first-child {
   background-color: #F2F2F2;
   color: black !important;
+}
+
+.tab-selection-label {
+  display: flex;
+  align-items: center;
+  margin: 0px;
+  margin-right: 8px;
+}
+
+.custom-tabs-label > div > #walk {
+  display: flex;
+  align-items: center;
+  height: inherit;
 }
 </style>

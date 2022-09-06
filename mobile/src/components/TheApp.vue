@@ -130,6 +130,7 @@
     padding: 0;
     width: 232px;
     border-radius: 0.5rem;
+    z-index: 1000;
   }
 
   li {

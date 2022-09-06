@@ -4,6 +4,7 @@
   import { useStore } from '../../composables/store.js';
   import { storage } from '../../composables/localStorage.js';
   import { keepAlive } from '../../composables/keepAlive.js';
+  import { isMobileDevice } from '../../utils/device.js';
 
   const { isAuth, username, forgotPassword, section } = useStore();
 
@@ -22,7 +23,11 @@
   async function checkAuth() {
     const resp = await login(username.value, password.value);
     if (resp?.statusCode === 200) {
-      section.value = 'admin';
+      if (isMobileDevice()) {
+        section.value = 'menu';
+      } else {
+        section.value = 'admin';
+      }
       isAuth.value = true;
       storeUser(resp.data);
       username.value = resp.data;

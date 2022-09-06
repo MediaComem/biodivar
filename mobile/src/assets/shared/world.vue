@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, watch } from 'vue';
+    import { ref, watch, onMounted } from 'vue';
 
 	const props = defineProps({
 		animate: Boolean,
@@ -7,21 +7,31 @@
 
 	const sequence = ref(0);
 	let interval = null;
+
+	function setAnimation() {
+		interval = setInterval(() => {
+			if (sequence.value === 11) {
+				sequence.value = 0;
+			}
+			else  {
+				sequence.value = sequence.value + 1;
+			}
+		}, 150);
+	}
     
     watch(() => props.animate, (val) => {
 		if (props.animate) {
-			interval = setInterval(() => {
-				if (sequence.value === 11) {
-					sequence.value = 0;
-				}
-				else  {
-					sequence.value = sequence.value + 1;
-				}
-			}, 150);
+			setAnimation();
 		} else {
 			clearInterval(interval);
 		}
 	});
+
+	onMounted(() => {
+		if (props.animate) {
+			setAnimation();
+		}
+	})
 </script>
 
 
