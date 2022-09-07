@@ -19,11 +19,13 @@
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp">location_searching</p>
               <p>COORDONNEES</p>
             </div>
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp">short_text</p>
               <p>TITRE</p>
               <img
                 class="transition"
@@ -35,6 +37,7 @@
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp description-transform">short_text</p>
               <p>SOUS-TITRE</p>
               <img
                 class="transition"
@@ -340,5 +343,9 @@ export default {
 
 .no-margin {
   margin: 0px;
+}
+
+.description-transform {
+  transform: scaleY(-1);
 }
 </style>
