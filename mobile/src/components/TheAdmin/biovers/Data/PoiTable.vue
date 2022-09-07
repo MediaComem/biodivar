@@ -73,6 +73,7 @@
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp text-margin">date_range</p>
               <p>CREER LE</p>
               <img
                 class="transition"
@@ -108,7 +109,7 @@
           </th>
           <th class="column">
             <div class="header-value">
-               <p class="material-symbols-sharp text-margin">architecture</p>
+              <p class="material-symbols-sharp text-margin">architecture</p>
               <p>DERNIER CONTRIBUTEUR-TRICE</p>
               <img
                 class="transition"
@@ -120,21 +121,25 @@
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp text-margin">north</p>
               <p>STYLE ELEVATION</p>
             </div>
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp text-margin">north</p>
               <p>STYLE ELEVATION GROUND</p>
             </div>
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp text-margin">format_color_fill</p>
               <p>STYLE FILL</p>
             </div>
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp text-margin">visibility</p>
               <p>STYLE IS VISIBLE</p>
             </div>
           </th>
@@ -145,16 +150,19 @@
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp text-margin">border_color</p>
               <p>STYLE STROKE</p>
             </div>
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp text-margin">line_weight</p>
               <p>STYLE STROKE WIDTH</p>
             </div>
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp text-margin">circle</p>
               <p>STYLE TYPE</p>
             </div>
           </th>
@@ -165,21 +173,25 @@
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp text-margin">date_range</p>
               <p>SYMBOL CREATION DATE</p>
             </div>
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp text-margin">edit</p>
               <p>SYMBOL MODITION DATE</p>
             </div>
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp text-margin">location_on</p>
               <p>AR FILE NAME</p>
             </div>
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp text-margin">map</p>
               <p>ICON FILE NAME</p>
             </div>
           </th>
@@ -190,16 +202,19 @@
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp text-margin">visibility</p>
               <p>IS VISIBLE</p>
             </div>
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp text-margin">north</p>
               <p>SYMBOL ELEVATION GROUND</p>
             </div>
           </th>
           <th class="column before-last-column">
             <div class="header-value">
+              <p class="material-symbols-sharp text-margin">database</p>
               <p>METADATA</p>
             </div>
           </th>

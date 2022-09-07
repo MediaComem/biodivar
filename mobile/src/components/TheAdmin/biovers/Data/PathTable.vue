@@ -31,6 +31,7 @@
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp text-margin">date_range</p>
               <p>CREER LE</p>
               <img
                 class="transition"
@@ -78,11 +79,13 @@
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp text-margin">north</p>
               <p>STYLE ELEVATION</p>
             </div>
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp text-margin">north</p>
               <p>STYLE ELEVATION GROUND</p>
             </div>
           </th>
@@ -93,16 +96,19 @@
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp text-margin">line_weight</p>
               <p>STYLE STOKE WIDTH</p>
             </div>
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp text-margin">circle</p>
               <p>STYLE TYPE</p>
             </div>
           </th>
           <th class="column before-last-column">
             <div class="header-value">
+              <p class="material-symbols-sharp">location_searching</p>
               <p>COORDONNEES</p>
             </div>
           </th>

@@ -38,11 +38,13 @@
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp">location_searching</p>
               <p>COORDONNEES</p>
             </div>
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp text-margin">date_range</p>
               <p>CREER LE</p>
               <img
                 class="transition"
@@ -54,6 +56,7 @@
           </th>
           <th class="column">
             <div class="header-value">
+              <p class="material-symbols-sharp text-margin">architecture</p>
               <p>AUTHEUR</p>
               <img
                 class="transition"
