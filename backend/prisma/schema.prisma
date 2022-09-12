@@ -24,7 +24,7 @@ model User {
   author_path             Path[]      @relation(name: "path_author")
   last_contrubutor_path   Path[]      @relation(name: "path_last_contributor")
   author_trace            UserTrace[] @relation(name: "trace_author")
-  author_event            Event[] @relation(name: "event_author")
+  author_event            Event[]     @relation(name: "event_author")
   token                   String?
 }
 
@@ -32,6 +32,7 @@ model Biovers {
   id                      Int         @id @default(autoincrement())
   name                    String
   description             String?
+  location                String?
   owner                   Int
   creation_date           DateTime
   update_date             DateTime?
@@ -56,21 +57,22 @@ model Poi {
   update_date             DateTime?
   deleted_date            DateTime?
   last_contributor        Int?
-  is_public               Boolean     @default(true)
-  is_editable             Boolean     @default(false)
   biovers                 Int
-  radius                  Float
-  style_type              String
-  style_stroke            Boolean
-  style_stroke_width      Float
-  style_fill              Boolean
-  style_elevation         Float
-  style_elevation_ground  Float
-  style_noise             Float
-  style_is_visible        Boolean
-  visible_from            Float
+  scope                   Float       @default(50)
   trigger_mode            String
+  style_type              String
+  extrusion               Float       @default(0)
+  radius                  Float       @default(0)
+  style_stroke_width      Float       @default(1)
+  stroke_color            String      @default("#FFFFFF")
+  stroke_opacity          Int         @default(100)
+  fill_type               Boolean     @default(false)
+  fill_color              String      @default("#FFFFFF")
+  fill_opacity            Int         @default(100)
+  amplitude               Float       @default(0)
+  wireframe               Boolean     @default(false)
   metadata                String?
+  position                Position?
   coordinate              Coordinate?
   symbol                  Symbol?
   media                   Media[]
@@ -85,19 +87,16 @@ model Path {
   creation_date           DateTime
   update_date             DateTime?
   deleted_date            DateTime?
-  last_contributor        Int?
-  is_public               Boolean     @default(true)
-  is_editable             Boolean     @default(false)      
+  last_contributor        Int? 
   coordinate              Coordinate[]
   biovers                 Int
   style_type              String
-  style_stroke            Boolean
-  style_stroke_width      Float
-  style_elevation         Float
-  style_elevation_ground  Float
-  style_noise             Float
-  style_is_visible        Boolean
-  visible_from            Float
+  style_stroke            Boolean     @default(true)
+  style_stroke_width      Float       @default(1)
+  style_elevation         Float       @default(0)
+  amplitude               Float       @default(0)  
+  style_is_visible        Boolean     @default(true)
+  scope                   Float       @default(50)
   metadata                String?
   biovers_fk              Biovers     @relation(fields: [biovers], references: [id])
   User                    User        @relation(name: "path_author", fields: [author], references: [id])
@@ -112,12 +111,14 @@ model Coordinate {
   creation_date           DateTime
   update_date             DateTime?
   deleted_date            DateTime?
-  poi_id                  Int?
+  poi_id                  Int?         @unique
   poi                     Poi?         @relation(fields: [poi_id], references: [id])
   path_id                 Int?
   path                    Path?        @relation(fields: [path_id], references: [id])
-  user_trace_id           Int?
+  user_trace_id           Int?         @unique
   user_trace              UserTrace?   @relation(fields: [user_trace_id], references: [id])
+  event_id                Int?         @unique
+  event                   Event?       @relation(fields: [event_id], references: [id])
 }
 
 model Symbol {
@@ -126,25 +127,33 @@ model Symbol {
   url                     String
   media_type_ar           String?
   ar_url                  String?
-  elevation_ground        Float
-  is_facing_user          Boolean
-  is_visible              Boolean
+  media_type_audio        String?
+  audio_url               String?
+  is_facing_user          Boolean     @default(true)
+  is_visible              Boolean     @default(true)  
+  is_visible_ar           Boolean     @default(true)
+  audio_autoplay          Boolean     @default(false)
+  audio_loop              Boolean     @default(false)
+  audio_distance          Float       @default(0)
+  autoplay                Boolean     @default(true)
+  loop                    Boolean     @default(true)
+  scale                   Float       @default(1)
+  wireframe               Boolean     @default(false)
+  amplitude               Float       @default(0)
   creation_date           DateTime
   update_date             DateTime?
   deleted_date            DateTime?
-  width                   Int?
-  height                  Int?
-  poi_id                  Int?
+  poi_id                  Int?         @unique
   poi                     Poi?         @relation(fields: [poi_id], references: [id])
+  position                Position?
 }
 
 model UserTrace {
   id                      Int          @id @default(autoincrement())
   creation_date           DateTime
-  update_date             DateTime?
   deleted_date            DateTime?
   author                  Int
-  is_public               Boolean     @default(true)
+  is_public               Boolean      @default(true)
   gps_accuracy            Float
   coordinate              Coordinate?
   biovers                 Int
@@ -154,18 +163,21 @@ model UserTrace {
 
 model Media {
   id                      Int          @id @default(autoincrement())
-  media_type              String
-  url                     String
-  elevation_ground        Float
-  is_facing_user          Boolean
-  is_visible              Boolean
-  caption                 String
-  caption_visible         Boolean
+  text                    String?
+  url                     String?
+  media_type              String?
+  is_facing               Boolean     @default(true)
+  autoplay                Boolean     @default(true)
+  loop                    Boolean     @default(false)
+  scale                   Float       @default(1)
+  amplitude               Float       @default(0)
+  metadata                String?
   creation_date           DateTime
   update_date             DateTime?
   deleted_date            DateTime?
   poi_id                  Int?
   poi                     Poi?         @relation(fields: [poi_id], references: [id])
+  position                Position?
 }
 
 model Event {
@@ -174,7 +186,22 @@ model Event {
   deleted_date            DateTime?
   author                  Int
   biovers                 Int
+  gps_accuracy            Float
+  coordinate              Coordinate?
   data                    String
   biovers_fk              Biovers     @relation(fields: [biovers], references: [id])
   User                    User        @relation(name: "event_author", fields: [author], references: [id])
+}
+
+model Position {
+  id                      Int         @id @default(autoincrement())  
+  x                       Float       @default(0)
+  alpha                   Float       @default(0)
+  y                       Float       @default(0)
+  media_id                Int?        @unique
+  media                   Media?      @relation(fields: [media_id], references: [id])  
+  symbol_id               Int?        @unique
+  symbol                  Symbol?     @relation(fields: [symbol_id], references: [id])
+  poi_id                  Int?        @unique
+  poi                     Poi?        @relation(fields: [poi_id], references: [id])
 }

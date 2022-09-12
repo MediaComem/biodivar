@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import winston from 'winston';
 import { MediaModel, MediaModels } from '../types/media_model';
 
@@ -51,17 +51,21 @@ export const createMedia = async (
   logger: winston.Logger
 ) => {
   try {
+    const position: Prisma.PositionCreateNestedOneWithoutMediaInput = media.position as Prisma.PositionCreateNestedOneWithoutMediaInput
     return await prisma.media.create({
       data: {
-        media_type: media.media_type,
-        url: media.url,
-        elevation_ground: media.elevation_ground,
-        is_facing_user: media.is_facing_user,
-        is_visible: media.is_visible,
-        caption: media.caption,
-        caption_visible: media.caption_visible,
+        text: media.text ? media.text : null,
+        media_type: media.media_type ? media.media_type : null,
+        url: media.url ? media.url : null,
+        is_facing: media.is_facing,
+        autoplay: media.autoplay,
+        loop: media.loop,
+        scale: media.scale,
+        amplitude: media.amplitude,
+        metadata: media.metadata ? media.metadata : null,
         creation_date: new Date(),
         poi_id: media.poi_id,
+        position: position,
       },
     });
   } catch (error) {
@@ -76,19 +80,25 @@ export const updateMedia = async (
   logger: winston.Logger
 ) => {
   try {
+    const position: Prisma.PositionUpdateWithoutMediaInput = media.position as Prisma.PositionUpdateWithoutMediaInput
     return await prisma.media.update({
       where: {
         id: media.id,
       },
       data: {
-        media_type: media.media_type,
-        url: media.url,
-        elevation_ground: media.elevation_ground,
-        is_facing_user: media.is_facing_user,
-        is_visible: media.is_visible,
-        caption: media.caption,
-        caption_visible: media.caption_visible,
+        text: media.text ? media.text : null,
+        media_type: media.media_type ? media.media_type : null,
+        url: media.url ? media.url : null,
+        is_facing: media.is_facing,
+        autoplay: media.autoplay,
+        loop: media.loop,
+        scale: media.scale,
+        amplitude: media.amplitude,
+        metadata: media.metadata ? media.metadata : null,
         update_date: new Date(),
+        position: {
+          update: position,
+        }
       },
     });
   } catch (error) {

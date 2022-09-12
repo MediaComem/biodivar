@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import winston from 'winston';
 import { SymbolModel } from '../types/symbol-model';
  
@@ -34,15 +34,9 @@ export const createSymbol = async (
   logger: winston.Logger
 ) => {
   try {
+    const symbolDB: Prisma.SymbolCreateInput = symbol as Prisma.SymbolCreateInput;
     return await prisma.symbol.create({
-      data: {
-        media_type: symbol.media_type,
-        url: symbol.url,
-        elevation_ground: symbol.elevation_ground,
-        is_facing_user: symbol.is_facing_user,
-        is_visible: symbol.is_visible,
-        creation_date: new Date(),
-      },
+      data: symbolDB,
     });
   } catch (error) {
     logger.error(error);
@@ -56,18 +50,12 @@ export const updateSymbol = async (
   logger: winston.Logger
 ) => {
   try {
+    const symbolDB: Prisma.SymbolCreateInput = symbol as Prisma.SymbolCreateInput;
     return await prisma.symbol.update({
       where: {
         id: symbol.id,
       },
-      data: {
-        media_type: symbol.media_type,
-        url: symbol.url,
-        elevation_ground: symbol.elevation_ground,
-        is_facing_user: symbol.is_facing_user,
-        is_visible: symbol.is_visible,
-        update_date: new Date(),
-      },
+      data: symbolDB,
     });
   } catch (error) {
     logger.error(error);

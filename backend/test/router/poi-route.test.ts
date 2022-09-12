@@ -276,11 +276,29 @@ describe('Test Poi Routes', () => {
       expect(store_poi?.symbol).toBeNull();
       store_poi.style_stroke_width = 555.5;
       store_poi.symbol = {
+        id: 3333333333,
+        poi_id: 3333333333,
         media_type: 'Video',
         url: '/specific/path',
         elevation_ground: 355.36,
         is_facing_user: false,
         is_visible: false,
+        ar_url: 'fdasfsd',
+        media_type_ar: 'fdafsf',
+        autoplay: false,
+        amplitude: 1.1,
+        audio_autoplay: false,
+        audio_distance: 33,
+        audio_loop: false,
+        audio_url: 'fasfsaf',
+        wireframe: false,
+        scale: 33,
+        loop: true,
+        is_visible_ar: true,
+        media_type_audio: 'fdasf',
+        update_date: null,
+        deleted_date: null,
+        creation_date: new Date(),
       } as Symbol;
       const res = await server.inject({
         method: 'POST',

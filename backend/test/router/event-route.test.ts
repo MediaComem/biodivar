@@ -7,6 +7,7 @@ import { setupEvent, dropEvent, event } from '../data/model/event';
 import { setupBiovers, dropBiovers } from '../data/model/biovers';
 import { EventModel } from '../../src/types/event-model';
 import { responseModel } from '../../src/types/response';
+import { CoordinateModel } from '../../src/types/coordinate-model';
 
 describe('Test User Trace Controller', () => {
   let server: Server;
@@ -33,9 +34,16 @@ describe('Test User Trace Controller', () => {
   });
 
   it('Create user trace', async () => {
+    const coordinate: CoordinateModel = {
+      lat: 12.2,
+      long: 13.3,
+      alt: 14.4,
+    };
     const newEvent: EventModel = {
         author: 1,
         biovers: 1,
+        coordinate: coordinate,
+        gps_accuracy: 11.2,
         data: '{Event: "Open Biovers"}',
     };
     const res = await server.inject({

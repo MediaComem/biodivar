@@ -1,10 +1,10 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
 import { CoordinateModel } from "../../../src/types/coordinate-model";
 
 import { media_test } from "./media";
 
 import { PoiModel } from "../../../src/types/poi-model";
-import { getPoiByTitle } from "../../../src/controller/poi-controller";
+import { PositionModel } from "../../../src/types/position-model";
 
 export const setupPoi = async (prisma: PrismaClient) => {
   if (test_poi.coordinate) {
@@ -49,11 +49,11 @@ export const setupPoiForMedia = async (prisma: PrismaClient) => {
     data: {
       media_type: media_test.media_type,
       url: media_test.url,
-      elevation_ground: media_test.elevation_ground,
-      is_facing_user: media_test.is_facing_user,
-      is_visible: media_test.is_visible,
-      caption: media_test.caption,
-      caption_visible: media_test.caption_visible,
+      is_facing: media_test.is_facing,
+      autoplay: media_test.autoplay,
+      loop: media_test.loop,
+      scale: media_test.scale,
+      amplitude: media_test.amplitude,
       creation_date: new Date(),
       poi_id: element.id,
     },
@@ -82,11 +82,11 @@ export const setupPoiForMediaMultiple = async (prisma: PrismaClient) => {
     data: {
       media_type: media_test.media_type,
       url: media_test.url,
-      elevation_ground: media_test.elevation_ground,
-      is_facing_user: media_test.is_facing_user,
-      is_visible: media_test.is_visible,
-      caption: media_test.caption,
-      caption_visible: media_test.caption_visible,
+      is_facing: media_test.is_facing,
+      autoplay: media_test.autoplay,
+      loop: media_test.loop,
+      scale: media_test.scale,
+      amplitude: media_test.amplitude,
       creation_date: new Date(),
       poi_id: element.id,
     },
@@ -115,11 +115,11 @@ export const setupPoiForCreateAndDelete = async (prisma: PrismaClient) => {
     data: {
       media_type: media_test.media_type,
       url: media_test.url,
-      elevation_ground: media_test.elevation_ground,
-      is_facing_user: media_test.is_facing_user,
-      is_visible: media_test.is_visible,
-      caption: media_test.caption,
-      caption_visible: media_test.caption_visible,
+      is_facing: media_test.is_facing,
+      autoplay: media_test.autoplay,
+      loop: media_test.loop,
+      scale: media_test.scale,
+      amplitude: media_test.amplitude,
       creation_date: new Date(),
       poi_id: element.id,
     },
@@ -148,11 +148,11 @@ export const setupPoiForDeletion = async (prisma: PrismaClient) => {
     data: {
       media_type: media_test.media_type,
       url: media_test.url,
-      elevation_ground: media_test.elevation_ground,
-      is_facing_user: media_test.is_facing_user,
-      is_visible: media_test.is_visible,
-      caption: media_test.caption,
-      caption_visible: media_test.caption_visible,
+      is_facing: media_test.is_facing,
+      autoplay: media_test.autoplay,
+      loop: media_test.loop,
+      scale: media_test.scale,
+      amplitude: media_test.amplitude,
       creation_date: new Date(),
       poi_id: element.id,
     },
@@ -164,12 +164,20 @@ export const dropPoi = async (prisma: PrismaClient) => {
   await prisma.poi.deleteMany({});
 };
 
+export const position_test: PositionModel = {
+  x: 2.5,
+  alpha: 5.6,
+  y: 22.5,
+}
+
 export const coordinate_test: CoordinateModel = {
   long: 12.2,
   lat: 13.3,
   alt: 14.4,
   creation_date: new Date(),
 };
+
+const position: Prisma.PositionCreateWithoutPoiInput = position_test as Prisma.PositionCreateWithoutPoiInput;
 
 export const test_poi: PoiModel = {
   title: "POI 1",
@@ -179,14 +187,16 @@ export const test_poi: PoiModel = {
   biovers: 1,
   radius: 15.5,
   style_type: "sphere",
-  style_stroke: true,
   style_stroke_width: 1.2,
-  style_fill: false,
-  style_elevation: 16.4,
-  style_elevation_ground: 32.4,
-  style_noise: 22.3,
-  style_is_visible: true,
-  visible_from: 455.5,
+  stroke_color: '#FFFFFF',
+  stroke_opacity: 95,
+  extrusion: 0.0,
+  fill_type: true,
+  fill_color: '#FFEEFF',
+  fill_opacity: 99,
+  amplitude: 22.3,
+  scope: 455.5,
+  wireframe: false,
   trigger_mode: "location",
   media: undefined,
 };

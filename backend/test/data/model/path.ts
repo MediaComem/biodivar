@@ -30,10 +30,9 @@ export const test_path: PathModel = {
   style_stroke: true,
   style_stroke_width: 1.2,
   style_elevation: 16.4,
-  style_elevation_ground: 32.4,
-  style_noise: 22.3,
+  amplitude: 22.3,
   style_is_visible: true,
-  visible_from: 455.5,
+  scope: 455.5,
   coordinate: path_coordinates,
 };
 
@@ -48,10 +47,9 @@ export const setupPath = async (prisma: PrismaClient) => {
       style_stroke: true,
       style_stroke_width: 1.2,
       style_elevation: 16.4,
-      style_elevation_ground: 32.4,
-      style_noise: 22.3,
+      amplitude: 22.3,
       style_is_visible: true,
-      visible_from: 455.5,
+      scope: 455.5,
       coordinate: {
         create: coordiantes,
       },

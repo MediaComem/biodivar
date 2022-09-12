@@ -278,7 +278,8 @@ export const createBiovers = async (
     return await prisma.biovers.create({
       data: {
         name: biovers.name,
-        description: biovers.description,
+        description: biovers.description ? biovers.description : '',
+        location: biovers.location ? biovers.location : '',
         owner: biovers.owner,
         is_public: biovers.is_public,
         is_editable: biovers.is_editable,
@@ -366,6 +367,7 @@ export const updateBiovers = async (
         data: {
           name: biovers.name,
           description: biovers.description,
+          location: biovers.location,
           is_public: biovers.is_public,
           is_editable: biovers.is_editable,
           update_date: new Date(),

@@ -17,26 +17,31 @@ const biovers: BioversModel = {
 const test_poi = {
     title: "POI 1",
     title_is_visible: true,
-    subtitle: {},
+    subtitle: '',
+    subtitle_is_visible: false,
     author: 1,
-    biovers: 2,
     creation_date: new Date(),
+    biovers: 1,
     radius: 15.5,
     style_type: "sphere",
-    style_stroke: true,
     style_stroke_width: 1.2,
-    style_fill: false,
-    style_elevation: 16.4,
-    style_elevation_ground: 32.4,
-    style_noise: 22.3,
-    style_is_visible: true,
-    visible_from: 455.5,
+    stroke_color: '#FFFFFF',
+    stroke_opacity: 95,
+    extrusion: 0.0,
+    fill_type: true,
+    fill_color: '#FFEEFF',
+    fill_opacity: 99,
+    amplitude: 22.3,
+    scope: 455.5,
+    wireframe: false,
     trigger_mode: "location",
     media: undefined,
     metadata: {},
     coordinate: {},
     symbol: {}
 };
+
+
 
 const coordinate_test = {
     id: 1,
@@ -54,10 +59,9 @@ const test_path = {
     style_stroke: true,
     style_stroke_width: 1.2,
     style_elevation: 16.4,
-    style_elevation_ground: 32.4,
-    style_noise: 22.3,
+    amplitude: 22.3,
     style_is_visible: true,
-    visible_from: 455.5,
+    scope: 455.5,
     coordinate: {},
     metadata: {},
 };

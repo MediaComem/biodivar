@@ -46,17 +46,14 @@ export const createPath = async (
         last_contributor: path.last_contributor
           ? path.last_contributor
           : path.author,
-        is_public: path.is_public,
-        is_editable: path.is_editable,
         biovers: path.biovers,
         style_type: path.style_type,
         style_stroke: path.style_stroke,
         style_stroke_width: path.style_stroke_width,
         style_elevation: path.style_elevation,
-        style_elevation_ground: path.style_elevation_ground,
-        style_noise: path.style_noise,
+        amplitude: path.amplitude,
         style_is_visible: path.style_is_visible,
-        visible_from: path.visible_from,
+        scope: path.scope,
         metadata: path.metadata,
         coordinate: {
           create: coordiantes,
@@ -100,17 +97,14 @@ export const updatePath = async (
         last_contributor: path.last_contributor
           ? path.last_contributor
           : path.author,
-        is_public: path.is_public,
-        is_editable: path.is_editable,
         biovers: path.biovers,
         style_type: path.style_type,
         style_stroke: path.style_stroke,
         style_stroke_width: path.style_stroke_width,
         style_elevation: path.style_elevation,
-        style_elevation_ground: path.style_elevation_ground,
-        style_noise: path.style_noise,
+        amplitude: path.amplitude,
         style_is_visible: path.style_is_visible,
-        visible_from: path.visible_from,
+        scope: path.scope,
         metadata: path.metadata,
       },
       include: {

@@ -2,13 +2,14 @@ import { PrismaClient } from '@prisma/client';
 import { MediaModel } from '../../../src/types/media_model';
 
 export const media_test: MediaModel = {
+  text: undefined,
   media_type: 'Video',
   url: '/specific/path',
-  elevation_ground: 355.36,
-  is_facing_user: false,
-  is_visible: true,
-  caption: 'Test',
-  caption_visible: true,
+  is_facing: true,
+  autoplay: true,
+  loop: false,
+  scale: 1.0,
+  amplitude: 0.0,
 };
 
 export const setupMedia = async (prisma: PrismaClient) => {
@@ -17,11 +18,11 @@ export const setupMedia = async (prisma: PrismaClient) => {
       id: 2,
       media_type: media_test.media_type,
       url: media_test.url,
-      elevation_ground: media_test.elevation_ground,
-      is_facing_user: media_test.is_facing_user,
-      is_visible: media_test.is_visible,
-      caption: media_test.caption,
-      caption_visible: media_test.caption_visible,
+      is_facing: media_test.is_facing,
+      autoplay: media_test.autoplay,
+      loop: media_test.loop,
+      scale: media_test.scale,
+      amplitude: media_test.amplitude,
       creation_date: new Date(),
     },
   });

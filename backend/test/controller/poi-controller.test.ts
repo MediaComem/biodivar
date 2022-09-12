@@ -50,6 +50,7 @@ describe('Test poi controller', () => {
     await dropSymbol(server.app.prisma);
     await server.stop();
   });
+ 
   
   it("Get POI by title", async () => {
     const poi = await getPoiByTitle(server.app.prisma, 'POI 1');

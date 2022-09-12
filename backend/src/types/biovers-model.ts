@@ -6,6 +6,7 @@ export interface BioversModel {
   id?: number;
   name: string;
   description?: string;
+  location?: string;
   owner: number;
   creation_date: Date;
   update_date?: Date;

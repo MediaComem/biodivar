@@ -1,6 +1,7 @@
 import { CoordinateModel } from "./coordinate-model";
 import { SymbolModel } from "./symbol-model";
 import { MediaModels } from "./media_model";
+import { PositionModel } from "./position-model";
 
 export interface PoiModel {
   id?: number;
@@ -13,24 +14,25 @@ export interface PoiModel {
   update_date?: Date;
   deleted_date?: Date;
   last_contributor?: number;
-  is_public?: boolean;
-  is_editable?: boolean;
   biovers: number;
+  scope: number;
+  extrusion: number;
   radius: number;
   style_type: string;
-  style_stroke: boolean;
   style_stroke_width: number;
-  style_fill: boolean;
-  style_elevation: number;
-  style_elevation_ground: number;
-  style_noise: number;
-  style_is_visible: boolean;
-  visible_from: number;
+  stroke_color: string;
+  stroke_opacity: number;
+  fill_type: boolean;
+  fill_color: string;
+  fill_opacity: number;
+  amplitude: number;
+  wireframe: boolean;
   trigger_mode: string;
   metadata?: string;
   coordinate?: CoordinateModel;
   symbol?: SymbolModel;
   media?: MediaModels;
+  position?: PositionModel;
 }
 
 export interface PoiModels extends Array<PoiModel> {}

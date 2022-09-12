@@ -13,6 +13,15 @@ export const createEvent = async (
         author: event.author,
         creation_date: new Date(),
         biovers: event.biovers,
+        gps_accuracy: event.gps_accuracy,
+        coordinate: {
+          create: {
+            long: event.coordinate.long,
+            lat: event.coordinate.lat,
+            alt: event.coordinate.alt,
+            creation_date: new Date(),
+          },
+        },
         data: event.data,
       },
     });
