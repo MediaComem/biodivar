@@ -116,7 +116,7 @@
             <input type="checkbox" :checked="path.display" @click="selectElement(path)">
           </td>
           <td class="column column-max-width second-column">{{ path.element.id }}</td>
-          <td class="column column-max-width end-align">{{ path.element.visible_from }} M</td>
+          <td class="column column-max-width end-align">{{ path.element.scope }} M</td>
           <td class="column column-max-width">{{ dateFormatter(path.element.creation_date) }}</td>
           <td class="column column-max-width">{{ userFormatter(path.element.User) }}</td>
           <td class="column column-max-width">{{ dateFormatter(path.element.update_date) }}</td>
@@ -154,10 +154,7 @@ export default {
   },
   computed: {
     getData() {
-      if (this.ownOrPublic(this.bioverId) === 'own') {
-        return this.getPathsByBiover(this.bioverId);
-      }
-      return this.getPathsByBiover(this.bioverId).filter((e) => e.element.is_public);
+      return this.getPathsByBiover(this.bioverId);
     },
     getSortedData() {
       return sort.sort(this.getData, this.sortElement, this.orderElement);

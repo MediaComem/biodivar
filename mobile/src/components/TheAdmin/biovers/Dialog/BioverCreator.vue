@@ -5,6 +5,12 @@
       <el-form-item :label="$t('biover.configurator.name')" :label-width="formLabelWidth">
         <el-input v-model="form.name" autocomplete="off"></el-input>
       </el-form-item>
+      <el-form-item label="description" :label-width="formLabelWidth">
+        <el-input v-model="form.description" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="location" :label-width="formLabelWidth">
+        <el-input v-model="form.location" autocomplete="off"></el-input>
+      </el-form-item>
       <el-form-item :label="$t('biover.configurator.public')" :label-width="formLabelWidth">
         <div>
           <el-radio v-model="form.is_public" :label="true" size="large">
@@ -61,6 +67,8 @@ export default {
       form: {},
       defaultForm: {
         name: '',
+        description: '',
+        location: '',
         is_public: true,
         is_editable: false,
       },

@@ -432,20 +432,20 @@
           <td class="column end-align">{{ poi.element.scope }} M</td>
           <td class="column">{{ poi.element.trigger_mode }}</td>
           <td class="column">{{ getARFileName(poi.element.symbol) }}</td>
-          <td class="column">{{ poi.element.symbol.is_visible_ar }}</td>
-          <td class="column">{{ poi.element.symbol.is_facing_user }}</td>
-          <td class="column">{{ poi.element.symbol.wireframe }}</td>
-          <td class="column">{{ poi.element.symbol.autoplay }}</td>
-          <td class="column">{{ poi.element.symbol.loop }}</td>
-          <td class="column">{{ poi.element.symbol.scale }}</td>
+          <td class="column">{{ poi.element.symbol ? poi.element.symbol.is_visible_ar : undefined }}</td>
+          <td class="column">{{ poi.element.symbol ? poi.element.symbol.is_facing_user : undefined }}</td>
+          <td class="column">{{ poi.element.symbol ? poi.element.symbol.wireframe : undefined }}</td>
+          <td class="column">{{ poi.element.symbol ? poi.element.symbol.autoplay : undefined }}</td>
+          <td class="column">{{ poi.element.symbol ? poi.element.symbol.loop : undefined }}</td>
+          <td class="column">{{ poi.element.symbol ? poi.element.symbol.scale : undefined }}</td>
           <td class="column">{{ positionFormatter(poi.element.symbol) }}</td>
-          <td class="column">{{ poi.element.symbol.amplitude }}</td>
+          <td class="column">{{ poi.element.symbol? poi.element.symbol.amplitude : undefined }}</td>
           <td class="column">{{ getAudioFileName(poi.element.symbol)  }}</td>
-          <td class="column">{{ poi.element.symbol.audio_autoplay }}</td>
-          <td class="column">{{ poi.element.symbol.audio_loop }}</td>
-          <td class="column">{{ poi.element.symbol.audio_distance }}</td>
+          <td class="column">{{ poi.element.symbol ? poi.element.symbol.audio_autoplay  : undefined}}</td>
+          <td class="column">{{ poi.element.symbol ? poi.element.symbol.audio_loop : undefined }}</td>
+          <td class="column">{{ poi.element.symbol ? poi.element.symbol.audio_distance :undefined }}</td>
           <td class="column">{{ getIconFileName(poi.element.symbol) }}</td>
-          <td class="column">{{ poi.element.symbol.is_visible }}</td>
+          <td class="column">{{ poi.element.symbol ? poi.element.symbol.is_visible : undefined }}</td>
           <td class="column">{{ poi.element.symbol ? dateFormatter(poi.element.symbol.creation_date) : ''}}</td>
           <td class="column">{{ poi.element.symbol && poi.element.symbol.update_date ? dateFormatter(poi.element.symbol.update_date) : ''}}</td>
           <td class="column">{{ poi.element.style_type }}</td>
@@ -490,10 +490,7 @@ export default {
   },
   computed: {
     getData() {
-      if (this.ownOrPublic(this.bioverId) === 'own') {
-        return this.getPoisByBiover(this.bioverId);
-      }
-      return this.getPoisByBiover(this.bioverId).filter((e) => e.element.is_public);
+      return this.getPoisByBiover(this.bioverId);
     },
     getSortedData() {
       return sort.sort(this.getData, this.sortElement, this.orderElement, this.isSymbol);
@@ -514,7 +511,7 @@ export default {
       return user && user.username ? user.username : '';
     },
     positionFormatter(symbol) {
-      return symbol.position ? `{ x: ${symbol.position.x}, y: ${symbol.position.y}, alpha: ${symbol.position.alpha}}` : '';
+      return symbol && symbol.position ? `{ x: ${symbol.position.x}, y: ${symbol.position.y}, alpha: ${symbol.position.alpha}}` : '';
     },
     getARFileName(symbol) {
       if (symbol && symbol.ar_url) {
