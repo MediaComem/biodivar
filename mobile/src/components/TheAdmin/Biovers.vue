@@ -35,12 +35,13 @@ export default {
     Filter,
   },
   methods: {
-    ...mapActions('biovers', ['getBiovers']),
+    ...mapActions('biovers', ['getBiovers', 'resetBiovers']),
   },
   computed: {
     ...mapState('biovers', ['ownBiovers', 'bioversToDisplay', 'currentBioversId']),
   },
   async mounted() {
+    this.resetBiovers();
     this.getBiovers();
   },
 };

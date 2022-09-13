@@ -85,13 +85,8 @@
           </th>
           <th class="column">
             <div class="header-value">
-              <p class="material-symbols-sharp text-margin">north</p>
-              <p>STYLE ELEVATION GROUND</p>
-            </div>
-          </th>
-          <th class="column">
-            <div class="header-value">
-              <p>STYLE NOISE</p>
+              <p class="material-symbols-sharp text-margin">animation</p>
+              <p>ANIMATION</p>
             </div>
           </th>
           <th class="column">
@@ -127,8 +122,7 @@
           <td class="column column-max-width">{{ dateFormatter(path.element.update_date) }}</td>
           <td class="column column-max-width">{{ userFormatter(path.element.last_contributor_fk) }}</td>
           <td class="column column-max-width end-align">{{ path.element.style_elevation }}</td>
-          <td class="column column-max-width end-align">{{ path.element.style_elevation_ground }}</td>
-          <td class="column column-max-width end-align">{{ path.element.style_noise }}</td>
+          <td class="column column-max-width end-align">{{ path.element.amplitude }}</td>
           <td class="column column-max-width end-align">{{ path.element.style_stroke_width }}</td>
           <td class="column column-max-width">{{ path.element.style_type }}</td>
           <td class="column column-max-width before-last-column">{{ getCoordinate(path.element.coordinate) }}</td>
@@ -229,5 +223,9 @@ export default {
 
 .no-margin {
   margin: 0px;
+}
+
+.text-margin {
+  padding-right: 6px;
 }
 </style>

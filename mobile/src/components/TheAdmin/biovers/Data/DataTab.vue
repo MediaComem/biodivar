@@ -20,14 +20,14 @@
         :class="{'button-focus': currentTab === 3}"
       >
         <p class="material-symbols-sharp text-margin">bar_chart</p>
-        <p>Trace</p>
+        <p>Trace [{{ getTraceByBiovers(bioverId).length }}]</p>
       </button>
       <button
         @click="selectTab(4)"
         :class="{'button-focus': currentTab === 4}"
       >
         <p class="material-symbols-sharp text-margin">bar_chart</p>
-        <p>Event</p>
+        <p>Event [{{ getEventByBiovers(bioverId).length }}]</p>
       </button>
     </div>
 
@@ -47,7 +47,6 @@ import PoiTable from './PoiTable.vue';
 import PathTable from './PathTable.vue';
 import TraceTable from './TraceTable.vue';
 import EventTable from './EventTable.vue';
-import { computed } from '@vue/runtime-core';
 
 export default {
   props: {
@@ -70,7 +69,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('biovers', ['getPoisByBiover', 'getPathsByBiover']),
+    ...mapGetters('biovers', ['getPoisByBiover', 'getPathsByBiover', 'getTraceByBiovers', 'getEventByBiovers']),
   },
 };
 </script>

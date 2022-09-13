@@ -16,30 +16,14 @@
           </th>
           <th class="column">
             <div class="header-value">
-              <p>TITRE</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'title' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort"
-                @click="setSort('title')">
-            </div>
-          </th>
-           <th class="column">
-            <div class="header-value">
-              <p>Précision du GPS</p>
+              <p class="material-symbols-sharp text-margin">architecture</p>
+              <p>AUTHEUR</p>
               <img
                 class="transition"
                 :class="{'change-icon': sortElement === 'subtitle' && !orderElement}"
                 src="../../../../assets/tables/sort-arrow.svg"
                 alt="sort"
                 @click="setSort('subtitle')">
-            </div>
-          </th>
-          <th class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp">location_searching</p>
-              <p>COORDONNEES</p>
             </div>
           </th>
           <th class="column">
@@ -54,26 +38,30 @@
                 @click="setSort('creation_date')">
             </div>
           </th>
-          <th class="column">
+           <th class="column">
             <div class="header-value">
-              <p class="material-symbols-sharp text-margin">architecture</p>
-              <p>AUTHEUR</p>
+              <p>Précision du GPS</p>
               <img
                 class="transition"
-                :class="{'change-icon': sortElement === 'subtitle' && !orderElement}"
+                :class="{'change-icon': sortElement === 'gps_accuracy' && !orderElement}"
                 src="../../../../assets/tables/sort-arrow.svg"
                 alt="sort"
-                @click="setSort('subtitle')">
+                @click="setSort('gps_accuracy')">
+            </div>
+          </th>
+          <th class="column">
+            <div class="header-value">
+              <p class="material-symbols-sharp">location_searching</p>
+              <p>COORDONNEES</p>
             </div>
           </th>
         </tr>
         <tr v-for="(trace, index) in getSortedData" :key="index">
           <td class="column">{{ trace.element.id }}</td>
-          <td class="column">{{ trace.name }}</td>
+          <td class="column">{{ userFormatter(trace.element.User) }}</td>
+          <td class="column">{{ dateFormatter(trace.element.creation_date) }}</td>
           <td class="column">{{ trace.element.gps_accuracy }}</td>
           <td class="column">({{ getCoordinate(trace) }})</td>    
-          <td class="column">{{ dateFormatter(trace.element.creation_date) }}</td>
-          <td class="column">{{ userFormatter(trace.element.User) }}</td>
         </tr>
       </table>
     </div>
@@ -133,5 +121,9 @@ export default {
 
 .no-margin {
   margin: 0px;
+}
+
+.text-margin {
+  padding-right: 6px;
 }
 </style>

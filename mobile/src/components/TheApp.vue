@@ -85,8 +85,19 @@
   <div v-else-if="section == 'admin'">
     <base-modal style="text-align: center;">
       <header>
-        <div class="logo" @click="menu = false">
+        <div class="logo-admin" @click="menu = false">
           <img alt="Biodivar" src="../assets/shared/logo.svg" />
+        </div>
+        <div class="central-headers">
+          <div class="col">
+            <p @click="section = 'menu'">RA</p>
+          </div>
+          <div class="col">
+            <p>Carte</p>
+          </div>
+          <div class="col">
+            <p>Préférences</p>
+          </div>
         </div>
         <div class="account">
           <img class="acount-image" alt="Account" src="../assets/shared/account_circle.svg" @click="menu = !menu">
@@ -156,14 +167,36 @@
 
   .logo {
     height: 22px;
-    width: 75%;
+    width: 80%;
     justify-content: flex-start;
     display: flex;
   }
 
+  .logo-admin {
+    height: 22px;
+    width: 20%;
+    justify-content: flex-start;
+    display: flex;
+  }
+
+  .central-headers {
+    display: flex;
+    justify-content: center;
+    width: 60%;
+  }
+
+  .col {
+    width: 33%;
+  }
+
+  .col > p {
+    margin: 0px;
+    cursor: pointer;
+  }
+
   .account {
     display: flex;
-    width: 25%;
+    width: 20%;
     justify-content: flex-end;
     cursor: pointer;
   }

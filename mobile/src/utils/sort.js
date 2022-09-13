@@ -1,5 +1,5 @@
 export default {
-    sort(data, sortElement, orderElement) {
+    sort(data, sortElement, orderElement, isSymbol = false) {
         if (data) {
             if (sortElement === '') {
                 return data;
@@ -45,7 +45,13 @@ export default {
                 });
             }
             if (orderElement) {
+                if (isSymbol) {
+                  return data.sort((a, b) => (a.element.symbol[sortElement] > b.element.symbol[sortElement] ? 1 : -1));
+                }
                 return data.sort((a, b) => (a.element[sortElement] > b.element[sortElement] ? 1 : -1));
+            }
+            if (isSymbol) {
+              return data.sort((a, b) => (a.element.symbol[sortElement] < b.element.symbol[sortElement] ? 1 : -1));
             }
             return data.sort((a, b) => (a.element[sortElement] < b.element[sortElement] ? 1 : -1));
         }

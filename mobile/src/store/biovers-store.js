@@ -250,6 +250,9 @@ export const bioversStore = {
     },
   },
   actions: {
+    resetBiovers({ commit }) {
+      commit('RESET_STORE');
+    },
     async getBiovers({ dispatch, commit, state }) {
       const ownerBiovers = await getBioversByUser();
       const publicB = await getBiovers();
