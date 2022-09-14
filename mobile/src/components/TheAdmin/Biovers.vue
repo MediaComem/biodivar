@@ -8,15 +8,7 @@
       <Map />
     </div>
     <div class="upload-layout">
-      <div class="import">
-        <GeoJsonImporter
-          v-if="bioversToDisplay.length > 0 && ownBiovers.length > 0"
-          :authorId="ownBiovers[0].owner"
-        />
-      </div>
-      <div class="filter">
-        <Filter v-if="bioversToDisplay.length > 0" />
-      </div>
+      <GeoJsonImporter />
     </div>
     <div>
       <BioversSelection />
@@ -61,19 +53,6 @@ export default {
 
 <style scoped>
 .upload-layout {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 1fr;
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
+  width: 100%;
 }
-
-.import {
-  grid-area: 1 / 1 / 2 / 2;
-}
-
-.filter {
-  grid-area: 1 / 2 / 2 / 3;
-}</style>
+</style>
