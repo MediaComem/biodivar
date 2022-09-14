@@ -290,9 +290,9 @@ export const bioversStore = {
       commit('ADD_NEW_BIOVER', biover);
     },
     addBioverToDisplay({ commit, state }, event) {
-      let selectBiover = state.ownBiovers.find((e) => e.name === event.label);
+      let selectBiover = state.ownBiovers.find((e) => e.name === event.name);
       if (!selectBiover) {
-        selectBiover = state.publicBiovers.find((e) => e.name === event.label);
+        selectBiover = state.publicBiovers.find((e) => e.name === event.name);
       }
       commit('SELECT_BIOVER', selectBiover);
     },

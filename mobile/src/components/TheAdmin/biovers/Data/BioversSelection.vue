@@ -20,7 +20,7 @@
     </div>
     <div class="border-element">
       <div v-show="currentBioversId === 0">
-        <el-tree ref="tree" node-key="id" :data="data" show-checkbox @check="selectedBiovers"/>
+        <BioversLayout v-if="allBiovers && allBiovers.length > 0" class="biover-layout-border" :biovers="allBiovers" @map="selectedBiovers" />
       </div>
       <div v-for="biovers in bioversToDisplay" :key="biovers.name" class="data-layout">
         <DataTab
@@ -33,97 +33,33 @@
 </template>
 
 <script>
-import { ref } from 'vue';
 import { mapState, mapActions } from 'vuex';
 
+import BioversLayout from '../../../TheBiovers/BioversLayout.vue';
 import DataTab from './DataTab.vue';
 import BioverCreator from '../Dialog/BioverCreator.vue';
 import World from '../../../../assets/shared/world.vue';
 
 export default {
-  components: { DataTab, BioverCreator, World },
-  watch: {
-    ownBiovers: {
-      deep: true,
-      handler(newVal) {
-        if (newVal.length !== this.data[0].length) {
-          const diff = newVal.filter((x) => !this.data[0].children
-            .some((child) => child.id === x.id));
-          diff.forEach((element) => {
-            this.data[0].children.push({
-              label: element.name,
-              id: element.id,
-            });
-          });
-        }
-      },
-    },
-    publicBiovers: {
-      deep: true,
-      handler(newVal) {
-        if (newVal.length !== this.data[1].length) {
-          const diff = newVal.filter((x) => !this.data[1].children
-            .some((child) => child.id === x.id));
-          diff.forEach((element) => {
-            this.data[1].children.push({
-              label: element.name,
-              id: element.id,
-            });
-          });
-        }
-      },
-    },
-    bioversToDisplay: {
-      deep: true,
-      handler(newVal) {
-        if (newVal.length > 0) {
-          const checked = [];
-          newVal.forEach((val) => {
-            checked.push(val.biover.id);
-          });
-          this.$nextTick(() => {
-            this.$refs.tree.setCheckedKeys(checked, false);
-          });
-        } else if (newVal.length === 0) {
-          this.$refs.tree.setCheckedKeys([], false);
-        }
-      },
-    },
-  },
+  components: { BioversLayout, DataTab, BioverCreator, World },
   data() {
     return {
-      data: [{
-        id: 0,
-        label: 'Mes Biovers',
-        children: [],
-        disabled: true,
-      },
-      {
-        id: -1,
-        label: 'Biovers Publiques',
-        children: [],
-        disabled: true,
-      },
-      ],
-      editableTabsValue: ref('1'),
       showDialog: false,
     };
   },
   computed: {
+    allBiovers() {
+      return this.ownBiovers.concat(this.publicBiovers);
+    },
     ...mapState('biovers', ['ownBiovers', 'publicBiovers', 'bioversToDisplay', 'addBioversInTab', 'currentBioversId']),
   },
   methods: {
     selectedBiovers(event) {
-      const index = this.bioversToDisplay.findIndex((biovers) => biovers.biover.id === event.id);
-      if (index === -1) {
-        this.addBioverToDisplay(event);
-        this.addPoiToDisplay(event.id);
-        this.addPathToDisplay(event.id);
-        this.addTraceToDisplay(event.id);
-        this.addEventToDisplay(event.id);
-      } else {
-        this.removeBioverToDisplay(event.id);
-      }
+      this.addBioverToDisplay(event);
+      this.addPoiToDisplay(event.id);
+      this.addPathToDisplay(event.id);
+      this.addTraceToDisplay(event.id);
+      this.addEventToDisplay(event.id);
     },
     selectTab(id) {
       const tabIndex = this.bioversToDisplay.findIndex((biovers) => biovers.biover.id === id);
@@ -142,10 +78,6 @@ export default {
       }
     },
     ...mapActions('biovers', ['addBioverToDisplay', 'removeBioverToDisplay', 'addPoiToDisplay', 'addPathToDisplay', 'addTraceToDisplay', 'addEventToDisplay', 'setCurrentBiover']),
-  },
-  deactivated() {
-    this.data[0].children = [];
-    this.data[1].children = [];
   },
 };
 </script>
@@ -203,4 +135,8 @@ export default {
   border-style: solid;
   border-color: #FFFFFF;
 }
+
+.biover-layout-border {
+    --border-radius: 0px;
+  }
 </style>

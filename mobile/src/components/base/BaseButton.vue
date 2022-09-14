@@ -25,6 +25,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    height: var(--height);
   }
 
   [data-role="button"] :slotted(img) {
