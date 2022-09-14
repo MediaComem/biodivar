@@ -78,7 +78,7 @@
       --icon-link: url("../../assets/biovers/search.svg");
       padding-top: 1rem;
       --bg-color: #E0E0E0;
-      
+      --border-color: #000000;
   }
 
   .search input {

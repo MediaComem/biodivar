@@ -23,7 +23,7 @@
     text-transform: uppercase;
     cursor: pointer;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
   }
 

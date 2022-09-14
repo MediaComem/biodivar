@@ -77,7 +77,6 @@ export default {
   methods: {
     async save() {
       const newBiover = await createBiover(this.form);
-      console.log(newBiover);
       this.addNewBiover(newBiover.data);
       this.form = JSON.parse(JSON.stringify(this.defaultForm));
       this.$emit('closeDialog');

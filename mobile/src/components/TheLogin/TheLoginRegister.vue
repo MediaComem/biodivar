@@ -113,17 +113,20 @@
     --icon-link: url("../../assets/login/perm_identity.svg");
     --bg-color: none;
     --color: black;
+    --border-color: #000000;
   }
 
   .password {
     --icon-link: url("../../assets/login/lock_outline.svg");
     --bg-color: none;
     --color: black;
+    --border-color: #000000;
   }
 
   .email {
     --icon-link: url("../../assets/login/email.svg");
     --bg-color: none;
     --color: black;
+    --border-color: #000000;
   }
 </style>

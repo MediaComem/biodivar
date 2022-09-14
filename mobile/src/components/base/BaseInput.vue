@@ -9,6 +9,12 @@
 </template>
 
 <style scoped>
+  .dialog-input-color {
+    --color: black;
+    --bg-color: none;
+    --border-color: #000000;
+  }
+
   [data-role="input"] {
     min-height: 0;
     position: relative;
@@ -22,7 +28,7 @@
     max-width: var(--max-width);
     padding: 1rem 1rem;
     box-sizing: border-box;
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
     border-radius: 3rem;
     background-color: var(--bg-color);
     background-image: var(--icon-link);
@@ -30,6 +36,7 @@
     background-repeat: no-repeat;
     padding-left: 3rem;
     margin: 0 1rem 1rem 1rem;
+    color: var(--color);
   }
 
   [data-role="input"] :slotted(input::placeholder) {

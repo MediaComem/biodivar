@@ -88,5 +88,6 @@
   .dialog-input-color {
     --color: black;
     --bg-color: white;
+    --border-color: #000000;
   }
 </style>

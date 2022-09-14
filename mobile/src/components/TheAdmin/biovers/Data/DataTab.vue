@@ -19,12 +19,19 @@
         @click="selectTab(3)"
         :class="{'button-focus': currentTab === 3}"
       >
-        <p class="material-symbols-sharp text-margin">bar_chart</p>
-        <p>Trace [{{ getTraceByBiovers(bioverId).length }}]</p>
+        <p class="material-symbols-sharp text-margin">gesture</p>
+        <p>paramètres</p>
       </button>
       <button
         @click="selectTab(4)"
         :class="{'button-focus': currentTab === 4}"
+      >
+        <p class="material-symbols-sharp text-margin">bar_chart</p>
+        <p>Trace [{{ getTraceByBiovers(bioverId).length }}]</p>
+      </button>
+      <button
+        @click="selectTab(5)"
+        :class="{'button-focus': currentTab === 5}"
       >
         <p class="material-symbols-sharp text-margin">bar_chart</p>
         <p>Event [{{ getEventByBiovers(bioverId).length }}]</p>
@@ -34,8 +41,9 @@
     <div class="data-table-layout">
       <PoiTable v-show="currentTab === 1" :bioverId="bioverId" />
       <PathTable v-show="currentTab === 2" :bioverId="bioverId" />
-      <TraceTable v-show="currentTab === 3" :bioverId="bioverId" />
-      <EventTable v-show="currentTab === 4" :bioverId="bioverId" />
+      <ParameterTable v-show="currentTab === 3" :bioverId="bioverId" />
+      <TraceTable v-show="currentTab === 4" :bioverId="bioverId" />
+      <EventTable v-show="currentTab === 5" :bioverId="bioverId" />
     </div>
   </div>
 </template>
@@ -45,6 +53,7 @@ import { mapGetters } from 'vuex';
 
 import PoiTable from './PoiTable.vue';
 import PathTable from './PathTable.vue';
+import ParameterTable from './ParameterTable.vue';
 import TraceTable from './TraceTable.vue';
 import EventTable from './EventTable.vue';
 
@@ -55,6 +64,7 @@ export default {
   components: {
     PoiTable,
     PathTable,
+    ParameterTable,
     TraceTable,
     EventTable,
   },
