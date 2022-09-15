@@ -59,7 +59,7 @@
             <a-entity
               :sound="`src: url(${getMediaUrl(media)}); on: click; positional: false;`"
               :emit-when-near="`distance: ${poi.radius};`"
-              :position="`0 ${poi.symbol.position.y} 0`"
+              :position="`0 ${poi.media.position.y} 0`"
             ></a-entity>
           </template>
 

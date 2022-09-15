@@ -29,7 +29,6 @@
     padding: 1rem 1rem;
     box-sizing: border-box;
     border: 1px solid var(--border-color);
-    border-radius: 3rem;
     background-color: var(--bg-color);
     background-image: var(--icon-link);
     background-position: 1rem 0.7rem;

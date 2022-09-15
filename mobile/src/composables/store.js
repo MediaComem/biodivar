@@ -8,7 +8,7 @@ const { storeFavori, getFavori, getPins, storePins } = storage();
 // global states
 const isAuth = ref(false);
 
-const section = ref('admin');
+const section = ref('menu');
 
 const biovers = ref([]);
 

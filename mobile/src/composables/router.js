@@ -2,10 +2,12 @@ import {ref, computed} from '@vue/reactivity';
 
 import Home from '../pages/Home.vue';
 import Biovers from '../pages/Biovers.vue';
+import Admin from '../pages/Admin.vue';
 
 const routes = {
   '#home': Home,
   '#biovers': Biovers,
+  '#admin': Admin,
 };
 
 const hash = ref(window.location.hash);

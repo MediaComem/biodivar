@@ -4,7 +4,6 @@
   import Footer from './app/UIElement/Footer.vue';
 
   import TheAframe from './TheAframe/TheAframe.vue';
-  import Biovers from './TheAdmin/Biovers.vue';
   import TheHud from './TheHud/TheHud.vue';
   import { useRouter } from '../composables/router.js';
   import { useStore } from '../composables/store.js';
@@ -64,40 +63,10 @@
     <base-modal style="text-align: center;">
       <div data-role="screen">
         <header>
-          <div class="logo" @click="menu = false">
-            <img alt="Biodivar" src="../assets/shared/logo.svg" />
-          </div>
-          <div class="account">
-            <img class="acount-image" alt="Account" src="../assets/shared/account_circle.svg" @click="menu = !menu">
-            <ul v-if="menu">
-              <li class="menu-item-divider font"><img class="menu-item" alt="Pencil" src="../assets/shared/edit.svg"> {{ $t('Header.Modify') }}</li>
-              <li @click="disconnect()" class="font"><img class="menu-item" alt="Disconnect" src="../assets/shared/logout.svg"> {{ $t('Header.Logout') }}</li>
-            </ul>
-            <div v-if="menu" class="dialog-overlay" @click="closeDialog()"/>
-          </div>
-        </header>
-        <component :is="page" @click="menu = false" />
-      </div>
-      <Footer v-if="isMobileOrTablet" @click="menu = false"/>
-    </base-modal>
-  </div>
-
-  <div v-else-if="section == 'admin'">
-    <base-modal style="text-align: center;">
-      <header>
-        <div class="logo-admin" @click="menu = false">
+        <div class="logo" @click="menu = false">
           <img alt="Biodivar" src="../assets/shared/logo.svg" />
         </div>
         <div class="central-headers">
-          <div class="col">
-            <p @click="section = 'menu'">RA</p>
-          </div>
-          <div class="col">
-            <p>Carte</p>
-          </div>
-          <div class="col">
-            <p>Préférences</p>
-          </div>
         </div>
         <div class="account">
           <img class="acount-image" alt="Account" src="../assets/shared/account_circle.svg" @click="menu = !menu">
@@ -108,8 +77,9 @@
           <div v-if="menu" class="dialog-overlay" @click="closeDialog()"/>
         </div>
       </header>
-      <Biovers />
-      </base-modal>
+        <component :is="page" @click="menu = false" />
+      </div>
+    </base-modal>
   </div>
 
   <div v-else-if="section == 'ar'">
@@ -159,7 +129,6 @@
 
   [data-role="screen"] {
     display: inline-block;
-    max-width: 1280px;
     min-height: 100%;
     width: 100%;
     padding-bottom: 56px;
@@ -170,19 +139,6 @@
     width: 80%;
     justify-content: flex-start;
     display: flex;
-  }
-
-  .logo-admin {
-    height: 22px;
-    width: 20%;
-    justify-content: flex-start;
-    display: flex;
-  }
-
-  .central-headers {
-    display: flex;
-    justify-content: center;
-    width: 60%;
   }
 
   .col {

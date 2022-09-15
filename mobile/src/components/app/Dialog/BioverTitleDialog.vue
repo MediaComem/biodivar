@@ -4,6 +4,7 @@
 
   const bioverName = ref('');
   const bioverDescription = ref('');
+  const bioversLocation = ref('');
 
   const props = defineProps({
       biover: Object,
@@ -14,6 +15,7 @@
   onMounted(() => {
     bioverName.value = props.biover.name;
     bioverDescription.value = props.biover.description;
+    bioversLocation.value = props.biover.location;
   })
 </script>
 
@@ -25,7 +27,8 @@
     <base-input class="dialog-input-color">
       <input type="text" v-model="bioverName" :placeholder="$t('TheMenu.Dialog.TitlePlaceholder')">
       <input type="text" v-model="bioverDescription" :placeholder="$t('TheMenu.Dialog.DescriptionPlaceholder')">
-      <base-button class="edit" @click="emit('save', { title: bioverName, description: bioverDescription })">
+      <input type="text" v-model="bioversLocation" placeholder="Emplacement du biovers">
+      <base-button class="edit" @click="emit('save', { title: bioverName, description: bioverDescription, location: bioversLocation })">
         <img style="width:25px; height:25px" src="../../../assets/shared/more/save_alt.svg" />{{ $t('TheMenu.Dialog.Save') }}
       </base-button>
     </base-input>

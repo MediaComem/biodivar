@@ -4,6 +4,7 @@
   import Splitting from 'splitting';
 
   import { useStore } from '../../composables/store';
+  import vuex from 'vuex';
 
   import { duplicateBiovers, updateBiovers, deleteBiovers } from '../../utils/api.js';
   
@@ -30,6 +31,7 @@
   import { deepClone } from '../../utils/duplicate.js';
 
   const { username, isInFavori, isInPins, favori, pins, biovers } = useStore();
+  const store = vuex.useStore();
 
   const isOpen = ref(false);
 
@@ -103,6 +105,7 @@
   async function saveTitle(modification) {
     props.biover.name = modification.title;
     props.biover.description = modification.description;
+    props.biover.location = modification.location;
     const resp = await updateBiovers(props.biover);
     if (resp?.statusCode === 200) {
       setupNotification(`Le biovers ${props.biover.name} a été mis à jour avec succès`, 'success')
@@ -131,6 +134,7 @@
     if (resp?.statusCode === 200) {
       setupNotification(`Le biovers ${props.biover.name} a été supprimé avec succès`, 'success')
       const index = biovers.value.findIndex((b) => b.id === props.biover.id);
+      store.dispatch('biovers/deleteBiovers', props.biover.id);
       biovers.value.splice(index, 1);
     } else {
       setupNotification(`Une erreur s'est produite durant la suppréssion du biovers ${props.biover.name}`, 'error')

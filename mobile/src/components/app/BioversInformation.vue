@@ -1,10 +1,12 @@
 <script setup>
   import BioverActions from './BioverActions.vue';
   import { useStore } from '../../composables/store.js';
+  import { useRouter } from '../../composables/router.js';
 
   import { dateFormatter, hourFormatter } from '../../utils/formatter.js';
 
   const { isMobileOrTablet, section, selectedBiovers } = useStore();
+  const { page, route } = useRouter();
 
   const emit = defineEmits(['visibility', 'editable', 'favori', 'pin', 'map'])
 
@@ -67,7 +69,7 @@
             <p class="information-text">15.3 MB</p>
         </div>
     </div>
-    <div class="button" v-if="section === 'menu'">
+    <div class="button" v-if="route !== '#admin'">
         <base-button class="enter" @click="enterAR()">
           <img src="../../assets/shared/home.svg" />{{ $t('TheMenu.Information.Enter') }}
         </base-button>

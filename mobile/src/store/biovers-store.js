@@ -64,6 +64,17 @@ export const bioversStore = {
       const eventIndex = state.events.findIndex((e) => e.bioverId === bioverId);
       state.events.splice(eventIndex, 1);
     },
+    DELETE_BIOVERS(state, bioverId) {
+      const ownBioversIndex = state.ownBiovers.findIndex((b) => b.id === bioverId);
+      if (ownBioversIndex !== -1) {
+        state.ownBiovers.splice(ownBioversIndex, 1);
+      } else {
+        const publicBioversIndex = state.publicBiovers.findIndex((b) => b.id === bioverId);
+        if (publicBioversIndex !== -1) {
+          state.ownBiovers.splice(publicBioversIndex, 1);
+        }
+      }
+    },
     SAVE_POI_TO_DISPLAY(state, payload) {
       state.pois.push({ bioverId: payload.id, pois: payload.pois });
     },
@@ -288,6 +299,10 @@ export const bioversStore = {
     },
     addNewBiover({ commit }, biover) {
       commit('ADD_NEW_BIOVER', biover);
+    },
+    deleteBiovers({ commit }, bioverId) {
+      commit('REMOVE_BIOVER', bioverId);
+      commit('DELETE_BIOVERS', bioverId);
     },
     addBioverToDisplay({ commit, state }, event) {
       let selectBiover = state.ownBiovers.find((e) => e.name === event.name);

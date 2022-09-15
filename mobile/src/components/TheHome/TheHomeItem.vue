@@ -1,8 +1,4 @@
 <script setup>
-  import { useStore } from '../../composables/store.js';
-
-  const { section } = useStore();
-
   const props = defineProps({
       src: String,
       title: String,
@@ -12,14 +8,7 @@
 </script>
 
 <template>
- <div v-if="props.title === 'VISUALISATION [desktop]'" class="container container-width" @click="section = 'admin'">
-    <a :href="props.link">
-      <img :src="props.src">
-      <h3>{{ props.title }}</h3>
-      <p>{{ props.description }}</p>
-    </a>
-  </div>
-  <div v-else class="container container-width">
+  <div class="container container-width">
     <a :href="props.link">
       <img :src="props.src">
       <h3>{{ props.title }}</h3>

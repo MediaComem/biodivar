@@ -69,9 +69,9 @@ function createPoi(poi) {
       creation_date: new Date(),
     },
     position: {
-      x: 0,
+      distance: 0,
       alpha: 0,
-      y: 0,
+      height: 0,
     },
     biovers: currentBioversId,
     extrusion: 0,
@@ -134,7 +134,9 @@ function sent() {
     importPois(pois.value);
     importPaths(paths.value);
   };
-  fr.readAsText(upload.value.uploadFiles[0].raw);
+  if (upload.value.uploadFiles) {
+    fr.readAsText(upload.value.uploadFiles[0].raw);
+  }
 }
 
 function handleExceed() {
@@ -147,6 +149,7 @@ function handleExceed() {
 async function save() {
   if (pois.value.length > 0) {
     const createdPois = await savePois(pois.value);
+    console.log(createdPois);
     updateImportPois(createdPois.data);
   }
 
@@ -166,7 +169,7 @@ async function save() {
 
 <template>
   <div class="action-layout">
-    <base-button class="button" @click="save">
+    <base-button class="button" @click="openBioversCreator">
       <p class="material-symbols-sharp text-formatting">add_circle</p> Créer un nouveau biovers
     </base-button>
     <BioverCreator :showDialog="bioversCreator" @closeDialog="closeBioversCreator"/>
@@ -179,7 +182,7 @@ async function save() {
       :on-change="handleExceed"
     >
       <template #trigger>
-        <base-button class="button" @click="save">
+        <base-button class="button">
           <p class="material-symbols-sharp text-formatting">upload_file</p> Importer .json
         </base-button>
       </template>

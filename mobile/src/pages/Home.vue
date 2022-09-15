@@ -20,8 +20,8 @@
   </div>
   <div data-role="item">
     <the-home-item :src="'./assets/symbol-biovers.svg'" :link="'#biovers'" :title="$t('TheMenu.Item.BioverTitle')" :description="$t('TheMenu.Item.BioverDescription')"></the-home-item>
-    <the-home-item :src="'./assets/symbol_visualisation.svg'" :title="$t('TheMenu.Item.VisualizationTitle')" :description="$t('TheMenu.Item.VisualizationDescription')"></the-home-item>
-    <the-home-item :src="'./assets/container.svg'" :title="$t('TheMenu.Item.NewTitle')" :description="$t('TheMenu.Item.NewDescription')"></the-home-item>
+    <the-home-item :src="'./assets/symbol_visualisation.svg'" :link="'#admin'" :title="$t('TheMenu.Item.VisualizationTitle')" :description="$t('TheMenu.Item.VisualizationDescription')"></the-home-item>
+    <!--the-home-item :src="'./assets/container.svg'" :title="$t('TheMenu.Item.NewTitle')" :description="$t('TheMenu.Item.NewDescription')"></the-home-item-->
     <the-home-item :src="'./assets/symbol_profil.svg'" :title="$t('TheMenu.Item.ProfilTitle')" :description="$t('TheMenu.Item.ProfilDescription')"></the-home-item>
     <the-home-item :src="'./assets/symbol_settings.svg'" :title="$t('TheMenu.Item.SettingTitle')" :description="$t('TheMenu.Item.SettingDescription')"></the-home-item>
     <the-home-item :src="'./assets/symbol_help.svg'" :title="$t('TheMenu.Item.HelpTitle')" :description="$t('TheMenu.Item.HelpDescription')"></the-home-item>
