@@ -11,11 +11,11 @@
             <input type="text" v-model="biovers.biover.name" placeholder="Nom du biovers">
         </base-input>
         <p class="parameter-name">sous-titre du biovers</p>
-        <base-input class="title">
+        <base-input class="subtitle">
             <input type="text" v-model="biovers.biover.description" placeholder="Sous-titre du biovers">
         </base-input>
         <p class="parameter-name">emplacement du biovers</p>
-        <base-input class="title">
+        <base-input class="location">
             <input type="text" v-model="biovers.biover.location" placeholder="Emplacement du biovers">
         </base-input>
         <div class="item">
@@ -132,7 +132,21 @@ export default {
 @import './table.css';
 
 .title {
-    --icon-link: url("../../../../assets/footer/biovers.svg");
+    --icon-link: url("../../../../assets/tables/title_icon.svg");
+    --bg-color: none;
+    --color: white;
+    --border-color: #FFFFFF;
+}
+
+.subtitle {
+    --icon-link: url("../../../../assets/tables/subtitle_icon.svg");
+    --bg-color: none;
+    --color: white;
+    --border-color: #FFFFFF;
+}
+
+.location {
+    --icon-link: url("../../../../assets/tables/location_icon.svg");
     --bg-color: none;
     --color: white;
     --border-color: #FFFFFF;

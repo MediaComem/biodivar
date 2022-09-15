@@ -167,7 +167,7 @@ async function save() {
 <template>
   <div class="action-layout">
     <base-button class="button" @click="save">
-      <p class="material-symbols-sharp text-formatting">done</p> Créer un nouveau biovers
+      <p class="material-symbols-sharp text-formatting">add_circle</p> Créer un nouveau biovers
     </base-button>
     <BioverCreator :showDialog="bioversCreator" @closeDialog="closeBioversCreator"/>
     <el-upload
@@ -180,11 +180,11 @@ async function save() {
     >
       <template #trigger>
         <base-button class="button" @click="save">
-          <p class="material-symbols-sharp text-formatting">done</p> Importer .json
+          <p class="material-symbols-sharp text-formatting">upload_file</p> Importer .json
         </base-button>
       </template>
       <base-button class="button" @click="save">
-        <p class="material-symbols-sharp text-formatting">done</p> Publier
+        <p class="material-symbols-sharp text-formatting">publish</p> Publier
       </base-button>
     </el-upload>
     <template v-if="saveDone">

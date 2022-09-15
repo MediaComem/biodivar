@@ -2,7 +2,7 @@
   import { logout } from '../../../utils/api.js';
   import { useStore } from '../../../composables/store.js';
 
-  const { isIOS, isAuth } = useStore();
+  const { isIOS, isAuth, section } = useStore();
 
   async function disconnect() {
     const resp = await logout();
@@ -16,31 +16,31 @@
     <div data-role="footer">
       <a href="#menu">
         <div class="container">
-          <img src="../../../assets/shared/home.svg" alt="home">
-          <p>{{ $t('Footer.Homepage') }}</p>
+          <p class="material-symbols-sharp">home</p>
+          <p class="text-font">{{ $t('Footer.Homepage') }}</p>
         </div>
       </a>
       <a href="#biovers">
         <div class="container" v-if="!isIOS">
           <img src="../../../assets/footer/biovers.svg" alt="home">
-          <p>{{ $t('Footer.Biover') }}</p>
+          <p class="text-font">{{ $t('Footer.Biover') }}</p>
         </div>
       </a>
         <div class="container">
           <img src="../../../assets/footer/new-biovers.svg" alt="new">
-          <p>{{ $t('Footer.New') }}</p>
+          <p class="text-font">{{ $t('Footer.New') }}</p>
         </div>
-        <div class="container">
+        <div class="container" @click="section = 'admin'">
           <img src="../../../assets/footer/visualisation.svg" alt="visualize">
-          <p>{{ $t('Footer.Visualize') }}</p>
+          <p class="text-font">{{ $t('Footer.Visualize') }}</p>
         </div>
         <div class="container">
-          <img src="../../../assets/footer/settings.svg" alt="settings">
-          <p>{{ $t('Footer.Settings') }}</p>
+          <p class="material-symbols-sharp">settings</p>
+          <p class="text-font">{{ $t('Footer.Settings') }}</p>
         </div>
         <div class="container" @click="disconnect()">
-          <img src="../../../assets/footer/logout.svg" alt="disconnect">
-          <p>{{ $t('Footer.Logout') }}</p>
+          <p class="material-symbols-sharp">logout</p>
+          <p class="text-font">{{ $t('Footer.Logout') }}</p>
         </div>
     </div>
 </template>
@@ -75,6 +75,9 @@
   p {
     margin: 0;
     color: #F2F2F2;
+  }
+
+  .text-font {
     font-family: 'BiodivAR Book';
     font-size: 8px;
     line-height: 8px;
