@@ -149,7 +149,6 @@ function handleExceed() {
 async function save() {
   if (pois.value.length > 0) {
     const createdPois = await savePois(pois.value);
-    console.log(createdPois);
     updateImportPois(createdPois.data);
   }
 

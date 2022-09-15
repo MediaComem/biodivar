@@ -86,20 +86,17 @@ export default {
       showEditionDialog: false,
       poiToUpdate: undefined,
       latlng: undefined,
-      zoom: 15,
+      unsubscribeActions: null,
       minZoom: 1,
       maxZoom: 19,
       boundingBox: [[-90, -180],[90,  180]],
-      center: [
-        46.7809153620790993954869918525218963623046875,
-        6.64862875164097832936249687918461859226226806640625],
     };
   },
   computed: {
     mapUrl() {
       return `https://api.maptiler.com/maps/50a99959-5522-4b4a-8489-28de9d3af0ed/{z}/{x}/{y}.png?key=${KEY}`;
     },
-    ...mapState('biovers', ['bioversToDisplay']),
+    ...mapState('biovers', ['pois']),
     ...mapGetters('biovers', ['getPois', 'getPaths', 'ownOrPublic', 'getCurrentBioverId', 'bioverIsEditable']),
   },
   methods: {
@@ -123,21 +120,32 @@ export default {
         minlong: 180,
         maxlong: -180,
       };
-      this.bioversToDisplay.forEach((biovers) => {
-        biovers.biover.Poi.forEach((poi) => {
-          if (poi.coordinate) {
-            if (poi.coordinate.lat < boundingBox.minlat) boundingBox.minlat = poi.coordinate.lat;
-            if (poi.coordinate.lat > boundingBox.maxlat) boundingBox.maxlat = poi.coordinate.lat;
-            if (poi.coordinate.long < boundingBox.minlong) boundingBox.minlong = poi.coordinate.long;
-            if (poi.coordinate.long > boundingBox.maxlong) boundingBox.maxlong = poi.coordinate.long;
+      this.pois.forEach((poisOfBiover) => {
+        poisOfBiover.pois.forEach((poi) => {
+          if (poi.element.coordinate) {
+            if (poi.element.coordinate.lat < boundingBox.minlat) boundingBox.minlat = poi.element.coordinate.lat;
+            if (poi.element.coordinate.lat > boundingBox.maxlat) boundingBox.maxlat = poi.element.coordinate.lat;
+            if (poi.element.coordinate.long < boundingBox.minlong) boundingBox.minlong = poi.element.coordinate.long;
+            if (poi.element.coordinate.long > boundingBox.maxlong) boundingBox.maxlong = poi.element.coordinate.long;
           }
-        });
+        })
       });
       this.boundingBox = [[boundingBox.minlat, boundingBox.minlong],[boundingBox.maxlat, boundingBox.maxlong]];
     },
   },
   mounted() {
+    this.unsubscribeActions = this.$store.subscribeAction({
+      after: (action) => {
+        if (action.type === 'biovers/addBioverToDisplay' || action.type === 'biovers/removeBioverToDisplay'|| action.type === 'biovers/updateImportPois' || action.type === 'biovers/importPaths') {
+          console.log('Update');
+          this.computeBoxingBox();
+        }
+      }
+    });
     this.computeBoxingBox();
+  },
+  unmounted() {
+    this.unsubscribeActions();
   }
 };
 </script>
