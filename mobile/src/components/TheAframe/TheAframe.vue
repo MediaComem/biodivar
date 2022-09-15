@@ -36,20 +36,20 @@
         <a-entity
           position="0 0 10000"
           :gps-position="`latitude: ${poi.coordinate.lat}; longitude: ${poi.coordinate.long}`"
-          :visible-from="`distance: ${poi.visible_from}`"
+          :visible-from="`distance: ${poi.scope}`"
           :poi-radius="`
             radius: ${poi.radius};
             shape: ${poi.style_type};
-            fill: ${poi.style_fill};
-            visible: ${poi.style_is_visible};
-            groundElevation: ${poi.style_elevation_ground};
+            fill: ${poi.fill_type};
+            visible: true;
+            groundElevation: ${poi.position.y};
           `"
         >
 
           <a-entity
             :look-at-roll-yaw="`enabled: ${poi.symbol.is_facing_user ? 'true' : 'false'}`"
             :gltf-model="`url(${getSymbolUrl(poi.symbol.id)})`"
-            :position="`0 ${poi.symbol.elevation_ground} 0`"
+            :position="`0 ${poi.symbol.position.y} 0`"
             :visible="`${poi.symbol.is_visible ? 'true' : 'false'}`"
             animation-mixer
           ></a-entity>
@@ -59,7 +59,7 @@
             <a-entity
               :sound="`src: url(${getMediaUrl(media)}); on: click; positional: false;`"
               :emit-when-near="`distance: ${poi.radius};`"
-              :position="`0 ${poi.symbol.elevation_ground} 0`"
+              :position="`0 ${poi.symbol.position.y} 0`"
             ></a-entity>
           </template>
 
