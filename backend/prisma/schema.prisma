@@ -195,9 +195,9 @@ model Event {
 
 model Position {
   id                      Int         @id @default(autoincrement())  
-  x                       Float       @default(0)
+  distance                Float       @default(0)
   alpha                   Float       @default(0)
-  y                       Float       @default(0)
+  height                  Float       @default(0)
   media_id                Int?        @unique
   media                   Media?      @relation(fields: [media_id], references: [id])  
   symbol_id               Int?        @unique

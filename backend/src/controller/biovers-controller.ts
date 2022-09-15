@@ -25,8 +25,13 @@ export const getBioversByUser = async (
           deleted_date: null,
         },
         include: {
+          position: true,
           coordinate: true,
-          symbol: true,
+          symbol: {
+            include: {
+              position: true,
+            }
+          },
           media: true,
           User: {
             select: {
@@ -73,6 +78,7 @@ export const getBioversByUser = async (
       },
       Event: {
         include: {
+          coordinate: true,
           User: {
             select: {
               username: true,
@@ -117,8 +123,13 @@ export const getBioversById = async (
             deleted_date: null,
           },
           include: {
+            position: true,
             coordinate: true,
-            symbol: true,
+            symbol: {
+              include: {
+                position: true,
+              }
+            },
             media: true,
             User: {
               select: {
@@ -165,6 +176,7 @@ export const getBioversById = async (
         },
         Event: {
           include: {
+            coordinate: true,
             User: {
               select: {
                 username: true,
@@ -205,8 +217,13 @@ export const getPublicBiovers = async (
             deleted_date: null,
           },
           include: {
+            position: true,
             coordinate: true,
-            symbol: true,
+            symbol: {
+              include: {
+                position: true,
+              }
+            },
             media: true,
             User: {
               select: {
@@ -253,6 +270,7 @@ export const getPublicBiovers = async (
         },
         Event: {
           include: {
+            coordinate: true,
             User: {
               select: {
                 username: true,
@@ -292,9 +310,17 @@ export const createBiovers = async (
           }
         },
         Poi: {
+          where: {
+            deleted_date: null,
+          },
           include: {
+            position: true,
             coordinate: true,
-            symbol: true,
+            symbol: {
+              include: {
+                position: true,
+              }
+            },
             media: true,
             User: {
               select: {
@@ -338,6 +364,7 @@ export const createBiovers = async (
         },
         Event: {
           include: {
+            coordinate: true,
             User: {
               select: {
                 username: true,
@@ -379,9 +406,17 @@ export const updateBiovers = async (
             }
           },
           Poi: {
+            where: {
+              deleted_date: null,
+            },
             include: {
+              position: true,
               coordinate: true,
-              symbol: true,
+              symbol: {
+                include: {
+                  position: true,
+                }
+              },
               media: true,
               User: {
                 select: {
@@ -425,6 +460,7 @@ export const updateBiovers = async (
           },
           Event: {
             include: {
+              coordinate: true,
               User: {
                 select: {
                   username: true,

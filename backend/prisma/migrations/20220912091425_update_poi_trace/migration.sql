@@ -33,9 +33,9 @@ ALTER TABLE "Biovers" ADD COLUMN "location" TEXT;
 -- CreateTable
 CREATE TABLE "Position" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "phi" REAL NOT NULL DEFAULT 0,
-    "sigma" REAL NOT NULL DEFAULT 0,
-    "z" REAL NOT NULL DEFAULT 0,
+    "distance" REAL NOT NULL DEFAULT 0,
+    "alpha" REAL NOT NULL DEFAULT 0,
+    "height" REAL NOT NULL DEFAULT 0,
     "media_id" INTEGER,
     "symbol_id" INTEGER,
     "poi_id" INTEGER,
