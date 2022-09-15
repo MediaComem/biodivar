@@ -1,6 +1,5 @@
 <template>
-  <l-map :min-zoom='minZoom' :max-zoom='maxZoom' v-model='zoom' v-model:zoom='zoom'
-    :center='center' @click="getPosition">
+  <l-map ref="map" :min-zoom='minZoom' :max-zoom='maxZoom' :bounds='boundingBox' @click="getPosition">
     <l-tile-layer
       url="https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg"
       layer-type="base"
@@ -54,7 +53,7 @@ import {
 } from '@vue-leaflet/vue-leaflet';
 import 'leaflet/dist/leaflet.css';
 
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 
 import Poi from './Poi.vue';
 import Path from './Path.vue';
@@ -64,6 +63,14 @@ import PoiEdition from '../Dialog/PoiEdition.vue';
 const KEY = import.meta.env.VITE_APP_MAP_KEY;
 
 export default {
+  watch: {
+    bioversToDisplay: {
+      handler() {
+        this.computeBoxingBox();
+      },
+      deep: true
+    }
+  },
   components: {
     LMap,
     LTileLayer,
@@ -82,6 +89,7 @@ export default {
       zoom: 15,
       minZoom: 1,
       maxZoom: 19,
+      boundingBox: [[-90, -180],[90,  180]],
       center: [
         46.7809153620790993954869918525218963623046875,
         6.64862875164097832936249687918461859226226806640625],
@@ -91,6 +99,7 @@ export default {
     mapUrl() {
       return `https://api.maptiler.com/maps/50a99959-5522-4b4a-8489-28de9d3af0ed/{z}/{x}/{y}.png?key=${KEY}`;
     },
+    ...mapState('biovers', ['bioversToDisplay']),
     ...mapGetters('biovers', ['getPois', 'getPaths', 'ownOrPublic', 'getCurrentBioverId', 'bioverIsEditable']),
   },
   methods: {
@@ -107,6 +116,28 @@ export default {
       this.poiToUpdate = { poi: event };
       this.showEditionDialog = true;
     },
+    computeBoxingBox() {
+      const boundingBox = {
+        minlat: 90,
+        maxlat: -90,
+        minlong: 180,
+        maxlong: -180,
+      };
+      this.bioversToDisplay.forEach((biovers) => {
+        biovers.biover.Poi.forEach((poi) => {
+          if (poi.coordinate) {
+            if (poi.coordinate.lat < boundingBox.minlat) boundingBox.minlat = poi.coordinate.lat;
+            if (poi.coordinate.lat > boundingBox.maxlat) boundingBox.maxlat = poi.coordinate.lat;
+            if (poi.coordinate.long < boundingBox.minlong) boundingBox.minlong = poi.coordinate.long;
+            if (poi.coordinate.long > boundingBox.maxlong) boundingBox.maxlong = poi.coordinate.long;
+          }
+        });
+      });
+      this.boundingBox = [[boundingBox.minlat, boundingBox.minlong],[boundingBox.maxlat, boundingBox.maxlong]];
+    },
   },
+  mounted() {
+    this.computeBoxingBox();
+  }
 };
 </script>
