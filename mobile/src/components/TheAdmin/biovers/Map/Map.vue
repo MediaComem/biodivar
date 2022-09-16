@@ -120,6 +120,7 @@ export default {
         minlong: 180,
         maxlong: -180,
       };
+      console.log(this.pois)
       this.pois.forEach((poisOfBiover) => {
         poisOfBiover.pois.forEach((poi) => {
           if (poi.element.coordinate) {
@@ -130,19 +131,18 @@ export default {
           }
         })
       });
+      console.log(boundingBox);
       this.boundingBox = [[boundingBox.minlat, boundingBox.minlong],[boundingBox.maxlat, boundingBox.maxlong]];
     },
   },
   mounted() {
     this.unsubscribeActions = this.$store.subscribeAction({
       after: (action) => {
-        if (action.type === 'biovers/addBioverToDisplay' || action.type === 'biovers/removeBioverToDisplay'|| action.type === 'biovers/updateImportPois' || action.type === 'biovers/importPaths') {
-          console.log('Update');
+        if (action.type === 'biovers/addBioverToDisplay' || action.type === 'biovers/removeBioverToDisplay'|| action.type === 'biovers/updateImportPois' || action.type === 'biovers/importPaths' || action.type === 'biovers/getBiovers') {
           this.computeBoxingBox();
         }
       }
     });
-    this.computeBoxingBox();
   },
   unmounted() {
     this.unsubscribeActions();
