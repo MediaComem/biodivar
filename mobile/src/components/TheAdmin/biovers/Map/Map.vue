@@ -120,7 +120,6 @@ export default {
         minlong: 180,
         maxlong: -180,
       };
-      console.log(this.pois)
       this.pois.forEach((poisOfBiover) => {
         poisOfBiover.pois.forEach((poi) => {
           if (poi.element.coordinate) {
@@ -131,7 +130,6 @@ export default {
           }
         })
       });
-      console.log(boundingBox);
       this.boundingBox = [[boundingBox.minlat, boundingBox.minlong],[boundingBox.maxlat, boundingBox.maxlong]];
     },
   },
