@@ -77,7 +77,9 @@
           <div v-if="menu" class="dialog-overlay" @click="closeDialog()"/>
         </div>
       </header>
+      <div data-role="component">
         <component :is="page" @click="menu = false" />
+      </div>
       </div>
     </base-modal>
   </div>
@@ -96,8 +98,9 @@
   header {
     border-bottom: solid black 1px;
     margin-bottom: 1rem;
-    padding-bottom: 1rem;
     display: flex;
+    padding: 10px 10px 1rem 10px;
+    background-color: #699A3F;
   }
 
   ul {
@@ -132,6 +135,10 @@
     min-height: 100%;
     width: 100%;
     padding-bottom: 56px;
+  }
+
+  [data-role="component"] {
+    padding: 0px 10px 10px 10px;
   }
 
   .logo {

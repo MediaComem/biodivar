@@ -16,7 +16,6 @@
     width: 100%;
     min-height: 100%;
     background: #8DC26F;;
-    padding: 10px;
     overflow-x: hidden;
   }
 
