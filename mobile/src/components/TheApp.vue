@@ -69,7 +69,10 @@
         <div class="central-headers">
         </div>
         <div class="account">
-          <img class="acount-image" alt="Account" src="../assets/shared/account_circle.svg" @click="menu = !menu">
+          <div class="acount-layout" @click="menu = !menu">
+            <img class="acount-image" alt="Account" src="../assets/shared/account_circle.svg">
+            <p>{{ username }}</p>
+          </div>
           <ul v-if="menu">
             <li class="menu-item-divider font"><img class="menu-item" alt="Pencil" src="../assets/shared/edit.svg"> {{ $t('Header.Modify') }}</li>
             <li @click="disconnect()" class="font"><img class="menu-item" alt="Disconnect" src="../assets/shared/logout.svg"> {{ $t('Header.Logout') }}</li>
@@ -162,6 +165,20 @@
     width: 20%;
     justify-content: flex-end;
     cursor: pointer;
+  }
+
+  .acount-layout {
+    display: flex;
+    background-color: #8DC26F;
+    border-radius: 1rem;
+    padding: 5px 10px 5px 10px;
+  }
+
+  .acount-layout > p {
+    margin: 0px 6px 0px 6px;
+    height: 24px;
+    align-items: center;
+    display: flex;
   }
 
   .account-image {

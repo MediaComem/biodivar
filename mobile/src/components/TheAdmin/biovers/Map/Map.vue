@@ -101,6 +101,7 @@ export default {
   },
   methods: {
     getPosition(event) {
+      console.log(event);
       if (event.latlng && this.getCurrentBioverId !== -1) {
         if ((this.ownOrPublic(this.getCurrentBioverId) === 'public' && !this.bioverIsEditable(this.getCurrentBioverId))) {
           return;

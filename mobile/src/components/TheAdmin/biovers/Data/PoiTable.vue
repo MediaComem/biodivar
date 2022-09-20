@@ -414,7 +414,11 @@
             </div>
           </th>
           <th class="last-column last-column-header">
-             <p class="material-symbols-sharp no-margin">more_vert</p>
+             <p class="material-symbols-sharp no-margin clickable" @click="openMenu(0)">more_vert</p>
+             <div v-if="menuState && menuState.id === 0 && menuState.state" class="menu">
+                <p class="menu-element" @click="downloadPois">Exporter les POIs</p>
+             </div>
+             <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
         </tr>
         <tr v-for="(poi, index) in getSortedData" :key="index">
@@ -461,7 +465,11 @@
           <td class="column">{{ poi.element.amplitude }}</td>
           <td class="column before-last-column">{{ poi.element.metadata }}</td>
           <td class="last-column">
-             <p class="material-symbols-sharp no-margin">more_vert</p>
+             <p class="material-symbols-sharp no-margin clickable" @click="openMenu(poi.element.id)">more_vert</p>
+             <div v-if="menuState && menuState.id === poi.element.id && menuState.state" class="menu">
+                <p class="menu-element" @click="downloadPoi(poi)">Exporter le POI</p>
+             </div>
+             <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </td>
         </tr>
       </table>
@@ -474,6 +482,8 @@ import { mapActions, mapGetters } from 'vuex';
 
 import { fullDateFormatter } from '../../../../utils/formatter.js';
 import sort from '../../../../utils/sort';
+import { computeGeoJSONFromPOI, computeGeoJSONFromPOIs } from '../../../../utils/geojson.js';
+
 
 export default {
   props: {
@@ -486,6 +496,7 @@ export default {
       sortElement: '',
       orderElement: false,
       isSymbol: false,
+      menuState: undefined,
     };
   },
   computed: {
@@ -559,6 +570,22 @@ export default {
           this.unselectAllPois();
         }
     },
+    openMenu(rowId) {
+      this.menuState = {id: rowId, state: true};
+    },
+    download(file) {
+      const anchor = document.createElement('a');
+      anchor.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(file);
+      anchor.target = '_blank';
+      anchor.download = 'export_poi.json';
+      anchor.click();
+    },
+    downloadPoi(poi) {
+      this.download(computeGeoJSONFromPOI(poi));
+    },
+    downloadPois() {
+      this.download(computeGeoJSONFromPOIs(this.getPoisByBiover(this.bioverId)))
+    },
     ...mapActions('biovers', ['updatePoiToDisplay', 'resetPoisModification', 'selectAllPois', 'unselectAllPois']),
   },
 };
@@ -581,5 +608,36 @@ export default {
 
 .text-margin {
   padding-right: 6px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.menu {
+  position: relative;
+  width: 200px;
+  height: 100px;
+  background-color: white;
+  color: black;
+  z-index: 10;
+  left: -180px;
+  top: -35px;
+  border-radius: 3px;
+}
+
+.menu-element {
+  margin: 0;
+  padding: 5px 0 5px 0;
+  border-bottom: 1px solid black;
+  cursor: pointer;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
 }
 </style>

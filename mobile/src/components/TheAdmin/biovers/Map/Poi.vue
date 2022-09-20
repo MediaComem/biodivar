@@ -7,8 +7,7 @@
   <l-marker @click="updatePoi"
   :lat-lng='[poi.element.coordinate.lat, poi.element.coordinate.long]'
   :draggable="true" @add="uploadDone">
-    <l-tooltip v-if="poi.element.title_is_visible || poi.element.subtitle_is_visible"
-    :options="{ permanent: true, direction: 'top'}">
+    <l-tooltip :options="{ permanent: false, direction: 'top'}">
       <p v-if="poi.element.title_is_visible">{{ poi.element.title }}</p>
       <p v-if="poi.element.subtitle_is_visible">{{ poi.element.subtitle }}</p>
     </l-tooltip>
@@ -50,6 +49,7 @@ export default {
   data() {
     return {
       url: '',
+      shouldDisplayTooltip: false,
     };
   },
   computed: {
