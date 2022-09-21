@@ -416,7 +416,9 @@
           <th class="last-column last-column-header">
              <p class="material-symbols-sharp no-margin clickable" @click="openMenu(0)">more_vert</p>
              <div v-if="menuState && menuState.id === 0 && menuState.state" class="menu">
-                <p class="menu-element" @click="downloadPois">Exporter les POIs</p>
+                <p class="menu-element" :class="{'disable': !globalChecked }" @click="downloadPois">Exporter les POIs</p>
+                <p class="menu-element" :class="{'disable': !globalChecked }" @click="copies()">Copier les POIs</p>
+                <p class="menu-element" :class="{'disable': couldPaste }" @click="paste(poi)">Coller le POI</p>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
@@ -469,7 +471,6 @@
              <div v-if="menuState && menuState.id === poi.element.id && menuState.state" class="menu">
                 <p class="menu-element" @click="downloadPoi(poi)">Exporter le POI</p>
                 <p class="menu-element" @click="copy(poi)">Copier le POI</p>
-                <p class="menu-element" :class="{'disable': couldPaste }" @click="paste(poi)">Coller le POI</p>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </td>
@@ -480,7 +481,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 import { fullDateFormatter } from '../../../../utils/formatter.js';
 import sort from '../../../../utils/sort';
@@ -593,16 +594,11 @@ export default {
       this.menuState = undefined;
     },
     downloadPois() {
+      if (!this.globalChecked) return;
       this.download(computeGeoJSONFromPOIs(this.getPoisByBiover(this.bioverId)))
       this.menuState = undefined;
     },
-    copy(poi) {
-      this.copyPoi(poi);
-      this.menuState = undefined;
-    },
-    async paste() {
-      if (this.couldPaste) return;
-      const poi = this.getCopyElement.element.element;
+    async setupCopyPoi(poi) {
       poi.biovers = this.bioverId;
       if (poi.coordinate) {
         delete poi.coordinate.id;
@@ -636,7 +632,33 @@ export default {
       delete poi.id;
       const newPoi = await savePoi(poi);
       this.addNewPoi(newPoi.data);
+    },
+    copy(poi) {
+      this.copyPoi(poi);
       this.menuState = undefined;
+    },
+    copies() {
+      if (!this.globalChecked) return;
+      const pois = this.getData.filter((poi) => poi.display);
+      this.copyPoi(pois);
+      this.menuState = undefined;
+    },
+    async paste() {
+      if (this.couldPaste) return;
+      if (Array.isArray(this.getCopyElement.element)) {
+        const pois = this.getCopyElement.element;
+        for (let i = 0; i < pois.length; i++ ) {
+          const poi = JSON.parse(JSON.stringify(pois[i].element));
+          await this.setupCopyPoi(poi);
+        };
+      } else {
+        const poi = JSON.parse(JSON.stringify(this.getCopyElement.element.element));
+        await this.setupCopyPoi(poi);
+      }
+      this.menuState = undefined;
+    },
+    async pastes() {
+
     },
     ...mapActions('biovers', ['updatePoiToDisplay', 'resetPoisModification', 'selectAllPois', 'unselectAllPois', 'copyPoi', 'addNewPoi']),
   },
