@@ -17,7 +17,7 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapState, mapGetters } from 'vuex';
 
 import { useStore } from '../composables/store.js';
 
@@ -43,7 +43,7 @@ export default {
       this.addTraceToDisplay(event.id);
       this.addEventToDisplay(event.id);
     },
-    ...mapActions('biovers', ['getBiovers', 'resetBiovers', 'addBioverToDisplay', 'addPoiToDisplay', 'addPathToDisplay', 'addTraceToDisplay', 'addEventToDisplay']),
+    ...mapActions('biovers', ['getBiovers', 'resetBiovers', 'addBioverToDisplay', 'addPoiToDisplay', 'addPathToDisplay', 'addTraceToDisplay', 'addEventToDisplay', 'loadPoiColumns']),
   },
   computed: {
     pins() {
@@ -51,10 +51,14 @@ export default {
       return getPinsBiovers();
     },
     ...mapState('biovers', ['ownBiovers', 'bioversToDisplay', 'currentBioversId']),
+    ...mapGetters('biovers', ['getPoiColumnsPreference']),
   },
   async mounted() {
     this.resetBiovers();
     this.getBiovers();
+    if (this.getPoiColumnsPreference === undefined) {
+      this.loadPoiColumns();
+    }
   },
 };
 </script>

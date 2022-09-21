@@ -1,5 +1,6 @@
 import { getBiovers, getBioversByUser } from '../utils/api.js';
-import filterUtils from '../utils/filters';
+import filterUtils from '../utils/filters.js';
+import { getPoiColumns } from '../utils/columns.js';
 
 export const bioversStore = {
   namespaced: true,
@@ -7,6 +8,7 @@ export const bioversStore = {
     return {
       index: 1,
       userPreference: [],
+      poiColumnsPreference: undefined,
       ownBiovers: [],
       publicBiovers: [],
       addBioversInTab: false,
@@ -46,6 +48,12 @@ export const bioversStore = {
         state.userPreference.push(selectBiover.id);
       }
       state.currentBioversId = selectBiover.id;
+    },
+    LOAD_POI_COLUMNS(state) {
+      state.poiColumnsPreference = getPoiColumns();
+    },
+    SAVE_POI_COLUMNS(state, columns) {
+      state.poiColumnsPreference = columns;
     },
     ADD_NEW_BIOVER(state, biover) {
       state.ownBiovers.push(biover);
@@ -321,6 +329,12 @@ export const bioversStore = {
     setCurrentBiover({ commit }, bioverId) {
       commit('SET_CURRENT_BIOVER', bioverId);
     },
+    loadPoiColumns({ commit }) {
+      commit('LOAD_POI_COLUMNS')
+    },
+    savePoiColumns({ commit }, columns) {
+      commit('SAVE_POI_COLUMNS', columns)
+    },
     addNewBiover({ commit }, biover) {
       commit('ADD_NEW_BIOVER', biover);
     },
@@ -589,6 +603,9 @@ export const bioversStore = {
     },
     getCopyElement(state) {
       return state.copyElement;
+    },
+    getPoiColumnsPreference(state) {
+      return state.poiColumnsPreference;
     },
   },
 };

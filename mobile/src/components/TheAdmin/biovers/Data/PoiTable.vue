@@ -17,13 +17,13 @@
                 @click="setSort('id')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.coordinate" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">location_searching</p>
               <p>COORDONNEES</p>
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.title" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">short_text</p>
               <p>TITRE</p>
@@ -35,7 +35,7 @@
                 @click="setSort('title')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.subtitle" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp description-transform text-margin">short_text</p>
               <p>SOUS-TITRE</p>
@@ -47,7 +47,7 @@
                 @click="setSort('subtitle')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.created_date" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">date_range</p>
               <p>CREER LE</p>
@@ -59,7 +59,7 @@
                 @click="setSort('creation_date')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.author" class="column">
             <div class="header-value">
                <p class="material-symbols-sharp text-margin">architecture</p>
               <p>AUTEUR-E</p>
@@ -71,7 +71,7 @@
                 @click="setSort('username')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.updated_date" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">edit</p>
               <p>MODIFIER LE</p>
@@ -83,7 +83,7 @@
                 @click="setSort('update_date')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.contributor" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">architecture</p>
               <p>DERNIER CONTRIBUTEUR-TRICE</p>
@@ -95,7 +95,7 @@
                 @click="setSort('contributor')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.scope" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">visibility</p>
               <p>PORTEE</p>
@@ -106,7 +106,7 @@
                 alt="sort" @click="setSort('scope')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.trigger" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">touch_app</p>
               <p>DECLENCHEUR</p>
@@ -117,13 +117,13 @@
                 alt="sort" @click="setSort('trigger_mode')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.ar_file_name" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">location_on</p>
               <p>AR FILE NAME</p>
             </div>
           </th>
-           <th class="column">
+           <th v-if="getPoiColumnsPreference.ar_visibility" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">visibility</p>
               <p>VISIBILITE AR</p>
@@ -135,7 +135,7 @@
                 @click="setSort('is_visible_ar', true)">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.ar_is_facing" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">camera_front</p>
               <p>FACE A LA CAMERA</p>
@@ -147,7 +147,7 @@
                 @click="setSort('is_facing_user', true)">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.symbol_wireframe" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">grid_4x4</p>
               <p>WIREFRAME DU SYMBOLE</p>
@@ -158,7 +158,7 @@
                 alt="sort" @click="setSort('wireframe', true)">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.autoplay" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">replay</p>
               <p>LECTURE AUTOMATIQUE</p>
@@ -169,7 +169,7 @@
                 alt="sort" @click="setSort('autoplay', true)">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.loop" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">replay</p>
               <p>LECTURE EN BOUCLER</p>
@@ -180,7 +180,7 @@
                 alt="sort" @click="setSort('loop', true)">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.scale" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">photo_size_select_small</p>
               <p>ECHELLE</p>
@@ -191,13 +191,13 @@
                 alt="sort" @click="setSort('scale', true)">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.symbol_position" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">merge</p>
               <p>POSITION DU SYMBOL</p>
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.symbol_animation" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">animation</p>
               <p>ANIMATION</p>
@@ -208,13 +208,13 @@
                 alt="sort" @click="setSort('amplitude', true)">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.audio_file" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">music_note</p>
               <p>AUDIO FILE NAME</p>
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.audio_autoplay" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">replay</p>
               <p>AUDIO LECTURE AUTOMATIQUE</p>
@@ -225,7 +225,7 @@
                 alt="sort" @click="setSort('audio_autoplay', true)">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.audio_loop" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">replay</p>
               <p>AUDIO LECTURE EN BOUCLER</p>
@@ -236,7 +236,7 @@
                 alt="sort" @click="setSort('audio_loop', true)">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.audio_scope" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">visibility</p>
               <p>PORTEE DE L'AUDIO</p>
@@ -247,13 +247,13 @@
                 alt="sort" @click="setSort('audio_distance', true)">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.icon_file" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">map</p>
               <p>ICON FILE NAME</p>
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.is_visible" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">visibility</p>
               <p>IS VISIBLE</p>
@@ -264,7 +264,7 @@
                 alt="sort" @click="setSort('is_visible', true)">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.symbol_created_date" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">date_range</p>
               <p>SYMBOL CREATION DATE</p>
@@ -275,7 +275,7 @@
                 alt="sort" @click="setSort('creation_date', true)">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.symbol_updated_date" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">edit</p>
               <p>SYMBOL MODITION DATE</p>
@@ -286,7 +286,7 @@
                 alt="sort" @click="setSort('update_date', true)">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.style_type" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">circle</p>
               <p>TYPE DE FORME</p>
@@ -297,7 +297,7 @@
                 alt="sort" @click="setSort('style_type')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.extrusion" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">expand</p>
               <p>EXTRUSION</p>
@@ -308,7 +308,7 @@
                 alt="sort" @click="setSort('extrusion')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.radius" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">share_location</p>
               <p>RAYON</p>
@@ -319,13 +319,13 @@
                 alt="sort" @click="setSort('radius')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.position" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">merge</p>
               <p>POSITION</p>
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.stroke_width" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">line_weight</p>
               <p>EPAISSEUR DU CONTOUR</p>
@@ -336,7 +336,7 @@
                 alt="sort" @click="setSort('style_stroke_width')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.stroke_color" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">colorize</p>
               <p>COULEUR DU CONTOUR</p>
@@ -347,7 +347,7 @@
                 alt="sort" @click="setSort('stroke_color')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.stroke_opacity" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">opacity</p>
               <p>OPACITE DU CONTOUR</p>
@@ -358,7 +358,7 @@
                 alt="sort" @click="setSort('stroke_opacity')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.wireframe" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">grid_4x4</p>
               <p>WIREFRAME DU REMPLISSAGE</p>
@@ -369,7 +369,7 @@
                 alt="sort" @click="setSort('wireframe')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.fill_color" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">colorize</p>
               <p>COULEUR DU REMPLISSAGE</p>
@@ -380,7 +380,7 @@
                 alt="sort" @click="setSort('fill_color')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.fill_opacity" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">opacity</p>
               <p>OPACITE DU REMPLISSAGE</p>
@@ -391,7 +391,7 @@
                 alt="sort" @click="setSort('fill_opacity')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getPoiColumnsPreference.animation" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">animation</p>
               <p>ANIMATION</p>
@@ -402,7 +402,7 @@
                 alt="sort" @click="setSort('amplitude')">
             </div>
           </th>
-          <th class="column before-last-column">
+          <th v-if="getPoiColumnsPreference.metadata" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">database</p>
               <p>METADATA</p>
@@ -419,6 +419,8 @@
                 <p class="menu-element" :class="{'disable': !globalChecked }" @click="downloadPois">Exporter les POIs</p>
                 <p class="menu-element" :class="{'disable': !globalChecked }" @click="copies()">Copier les POIs</p>
                 <p class="menu-element" :class="{'disable': couldPaste }" @click="paste()">Coller le POI</p>
+                <p class="menu-element" :class="{'disable': !globalChecked }" @click="poisDeletion()">Supprimer les POIs</p>
+                <p class="menu-element" @click="openColumnSelector()">Définir les colonnes</p>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
@@ -428,44 +430,44 @@
             <input type="checkbox" :checked="poi.display" @click="selectElement(poi)">
           </td>
           <td class="column second-column">{{ poi.element.id }}</td>
-          <td class="column">({{ getCoordinate(poi) }})</td>
-          <td class="column">{{ poi.element.title }}</td>
-          <td class="column">{{ poi.element.subtitle }}</td>
-          <td class="column">{{ dateFormatter(poi.element.creation_date) }}</td>
-          <td class="column">{{ userFormatter(poi.element.User) }}</td>
-          <td class="column">{{ dateFormatter(poi.element.update_date) }}</td>
-          <td class="column">{{ userFormatter(poi.element.last_contributor_fk) }}</td>
-          <td class="column end-align">{{ poi.element.scope }} M</td>
-          <td class="column">{{ poi.element.trigger_mode }}</td>
-          <td class="column">{{ getARFileName(poi.element.symbol) }}</td>
-          <td class="column">{{ poi.element.symbol ? poi.element.symbol.is_visible_ar : undefined }}</td>
-          <td class="column">{{ poi.element.symbol ? poi.element.symbol.is_facing_user : undefined }}</td>
-          <td class="column">{{ poi.element.symbol ? poi.element.symbol.wireframe : undefined }}</td>
-          <td class="column">{{ poi.element.symbol ? poi.element.symbol.autoplay : undefined }}</td>
-          <td class="column">{{ poi.element.symbol ? poi.element.symbol.loop : undefined }}</td>
-          <td class="column">{{ poi.element.symbol ? poi.element.symbol.scale : undefined }}</td>
-          <td class="column">{{ positionFormatter(poi.element.symbol) }}</td>
-          <td class="column">{{ poi.element.symbol? poi.element.symbol.amplitude : undefined }}</td>
-          <td class="column">{{ getAudioFileName(poi.element.symbol)  }}</td>
-          <td class="column">{{ poi.element.symbol ? poi.element.symbol.audio_autoplay  : undefined}}</td>
-          <td class="column">{{ poi.element.symbol ? poi.element.symbol.audio_loop : undefined }}</td>
-          <td class="column">{{ poi.element.symbol ? poi.element.symbol.audio_distance :undefined }}</td>
-          <td class="column">{{ getIconFileName(poi.element.symbol) }}</td>
-          <td class="column">{{ poi.element.symbol ? poi.element.symbol.is_visible : undefined }}</td>
-          <td class="column">{{ poi.element.symbol ? dateFormatter(poi.element.symbol.creation_date) : ''}}</td>
-          <td class="column">{{ poi.element.symbol && poi.element.symbol.update_date ? dateFormatter(poi.element.symbol.update_date) : ''}}</td>
-          <td class="column">{{ poi.element.style_type }}</td>
-          <td class="column">{{ poi.element.extrusion }}</td>
-          <td class="column end-align">{{ poi.element.radius }}M</td>
-          <td class="column">{{ positionFormatter(poi.element) }}</td>
-          <td class="column">{{ poi.element.style_stroke_width }}</td>
-          <td class="column">{{ poi.element.stroke_color }}</td>
-          <td class="column">{{ poi.element.stroke_opacity }}</td>
-          <td class="column">{{ poi.element.wireframe }}</td>
-          <td class="column">{{ poi.element.fill_color }}</td>
-          <td class="column">{{ poi.element.fill_opacity }}</td>
-          <td class="column">{{ poi.element.amplitude }}</td>
-          <td class="column before-last-column">{{ poi.element.metadata }}</td>
+          <td v-if="getPoiColumnsPreference.coordinate" class="column">({{ getCoordinate(poi) }})</td>
+          <td v-if="getPoiColumnsPreference.title" class="column">{{ poi.element.title }}</td>
+          <td v-if="getPoiColumnsPreference.subtitle" class="column">{{ poi.element.subtitle }}</td>
+          <td v-if="getPoiColumnsPreference.created_date" class="column">{{ dateFormatter(poi.element.creation_date) }}</td>
+          <td v-if="getPoiColumnsPreference.author" class="column">{{ userFormatter(poi.element.User) }}</td>
+          <td v-if="getPoiColumnsPreference.updated_date" class="column">{{ dateFormatter(poi.element.update_date) }}</td>
+          <td v-if="getPoiColumnsPreference.contributor" class="column">{{ userFormatter(poi.element.last_contributor_fk) }}</td>
+          <td v-if="getPoiColumnsPreference.scope" class="column end-align">{{ poi.element.scope }} M</td>
+          <td v-if="getPoiColumnsPreference.trigger" class="column">{{ poi.element.trigger_mode }}</td>
+          <td v-if="getPoiColumnsPreference.ar_file_name" class="column">{{ getARFileName(poi.element.symbol) }}</td>
+          <td v-if="getPoiColumnsPreference.ar_visibility" class="column">{{ poi.element.symbol ? poi.element.symbol.is_visible_ar : undefined }}</td>
+          <td v-if="getPoiColumnsPreference.ar_is_facing" class="column">{{ poi.element.symbol ? poi.element.symbol.is_facing_user : undefined }}</td>
+          <td v-if="getPoiColumnsPreference.symbol_wireframe" class="column">{{ poi.element.symbol ? poi.element.symbol.wireframe : undefined }}</td>
+          <td v-if="getPoiColumnsPreference.autoplay" class="column">{{ poi.element.symbol ? poi.element.symbol.autoplay : undefined }}</td>
+          <td v-if="getPoiColumnsPreference.loop" class="column">{{ poi.element.symbol ? poi.element.symbol.loop : undefined }}</td>
+          <td v-if="getPoiColumnsPreference.scale" class="column">{{ poi.element.symbol ? poi.element.symbol.scale : undefined }}</td>
+          <td v-if="getPoiColumnsPreference.symbol_position" class="column">{{ positionFormatter(poi.element.symbol) }}</td>
+          <td v-if="getPoiColumnsPreference.symbol_animation" class="column">{{ poi.element.symbol? poi.element.symbol.amplitude : undefined }}</td>
+          <td v-if="getPoiColumnsPreference.audio_file" class="column">{{ getAudioFileName(poi.element.symbol)  }}</td>
+          <td v-if="getPoiColumnsPreference.audio_autoplay" class="column">{{ poi.element.symbol ? poi.element.symbol.audio_autoplay  : undefined}}</td>
+          <td v-if="getPoiColumnsPreference.audio_loop" class="column">{{ poi.element.symbol ? poi.element.symbol.audio_loop : undefined }}</td>
+          <td v-if="getPoiColumnsPreference.audio_scope" class="column">{{ poi.element.symbol ? poi.element.symbol.audio_distance :undefined }}</td>
+          <td v-if="getPoiColumnsPreference.icon_file" class="column">{{ getIconFileName(poi.element.symbol) }}</td>
+          <td v-if="getPoiColumnsPreference.is_visible" class="column">{{ poi.element.symbol ? poi.element.symbol.is_visible : undefined }}</td>
+          <td v-if="getPoiColumnsPreference.symbol_created_date" class="column">{{ poi.element.symbol ? dateFormatter(poi.element.symbol.creation_date) : ''}}</td>
+          <td v-if="getPoiColumnsPreference.symbol_updated_date" class="column">{{ poi.element.symbol && poi.element.symbol.update_date ? dateFormatter(poi.element.symbol.update_date) : ''}}</td>
+          <td v-if="getPoiColumnsPreference.style_type" class="column">{{ poi.element.style_type }}</td>
+          <td v-if="getPoiColumnsPreference.extrusion" class="column">{{ poi.element.extrusion }}</td>
+          <td v-if="getPoiColumnsPreference.radius" class="column end-align">{{ poi.element.radius }}M</td>
+          <td v-if="getPoiColumnsPreference.position" class="column">{{ positionFormatter(poi.element) }}</td>
+          <td v-if="getPoiColumnsPreference.stroke_width" class="column">{{ poi.element.style_stroke_width }}</td>
+          <td v-if="getPoiColumnsPreference.stroke_color" class="column">{{ poi.element.stroke_color }}</td>
+          <td v-if="getPoiColumnsPreference.stroke_opacity" class="column">{{ poi.element.stroke_opacity }}</td>
+          <td v-if="getPoiColumnsPreference.wireframe" class="column">{{ poi.element.wireframe }}</td>
+          <td v-if="getPoiColumnsPreference.fill_color" class="column">{{ poi.element.fill_color }}</td>
+          <td v-if="getPoiColumnsPreference.fill_opacity" class="column">{{ poi.element.fill_opacity }}</td>
+          <td v-if="getPoiColumnsPreference.animation" class="column">{{ poi.element.amplitude }}</td>
+          <td v-if="getPoiColumnsPreference.metadata" class="column">{{ poi.element.metadata }}</td>
           <td class="last-column">
              <p class="material-symbols-sharp no-margin clickable" @click="openMenu(poi.element.id)">more_vert</p>
              <div v-if="menuState && menuState.id === poi.element.id && menuState.state" class="menu">
@@ -479,10 +481,14 @@
       </table>
     </div>
   </div>
+  <PoiColumnsSelection v-if="columnDialog" :showDialog="columnDialog"
+    @close-dialog="columnDialog = false" />
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+
+import PoiColumnsSelection from '../Dialog/PoiColumnsSelection.vue';
 
 import { fullDateFormatter } from '../../../../utils/formatter.js';
 import sort from '../../../../utils/sort';
@@ -491,6 +497,7 @@ import { computeGeoJSONFromPOI, computeGeoJSONFromPOIs } from '../../../../utils
 import { savePoi, deletePoi } from '../../../../utils/api.js';
 
 export default {
+  components: { PoiColumnsSelection },
   props: {
     bioverId: Number,
   },
@@ -502,6 +509,7 @@ export default {
       orderElement: false,
       isSymbol: false,
       menuState: undefined,
+      columnDialog: false,
     };
   },
   computed: {
@@ -519,7 +527,7 @@ export default {
       if (value && value.type === 'POI') return false;
       return true;
     },
-    ...mapGetters('biovers', ['getPoisByBiover', 'ownOrPublic', 'bioverIsEditable', 'getCopyElement']),
+    ...mapGetters('biovers', ['getPoisByBiover', 'ownOrPublic', 'bioverIsEditable', 'getCopyElement', 'getPoiColumnsPreference']),
   },
   methods: {
     dateFormatter(date) {
@@ -658,9 +666,22 @@ export default {
       }
       this.menuState = undefined;
     },
+    async poisDeletion() {
+      if (!this.globalChecked) return;
+      const pois = this.getData.filter((poi) => poi.display);
+      for (let i = 0; i < pois.length; i++ ) {
+        await deletePoi(pois[i].element);
+        this.removePoi(pois[i].element);
+      }
+      this.menuState = undefined;
+    },
     async poiDeletion(poi) {
       await deletePoi(poi.element);
       this.removePoi(poi.element);
+      this.menuState = undefined;
+    },
+    openColumnSelector() {
+      this.columnDialog = true;
       this.menuState = undefined;
     },
     ...mapActions('biovers', ['updatePoiToDisplay', 'resetPoisModification', 'selectAllPois', 'unselectAllPois', 'copyPoi', 'addNewPoi', 'removePoi']),

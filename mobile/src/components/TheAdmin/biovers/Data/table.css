@@ -40,7 +40,6 @@ table {
   
   .first-column-header {
     padding-bottom: 1px;
-    border-bottom: 1px solid white;
   }
   
   .first-column {
@@ -48,21 +47,15 @@ table {
     width: 22px;
     left: 38px;
     top: auto;
-    border-right: 1px solid white;
     padding-right: 5px;
   }
   
   .second-column {
-    padding-left: 8px;
-  }
-  
-  .before-last-column {
-    border: 0;
+    border-left: 1px solid white;
   }
   
   .last-column-header {
     padding-bottom: 1px;
-    border-bottom: 1px solid white;
   }
   
   .last-column {
@@ -70,7 +63,6 @@ table {
     width: 40px;
     right: 40px;
     top: auto;
-    border-left: 1px solid white;
     height: 22px;
   }
   

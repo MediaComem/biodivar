@@ -8,6 +8,7 @@ const vuexLocal = new VuexPersistence({
   reducer: (state) => ({
     biovers: {
       userPreference: state.biovers.userPreference,
+      poiColumnsPreference: state.biovers.poiColumnsPreference,
     },
   }),
 });
