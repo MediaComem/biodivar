@@ -62,6 +62,10 @@ export function updatePoi(poi) {
   return postJson(API + 'poi/update', poi);
 }
 
+export function deletePoi(poi) {
+  return postJson(API + 'poi/delete', poi);
+}
+
 // Path part
 export function savePaths(paths) {
   return postJson(API + 'path/creates', paths);

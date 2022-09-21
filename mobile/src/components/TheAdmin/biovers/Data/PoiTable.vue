@@ -471,6 +471,7 @@
              <div v-if="menuState && menuState.id === poi.element.id && menuState.state" class="menu">
                 <p class="menu-element" @click="downloadPoi(poi)">Exporter le POI</p>
                 <p class="menu-element" @click="copy(poi)">Copier le POI</p>
+                <p class="menu-element" @click="poiDeletion(poi)">Supprimer le POI</p>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </td>
@@ -487,7 +488,7 @@ import { fullDateFormatter } from '../../../../utils/formatter.js';
 import sort from '../../../../utils/sort';
 import { computeGeoJSONFromPOI, computeGeoJSONFromPOIs } from '../../../../utils/geojson.js';
 
-import { savePoi } from '../../../../utils/api.js';
+import { savePoi, deletePoi } from '../../../../utils/api.js';
 
 export default {
   props: {
@@ -657,7 +658,12 @@ export default {
       }
       this.menuState = undefined;
     },
-    ...mapActions('biovers', ['updatePoiToDisplay', 'resetPoisModification', 'selectAllPois', 'unselectAllPois', 'copyPoi', 'addNewPoi']),
+    async poiDeletion(poi) {
+      await deletePoi(poi.element);
+      this.removePoi(poi.element);
+      this.menuState = undefined;
+    },
+    ...mapActions('biovers', ['updatePoiToDisplay', 'resetPoisModification', 'selectAllPois', 'unselectAllPois', 'copyPoi', 'addNewPoi', 'removePoi']),
   },
 };
 </script>

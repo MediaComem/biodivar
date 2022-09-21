@@ -120,6 +120,11 @@ export const bioversStore = {
       state.pois[index].pois.push(poiElementToAdd);
       state.poisModification = { element: poiElementToAdd };
     },
+    REMOVE_INTO_POI(state, poi) {
+      const index = state.pois.findIndex((e) => e.bioverId === poi.biovers);
+      const poiIndex = state.pois[index].pois.findIndex((e) => e.id === poi.id);
+      state.pois[index].pois.splice(poiIndex, 1);
+    },
     IMPORT_POI(state, pois) {
       const index = state.pois.findIndex((e) => e.bioverId === state.currentBioversId);
       const bioverToDisplayIndex = state.bioversToDisplay
@@ -213,6 +218,21 @@ export const bioversStore = {
         state.publicBiovers[index].Poi.push(poi);
       } else {
         state.ownBiovers[index].Poi.push(poi);
+      }
+    },
+    REMOVE_POI_INTO_BIOVER(state, poi) {
+      const bioverToDisplayIndex = state.bioversToDisplay
+        .findIndex((biover) => biover.biover.id === poi.biovers);
+      const bioversToDisplayPoiIndex = state.bioversToDisplay[bioverToDisplayIndex].biover.Poi.findIndex((p) => p.id === poi.id);
+      state.bioversToDisplay[bioverToDisplayIndex].biover.Poi.splice(bioversToDisplayPoiIndex, 1);
+      let index = state.ownBiovers.findIndex((biovers) => biovers.id === poi.biovers);
+      if (index === -1) {
+        index = state.publicBiovers.findIndex((biovers) => biovers.id === poi.biovers);
+        let poiIndex = state.publicBiovers[index].Poi.findIndex((p) => p.id === poi.id);
+        state.publicBiovers[index].Poi.splice(poiIndex, 1);
+      } else {
+        let poiIndex = state.ownBiovers[index].Poi.findIndex((p) => p.id === poi.id);
+        state.ownBiovers[index].Poi.splice(poiIndex, 1);
       }
     },
     RESET_POI_MODIFICATION(state) {
@@ -431,6 +451,10 @@ export const bioversStore = {
     addNewPoi({ commit }, poi) {
       commit('ADD_INTO_POI', poi);
       commit('ADD_POI_INTO_BIOVER', poi);
+    },
+    removePoi({ commit }, poi) {
+      commit('REMOVE_INTO_POI', poi);
+      commit('REMOVE_POI_INTO_BIOVER', poi);
     },
     updatePoi({ commit }, poi) {
       commit('UPDATE_POI', poi);
