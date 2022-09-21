@@ -21,6 +21,7 @@ export const bioversStore = {
       uploadInProgress: false,
       uploadDone: false,
       filter: '',
+      copyElement: undefined,
     };
   },
   mutations: {
@@ -259,6 +260,9 @@ export const bioversStore = {
     FILTER(state, filter) {
       state.filter = filter;
     },
+    COPY(state, payload) {
+      state.copyElement = payload;
+    }
   },
   actions: {
     resetBiovers({ commit }) {
@@ -473,6 +477,16 @@ export const bioversStore = {
     filter({ commit }, filter) {
       commit('FILTER', filter);
     },
+    copyPoi({ commit }, poi) {
+      commit('COPY', {
+        type: 'POI',
+        element: poi,
+      });
+    },
+    pastePoi({ commit }, poi) {
+      commit('ADD_INTO_POI', poi);
+      commit('ADD_POI_INTO_BIOVER', poi);
+    },
   },
   getters: {
     getCurrentBioverId(state) {
@@ -548,6 +562,9 @@ export const bioversStore = {
         return true;
       }
       return state.publicBiovers[index].is_editable;
+    },
+    getCopyElement(state) {
+      return state.copyElement;
     },
   },
 };

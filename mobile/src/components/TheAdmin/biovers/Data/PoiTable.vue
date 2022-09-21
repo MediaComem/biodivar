@@ -468,6 +468,8 @@
              <p class="material-symbols-sharp no-margin clickable" @click="openMenu(poi.element.id)">more_vert</p>
              <div v-if="menuState && menuState.id === poi.element.id && menuState.state" class="menu">
                 <p class="menu-element" @click="downloadPoi(poi)">Exporter le POI</p>
+                <p class="menu-element" @click="copy(poi)">Copier le POI</p>
+                <p class="menu-element" :class="{'disable': couldPaste }" @click="paste(poi)">Coller le POI</p>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </td>
@@ -478,12 +480,13 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 
 import { fullDateFormatter } from '../../../../utils/formatter.js';
 import sort from '../../../../utils/sort';
 import { computeGeoJSONFromPOI, computeGeoJSONFromPOIs } from '../../../../utils/geojson.js';
 
+import { savePoi } from '../../../../utils/api.js';
 
 export default {
   props: {
@@ -509,7 +512,12 @@ export default {
     allAreUnselected() {
       return this.getData.filter((poi) => poi.display).length === 0;
     },
-    ...mapGetters('biovers', ['getPoisByBiover', 'ownOrPublic', 'bioverIsEditable']),
+    couldPaste() {
+      const value = this.getCopyElement;
+      if (value && value.type === 'POI') return false;
+      return true;
+    },
+    ...mapGetters('biovers', ['getPoisByBiover', 'ownOrPublic', 'bioverIsEditable', 'getCopyElement']),
   },
   methods: {
     dateFormatter(date) {
@@ -582,11 +590,55 @@ export default {
     },
     downloadPoi(poi) {
       this.download(computeGeoJSONFromPOI(poi));
+      this.menuState = undefined;
     },
     downloadPois() {
       this.download(computeGeoJSONFromPOIs(this.getPoisByBiover(this.bioverId)))
+      this.menuState = undefined;
     },
-    ...mapActions('biovers', ['updatePoiToDisplay', 'resetPoisModification', 'selectAllPois', 'unselectAllPois']),
+    copy(poi) {
+      this.copyPoi(poi);
+      this.menuState = undefined;
+    },
+    async paste() {
+      if (this.couldPaste) return;
+      const poi = this.getCopyElement.element.element;
+      poi.biovers = this.bioverId;
+      if (poi.coordinate) {
+        delete poi.coordinate.id;
+        delete poi.coordinate.poi_id;
+      }
+      if (poi.symbol) {
+        delete poi.symbol.id;
+        delete poi.symbol.poi_id;
+        if (poi.symbol.position == null) {
+          poi.symbol.position = undefined;
+        } else {
+          delete poi.symbol.position.id;
+          delete poi.symbol.position.poi_id;
+        }
+      }
+      if (poi.media && poi.media.length > 0) {
+        for (let i = 0; i < poi.media.length; i++) {
+          delete poi.media[i].id;
+          delete poi.media[i].poi_id;
+          if (poi.media[i].position) {
+            delete poi.media[i].position.id;
+          }
+        }
+      }
+      if (poi.position == null) {
+        poi.position = undefined;
+      } else {
+        delete poi.position.id;
+        delete poi.position.poi_id;
+      }
+      delete poi.id;
+      const newPoi = await savePoi(poi);
+      this.addNewPoi(newPoi.data);
+      this.menuState = undefined;
+    },
+    ...mapActions('biovers', ['updatePoiToDisplay', 'resetPoisModification', 'selectAllPois', 'unselectAllPois', 'copyPoi', 'addNewPoi']),
   },
 };
 </script>
@@ -617,7 +669,6 @@ export default {
 .menu {
   position: relative;
   width: 200px;
-  height: 100px;
   background-color: white;
   color: black;
   z-index: 10;
@@ -639,5 +690,10 @@ export default {
   left: 0;
   width: 100vw;
   height: 100vh;
+}
+
+.disable {
+  background-color: gray;
+  color: lightgray;
 }
 </style>
