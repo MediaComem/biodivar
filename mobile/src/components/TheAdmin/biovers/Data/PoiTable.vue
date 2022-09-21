@@ -418,7 +418,7 @@
              <div v-if="menuState && menuState.id === 0 && menuState.state" class="menu">
                 <p class="menu-element" :class="{'disable': !globalChecked }" @click="downloadPois">Exporter les POIs</p>
                 <p class="menu-element" :class="{'disable': !globalChecked }" @click="copies()">Copier les POIs</p>
-                <p class="menu-element" :class="{'disable': couldPaste }" @click="paste(poi)">Coller le POI</p>
+                <p class="menu-element" :class="{'disable': couldPaste }" @click="paste()">Coller le POI</p>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
@@ -656,9 +656,6 @@ export default {
         await this.setupCopyPoi(poi);
       }
       this.menuState = undefined;
-    },
-    async pastes() {
-
     },
     ...mapActions('biovers', ['updatePoiToDisplay', 'resetPoisModification', 'selectAllPois', 'unselectAllPois', 'copyPoi', 'addNewPoi']),
   },
