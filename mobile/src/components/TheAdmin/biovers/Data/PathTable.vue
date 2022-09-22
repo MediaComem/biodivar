@@ -114,7 +114,7 @@
                 <p class="menu-element" :class="{'disable': !globalChecked }" @click="downloadPaths">Exporter les PATHs</p>
                 <p class="menu-element" :class="{'disable': !globalChecked }" @click="copies()">Copier les PATHs</p>
                 <p class="menu-element" :class="{'disable': couldPaste }" @click="paste()">Coller les PATHs</p>
-                <p class="menu-element" :class="{'disable': !globalChecked }" @click="pathsDeletion()">Supprimer les PATHs</p>
+                <p class="menu-element" :class="{'disable': !globalChecked }" @click="openDeletionDialog()">Supprimer les PATHs</p>
                 <p class="menu-element" @click="openColumnSelector()">Définir les colonnes</p>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
@@ -140,7 +140,7 @@
              <div v-if="menuState && menuState.id === path.element.id && menuState.state" class="menu">
                 <p class="menu-element" @click="downloadPath(path)">Exporter le PATH</p>
                 <p class="menu-element" @click="copy(path)">Copier le PATH</p>
-                <p class="menu-element" @click="pathDeletion(path)">Supprimer le PATH</p>
+                <p class="menu-element" @click="openDeletionDialog(path)">Supprimer le PATH</p>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </td>
@@ -148,6 +148,7 @@
       </table>
     </div>
   </div>
+  <DeleteConfirmation v-if="deleteDialog" :dialogVisible="deleteDialog" title="Êtes-vous sûr de vouloir supprimer ces chemins?" @closeDialog="deleteDialog = false" @validate="confirmDeletion()" />
   <PathColumnsSelector v-if="columnDialog" :showDialog="columnDialog" @close-dialog="columnDialog = false" />
 </div>
   
@@ -157,6 +158,7 @@
 import { mapGetters, mapActions } from 'vuex';
 
 import PathColumnsSelector from '../Dialog/PathColumnsSelector.vue';
+import DeleteConfirmation from '../Dialog/DeleteConfirmation.vue';
 
 import { dateFormatter, coordinateFormatter } from '../../../../utils/formatter.js';
 import { computeGeoJSONFromPATH, computeGeoJSONFromPATHs } from '../../../../utils/geojson.js';
@@ -165,7 +167,7 @@ import sort from '../../../../utils/sort';
 import { savePath, deletePath } from '../../../../utils/api.js';
 
 export default {
-  components: { PathColumnsSelector },
+  components: { PathColumnsSelector, DeleteConfirmation },
   props: {
     bioverId: Number,
   },
@@ -176,6 +178,8 @@ export default {
       orderElement: false,
       menuState: undefined,
       columnDialog: false,
+      deleteDialog: false,
+      pathToDelete: undefined,
     }
   },
   computed: {
@@ -294,6 +298,15 @@ export default {
       }
       this.menuState = undefined;
       this.globalCheckAnalizer();
+    },
+    openDeletionDialog(path) {
+      this.pathToDelete = path;
+      this.deleteDialog = true;
+      this.menuState = undefined;
+    },
+    confirmDeletion() {
+      this.pathToDelete ? this.pathDeletion(this.pathToDelete) : this.pathsDeletion();
+      this.deleteDialog = false;
     },
     async pathDeletion(path) {
       await deletePath(path.element);

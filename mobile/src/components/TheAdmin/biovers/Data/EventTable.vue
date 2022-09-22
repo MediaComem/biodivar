@@ -59,7 +59,7 @@
           <th class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">database</p>
-              <p>Event</p>
+              <p>EVENT</p>
               <img
                 class="transition"
                 :class="{'change-icon': sortElement === 'data' && !orderElement}"

@@ -475,7 +475,7 @@
                 <p class="menu-element" @click="downloadPoi(poi)">Exporter le POI</p>
                 <p class="menu-element" @click="copy(poi)">Copier le POI</p>
                 <p class="menu-element" @click="openEdition(poi)">Editer le POI</p>
-                <p class="menu-element" @click="poiDeletion(poi)">Supprimer le POI</p>
+                <p class="menu-element" @click="openDeletionDialog(poi)">Supprimer le POI</p>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </td>
@@ -483,7 +483,7 @@
       </table>
     </div>
   </div>
-  <DeleteConfirmation v-if="deleteDialog" :dialogVisible="deleteDialog" title="Êtes-vous sûr de vouloir supprimer ces point d'intérêts?" @closeDialog="deleteDialog = false" @validate="poisDeletion()" />
+  <DeleteConfirmation v-if="deleteDialog" :dialogVisible="deleteDialog" title="Êtes-vous sûr de vouloir supprimer ces point d'intérêts?" @closeDialog="deleteDialog = false" @validate="confirmDeletion()" />
   <PoiColumnsSelection v-if="columnDialog" :showDialog="columnDialog" @close-dialog="columnDialog = false" />
   <PoiEdition v-if="showEditionDialog" :poi="poiToUpdate" :showDialog="showEditionDialog"
     @close-dialog="showEditionDialog = false"/>
@@ -686,9 +686,14 @@ export default {
       this.showEditionDialog = true;
       this.menuState = undefined;
     },
-    openDeletionDialog() {
+    openDeletionDialog(poi) {
+      this.poiToDelete = poi;
       this.deleteDialog = true;
       this.menuState = undefined;
+    },
+    confirmDeletion() {
+      this.poiToDelete ? this.poiDeletion(this.poiToDelete) : this.poisDeletion();
+      this.deleteDialog = false;
     },
     async poisDeletion() {
       if (!this.globalChecked) return;
@@ -697,7 +702,6 @@ export default {
         await deletePoi(pois[i].element);
         this.removePoi(pois[i].element);
       }
-      this.deleteDialog = false;
       this.globalCheckAnalizer();
     },
     async poiDeletion(poi) {
