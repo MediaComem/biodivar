@@ -1,5 +1,6 @@
 <script setup>
   import { ref } from 'vue';
+  import { store } from '../../store/store.js';
   import { useStore } from '../../composables/store.js';
   import { couldEdit } from '../../utils/authorization.js';
 
@@ -13,6 +14,18 @@
   });
 
   const emit = defineEmits(['edit', 'duplicate', 'delete', 'visibility', 'editable', 'favori', 'pin', 'close'])
+
+  function openInMap() {
+    if (window.location.hash !== '#admin') {
+      window.location.hash = '#admin';
+    }
+    store.dispatch('biovers/addBioverToDisplay', props.biover);
+    store.dispatch('biovers/addPoiToDisplay', props.biover.id);
+    store.dispatch('biovers/addPathToDisplay', props.biover.id);
+    store.dispatch('biovers/addTraceToDisplay', props.biover.id);
+    store.dispatch('biovers/addEventToDisplay', props.biover.id);
+    emit('close');
+  }
 
 </script>
 
@@ -28,7 +41,7 @@
       </div>
       <ul>
         <li v-if="isMobileOrTablet" @click="section = 'ar'"><img alt="OpenAR" src="../../assets/shared/more/view_in_ar.svg"> {{ $t('TheMenu.More.AR') }}</li>
-        <li><img alt="Map" src="../../assets/shared/more/map.svg"> {{ $t('TheMenu.More.Desktop') }}</li>
+        <li @click="openInMap"><img alt="Map" src="../../assets/shared/more/map.svg"> {{ $t('TheMenu.More.Desktop') }}</li>
         <li :class="{'not-allowed': !editableRight}" @click="editableRight ? emit('edit') : ''"><img alt="Title" src="../../assets/shared/more/edit.svg"> {{ $t('TheMenu.More.Title') }}</li>
         <li @click="emit('duplicate')"><img alt="Copy" src="../../assets/shared/more/file_copy.svg"> {{ $t('TheMenu.More.Duplicate') }}</li>
         <li :class="{'not-allowed': !editableRight}" @click="editableRight ? emit('delete') : ''"><img alt="Delete" src="../../assets/shared/more/delete.svg"> {{ $t('TheMenu.More.Delete') }}</li>
