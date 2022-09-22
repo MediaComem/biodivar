@@ -122,6 +122,13 @@ export const bioversStore = {
     SAVE_EVENT_TO_DISPLAY(state, payload) {
       state.events.push({ bioverId: payload.id, events: payload.events });
     },
+    UPDATE_EVENT_TO_DISPLAY(state, payload) {
+      const eventsIndex = state.events.findIndex((e) => e.bioverId === payload.bioverId);
+      const eventIndex = state.events[eventsIndex].events
+        .findIndex((e) => e.element.id === payload.event.element.id);
+      state.events[eventsIndex].events[eventIndex].display = !state.events[eventsIndex]
+        .events[eventIndex].display;
+    },
     ADD_INTO_POI(state, poi) {
       const index = state.pois.findIndex((e) => e.bioverId === state.currentBioversId);
       const bioverToDisplayIndex = state.bioversToDisplay
@@ -325,6 +332,18 @@ export const bioversStore = {
         state.paths[pathsIndex].paths[i].display = false;
       }
     },
+    SELECT_ALL_EVENTS(state) {
+      const eventsIndex = state.events.findIndex((e) => e.bioverId === state.currentBioversId);
+      for (let i = 0; i < state.events[eventsIndex].events.length; i += 1) {
+        state.events[eventsIndex].events[i].display = true;
+      }
+    },
+    UNSELECT_ALL_EVENTS(state) {
+      const eventsIndex = state.events.findIndex((e) => e.bioverId === state.currentBioversId);
+      for (let i = 0; i < state.events[eventsIndex].events.length; i += 1) {
+        state.events[eventsIndex].events[i].display = false;
+      }
+    },
     RESET_STORE(state) {
       state.ownBiovers = [];
       state.publicBiovers = [];
@@ -520,6 +539,9 @@ export const bioversStore = {
         events: data,
       });
     },
+    updateEventToDisplay({ commit }, payload) {
+      commit('UPDATE_EVENT_TO_DISPLAY', payload);
+    },
     addNewPoi({ commit }, poi) {
       commit('ADD_INTO_POI', poi);
       commit('ADD_POI_INTO_BIOVER', poi);
@@ -574,6 +596,12 @@ export const bioversStore = {
     },
     unselectAllPaths({ commit }) {
       commit('UNSELECT_ALL_PATHS');
+    },
+    selectAllEvents({ commit }) {
+      commit('SELECT_ALL_EVENTS');
+    },
+    unselectAllEvents({ commit }) {
+      commit('UNSELECT_ALL_EVENTS');
     },
     resetStore({ commit }) {
       commit('RESET_STORE');

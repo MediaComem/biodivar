@@ -191,3 +191,62 @@ export function computeGeoJSONFromPATH(path) {
   }
 `;
 }
+
+export function computeGeoJSONFromEvents(events) {
+  if (events && events.length > 0) {
+      let json = `
+  {
+      "name": "${events[0].name}",
+      "type": "FeatureCollection",
+      "features": [`;
+      events.forEach((event) => {
+        if (event.display) {
+          json += `
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [${event.element.coordinate.long}, ${event.element.coordinate.lat}, ${event.element.coordinate.alt}]
+            },
+            "properties": {
+              "id_event": "${event.element.id}",
+              "created_at": "${event.element.creation_date}",
+              "owner": "${event.element.User ? event.element.User.username : ''}",
+              "gps_accuracy": "${event.element.gps_accuracy}",
+              "event": "${event.element.data}"
+            }
+          },`
+      }
+  })
+  json = json.slice(0, -1);
+  json += `]
+  }`;
+return json;
+  }
+  return '';
+}
+
+export function computeGeoJSONFromEvent(event) { 
+  return `
+  {
+    "name": "${event.name}",
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [${event.element.coordinate.long}, ${event.element.coordinate.lat}, ${event.element.coordinate.alt}]
+        },
+        "properties": {
+          "id_event": "${event.element.id}",
+          "created_at": "${event.element.creation_date}",
+          "owner": "${event.element.User ? event.element.User.username : ''}",
+          "gps_accuracy": "${event.element.gps_accuracy}",
+          "event": "${event.element.data}"
+        }
+      }
+    ]
+  }
+`;
+}

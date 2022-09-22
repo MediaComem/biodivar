@@ -3,6 +3,9 @@
     <div class="scrolling-table">
       <table>
         <tr class="tr-header">
+          <th class="first-column first-column-header">
+            <input type="checkbox" :checked="globalChecked" @click="selectAll">
+          </th>
           <th class="column second-column">
             <div class="header-value">
               <p>#</p>
@@ -68,14 +71,31 @@
                 @click="setSort('data')">
             </div>
           </th>
+          <th class="last-column last-column-header">
+             <p class="material-symbols-sharp no-margin clickable" @click="openMenu(0)">more_vert</p>
+             <div v-if="menuState && menuState.id === 0 && menuState.state" class="menu">
+                <p class="menu-element" :class="{'disable': !globalChecked }" @click="downloadEvents">Exporter les Events</p>
+             </div>
+             <div v-if="menuState" class="overlay" @click="menuState = undefined" />
+          </th>
         </tr>
         <tr v-for="(event, index) in getSortedData" :key="index">
+          <td class="first-column">
+            <input type="checkbox" :checked="event.display" @click="selectElement(event)">
+          </td>
           <td class="column">{{ event.element.id }}</td>
           <td class="column">{{ dateFormatter(event.element.creation_date) }}</td>
           <td class="column">{{ userFormatter(event.element.User) }}</td>
           <td class="column">{{ event.element.gps_accuracy }}</td>    
           <td class="column">({{ getCoordinate(event) }})</td>
-          <td class="column">({{ event.element.data }})</td>    
+          <td class="column">({{ event.element.data }})</td>
+          <td class="last-column">
+             <p class="material-symbols-sharp no-margin clickable" @click="openMenu(event.element.id)">more_vert</p>
+             <div v-if="menuState && menuState.id === event.element.id && menuState.state" class="menu">
+                <p class="menu-element" @click="downloadEvent(event)">Exporter l'Event</p>
+             </div>
+             <div v-if="menuState" class="overlay" @click="menuState = undefined" />
+          </td>    
         </tr>
       </table>
     </div>
@@ -83,10 +103,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 import { dateFormatter } from '../../../../utils/formatter.js';
 import sort from '../../../../utils/sort';
+import { computeGeoJSONFromEvent, computeGeoJSONFromEvents } from '../../../../utils/geojson.js';
+
 
 export default {
   props: {
@@ -94,8 +116,10 @@ export default {
   },
   data() {
     return {
+      globalChecked: true,
       sortElement: '',
       orderElement: false,
+      menuState: undefined,
     }
   },
   methods: {
@@ -116,10 +140,55 @@ export default {
       }
       this.sortElement = value;
     },
+    globalCheckAnalizer() {
+      if (this.allAreUnselected) {
+        this.globalChecked = false;
+      } else {
+        this.globalChecked = true;
+      }
+    },
+    selectElement(selectedEvent) {
+      this.updateEventToDisplay({
+        bioverId: this.bioverId,
+        event: selectedEvent,
+      });
+      this.globalCheckAnalizer();
+    },
+    selectAll() {
+      this.globalChecked = !this.globalChecked;
+      if (this.globalChecked) {
+        this.selectAllEvents();
+      } else {
+        this.unselectAllEvents();
+      }
+    },
+    openMenu(rowId) {
+      this.menuState = {id: rowId, state: true};
+    },
+    download(file) {
+      const anchor = document.createElement('a');
+      anchor.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(file);
+      anchor.target = '_blank';
+      anchor.download = 'export_event.json';
+      anchor.click();
+    },
+    downloadEvent(event) {
+      this.download(computeGeoJSONFromEvent(event));
+      this.menuState = undefined;
+    },
+    downloadEvents() {
+      if (!this.globalChecked) return;
+      this.download(computeGeoJSONFromEvents(this.getEventByBiovers(this.bioverId)))
+      this.menuState = undefined;
+    },
+    ...mapActions('biovers', ['selectAllEvents', 'unselectAllEvents', 'updateEventToDisplay']),
   },
   computed: {
     getSortedData() {
       return sort.sort(this.getEventByBiovers(this.bioverId), this.sortElement, this.orderElement);
+    },
+    allAreUnselected() {
+      return this.getSortedData.filter((event) => event.display).length === 0;
     },
     ...mapGetters('biovers', ['getEventByBiovers']),
   },
