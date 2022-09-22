@@ -484,8 +484,7 @@
     </div>
   </div>
   <DeleteConfirmation v-if="deleteDialog" :dialogVisible="deleteDialog" title="Êtes-vous sûr de vouloir supprimer ces point d'intérêts?" @closeDialog="deleteDialog = false" @validate="poisDeletion()" />
-  <PoiColumnsSelection v-if="columnDialog" :showDialog="columnDialog"
-    @close-dialog="columnDialog = false" />
+  <PoiColumnsSelection v-if="columnDialog" :showDialog="columnDialog" @close-dialog="columnDialog = false" />
   <PoiEdition v-if="showEditionDialog" :poi="poiToUpdate" :showDialog="showEditionDialog"
     @close-dialog="showEditionDialog = false"/>
 </div>
@@ -732,44 +731,5 @@ export default {
 
 .text-margin {
   padding-right: 6px;
-}
-
-.clickable {
-  cursor: pointer;
-}
-
-.menu {
-  position: relative;
-  width: 200px;
-  background-color: white;
-  color: black;
-  z-index: 10;
-  left: -180px;
-  top: -35px;
-  border-radius: 3px;
-}
-
-.menu-element {
-  margin: 0;
-  padding: 5px 0 5px 0;
-  border-bottom: 1px solid black;
-  cursor: pointer;
-}
-
-.menu-element:hover {
-  background-color: #BDBDBD;
-}
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-}
-
-.disable {
-  background-color: gray;
-  color: lightgray;
 }
 </style>

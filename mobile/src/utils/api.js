@@ -67,8 +67,16 @@ export function deletePoi(poi) {
 }
 
 // Path part
+export function savePath(path) {
+  return postJson(API + 'path/create', path);
+}
+
 export function savePaths(paths) {
   return postJson(API + 'path/creates', paths);
+}
+
+export function deletePath(path) {
+  return postJson(API + 'path/delete', path);
 }
 
 // Symbol part

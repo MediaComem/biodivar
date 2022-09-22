@@ -1,3 +1,5 @@
+import { coordinateFormatter } from './formatter.js';
+
 export function computeGeoJSONFromPOIs(pois) {
     if (pois && pois.length > 0) {
         let json = `
@@ -119,4 +121,73 @@ export function computeGeoJSONFromPOI(poi) {
         ]
       }
     `;
+}
+
+export function computeGeoJSONFromPATHs(paths) {
+  if (paths && paths.length > 0) {
+      let json = `
+  {
+      "name": "${paths[0].name}",
+      "type": "FeatureCollection",
+      "features": [`;
+      paths.forEach((path) => {
+        if (path.display) {
+          json += `
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": ${coordinateFormatter(path.element.coordinate)}
+            },
+            "properties": {
+              "id_path": "${path.element.id}",
+              "created_at": "${path.element.creation_date}",
+              "owner": "${path.element.User ? path.element.User.username : ''}",
+              "updated_at": "${path.element.update_date}",
+              "contributor": "${path.element.last_contributor_fk ? path.element.last_contributor_fk.username : ''}",
+              "scope": "${path.element.scope}",
+              "style_type": "${path.element.style_type}",
+              "style_stoke": "${path.element.style_stroke_width}",
+              "amplitude": "${path.element.amplitude}",
+              "elevation": "${path.element.style_elevation}"
+            }
+          },`
+      }
+  })
+  json = json.slice(0, -1);
+  json += `]
+  }`;
+return json;
+  }
+  return '';
+}
+
+export function computeGeoJSONFromPATH(path) { 
+  return `
+  {
+    "name": "${path.name}",
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "LineString",
+          "coordinates": ${coordinateFormatter(path.element.coordinate)}
+        },
+        "properties": {
+          "id_path": "${path.element.id}",
+          "created_at": "${path.element.creation_date}",
+          "owner": "${path.element.User ? path.element.User.username : ''}",
+          "updated_at": "${path.element.update_date}",
+          "contributor": "${path.element.last_contributor_fk ? path.element.last_contributor_fk.username : ''}",
+          "scope": "${path.element.scope}",
+          "style_type": "${path.element.style_type}",
+          "style_stoke": "${path.element.style_stroke_width}",
+          "amplitude": "${path.element.amplitude}",
+          "elevation": "${path.element.style_elevation}"
+        }
+      }
+    ]
+  }
+`;
 }

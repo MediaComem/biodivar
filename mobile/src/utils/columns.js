@@ -40,3 +40,18 @@ export function getPoiColumns() {
       'metadata': true,
     }
   }
+
+export function getPathColumns() {
+  return {
+    'scope': true,
+    'created_date': true,
+    'author': true,
+    'updated_date': true,
+    'contributor': true,
+    'elevation': true,
+    'animation': true,
+    'stroke_width': true,
+    'style_type': true,
+    'coordinate': true,
+  }
+}

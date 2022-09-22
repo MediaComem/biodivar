@@ -1,6 +1,6 @@
 import { getBiovers, getBioversByUser } from '../utils/api.js';
 import filterUtils from '../utils/filters.js';
-import { getPoiColumns } from '../utils/columns.js';
+import { getPoiColumns, getPathColumns } from '../utils/columns.js';
 
 export const bioversStore = {
   namespaced: true,
@@ -9,6 +9,7 @@ export const bioversStore = {
       index: 1,
       userPreference: [],
       poiColumnsPreference: undefined,
+      pathColumnsPreference: undefined,
       ownBiovers: [],
       publicBiovers: [],
       addBioversInTab: false,
@@ -54,6 +55,12 @@ export const bioversStore = {
     },
     SAVE_POI_COLUMNS(state, columns) {
       state.poiColumnsPreference = columns;
+    },
+    LOAD_PATH_COLUMNS(state) {
+      state.pathColumnsPreference = getPathColumns();
+    },
+    SAVE_PATH_COLUMNS(state, columns) {
+      state.pathColumnsPreference = columns;
     },
     ADD_NEW_BIOVER(state, biover) {
       state.ownBiovers.push(biover);
@@ -132,6 +139,24 @@ export const bioversStore = {
       const index = state.pois.findIndex((e) => e.bioverId === poi.biovers);
       const poiIndex = state.pois[index].pois.findIndex((e) => e.id === poi.id);
       state.pois[index].pois.splice(poiIndex, 1);
+    },
+    ADD_INTO_PATH(state, path) {
+      const index = state.paths.findIndex((e) => e.bioverId === state.currentBioversId);
+      const bioverToDisplayIndex = state.bioversToDisplay
+        .findIndex((biover) => biover.biover.id === state.currentBioversId);
+      const pathElementToAdd = {
+        name: state.bioversToDisplay[bioverToDisplayIndex].title,
+        element: path,
+        display: true,
+        import: false,
+      };
+      state.paths[index].paths.push(pathElementToAdd);
+      state.pathsModification = { element: pathElementToAdd };
+    },
+    REMOVE_INTO_PATH(state, path) {
+      const index = state.paths.findIndex((e) => e.bioverId === path.biovers);
+      const pathIndex = state.paths[index].paths.findIndex((e) => e.id === path.id);
+      state.paths[index].paths.splice(pathIndex, 1);
     },
     IMPORT_POI(state, pois) {
       const index = state.pois.findIndex((e) => e.bioverId === state.currentBioversId);
@@ -243,6 +268,33 @@ export const bioversStore = {
         state.ownBiovers[index].Poi.splice(poiIndex, 1);
       }
     },
+    ADD_PATH_INTO_BIOVER(state, path) {
+      const bioverToDisplayIndex = state.bioversToDisplay
+        .findIndex((biover) => biover.biover.id === state.currentBioversId);
+      state.bioversToDisplay[bioverToDisplayIndex].biover.Path.push(path);
+      let index = state.ownBiovers.findIndex((biovers) => biovers.id === state.currentBioversId);
+      if (index === -1) {
+        index = state.publicBiovers.findIndex((biovers) => biovers.id === state.currentBioversId);
+        state.publicBiovers[index].Path.push(path);
+      } else {
+        state.ownBiovers[index].Path.push(path);
+      }
+    },
+    REMOVE_PATH_INTO_BIOVER(state, path) {
+      const bioverToDisplayIndex = state.bioversToDisplay
+        .findIndex((biover) => biover.biover.id === path.biovers);
+      const bioversToDisplayPathIndex = state.bioversToDisplay[bioverToDisplayIndex].biover.Path.findIndex((p) => p.id === path.id);
+      state.bioversToDisplay[bioverToDisplayIndex].biover.Path.splice(bioversToDisplayPathIndex, 1);
+      let index = state.ownBiovers.findIndex((biovers) => biovers.id === path.biovers);
+      if (index === -1) {
+        index = state.publicBiovers.findIndex((biovers) => biovers.id === path.biovers);
+        let pathIndex = state.publicBiovers[index].Path.findIndex((p) => p.id === path.id);
+        state.publicBiovers[index].Path.splice(pathIndex, 1);
+      } else {
+        let pathIndex = state.ownBiovers[index].Path.findIndex((p) => p.id === path.id);
+        state.ownBiovers[index].Path.splice(pathIndex, 1);
+      }
+    },
     RESET_POI_MODIFICATION(state) {
       state.poisModification = null;
     },
@@ -334,6 +386,12 @@ export const bioversStore = {
     },
     savePoiColumns({ commit }, columns) {
       commit('SAVE_POI_COLUMNS', columns)
+    },
+    loadPathColumns({ commit }) {
+      commit('LOAD_PATH_COLUMNS')
+    },
+    savePathColumns({ commit }, columns) {
+      commit('SAVE_PATH_COLUMNS', columns)
     },
     addNewBiover({ commit }, biover) {
       commit('ADD_NEW_BIOVER', biover);
@@ -470,6 +528,14 @@ export const bioversStore = {
       commit('REMOVE_INTO_POI', poi);
       commit('REMOVE_POI_INTO_BIOVER', poi);
     },
+    addNewPath({ commit }, poi) {
+      commit('ADD_INTO_PATH', poi);
+      commit('ADD_PATH_INTO_BIOVER', poi);
+    },
+    removePath({ commit }, path) {
+      commit('REMOVE_INTO_PATH', path);
+      commit('REMOVE_PATH_INTO_BIOVER', path);
+    },
     updatePoi({ commit }, poi) {
       commit('UPDATE_POI', poi);
     },
@@ -521,9 +587,11 @@ export const bioversStore = {
         element: poi,
       });
     },
-    pastePoi({ commit }, poi) {
-      commit('ADD_INTO_POI', poi);
-      commit('ADD_POI_INTO_BIOVER', poi);
+    copyPath ({ commit }, path) {
+      commit('COPY', {
+        type: 'PATH',
+        element: path,
+      });
     },
   },
   getters: {
@@ -606,6 +674,9 @@ export const bioversStore = {
     },
     getPoiColumnsPreference(state) {
       return state.poiColumnsPreference;
+    },
+    getPathColumnsPreference(state) {
+      return state.pathColumnsPreference;
     },
   },
 };
