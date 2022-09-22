@@ -1,7 +1,7 @@
 <template>
    <el-dialog v-model="showDialog" title="Séléction des colonnes"
    @close="$emit('closeDialog')">
-   <el-form :model="form">
+   <el-form :model="form" style="display: grid;">
         <el-checkbox v-model="form.coordinate" label="COORDONNEES" size="large" />
         <el-checkbox v-model="form.title" label="TITRE" size="large" />
         <el-checkbox v-model="form.subtitle" label="SOUS-TITRE" size="large" />

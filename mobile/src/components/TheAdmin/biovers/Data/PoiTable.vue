@@ -1,5 +1,6 @@
 <template>
-  <div class="table-layout">
+<div>
+<div class="table-layout">
     <div class="scrolling-table">
       <table>
         <tr class="tr-header">
@@ -419,7 +420,7 @@
                 <p class="menu-element" :class="{'disable': !globalChecked }" @click="downloadPois">Exporter les POIs</p>
                 <p class="menu-element" :class="{'disable': !globalChecked }" @click="copies()">Copier les POIs</p>
                 <p class="menu-element" :class="{'disable': couldPaste }" @click="paste()">Coller le POI</p>
-                <p class="menu-element" :class="{'disable': !globalChecked }" @click="poisDeletion()">Supprimer les POIs</p>
+                <p class="menu-element" :class="{'disable': !globalChecked }" @click="openDeletionDialog()">Supprimer les POIs</p>
                 <p class="menu-element" @click="openColumnSelector()">Définir les colonnes</p>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
@@ -473,6 +474,7 @@
              <div v-if="menuState && menuState.id === poi.element.id && menuState.state" class="menu">
                 <p class="menu-element" @click="downloadPoi(poi)">Exporter le POI</p>
                 <p class="menu-element" @click="copy(poi)">Copier le POI</p>
+                <p class="menu-element" @click="openEdition(poi)">Editer le POI</p>
                 <p class="menu-element" @click="poiDeletion(poi)">Supprimer le POI</p>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
@@ -481,14 +483,21 @@
       </table>
     </div>
   </div>
+  <DeleteConfirmation v-if="deleteDialog" :dialogVisible="deleteDialog" title="Êtes-vous sûr de vouloir supprimer ces point d'intérêts?" @closeDialog="deleteDialog = false" @validate="poisDeletion()" />
   <PoiColumnsSelection v-if="columnDialog" :showDialog="columnDialog"
     @close-dialog="columnDialog = false" />
+  <PoiEdition v-if="showEditionDialog" :poi="poiToUpdate" :showDialog="showEditionDialog"
+    @close-dialog="showEditionDialog = false"/>
+</div>
+  
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
 import PoiColumnsSelection from '../Dialog/PoiColumnsSelection.vue';
+import PoiEdition from '../Dialog/PoiEdition.vue';
+import DeleteConfirmation from '../Dialog/DeleteConfirmation.vue';
 
 import { fullDateFormatter } from '../../../../utils/formatter.js';
 import sort from '../../../../utils/sort';
@@ -497,7 +506,7 @@ import { computeGeoJSONFromPOI, computeGeoJSONFromPOIs } from '../../../../utils
 import { savePoi, deletePoi } from '../../../../utils/api.js';
 
 export default {
-  components: { PoiColumnsSelection },
+  components: { PoiColumnsSelection, DeleteConfirmation, PoiEdition },
   props: {
     bioverId: Number,
   },
@@ -510,6 +519,9 @@ export default {
       isSymbol: false,
       menuState: undefined,
       columnDialog: false,
+      deleteDialog: false,
+      showEditionDialog: false,
+      poiToUpdate: {},
     };
   },
   computed: {
@@ -541,6 +553,13 @@ export default {
     },
     positionFormatter(symbol) {
       return symbol && symbol.position ? `{ x: ${symbol.position.x}, y: ${symbol.position.y}, alpha: ${symbol.position.alpha}}` : '';
+    },
+    globalCheckAnalizer() {
+      if (this.allAreUnselected) {
+        this.globalChecked = false;
+      } else {
+        this.globalChecked = true;
+      }
     },
     getARFileName(symbol) {
       if (symbol && symbol.ar_url) {
@@ -574,19 +593,15 @@ export default {
         bioverId: this.bioverId,
         poi: selectedPoi,
       });
-      if (this.allAreUnselected) {
-        this.globalChecked = false;
-      } else {
-        this.globalChecked = true;
-      }
+      this.globalCheckAnalizer();
     },
     selectAll() {
       this.globalChecked = !this.globalChecked;
-        if (this.globalChecked) {
-          this.selectAllPois();
-        } else {
-          this.unselectAllPois();
-        }
+      if (this.globalChecked) {
+        this.selectAllPois();
+      } else {
+        this.unselectAllPois();
+      }
     },
     openMenu(rowId) {
       this.menuState = {id: rowId, state: true};
@@ -665,6 +680,16 @@ export default {
         await this.setupCopyPoi(poi);
       }
       this.menuState = undefined;
+      this.globalCheckAnalizer();
+    },
+    openEdition(poi) {
+      this.poiToUpdate = { poi: poi.element };
+      this.showEditionDialog = true;
+      this.menuState = undefined;
+    },
+    openDeletionDialog() {
+      this.deleteDialog = true;
+      this.menuState = undefined;
     },
     async poisDeletion() {
       if (!this.globalChecked) return;
@@ -673,7 +698,8 @@ export default {
         await deletePoi(pois[i].element);
         this.removePoi(pois[i].element);
       }
-      this.menuState = undefined;
+      this.deleteDialog = false;
+      this.globalCheckAnalizer();
     },
     async poiDeletion(poi) {
       await deletePoi(poi.element);
@@ -728,6 +754,10 @@ export default {
   padding: 5px 0 5px 0;
   border-bottom: 1px solid black;
   cursor: pointer;
+}
+
+.menu-element:hover {
+  background-color: #BDBDBD;
 }
 
 .overlay {
