@@ -129,6 +129,13 @@ export const bioversStore = {
       state.events[eventsIndex].events[eventIndex].display = !state.events[eventsIndex]
         .events[eventIndex].display;
     },
+    UPDATE_TRACE_TO_DISPLAY(state, payload) {
+      const tracesIndex = state.traces.findIndex((e) => e.bioverId === payload.bioverId);
+      const traceIndex = state.traces[tracesIndex].traces
+        .findIndex((e) => e.element.id === payload.trace.element.id);
+      state.traces[tracesIndex].traces[traceIndex].display = !state.traces[tracesIndex]
+        .traces[traceIndex].display;
+    },
     ADD_INTO_POI(state, poi) {
       const index = state.pois.findIndex((e) => e.bioverId === state.currentBioversId);
       const bioverToDisplayIndex = state.bioversToDisplay
@@ -344,6 +351,18 @@ export const bioversStore = {
         state.events[eventsIndex].events[i].display = false;
       }
     },
+    SELECT_ALL_TRACES(state) {
+      const tracesIndex = state.traces.findIndex((e) => e.bioverId === state.currentBioversId);
+      for (let i = 0; i < state.traces[tracesIndex].traces.length; i += 1) {
+        state.traces[tracesIndex].traces[i].display = true;
+      }
+    },
+    UNSELECT_ALL_TRACES(state) {
+      const tracesIndex = state.traces.findIndex((e) => e.bioverId === state.currentBioversId);
+      for (let i = 0; i < state.traces[tracesIndex].traces.length; i += 1) {
+        state.traces[tracesIndex].traces[i].display = false;
+      }
+    },
     RESET_STORE(state) {
       state.ownBiovers = [];
       state.publicBiovers = [];
@@ -542,6 +561,9 @@ export const bioversStore = {
     updateEventToDisplay({ commit }, payload) {
       commit('UPDATE_EVENT_TO_DISPLAY', payload);
     },
+    updateTraceToDisplay({ commit }, payload) {
+      commit('UPDATE_TRACE_TO_DISPLAY', payload);
+    },
     addNewPoi({ commit }, poi) {
       commit('ADD_INTO_POI', poi);
       commit('ADD_POI_INTO_BIOVER', poi);
@@ -602,6 +624,12 @@ export const bioversStore = {
     },
     unselectAllEvents({ commit }) {
       commit('UNSELECT_ALL_EVENTS');
+    },
+    selectAllTraces({ commit }) {
+      commit('SELECT_ALL_TRACES');
+    },
+    unselectAllTraces({ commit }) {
+      commit('UNSELECT_ALL_TRACES');
     },
     resetStore({ commit }) {
       commit('RESET_STORE');
