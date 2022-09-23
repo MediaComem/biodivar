@@ -14,6 +14,7 @@ const uploadDone = computed(() => store.state.biovers.uploadDone);
 
 const bioversCreator = ref(false);
 const upload = ref(null);
+const couldPublish = ref(false);
 const saveDone = ref(false);
 const pois = ref([]);
 const paths = ref([]);
@@ -133,6 +134,7 @@ function sent() {
     }
     importPois(pois.value);
     importPaths(paths.value);
+    couldPublish.value = true;
   };
   if (upload.value.uploadFiles) {
     fr.readAsText(upload.value.uploadFiles[0].raw);
@@ -147,6 +149,7 @@ function handleExceed() {
 }
 
 async function save() {
+  if (!couldPublish.value) return;
   if (pois.value.length > 0) {
     const createdPois = await savePois(pois.value);
     updateImportPois(createdPois.data);
@@ -162,6 +165,7 @@ async function save() {
   saveDone.value = true;
   setTimeout(() => {
     saveDone.value = false;
+    couldPublish.value = false;
   }, 2000);
 }
 </script>
@@ -185,7 +189,7 @@ async function save() {
           <p class="material-symbols-sharp text-formatting">upload_file</p> Importer .json
         </base-button>
       </template>
-      <base-button class="button" @click="save">
+      <base-button :class="{button: couldPublish, disable: !couldPublish}" @click="save">
         <p class="material-symbols-sharp text-formatting">publish</p> Publier
       </base-button>
     </el-upload>
@@ -209,11 +213,24 @@ async function save() {
   padding-right: 15px !important;
 }
 
+.disable {
+  --link-color: white;
+  --highlight-color: #2f81ed69;
+  width: auto !important;
+  margin: 1rem !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
 .button > p {
   margin: 0px;
 }
 
 .el-upload {
   padding-right: 15px;
+}
+
+.text-formatting {
+  margin: 0
 }
 </style>
