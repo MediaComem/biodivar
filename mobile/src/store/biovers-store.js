@@ -1,6 +1,6 @@
 import { getBiovers, getBioversByUser } from '../utils/api.js';
 import filterUtils from '../utils/filters.js';
-import { getPoiColumns, getPathColumns, getTracesColumns } from '../utils/columns.js';
+import { getPoiColumns, getPathColumns, getTracesColumns, getEventsColumns } from '../utils/columns.js';
 
 export const bioversStore = {
   namespaced: true,
@@ -11,6 +11,7 @@ export const bioversStore = {
       poiColumnsPreference: undefined,
       pathColumnsPreference: undefined,
       traceColumnsPreference: undefined,
+      eventColumnsPreference: undefined,
       ownBiovers: [],
       publicBiovers: [],
       addBioversInTab: false,
@@ -68,6 +69,12 @@ export const bioversStore = {
     },
     SAVE_TRACE_COLUMNS(state, columns) {
       state.traceColumnsPreference = columns;
+    },
+    LOAD_EVENT_COLUMNS(state) {
+      state.eventColumnsPreference = getEventsColumns();
+    },
+    SAVE_EVENT_COLUMNS(state, columns) {
+      state.eventColumnsPreference = columns;
     },
     ADD_NEW_BIOVER(state, biover) {
       state.ownBiovers.push(biover);
@@ -444,6 +451,12 @@ export const bioversStore = {
     saveTraceColumns({ commit }, columns) {
       commit('SAVE_TRACE_COLUMNS', columns)
     },
+    loadEventColumns({ commit }) {
+      commit('LOAD_EVENT_COLUMNS')
+    },
+    saveEventColumns({ commit }, columns) {
+      commit('SAVE_EVENT_COLUMNS', columns)
+    },
     addNewBiover({ commit }, biover) {
       commit('ADD_NEW_BIOVER', biover);
     },
@@ -749,6 +762,9 @@ export const bioversStore = {
     },
     getTraceColumnsPreference(state) {
       return state.traceColumnsPreference;
+    },
+    getEventColumnsPreference(state) {
+      return state.eventColumnsPreference;
     },
   },
 };

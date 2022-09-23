@@ -11,6 +11,7 @@ const vuexLocal = new VuexPersistence({
       poiColumnsPreference: state.biovers.poiColumnsPreference,
       pathColumnsPreference: state.biovers.pathColumnsPreference,
       traceColumnsPreference: state.biovers.traceColumnsPreference,
+      eventColumnsPreference: state.biovers.eventColumnsPreference,
     },
   }),
 });

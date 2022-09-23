@@ -65,3 +65,13 @@ export function getTracesColumns() {
     'coordinate': true,
   }
 }
+
+export function getEventsColumns() {
+  return {
+    'created_date': true,
+    'author': true,
+    'gps_accuracy': true,
+    'coordinate': true,
+    'data': true,
+  }
+}

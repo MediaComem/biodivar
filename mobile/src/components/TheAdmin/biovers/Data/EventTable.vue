@@ -1,5 +1,6 @@
 <template>
-  <div class="table-layout">
+<div>
+<div class="table-layout">
     <div class="scrolling-table">
       <table>
         <tr class="tr-header">
@@ -17,7 +18,7 @@
                 @click="setSort('id')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getEventColumnsPreference.created_date" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">date_range</p>
               <p>CREER LE</p>
@@ -29,7 +30,7 @@
                 @click="setSort('creation_date')">
             </div>
           </th>
-           <th class="column">
+           <th v-if="getEventColumnsPreference.author" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">architecture</p>
               <p>AUTHEUR</p>
@@ -41,7 +42,7 @@
                 @click="setSort('subtitle')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getEventColumnsPreference.gps_accuracy" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">crisis_alert</p>
               <p>PRECISION DU GPS</p>
@@ -53,13 +54,13 @@
                 @click="setSort('gps_accuracy')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getEventColumnsPreference.coordinate" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">location_searching</p>
               <p>COORDONNEES</p>
             </div>
           </th>
-          <th class="column">
+          <th v-if="getEventColumnsPreference.data" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">database</p>
               <p>EVENT</p>
@@ -75,6 +76,7 @@
              <p class="material-symbols-sharp no-margin clickable" @click="openMenu(0)">more_vert</p>
              <div v-if="menuState && menuState.id === 0 && menuState.state" class="menu">
                 <p class="menu-element" :class="{'disable': !globalChecked }" @click="downloadEvents">Exporter les Events</p>
+                <p class="menu-element" @click="openColumnSelector()">Définir les colonnes</p>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
@@ -84,11 +86,11 @@
             <input type="checkbox" :checked="event.display" @click="selectElement(event)">
           </td>
           <td class="column">{{ event.element.id }}</td>
-          <td class="column">{{ dateFormatter(event.element.creation_date) }}</td>
-          <td class="column">{{ userFormatter(event.element.User) }}</td>
-          <td class="column">{{ event.element.gps_accuracy }}</td>    
-          <td class="column">({{ getCoordinate(event) }})</td>
-          <td class="column">({{ event.element.data }})</td>
+          <td v-if="getEventColumnsPreference.created_date" class="column">{{ dateFormatter(event.element.creation_date) }}</td>
+          <td v-if="getEventColumnsPreference.author" class="column">{{ userFormatter(event.element.User) }}</td>
+          <td v-if="getEventColumnsPreference.gps_accuracy" class="column">{{ event.element.gps_accuracy }}</td>    
+          <td v-if="getEventColumnsPreference.coordinate" class="column">({{ getCoordinate(event) }})</td>
+          <td v-if="getEventColumnsPreference.data" class="column">({{ event.element.data }})</td>
           <td class="last-column">
              <p class="material-symbols-sharp no-margin clickable" @click="openMenu(event.element.id)">more_vert</p>
              <div v-if="menuState && menuState.id === event.element.id && menuState.state" class="menu">
@@ -100,10 +102,15 @@
       </table>
     </div>
   </div>
+  <EventColumnsSelector v-if="columnDialog" :showDialog="columnDialog" @close-dialog="columnDialog = false" />
+</div>
+  
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+
+import EventColumnsSelector from '../Dialog/EventColumnsSelector.vue';
 
 import { dateFormatter } from '../../../../utils/formatter.js';
 import sort from '../../../../utils/sort';
@@ -111,6 +118,7 @@ import { computeGeoJSONFromEvent, computeGeoJSONFromEvents } from '../../../../u
 
 
 export default {
+  components: { EventColumnsSelector },
   props: {
     bioverId: Number,
   },
@@ -120,6 +128,7 @@ export default {
       sortElement: '',
       orderElement: false,
       menuState: undefined,
+      columnDialog: false,
     }
   },
   methods: {
@@ -165,6 +174,10 @@ export default {
     openMenu(rowId) {
       this.menuState = {id: rowId, state: true};
     },
+    openColumnSelector() {
+      this.columnDialog = true;
+      this.menuState = undefined;
+    },
     download(file) {
       const anchor = document.createElement('a');
       anchor.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(file);
@@ -190,7 +203,7 @@ export default {
     allAreUnselected() {
       return this.getSortedData.filter((event) => event.display).length === 0;
     },
-    ...mapGetters('biovers', ['getEventByBiovers']),
+    ...mapGetters('biovers', ['getEventByBiovers', 'getEventColumnsPreference']),
   },
 };
 </script>
