@@ -1,5 +1,6 @@
 <template>
-  <div class="table-layout">
+<div>
+<div class="table-layout">
     <div class="scrolling-table">
       <table>
         <tr class="tr-header">
@@ -17,7 +18,7 @@
                 @click="setSort('id')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getTraceColumnsPreference.author" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">architecture</p>
               <p>AUTHEUR</p>
@@ -29,7 +30,7 @@
                 @click="setSort('subtitle')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getTraceColumnsPreference.created_date" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">date_range</p>
               <p>CREER LE</p>
@@ -41,7 +42,7 @@
                 @click="setSort('creation_date')">
             </div>
           </th>
-           <th class="column">
+           <th v-if="getTraceColumnsPreference.gps_accuracy" class="column">
             <div class="header-value">
               <p>Précision du GPS</p>
               <img
@@ -52,7 +53,7 @@
                 @click="setSort('gps_accuracy')">
             </div>
           </th>
-          <th class="column">
+          <th v-if="getTraceColumnsPreference.coordinate" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp">location_searching</p>
               <p>COORDONNEES</p>
@@ -62,6 +63,7 @@
              <p class="material-symbols-sharp no-margin clickable" @click="openMenu(0)">more_vert</p>
              <div v-if="menuState && menuState.id === 0 && menuState.state" class="menu">
                 <p class="menu-element" :class="{'disable': !globalChecked }" @click="downloadTraces">Exporter les Traces</p>
+                <p class="menu-element" @click="openColumnSelector()">Définir les colonnes</p>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
@@ -71,10 +73,10 @@
             <input type="checkbox" :checked="trace.display" @click="selectElement(trace)">
           </td>
           <td class="column">{{ trace.element.id }}</td>
-          <td class="column">{{ userFormatter(trace.element.User) }}</td>
-          <td class="column">{{ dateFormatter(trace.element.creation_date) }}</td>
-          <td class="column">{{ trace.element.gps_accuracy }}</td>
-          <td class="column">({{ getCoordinate(trace) }})</td>
+          <td v-if="getTraceColumnsPreference.author" class="column">{{ userFormatter(trace.element.User) }}</td>
+          <td v-if="getTraceColumnsPreference.created_date" class="column">{{ dateFormatter(trace.element.creation_date) }}</td>
+          <td v-if="getTraceColumnsPreference.gps_accuracy" class="column">{{ trace.element.gps_accuracy }}</td>
+          <td v-if="getTraceColumnsPreference.coordinate" class="column">({{ getCoordinate(trace) }})</td>
           <td class="last-column">
              <p class="material-symbols-sharp no-margin clickable" @click="openMenu(trace.element.id)">more_vert</p>
              <div v-if="menuState && menuState.id === trace.element.id && menuState.state" class="menu">
@@ -86,10 +88,15 @@
       </table>
     </div>
   </div>
+  <TraceColumnsSelector v-if="columnDialog" :showDialog="columnDialog" @close-dialog="columnDialog = false" />
+</div>
+  
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+
+import TraceColumnsSelector from '../Dialog/TraceColumnsSelector.vue';
 
 import { dateFormatter } from '../../../../utils/formatter.js';
 import sort from '../../../../utils/sort';
@@ -97,6 +104,7 @@ import sort from '../../../../utils/sort';
 import { computeGeoJSONFromTrace, computeGeoJSONFromTraces } from '../../../../utils/geojson.js';
 
 export default {
+  components: { TraceColumnsSelector },
   props: {
     bioverId: Number,
   },
@@ -106,6 +114,7 @@ export default {
       orderElement: false,
       globalChecked: true,
       menuState: undefined,
+      columnDialog: false,
     }
   },
   computed: {
@@ -115,7 +124,7 @@ export default {
     allAreUnselected() {
       return this.getSortedData.filter((trace) => trace.display).length === 0;
     },
-    ...mapGetters('biovers', ['getTraceByBiovers']),
+    ...mapGetters('biovers', ['getTraceByBiovers', 'getTraceColumnsPreference']),
   },
   methods: {
     dateFormatter(date) {
@@ -159,6 +168,10 @@ export default {
     },
     openMenu(rowId) {
       this.menuState = {id: rowId, state: true};
+    },
+    openColumnSelector() {
+      this.columnDialog = true;
+      this.menuState = undefined;
     },
     download(file) {
       const anchor = document.createElement('a');

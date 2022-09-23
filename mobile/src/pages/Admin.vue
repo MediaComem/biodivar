@@ -43,7 +43,7 @@ export default {
       this.addTraceToDisplay(event.id);
       this.addEventToDisplay(event.id);
     },
-    ...mapActions('biovers', ['getBiovers', 'resetBiovers', 'addBioverToDisplay', 'addPoiToDisplay', 'addPathToDisplay', 'addTraceToDisplay', 'addEventToDisplay', 'loadPoiColumns', 'loadPathColumns']),
+    ...mapActions('biovers', ['getBiovers', 'resetBiovers', 'addBioverToDisplay', 'addPoiToDisplay', 'addPathToDisplay', 'addTraceToDisplay', 'addEventToDisplay', 'loadPoiColumns', 'loadPathColumns', 'loadTraceColumns']),
   },
   computed: {
     pins() {
@@ -51,7 +51,7 @@ export default {
       return getPinsBiovers();
     },
     ...mapState('biovers', ['ownBiovers', 'bioversToDisplay', 'currentBioversId']),
-    ...mapGetters('biovers', ['getPoiColumnsPreference', 'getPathColumnsPreference']),
+    ...mapGetters('biovers', ['getPoiColumnsPreference', 'getPathColumnsPreference', 'getTraceColumnsPreference']),
   },
   async mounted() {
     this.resetBiovers();
@@ -61,6 +61,9 @@ export default {
     }
     if (this.getPathColumnsPreference === undefined) {
       this.loadPathColumns();
+    }
+    if (this.getTraceColumnsPreference === undefined) {
+      this.loadTraceColumns();
     }
   },
 };

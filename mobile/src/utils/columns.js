@@ -55,3 +55,13 @@ export function getPathColumns() {
     'coordinate': true,
   }
 }
+
+
+export function getTracesColumns() {
+  return {
+    'created_date': true,
+    'author': true,
+    'gps_accuracy': true,
+    'coordinate': true,
+  }
+}
