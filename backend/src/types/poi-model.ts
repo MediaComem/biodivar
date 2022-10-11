@@ -31,7 +31,7 @@ export interface PoiModel {
   metadata?: string;
   coordinate?: CoordinateModel;
   symbol?: SymbolModel;
-  media?: MediaModels;
+  medias?: MediaModels;
   position?: PositionModel;
 }
 

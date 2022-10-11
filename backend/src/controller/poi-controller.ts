@@ -13,18 +13,12 @@ export const createPoi = async (
   try {
 
     const coordinate: Prisma.CoordinateCreateWithoutPoiInput = poi.coordinate as Prisma.CoordinateCreateWithoutPoiInput;
-    const symbol: Prisma.SymbolCreateWithoutPoiInput = poi.symbol as Prisma.SymbolCreateWithoutPoiInput;
-    const medias: Array<Prisma.MediaCreateWithoutPoiInput> = [];
+    if (!coordinate.creation_date) {
+      coordinate.creation_date = new Date();
+    }
     const position: Prisma.PositionCreateWithoutPoiInput = poi.position as Prisma.PositionCreateWithoutPoiInput;
 
-    if (poi.media) {
-      poi.media.forEach((media) => {
-        media.creation_date = new Date();
-        medias.push(media as Prisma.MediaCreateWithoutPoiInput);
-      });
-    }
-
-    return await prisma.poi.create({
+    const newPoi = await prisma.poi.create({
       data: {
         title: poi.title ? poi.title : '',
         title_is_visible: poi.title_is_visible 
@@ -50,16 +44,39 @@ export const createPoi = async (
         fill_opacity: poi.fill_opacity,
         amplitude: poi.amplitude,
         wireframe: poi.wireframe,  
-        metadata: poi.metadata,
+        metadata: JSON.stringify(poi.metadata),
         coordinate: {
           create: coordinate,
         },
-        symbol: {
-          create: symbol
-        },
-        media: {
-            create: medias,
-        },
+        symbol: poi.symbol ? {
+          create: {
+            media_type: poi.symbol.media_type,
+            url: poi.symbol.url,
+            is_facing_user: poi.symbol.is_facing_user,
+            media_type_audio: poi.symbol.media_type_audio,
+            audio_url: poi.symbol.audio_url,
+            is_visible: poi.symbol.is_visible,
+            is_visible_ar: poi.symbol.is_visible_ar,
+            media_type_ar: poi.symbol.media_type_ar,
+            ar_url: poi.symbol.ar_url,
+            amplitude: poi.symbol.amplitude,
+            audio_autoplay: poi.symbol.audio_autoplay,
+            audio_distance: poi.symbol.audio_distance,
+            audio_loop: poi.symbol.audio_loop,
+            autoplay: poi.symbol.autoplay,
+            wireframe: poi.symbol.wireframe,
+            scale: poi.symbol.scale,
+            loop: poi.symbol.loop,
+            creation_date: new Date(),
+            position: {
+              create: {
+                distance: poi.symbol?.position?.distance,
+                rotation: poi.symbol?.position?.rotation,
+                elevation: poi.symbol?.position?.elevation,
+              }
+            }
+          },
+        } : undefined,
         position: {
           create: position,
         }
@@ -84,6 +101,18 @@ export const createPoi = async (
         },
       },
     });
+
+    if (poi.medias) {
+      for (let i = 0; i < poi.medias.length; i++) {
+        delete poi.medias[i].content;
+        poi.medias[i].creation_date = new Date();
+        poi.medias[i].poi_id = newPoi.id;
+        poi.medias[i].metadata = JSON.stringify(poi.medias[i].metadata);
+        await createMedia(prisma, poi.medias[i], logger);
+      };
+    }
+    return await getPoiById(prisma, newPoi.id);
+
   } catch (error) {
     logger.error(error);
     throw new Error('Cannot create poi due to error');
@@ -160,11 +189,11 @@ export const updatePoi = async (
       if (poi.symbol) {
         poi.symbol.creation_date = new Date();
       }
-      if (poi.media && poi.media.length > 0) {
+      if (poi.medias && poi.medias.length > 0) {
         const inDB = await getMediasByPoi(prisma, poi.id);
-        const toBeCreated = onlyInLeft(poi.media, inDB as MediaModels);
-        const toBeDeleted = onlyInLeft(inDB as MediaModels, poi.media);
-        const toBeUpdated = inTheTwoArrays(poi.media, inDB as MediaModels);
+        const toBeCreated = onlyInLeft(poi.medias, inDB as MediaModels);
+        const toBeDeleted = onlyInLeft(inDB as MediaModels, poi.medias);
+        const toBeUpdated = inTheTwoArrays(poi.medias, inDB as MediaModels);
 
         for (let i = 0; i < toBeDeleted.length; i++) {
           await deleteMedia(prisma, toBeDeleted[i] as MediaModel, logger);
@@ -321,7 +350,7 @@ export const deletePoi = async (
                 },
               }
             : undefined,
-          media: poi.media
+          media: poi.medias
             ? {
                 updateMany: {
                   where: {

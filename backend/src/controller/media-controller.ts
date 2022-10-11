@@ -51,7 +51,6 @@ export const createMedia = async (
   logger: winston.Logger
 ) => {
   try {
-    const position: Prisma.PositionCreateNestedOneWithoutMediaInput = media.position as Prisma.PositionCreateNestedOneWithoutMediaInput
     return await prisma.media.create({
       data: {
         text: media.text ? media.text : null,
@@ -65,7 +64,13 @@ export const createMedia = async (
         metadata: media.metadata ? media.metadata : null,
         creation_date: new Date(),
         poi_id: media.poi_id,
-        position: position,
+        position: {
+          create: {
+            distance: media.position.distance,
+            rotation: media.position.rotation,
+            elevation: media.position.elevation,
+          },
+        },
       },
     });
   } catch (error) {

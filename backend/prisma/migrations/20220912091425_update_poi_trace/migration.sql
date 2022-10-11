@@ -34,8 +34,8 @@ ALTER TABLE "Biovers" ADD COLUMN "location" TEXT;
 CREATE TABLE "Position" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "distance" REAL NOT NULL DEFAULT 0,
-    "alpha" REAL NOT NULL DEFAULT 0,
-    "height" REAL NOT NULL DEFAULT 0,
+    "rotation" REAL NOT NULL DEFAULT 0,
+    "elevation" REAL NOT NULL DEFAULT 0,
     "media_id" INTEGER,
     "symbol_id" INTEGER,
     "poi_id" INTEGER,
@@ -188,6 +188,7 @@ CREATE TABLE "new_Media" (
     "url" TEXT,
     "media_type" TEXT,
     "is_facing" BOOLEAN NOT NULL DEFAULT true,
+    "is_visible_in_radius" BOOLEAN NOT NULL DEFAULT true,
     "autoplay" BOOLEAN NOT NULL DEFAULT true,
     "loop" BOOLEAN NOT NULL DEFAULT false,
     "scale" REAL NOT NULL DEFAULT 1,

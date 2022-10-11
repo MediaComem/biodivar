@@ -6,6 +6,7 @@ export interface MediaModel {
     media_type?: string;
     url?: string;
     is_facing: boolean;
+    is_visible_in_radius: boolean,
     autoplay: boolean;
     loop: boolean;
     scale: number;
@@ -15,7 +16,8 @@ export interface MediaModel {
     update_date?: Date;
     deleted_date?: Date;
     poi_id?: number;
-    position?: PositionModel;
+    position?: any;
+    content?: String;
   }
   
   export interface MediaModels extends Array<MediaModel> {}

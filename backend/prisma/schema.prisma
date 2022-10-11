@@ -167,6 +167,7 @@ model Media {
   url                     String?
   media_type              String?
   is_facing               Boolean     @default(true)
+  is_visible_in_radius    Boolean     @default(true)
   autoplay                Boolean     @default(true)
   loop                    Boolean     @default(false)
   scale                   Float       @default(1)
@@ -196,8 +197,8 @@ model Event {
 model Position {
   id                      Int         @id @default(autoincrement())  
   distance                Float       @default(0)
-  alpha                   Float       @default(0)
-  height                  Float       @default(0)
+  rotation                Float       @default(0)
+  elevation               Float       @default(0)
   media_id                Int?        @unique
   media                   Media?      @relation(fields: [media_id], references: [id])  
   symbol_id               Int?        @unique
