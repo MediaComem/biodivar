@@ -485,7 +485,7 @@
   </div>
   <DeleteConfirmation v-if="deleteDialog" :dialogVisible="deleteDialog" title="Êtes-vous sûr de vouloir supprimer ces point d'intérêts?" @closeDialog="deleteDialog = false" @validate="confirmDeletion()" />
   <PoiColumnsSelection v-if="columnDialog" :showDialog="columnDialog" @close-dialog="columnDialog = false" />
-  <PoiEdition v-if="showEditionDialog" :poi="poiToUpdate" :showDialog="showEditionDialog"
+  <ThePoiEditor :isEdit="true" :poi="poiToUpdate" :showDialog="showEditionDialog"
     @close-dialog="showEditionDialog = false"/>
 </div>
   
@@ -495,7 +495,7 @@
 import { mapActions, mapGetters } from 'vuex';
 
 import PoiColumnsSelection from '../Dialog/PoiColumnsSelection.vue';
-import PoiEdition from '../Dialog/PoiEdition.vue';
+import ThePoiEditor from '../Dialog/ThePoiEditor.vue';
 import DeleteConfirmation from '../Dialog/DeleteConfirmation.vue';
 
 import { fullDateFormatter } from '../../../../utils/formatter.js';
@@ -505,7 +505,7 @@ import { computeGeoJSONFromPOI, computeGeoJSONFromPOIs } from '../../../../utils
 import { savePoi, deletePoi } from '../../../../utils/api.js';
 
 export default {
-  components: { PoiColumnsSelection, DeleteConfirmation, PoiEdition },
+  components: { PoiColumnsSelection, DeleteConfirmation, ThePoiEditor },
   props: {
     bioverId: Number,
   },

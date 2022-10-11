@@ -553,14 +553,13 @@ import { mapActions, mapGetters } from 'vuex';
 
 import TheAframeEditor from '../../../TheAframe/TheAframeEditor.vue';
 import AframeMedia from '../../../TheAframe/AframeMedia.vue';
-import ThePoiEditorHeader from './ThePoiEditorHeader.vue';
 
 import { savePoi, updatePoi, deletePoi, saveSymbol, saveMedia, getSymbolUrl, getIcon, getMediaUrl } from '../../../../utils/api.js';
 
 
 export default {
   name: 'App',
-  components: { TheAframeEditor, ThePoiEditorHeader, AframeMedia },
+  components: { TheAframeEditor, AframeMedia },
   props: {
     poi: Object,
     coordinate: Object,
