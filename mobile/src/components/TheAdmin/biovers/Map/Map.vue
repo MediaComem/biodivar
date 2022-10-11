@@ -41,8 +41,8 @@
     </l-map>
     <ThePoiEditor :showDialog="showCreationDialog" :isEdit="false" :coordinate="latlng"
     @close-dialog="showCreationDialog = false" />
-    <!--ThePoiEditor v-if="showEditionDialog" :isEdit="true" :poi="poiToUpdate" :showDialog="showEditionDialog"
-    @close-dialog="showEditionDialog = false"/-->
+    <ThePoiEditor :isEdit="true" :poi="poiToUpdate" :showDialog="showEditionDialog"
+    @close-dialog="showEditionDialog = false"/>
 </template>
 
 <script>
@@ -99,7 +99,6 @@ export default {
   },
   methods: {
     getPosition(event) {
-      console.log(event);
       if (event.latlng && this.getCurrentBioverId !== -1) {
         if ((this.ownOrPublic(this.getCurrentBioverId) === 'public' && !this.bioverIsEditable(this.getCurrentBioverId))) {
           return;

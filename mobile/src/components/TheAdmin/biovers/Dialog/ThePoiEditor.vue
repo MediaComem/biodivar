@@ -37,18 +37,18 @@
         :shapeExtrusion="form.extrusion"
         :shapeAmplitude="form.amplitude"
       >
-        <aframe-media v-for="(media, index) in form.medias" :key="index"
-          :showMedia="tab == 1 || !media.is_visible_in_radius"
-          :media="media.url"
-          :mediaType="media.media_type"
-          :mediaLoop="media.loop"
-          :scale="media.scale"
-          :positionX="media.position.distance"
-          :positionY="media.position.elevation"
-          :positionRotation="media.position.rotation"
-          :isVisibleInRadius="media.is_visible_in_radius"
-          :facing="media.is_facing"
-          :text="media.text"
+        <aframe-media v-for="(m, index) in form.media" :key="index"
+          :showMedia="tab == 1 || !m.is_visible_in_radius"
+          :media="m.url"
+          :mediaType="m.media_type"
+          :mediaLoop="m.loop"
+          :scale="m.scale"
+          :positionX="m.position.distance"
+          :positionY="m.position.elevation"
+          :positionRotation="m.position.rotation"
+          :isVisibleInRadius="m.is_visible_in_radius"
+          :facing="m.is_facing"
+          :text="m.text"
         ></aframe-media>
       </the-aframe-editor>
     </div>
@@ -411,7 +411,7 @@
     <div v-show="tab === 1" class="collapse">
       <div class="container-layout">
       <el-collapse>
-        <el-collapse-item v-for="(element, index) in form.medias" :key="index" :title="`Media ${index + 1}`" :name="index">
+        <el-collapse-item v-for="(element, index) in form.media" :key="index" :title="`Media ${index + 1}`" :name="index">
           <template #title>
           Media {{index + 1}}<p class="material-symbols-sharp delete-font" @click="removeMedia(index)">delete</p>
         </template>
@@ -536,13 +536,13 @@
       </div>
     </div>
     <div v-if="isEdit" class="full-button actions-button">
-      <button class="full-button button-red"><p class="material-symbols-sharp">wrong_location</p> Supprimer le point d'intérêt</button>
+      <button class="full-button button-red" @click="deletePoi()"><p class="material-symbols-sharp">wrong_location</p> Supprimer le point d'intérêt</button>
     </div>
     <div v-else class="full-button actions-button">
       <button class="full-button button-dark-gray" @click="$emit('closeDialog')"><p class="material-symbols-sharp">undo</p>Annuler</button>
     </div>
     <div class="full-button actions-button">
-      <button class="full-button button-blue" @click="isEdit ? undefined : createPoi()" ><p class="material-symbols-sharp">where_to_vote</p> Enregistrer les modifications</button>
+      <button class="full-button button-blue" @click="isEdit ? updatePoi() : createPoi()" ><p class="material-symbols-sharp">where_to_vote</p> Enregistrer les modifications</button>
     </div>
   </div>
   </el-dialog>
@@ -555,7 +555,7 @@ import TheAframeEditor from '../../../TheAframe/TheAframeEditor.vue';
 import AframeMedia from '../../../TheAframe/AframeMedia.vue';
 import ThePoiEditorHeader from './ThePoiEditorHeader.vue';
 
-import { savePoi, saveSymbol, saveMedia } from '../../../../utils/api.js';
+import { savePoi, updatePoi, deletePoi, saveSymbol, saveMedia, getSymbolUrl, getIcon, getMediaUrl } from '../../../../utils/api.js';
 
 
 export default {
@@ -571,10 +571,19 @@ export default {
   watch: {
     showDialog(newVal) {
       this.dialogVisible = newVal;
+      if (this.dialogVisible) {
+        if (this.isEdit) {
+            this.setupEdition();
+        }
+      } else {
+        this.resetEditor();
+      }
     },
     coordinate(newVal) {
-      this.form.coordinate.lat = newVal.lat;
-      this.form.coordinate.long = newVal.lng;
+        if (newVal) {
+            this.form.coordinate.lat = newVal.lat;
+            this.form.coordinate.long = newVal.lng;
+        }
     },
   },
   data() {
@@ -629,7 +638,7 @@ export default {
         amplitude: 0,
         metadata: [],
       },
-      form: {
+      defaultForm: {
         title: '',
         title_is_visible: true,
         subtitle: '',
@@ -682,11 +691,36 @@ export default {
         amplitude: 0,
         wireframe: false,
         metadata: [],
-        medias: [],
+        media: [],
       },
+      form: {},
     }
   },
   methods: {
+    setupEdition() {
+        this.form = JSON.parse(JSON.stringify(this.poi.poi));
+        this.symbolFileAr.url = getSymbolUrl(this.form.symbol.id);
+        this.symbolFile.url = getIcon(this.form.symbol.id);
+        for (let i = 0; i < this.form.media.length; i++) {
+            this.form.media[i].url = getMediaUrl(this.form.media[i]);
+        }
+    },
+    resetEditor() {
+        this.form = JSON.parse(JSON.stringify(this.defaultForm));
+        this.symbolFile = {
+            url: '',
+            content: undefined,
+        };
+        this.symbolFileAr = {
+            url: '',
+            content: undefined,
+        };
+        this.symbolFileAudio = {
+            url: '',
+            content: undefined,
+        };
+        this.tab = 0;
+    },
     longitudeValidation() {
       if (this.form.coordinate.long < -180) {
         this.form.coordinate.long = -180;
@@ -714,20 +748,20 @@ export default {
       this.form.metadata.splice(index, 1);
     },
     addMedia() {
-      this.form.medias.push(JSON.parse(JSON.stringify(this.default_media)));
+      this.form.media.push(JSON.parse(JSON.stringify(this.default_media)));
     },
     removeMedia(index) {
-      this.form.medias.splice(index, 1);
+      this.form.media.splice(index, 1);
     },
     addMetadata(index) {
-      this.form.medias[index].metadata.push({
+      this.form.media[index].metadata.push({
         key: '',
         value: '',
         description: '',
       })
     },
     deleteMetadata(index, indexMeta) {
-      this.form.medias[index].metadata.splice(indexMeta, 1);
+      this.form.media[index].metadata.splice(indexMeta, 1);
     },
     handleFileUploadSymbol(event) {
       const files = event.target.files;
@@ -771,18 +805,18 @@ export default {
     handleFileUploadMedia(event, index) {
       const files = event.target.files;
       if (files && files.length > 0) {
-        this.form.medias[index].content = files[0];
-        const lastDot = this.form.medias[index].content.name.lastIndexOf('.');
-        const ext = this.form.medias[index].content.name.substring(lastDot + 1);
-        this.form.medias[index].url = URL.createObjectURL(this.form.medias[index].content);
-        this.form.medias[index].media_type = ext;
+        this.form.media[index].content = files[0];
+        const lastDot = this.form.media[index].content.name.lastIndexOf('.');
+        const ext = this.form.media[index].content.name.substring(lastDot + 1);
+        this.form.media[index].url = URL.createObjectURL(this.form.media[index].content);
+        this.form.media[index].media_type = ext;
       } else {
-        this.form.medias[index].url = '';
-        this.form.medias[index].media_type = '';
+        this.form.media[index].url = '';
+        this.form.media[index].media_type = '';
       }
     },
-    async createPoi() {
-      if (this.symbolFileAr.content) {
+    async saveSymbolAndMedias() {
+        if (this.symbolFileAr.content) {
         const formData = new FormData();
         formData.append('file', this.symbolFileAr.content);
         const path = await saveSymbol(formData);
@@ -806,24 +840,39 @@ export default {
           this.form.symbol.audio_url = path.data;
         }
       }
-      if (this.form.medias.length > 0) {
-        for (let i = 0; i < this.form.medias.length; i++) {
+      if (this.form.media.length > 0) {
+        for (let i = 0; i < this.form.media.length; i++) {
             const formData = new FormData();
-            formData.append('file', this.form.medias[i].content);
+            formData.append('file', this.form.media[i].content);
             const path = await saveMedia(formData);
             if (path.data) {
-                this.form.medias[i].url = path.data;
+                this.form.media[i].url = path.data;
             }
         } 
       }
+    },
+    async createPoi() {
+      await this.saveSymbolAndMedias();
       this.form.biovers = this.getCurrentBioverId;
       const newPoi = await savePoi(this.form);
       this.addNewPoi(newPoi.data);
       this.showCreationDialog = false;
-      //this.form = JSON.parse(JSON.stringify(this.defaultForm));
       this.$emit('closeDialog');
     },
-    ...mapActions('biovers', ['addNewPoi']),
+    async updatePoi() {
+      await this.saveSymbolAndMedias();
+      const updatedPoi = await updatePoi(this.form);
+      this.updatePoiStore(updatedPoi.data);
+      this.showCreationDialog = false;
+      this.$emit('closeDialog');
+    },
+    async deletePoi() {
+        this.removePoi(this.form);
+        await deletePoi(this.form);
+        this.showCreationDialog = false;
+        this.$emit('closeDialog');
+    },
+    ...mapActions('biovers', ['addNewPoi', 'updatePoiStore', 'removePoi']),
   },
   computed: {
     getTitle() {
@@ -834,6 +883,9 @@ export default {
       return !(mediaType === 'mp4' || mediaType === 'm4a');
     },
     ...mapGetters('biovers', ['getCurrentBioverId'])
+  },
+  mounted() {
+    this.form = JSON.parse(JSON.stringify(this.defaultForm));
   },
 }
 </script>

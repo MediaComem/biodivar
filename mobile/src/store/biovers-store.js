@@ -606,7 +606,7 @@ export const bioversStore = {
       commit('REMOVE_INTO_PATH', path);
       commit('REMOVE_PATH_INTO_BIOVER', path);
     },
-    updatePoi({ commit }, poi) {
+    updatePoiStore({ commit }, poi) {
       commit('UPDATE_POI', poi);
     },
     importPois({ commit }, pois) {
