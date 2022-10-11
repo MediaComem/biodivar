@@ -82,12 +82,20 @@ export const createPoi = async (
         }
       },
       include: {
+        position: true,
         coordinate: true,
-        symbol: true,
+        symbol: {
+          include: {
+            position: true,
+          },
+        },
         media: {
           where: {
             deleted_date: null,
-          }
+          },
+          include: {
+            position: true,
+          },
         },
         User: {
           select: {
@@ -102,13 +110,13 @@ export const createPoi = async (
       },
     });
 
-    if (poi.medias) {
-      for (let i = 0; i < poi.medias.length; i++) {
-        delete poi.medias[i].content;
-        poi.medias[i].creation_date = new Date();
-        poi.medias[i].poi_id = newPoi.id;
-        poi.medias[i].metadata = JSON.stringify(poi.medias[i].metadata);
-        await createMedia(prisma, poi.medias[i], logger);
+    if (poi.media) {
+      for (let i = 0; i < poi.media.length; i++) {
+        delete poi.media[i].content;
+        poi.media[i].creation_date = new Date();
+        poi.media[i].poi_id = newPoi.id;
+        poi.media[i].metadata = JSON.stringify(poi.media[i].metadata);
+        await createMedia(prisma, poi.media[i], logger);
       };
     }
     return await getPoiById(prisma, newPoi.id);
@@ -126,12 +134,20 @@ export const getPoiById = async (prisma: PrismaClient, id: number) => {
       deleted_date: null,
     },
     include: {
+      position: true,
       coordinate: true,
-      symbol: true,
+      symbol: {
+        include: {
+          position: true,
+        },
+      },
       media: {
         where: {
           deleted_date: null,
-        }
+        },
+        include: {
+          position: true,
+        },
       },
       User: {
         select: {
@@ -154,12 +170,20 @@ export const getPoiByTitle = async (prisma: PrismaClient, name: string) => {
       deleted_date: null,
     },
     include: {
+      position: true,
       coordinate: true,
-      symbol: true,
+      symbol: {
+        include: {
+          position: true,
+        },
+      },
       media: {
         where: {
           deleted_date: null,
-        }
+        },
+        include: {
+          position: true,
+        },
       },
       User: {
         select: {
@@ -189,11 +213,11 @@ export const updatePoi = async (
       if (poi.symbol) {
         poi.symbol.creation_date = new Date();
       }
-      if (poi.medias && poi.medias.length > 0) {
+      if (poi.media && poi.media.length > 0) {
         const inDB = await getMediasByPoi(prisma, poi.id);
-        const toBeCreated = onlyInLeft(poi.medias, inDB as MediaModels);
-        const toBeDeleted = onlyInLeft(inDB as MediaModels, poi.medias);
-        const toBeUpdated = inTheTwoArrays(poi.medias, inDB as MediaModels);
+        const toBeCreated = onlyInLeft(poi.media, inDB as MediaModels);
+        const toBeDeleted = onlyInLeft(inDB as MediaModels, poi.media);
+        const toBeUpdated = inTheTwoArrays(poi.media, inDB as MediaModels);
 
         for (let i = 0; i < toBeDeleted.length; i++) {
           await deleteMedia(prisma, toBeDeleted[i] as MediaModel, logger);
@@ -302,12 +326,20 @@ export const updatePoi = async (
           } : undefined,
         },
         include: {
+          position: true,
           coordinate: true,
-          symbol: true,
+          symbol: {
+            include: {
+              position: true,
+            },
+          },
           media: {
             where: {
               deleted_date: null,
-            }
+            },
+            include: {
+              position: true,
+            },
           },
           User: {
             select: {
@@ -350,7 +382,7 @@ export const deletePoi = async (
                 },
               }
             : undefined,
-          media: poi.medias
+          media: poi.media
             ? {
                 updateMany: {
                   where: {

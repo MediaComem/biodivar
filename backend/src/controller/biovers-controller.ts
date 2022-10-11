@@ -32,7 +32,11 @@ export const getBioversByUser = async (
               position: true,
             }
           },
-          media: true,
+          media: {
+            include: {
+              position: true,
+            }
+          },
           User: {
             select: {
               username: true,
@@ -130,7 +134,11 @@ export const getBioversById = async (
                 position: true,
               }
             },
-            media: true,
+            media: {
+              include: {
+                position: true,
+              }
+            },
             User: {
               select: {
                 username: true,
@@ -224,7 +232,11 @@ export const getPublicBiovers = async (
                 position: true,
               }
             },
-            media: true,
+            media: {
+              include: {
+                position: true,
+              }
+            },
             User: {
               select: {
                 username: true,
@@ -321,7 +333,11 @@ export const createBiovers = async (
                 position: true,
               }
             },
-            media: true,
+            media: {
+              include: {
+                position: true,
+              }
+            },
             User: {
               select: {
                 username: true,
@@ -417,7 +433,11 @@ export const updateBiovers = async (
                   position: true,
                 }
               },
-              media: true,
+              media: {
+                include: {
+                  position: true,
+                }
+              },
               User: {
                 select: {
                   username: true,
