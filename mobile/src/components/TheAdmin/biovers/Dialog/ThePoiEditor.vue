@@ -1,5 +1,6 @@
 <template>
-  <el-dialog v-model="dialogVisible" :title="getTitle" @close="$emit('closeDialog')" :fullscreen="true">
+  <div v-if="dialogVisible" class="modal-edition">
+    <PoiEditorHeader :mode="isEdit" @close="$emit('closeDialog')" />
     <div class="embedded">
       <the-aframe-editor
         :showSymbol="tab === 0"
@@ -545,12 +546,13 @@
       <button class="full-button button-blue" @click="isEdit ? updatePoi() : createPoi()" ><p class="material-symbols-sharp">where_to_vote</p> Enregistrer les modifications</button>
     </div>
   </div>
-  </el-dialog>
+  </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
+import PoiEditorHeader from './PoiEditorHeader.vue';
 import TheAframeEditor from '../../../TheAframe/TheAframeEditor.vue';
 import AframeMedia from '../../../TheAframe/AframeMedia.vue';
 
@@ -559,7 +561,7 @@ import { savePoi, updatePoi, deletePoi, saveSymbol, saveMedia, getSymbolUrl, get
 
 export default {
   name: 'App',
-  components: { TheAframeEditor, AframeMedia },
+  components: { TheAframeEditor, AframeMedia, PoiEditorHeader },
   props: {
     poi: Object,
     coordinate: Object,
@@ -890,9 +892,6 @@ export default {
     ...mapActions('biovers', ['addNewPoi', 'updatePoiStore', 'removePoi']),
   },
   computed: {
-    getTitle() {
-      return this.isEdit ? "éditer point d'intérêt" : "nouveau point d'intérêt";
-    },
     mediaARCheck() {
       const mediaType = this.form.symbol.media_type_ar;
       return !(mediaType === 'mp4' || mediaType === 'm4a');
@@ -906,6 +905,18 @@ export default {
 </script>
 
 <style>
+.modal-edition {
+  background-color: white;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 10000000;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 #title, #description {
   width: 100%;
   margin-right: 5px;
@@ -1088,7 +1099,7 @@ textarea {
 }
 
 .edition-layout {
-  height: calc(100vh - 40vh - 85px);
+  height: calc(100vh - 40vh - 130px);
 }
 
 .collapse {
@@ -1098,8 +1109,8 @@ textarea {
 }
 
 .actions-button {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .description-transform {
