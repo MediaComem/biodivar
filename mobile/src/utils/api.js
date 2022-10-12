@@ -83,6 +83,11 @@ export function deletePath(path) {
 export function getSymbolUrl(id) {
   return API + 'symbol_ar/id?id=' + id;
 }
+
+export function getSymbolAudiUrl(id) {
+  return API + 'symbol_audio/id?id=' + id;
+}
+
 export function getIcon(symbol) {
   if (symbol && symbol.id) {
     return `${API}symbol/id?id=${symbol.id}`;

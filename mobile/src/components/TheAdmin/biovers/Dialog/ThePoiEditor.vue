@@ -39,7 +39,7 @@
       >
         <aframe-media v-for="(m, index) in form.media" :key="index"
           :showMedia="tab == 1 || !m.is_visible_in_radius"
-          :media="m.url"
+          :media="m.display_url"
           :mediaType="m.media_type"
           :mediaLoop="m.loop"
           :scale="m.scale"
@@ -554,7 +554,7 @@ import { mapActions, mapGetters } from 'vuex';
 import TheAframeEditor from '../../../TheAframe/TheAframeEditor.vue';
 import AframeMedia from '../../../TheAframe/AframeMedia.vue';
 
-import { savePoi, updatePoi, deletePoi, saveSymbol, saveMedia, getSymbolUrl, getIcon, getMediaUrl } from '../../../../utils/api.js';
+import { savePoi, updatePoi, deletePoi, saveSymbol, saveMedia, getSymbolUrl, getIcon, getMediaUrl, getSymbolAudiUrl } from '../../../../utils/api.js';
 
 
 export default {
@@ -622,6 +622,7 @@ export default {
       default_media: {
         text: '',
         url: '',
+        display_url: '',
         media_type: '',
         content: undefined,
         is_visible_in_radius: true,
@@ -699,9 +700,21 @@ export default {
     setupEdition() {
         this.form = JSON.parse(JSON.stringify(this.poi.poi));
         this.symbolFileAr.url = getSymbolUrl(this.form.symbol.id);
-        this.symbolFile.url = getIcon(this.form.symbol.id);
+        this.symbolFileAudio.url = getSymbolAudiUrl(this.form.symbol.id);
+        this.symbolFile.url = getIcon(this.form.symbol);
         for (let i = 0; i < this.form.media.length; i++) {
-            this.form.media[i].url = getMediaUrl(this.form.media[i]);
+            if (!this.form.media[i].metadata) {
+              this.form.media[i].metadata = [];
+            } else {
+              this.form.media[i].metadata = JSON.parse(this.form.media[i].metadata);
+            }
+            this.form.media[i].display_url = getMediaUrl(this.form.media[i]);
+            
+        }
+        if (!this.form.metadata) {
+          this.form.metadata = [];
+        } else {
+          this.form.metadata = JSON.parse(this.form.metadata);
         }
     },
     resetEditor() {
@@ -808,9 +821,11 @@ export default {
         const lastDot = this.form.media[index].content.name.lastIndexOf('.');
         const ext = this.form.media[index].content.name.substring(lastDot + 1);
         this.form.media[index].url = URL.createObjectURL(this.form.media[index].content);
+        this.form.media[index].display_url = URL.createObjectURL(this.form.media[index].content);
         this.form.media[index].media_type = ext;
       } else {
         this.form.media[index].url = '';
+        this.form.media[index].display_url = '';
         this.form.media[index].media_type = '';
       }
     },
@@ -841,6 +856,7 @@ export default {
       }
       if (this.form.media.length > 0) {
         for (let i = 0; i < this.form.media.length; i++) {
+            delete this.form.media[i].display_url;
             const formData = new FormData();
             formData.append('file', this.form.media[i].content);
             const path = await saveMedia(formData);

@@ -16,6 +16,7 @@
     border: solid black 1px;
     margin: 0 auto 1rem auto;
     border-radius: 1rem;
+    display: flex;
   }
 
   [data-role="radio"] :slotted(button) {
