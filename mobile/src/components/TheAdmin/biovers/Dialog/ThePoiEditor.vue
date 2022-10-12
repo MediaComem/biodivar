@@ -1,6 +1,7 @@
 <template>
+  <div v-if="dialogVisible" class="overlay" @click="cancelDialog = true"></div>
   <div v-if="dialogVisible" class="modal-edition">
-    <PoiEditorHeader :mode="isEdit" @close="$emit('closeDialog')" />
+    <PoiEditorHeader :mode="isEdit" @close="cancelDialog = true" />
     <div class="embedded">
       <the-aframe-editor
         :showSymbol="tab === 0"
@@ -537,22 +538,26 @@
       </div>
     </div>
     <div v-if="isEdit" class="full-button actions-button">
-      <button class="full-button button-red" @click="deletePoi()"><p class="material-symbols-sharp">wrong_location</p> Supprimer le point d'intérêt</button>
+      <button class="full-button button-red" @click="deleteDialog = true"><p class="material-symbols-sharp">wrong_location</p> Supprimer le point d'intérêt</button>
     </div>
     <div v-else class="full-button actions-button">
-      <button class="full-button button-dark-gray" @click="$emit('closeDialog')"><p class="material-symbols-sharp">undo</p>Annuler</button>
+      <button class="full-button button-dark-gray" @click="cancelDialog = true"><p class="material-symbols-sharp">undo</p>Annuler</button>
     </div>
     <div class="full-button actions-button">
       <button class="full-button button-blue" @click="isEdit ? updatePoi() : createPoi()" ><p class="material-symbols-sharp">where_to_vote</p> Enregistrer les modifications</button>
     </div>
   </div>
   </div>
+  <DeleteConfirmation v-if="deleteDialog" :dialogVisible="deleteDialog" title="Êtes-vous sûr de vouloir supprimer ces point d'intérêts?" @closeDialog="deleteDialog = false" @validate="deletePoi()" />
+  <CancelConfirmation v-if="cancelDialog" :dialogVisible="cancelDialog" title="Voulez-vous enregistrer les modifications?" @close="close()" @closeDialog="cancelDialog = false" @validate="isEdit ? updatePoi() : createPoi()" />
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
 import PoiEditorHeader from './PoiEditorHeader.vue';
+import DeleteConfirmation from './DeleteConfirmation.vue';
+import CancelConfirmation from './CancelConfirmation.vue';
 import TheAframeEditor from '../../../TheAframe/TheAframeEditor.vue';
 import AframeMedia from '../../../TheAframe/AframeMedia.vue';
 
@@ -561,7 +566,7 @@ import { savePoi, updatePoi, deletePoi, saveSymbol, saveMedia, getSymbolUrl, get
 
 export default {
   name: 'App',
-  components: { TheAframeEditor, AframeMedia, PoiEditorHeader },
+  components: { TheAframeEditor, AframeMedia, PoiEditorHeader, DeleteConfirmation, CancelConfirmation },
   props: {
     poi: Object,
     coordinate: Object,
@@ -591,6 +596,8 @@ export default {
     return {
       tab: 0,
       dialogVisible: false,
+      deleteDialog: false,
+      cancelDialog: false,
       style_option: [{
         value: 'circle',
         label: 'Cercle',
@@ -735,6 +742,10 @@ export default {
         };
         this.tab = 0;
     },
+    close() {
+      this.cancelDialog = false;
+      this.$emit('closeDialog');
+    },
     longitudeValidation() {
       if (this.form.coordinate.long < -180) {
         this.form.coordinate.long = -180;
@@ -869,6 +880,7 @@ export default {
       }
     },
     async createPoi() {
+      this.cancelDialog = false;
       await this.saveSymbolAndMedias();
       this.form.biovers = this.getCurrentBioverId;
       const newPoi = await savePoi(this.form);
@@ -877,6 +889,7 @@ export default {
       this.$emit('closeDialog');
     },
     async updatePoi() {
+      this.cancelDialog = false;
       await this.saveSymbolAndMedias();
       const updatedPoi = await updatePoi(this.form);
       this.updatePoiStore(updatedPoi.data);
@@ -904,14 +917,24 @@ export default {
 }
 </script>
 
-<style>
-.modal-edition {
-  background-color: white;
+<style scoped>
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5);
   width: 100vw;
   height: 100vh;
   position: fixed;
   top: 0px;
   left: 0px;
+  z-index: 1000000;
+}
+
+.modal-edition {
+  background-color: white;
+  width: 70vw;
+  height: 95vh;
+  position: fixed;
+  top: 2.5vh;
+  left: 15vw;
   z-index: 10000000;
   padding-left: 10px;
   padding-right: 10px;
@@ -1064,17 +1087,17 @@ textarea {
 }
 
 .slider-width {
-  width: calc(100% - 130px);
+  width: calc(100% - 130px) !important;
   padding-left: 23px;
 }
 
 .slider-width-position {
-  width: calc(100% - 170px);
+  width: calc(100% - 170px) !important;
   padding-left: 23px;
 }
 
 .slider-width-small {
-  width: calc(100% - 200px);
+  width: calc(100% - 200px) !important;
   padding-left: 23px;
 }
 
@@ -1099,12 +1122,12 @@ textarea {
 }
 
 .edition-layout {
-  height: calc(100vh - 40vh - 130px);
+  height: calc(95vh - 40vh);
 }
 
 .collapse {
   border: 2px solid black;
-  height: calc(100vh - 40vh - 255px);
+  height: calc(95vh - 40vh - 210px);
   overflow: auto;
 }
 

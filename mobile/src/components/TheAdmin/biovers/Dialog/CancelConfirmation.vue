@@ -2,16 +2,19 @@
     <div class="overlay"></div>
     <div class="layout">
       <div class="header">
-        <p class="material-symbols-sharp symbol-location">delete</p>
+        <p class="material-symbols-sharp symbol-location">undo</p>
         <p class="title">{{ title }}</p>
         <p class="material-symbols-sharp symbol-close" @click="$emit('closeDialog')">close</p>
       </div>
       <base-input class="dialog-input-color">
-        <base-button class="delete" @click="$emit('validate')">
-          <img src="../../../../assets/shared/more/delete_white.svg" />Supprimer
+        <base-button class="save" @click="$emit('validate')">
+          <p class="material-symbols-sharp text-formatting">save</p>Enregistrer
+        </base-button>
+        <base-button class="delete" @click="$emit('close')">
+          <p class="material-symbols-sharp text-formatting">delete</p>Ne pas enregistrer
         </base-button>
         <base-button class="cancel" @click="$emit('closeDialog')">
-          <img src="../../../../assets/shared/cross_white.svg" />Annuler
+          <p class="material-symbols-sharp text-formatting">close</p>Annuler
         </base-button>
       </base-input>
     </div>
@@ -23,7 +26,7 @@ export default {
     title: String,
     dialogVisible: Boolean,
   },
-  emits: ['closeDialog', 'validate'],
+  emits: ['closeDialog', 'validate', 'close'],
 }
 </script>
 
@@ -40,13 +43,18 @@ export default {
 
   .layout {
     width: 50vw;
-    height: 14vh;
+    height: 18vh;
     position: fixed;
-    top: 43vh;
+    top: 41vh;
     left: 25vw;
     z-index: 1000000000;
     background-color: white;
     padding: 1rem;
+  }
+
+  .save {
+    --link-color: white;
+    --highlight-color: rgba(4, 0, 255, 0.5);
   }
 
   .delete {
@@ -99,5 +107,10 @@ export default {
     align-items: center;
     margin: 0;
     cursor: pointer;
+}
+
+.text-formatting {
+    margin: 0px;
+    height: 29px;
 }
 </style>

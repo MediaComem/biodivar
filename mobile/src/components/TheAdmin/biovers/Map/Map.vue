@@ -1,22 +1,10 @@
 <template>
   <l-map ref="map" :min-zoom='minZoom' :max-zoom='maxZoom' :bounds='boundingBox' @click="getPosition">
     <l-tile-layer
-      url="https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg"
+      :url="mapDark"
       layer-type="base"
-      name="Couleurs"
-      attribution='Données &copy; <a href="https://www.swisstopo.admin.ch">Swisstopo</a>'
-    ></l-tile-layer>
-    <l-tile-layer
-      url="https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-grau/default/current/3857/{z}/{x}/{y}.jpeg"
-      layer-type="base"
-      name="Gris"
-      attribution='Données &copy; <a href="https://www.swisstopo.admin.ch">Swisstopo</a>'
-    ></l-tile-layer>
-    <l-tile-layer
-      url="https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.swissimage/default/current/3857/{z}/{x}/{y}.jpeg"
-      layer-type="base"
-      name="Sat"
-      attribution='Données &copy; <a href="https://www.swisstopo.admin.ch">Swisstopo</a>'
+      name="Dark"
+      attribution=""
     ></l-tile-layer>
     <l-tile-layer
       :url="mapUrl"
@@ -85,14 +73,17 @@ export default {
       poiToUpdate: undefined,
       latlng: undefined,
       unsubscribeActions: null,
-      minZoom: 1,
-      maxZoom: 19,
+      minZoom: 3,
+      maxZoom: 22,
       boundingBox: [[-90, -180],[90,  180]],
     };
   },
   computed: {
     mapUrl() {
       return `https://api.maptiler.com/maps/50a99959-5522-4b4a-8489-28de9d3af0ed/{z}/{x}/{y}.png?key=${KEY}`;
+    },
+    mapDark() {
+      return `https://api.maptiler.com/maps/ch-swisstopo-lbm-dark/{z}/{x}/{y}.png?key=${KEY}`
     },
     ...mapState('biovers', ['pois']),
     ...mapGetters('biovers', ['getPois', 'getPaths', 'ownOrPublic', 'getCurrentBioverId', 'bioverIsEditable']),
