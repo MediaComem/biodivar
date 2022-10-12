@@ -43,9 +43,9 @@ export default {
 
   .layout {
     width: 50vw;
-    height: 18vh;
+    height: 20vh;
     position: fixed;
-    top: 41vh;
+    top: 40vh;
     left: 25vw;
     z-index: 1000000000;
     background-color: white;

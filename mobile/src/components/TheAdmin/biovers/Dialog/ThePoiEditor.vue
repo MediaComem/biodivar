@@ -897,10 +897,11 @@ export default {
       this.$emit('closeDialog');
     },
     async deletePoi() {
-        this.removePoi(this.form);
-        await deletePoi(this.form);
-        this.showCreationDialog = false;
-        this.$emit('closeDialog');
+      this.deleteDialog = false;
+      this.removePoi(this.form);
+      await deletePoi(this.form);
+      this.showCreationDialog = false;
+      this.$emit('closeDialog');
     },
     ...mapActions('biovers', ['addNewPoi', 'updatePoiStore', 'removePoi']),
   },
