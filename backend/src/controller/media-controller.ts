@@ -53,15 +53,16 @@ export const createMedia = async (
   try {
     return await prisma.media.create({
       data: {
-        text: media.text ? media.text : null,
-        media_type: media.media_type ? media.media_type : null,
+        text: media.text ? media.text : '',
+        media_type: media.media_type ? media.media_type : '',
         url: media.url ? media.url : null,
         is_facing: media.is_facing,
+        is_visible_in_radius: media.is_visible_in_radius,
         autoplay: media.autoplay,
         loop: media.loop,
         scale: media.scale,
         amplitude: media.amplitude,
-        metadata: media.metadata ? media.metadata : null,
+        metadata: media.metadata && media.metadata.length > 0 ? JSON.stringify(media.metadata) : null,
         creation_date: new Date(),
         poi_id: media.poi_id,
         position: {
@@ -91,18 +92,23 @@ export const updateMedia = async (
         id: media.id,
       },
       data: {
-        text: media.text ? media.text : null,
-        media_type: media.media_type ? media.media_type : null,
+        text: media.text ? media.text : '',
+        media_type: media.media_type ? media.media_type : '',
         url: media.url ? media.url : null,
         is_facing: media.is_facing,
+        is_visible_in_radius: media.is_visible_in_radius,
         autoplay: media.autoplay,
         loop: media.loop,
         scale: media.scale,
         amplitude: media.amplitude,
-        metadata: media.metadata ? media.metadata : null,
+        metadata: media.metadata && media.metadata.length > 0 ? JSON.stringify(media.metadata) : null,
         update_date: new Date(),
         position: {
-          update: position,
+          update: {
+            distance: media.position.distance,
+            rotation: media.position.rotation,
+            elevation: media.position.elevation,
+          },
         }
       },
     });

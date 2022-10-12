@@ -44,7 +44,7 @@ export const createPoi = async (
         fill_opacity: poi.fill_opacity,
         amplitude: poi.amplitude,
         wireframe: poi.wireframe,  
-        metadata: JSON.stringify(poi.metadata),
+        metadata: poi.metadata && poi.metadata.length > 0 ? JSON.stringify(poi.metadata) : null,
         coordinate: {
           create: coordinate,
         },
@@ -263,7 +263,7 @@ export const updatePoi = async (
           fill_opacity: poi.fill_opacity,
           amplitude: poi.amplitude,
           wireframe: poi.wireframe,  
-          metadata: poi.metadata,
+          metadata: poi.metadata && poi.metadata.length > 0 ? JSON.stringify(poi.metadata) : null,
           coordinate: poi.coordinate ? {
             upsert: {
               create: {

@@ -33,9 +33,12 @@ export const getBioversByUser = async (
             }
           },
           media: {
+            where: {
+              deleted_date: null,
+            },
             include: {
               position: true,
-            }
+            },
           },
           User: {
             select: {
@@ -135,9 +138,12 @@ export const getBioversById = async (
               }
             },
             media: {
+              where: {
+                deleted_date: null,
+              },
               include: {
                 position: true,
-              }
+              },
             },
             User: {
               select: {
@@ -233,9 +239,12 @@ export const getPublicBiovers = async (
               }
             },
             media: {
+              where: {
+                deleted_date: null,
+              },
               include: {
                 position: true,
-              }
+              },
             },
             User: {
               select: {
@@ -334,9 +343,12 @@ export const createBiovers = async (
               }
             },
             media: {
+              where: {
+                deleted_date: null,
+              },
               include: {
                 position: true,
-              }
+              },
             },
             User: {
               select: {
@@ -431,12 +443,15 @@ export const updateBiovers = async (
               symbol: {
                 include: {
                   position: true,
-                }
+                },
               },
               media: {
+                where: {
+                  deleted_date: null,
+                },
                 include: {
                   position: true,
-                }
+                },
               },
               User: {
                 select: {

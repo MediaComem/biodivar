@@ -1,7 +1,7 @@
 import { ServerRoute } from '@hapi/hapi';
 
 import {
-  createSymbol,
+  getSymbolAudioById,
   getSymbolArById,
   updateSymbol,
   deleteSymbol,
@@ -34,6 +34,27 @@ symbolRoutes.push({
         return h.file(symbol);
       } else {
         return h.file(process.env.DEFAULT_SYMBOL_PATH || '');
+      }
+    },
+    auth: {
+      mode: 'try',
+    },
+  },
+});
+
+symbolRoutes.push({
+  method: 'GET',
+  path: '/symbol_audio/id',
+  options: {
+    handler: async function (request, h) {
+      const symbol = await getSymbolAudioById(
+        request.server.app.prisma,
+        +request.query.id
+      );
+      if (symbol) {
+        return h.file(symbol);
+      } else {
+        return h.file(process.env.DEFAULT_AR_SYMBOL_PATH || '');
       }
     },
     auth: {
