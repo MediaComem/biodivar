@@ -1,7 +1,7 @@
 <script setup>
   import '../aframe/poi-radius.js';
-  import '../aframe/animation-mixer-editor.js';
-  import '../aframe/look-at-roll-yaw-editor.js';
+  import '../aframe/animation-mixer.js';
+  import '../aframe/look-at-roll-yaw.js';
   import '../aframe/ring.js';
   import '../aframe/poi-animator.js';
 

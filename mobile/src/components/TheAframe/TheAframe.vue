@@ -42,26 +42,26 @@
             shape: ${poi.style_type};
             fill: ${poi.fill_type};
             visible: true;
-            groundElevation: ${poi.position.y};
+            groundElevation: ${poi.position.elevation};
           `"
         >
 
           <a-entity
             :look-at-roll-yaw="`enabled: ${poi.symbol.is_facing_user ? 'true' : 'false'}`"
             :gltf-model="`url(${getSymbolUrl(poi.symbol.id)})`"
-            :position="`0 ${poi.symbol.position.y} 0`"
-            :visible="`${poi.symbol.is_visible ? 'true' : 'false'}`"
+            :position="`0 ${poi.symbol.position.elevation} 0`"
+            :visible="`${poi.symbol.is_visible_ar ? 'true' : 'false'}`"
             animation-mixer
           ></a-entity>
 
           <!-- todo handle other media -->
-          <template v-for="media of poi.media">
+          <!--template v-for="media of poi.media">
             <a-entity
               :sound="`src: url(${getMediaUrl(media)}); on: click; positional: false;`"
               :emit-when-near="`distance: ${poi.radius};`"
               :position="`0 ${poi.media.position.y} 0`"
             ></a-entity>
-          </template>
+          </template-->
 
         </a-entity>
       </template>
