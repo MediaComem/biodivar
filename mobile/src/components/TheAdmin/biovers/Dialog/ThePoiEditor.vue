@@ -66,8 +66,7 @@
     </div>
     <div v-show="tab === 0" class="collapse">
       <div class="container-layout">
-        <el-collapse>
-        <el-collapse-item title="Général" name="1">
+        <Accordeon :header="'Général'" :length="6 + form.metadata.length" :should-be-open="true">
           <div style="display: flex">
             <div class="col-main border"><p class="material-symbols-sharp">location_searching</p><p>coordonnées</p>
               <el-tooltip placement="top">
@@ -162,8 +161,8 @@
             </div>
             <div class="col2 border end-border" />
           </div>
-        </el-collapse-item>
-        <el-collapse-item title="Symbole" name="2">
+        </Accordeon>
+        <Accordeon :header="'Symbole'" :length="8" :should-be-open="true">
           <div style="display: flex">
             <div class="col-main border"><p class="material-symbols-sharp">location_on</p><p>symbol</p>
               <el-tooltip placement="top">
@@ -298,8 +297,8 @@
             </div>
             <!--div class="col3 border end-border"><input id="symbol_vis" type="checkbox" v-model="form.symbol.is_visible"><label for="symbol_vis">visible</label></div-->
           </div>
-        </el-collapse-item>
-        <el-collapse-item title="Rayon" name="3">
+        </Accordeon>
+        <Accordeon :header="'Rayon'" :length="6" :should-be-open="true">
           <div style="display: flex">
             <div class="col-main border"><p class="material-symbols-sharp">circle</p><p>forme</p>
             <el-tooltip placement="top">
@@ -403,8 +402,7 @@
               <el-slider class="slider-width" v-model="form.amplitude" :max="1"  :step="0.01"/>
             </div>
           </div>
-        </el-collapse-item>
-      </el-collapse>
+      </Accordeon>
       <div class="full-button actions-button">
         <button class="full-button button-gray"><p class="material-symbols-sharp">bookmark</p> Définir comme paramètres par défaut</button>
       </div>
@@ -412,11 +410,8 @@
     </div>
     <div v-show="tab === 1" class="collapse">
       <div class="container-layout">
-      <el-collapse>
-        <el-collapse-item v-for="(element, index) in form.media" :key="index" :title="`Media ${index + 1}`" :name="index">
-          <template #title>
-          Media {{index + 1}}<p class="material-symbols-sharp delete-font" @click="removeMedia(index)">delete</p>
-        </template>
+        <div v-for="(element, index) in form.media" :key="index" :title="`Media ${index + 1}`" :name="index">
+        <Accordeon :header="'Media ' + (index + 1)" :length="5 + element.metadata.length" :should-be-open="true" :could-delete="true" @delete="removeMedia(index)">
           <div style="display: flex">
             <div class="col-main border"><p class="material-symbols-sharp">add_photo_alternate</p><p>média</p>
             <el-tooltip placement="top">
@@ -529,8 +524,9 @@
               </el-tooltip></div>
             <div class="col2 border end-border" />
           </div>
-        </el-collapse-item>
-      </el-collapse>
+      </Accordeon>
+        </div>
+      
 
       <div class="full-button actions-button">
         <button class="full-button button-gray" @click="addMedia"><p class="material-symbols-sharp">add</p> Ajouter un média</button>
@@ -555,6 +551,8 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
+import Accordeon from '../../../app/UIElement/Accordeon.vue';
+
 import PoiEditorHeader from './PoiEditorHeader.vue';
 import DeleteConfirmation from './DeleteConfirmation.vue';
 import CancelConfirmation from './CancelConfirmation.vue';
@@ -566,7 +564,7 @@ import { savePoi, updatePoi, deletePoi, saveSymbol, saveMedia, getSymbolUrl, get
 
 export default {
   name: 'App',
-  components: { TheAframeEditor, AframeMedia, PoiEditorHeader, DeleteConfirmation, CancelConfirmation },
+  components: { TheAframeEditor, AframeMedia, PoiEditorHeader, DeleteConfirmation, CancelConfirmation, Accordeon },
   props: {
     poi: Object,
     coordinate: Object,
@@ -919,6 +917,11 @@ export default {
 </script>
 
 <style scoped>
+p {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
 .overlay {
   background-color: rgba(0, 0, 0, 0.5);
   width: 100vw;

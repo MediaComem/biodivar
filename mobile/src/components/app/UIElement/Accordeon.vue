@@ -4,17 +4,22 @@
   const props = defineProps({
       header: String,
       length: Number,
+      shouldBeOpen: Boolean,
+      couldDelete: Boolean,
   })
 
-  const open = ref(false);
+  const emit = defineEmits(['delete'])
+
+  const open = ref(props.shouldBeOpen);
 </script>
 
 
 <template>
 <div>
-    <div class="title" @click="open = !open">
-        <div class="image transition" :class="{rotate: open}"/>
-        <p class="text">{{ props.header }}</p>
+    <div class="title">
+        <div class="image transition" :class="{rotate: open}" @click="open = !open"/>
+        <p class="text" @click="open = !open">{{ props.header }}</p>
+        <p v-if="props.couldDelete" class="material-symbols-sharp delete-font" @click="emit('delete')">delete</p>
     </div>
   
   <div data-role="accordeon" class="transition" :style="{'max-height': open ? `${props.length * 450}px` : '0'}">
@@ -63,6 +68,16 @@
       line-height: 14px;
       margin: 0;
       padding-left: 0.5rem;
+      display: flex;
+      align-items: center;
   }
+
+    .delete-font {
+        padding-left: 5px;
+        margin: 0px;
+        display: flex;
+        align-items: center;
+        font-size: 17px;
+    }
 
 </style>

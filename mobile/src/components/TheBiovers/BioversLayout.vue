@@ -47,19 +47,19 @@
         <input type="text" v-model="search">
       </base-input>
       <hr>
-      <Accordeon class="own" :header="`mes biovers (${own.length})`" :length="own.length">
+      <Accordeon class="own" :header="`mes biovers (${own.length})`" :length="own.length" :should-be-open="false">
           <div v-for="(item, index) in own" :key="index">
               <BioversItem :biover="item" @map="mapAction"/>
           </div>
       </Accordeon>
       <hr>
-      <Accordeon class="favori" :header="`favoris (${favoriBiovers.length})`" :length="favoriBiovers.length">
+      <Accordeon class="favori" :header="`favoris (${favoriBiovers.length})`" :length="favoriBiovers.length" :should-be-open="false">
           <div v-for="(item, index) in favoriBiovers" :key="index">
               <BioversItem :biover="item" @map="mapAction"/>
           </div>
       </Accordeon>
       <hr>
-      <Accordeon class="public" :header="`publiques (${publicBiovers.length})`" :length="publicBiovers.length">
+      <Accordeon class="public" :header="`publiques (${publicBiovers.length})`" :length="publicBiovers.length" :should-be-open="false">
           <div v-for="(item, index) in publicBiovers" :key="index">
               <BioversItem :biover="item" @map="mapAction"/>
           </div>

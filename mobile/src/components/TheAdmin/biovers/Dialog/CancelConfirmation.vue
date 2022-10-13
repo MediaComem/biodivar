@@ -43,7 +43,7 @@ export default {
 
   .layout {
     width: 50vw;
-    height: 20vh;
+    height: fit-content;
     position: fixed;
     top: 40vh;
     left: 25vw;
