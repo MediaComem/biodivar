@@ -1,18 +1,31 @@
 <template>
-  <l-circle :lat-lng='[poi.element.coordinate.lat, poi.element.coordinate.long]'
-  :radius="poi.element.radius"
-  :fill="poi.element.style_fill" :fill-opacity='1'
-  color="RGB(0, 231, 200, 0.5)" fill-color="RGB(205, 231, 65, 0.5)">
+  <l-circle
+    ref="circle"
+    :lat-lng='[poi.element.coordinate.lat, poi.element.coordinate.long]'
+    :radius="poi.element.radius"
+    :weight="poi.element.style_stroke_width"
+    :color="poi.element.stroke_color"
+    :opacity="poi.element.stroke_opacity / 100"
+    :fill="true" 
+    :fill-color="poi.element.fill_color"
+    :fill-opacity='poi.element.fill_opacity / 100'
+   >
   </l-circle>
-  <l-marker @click="updatePoi"
-  :lat-lng='[poi.element.coordinate.lat, poi.element.coordinate.long]'
-  :draggable="true" @add="uploadDone">
-    <l-tooltip :options="{ permanent: false, direction: 'top'}">
+  <l-marker 
+    @click="updatePoi"
+    :lat-lng='[poi.element.coordinate.lat, poi.element.coordinate.long]'
+    :draggable="true" @add="uploadDone"
+  >
+    <l-tooltip 
+      :options="{ permanent: false, direction: 'top'}">
       <p v-if="poi.element.title_is_visible">{{ poi.element.title }}</p>
       <p v-if="poi.element.subtitle_is_visible">{{ poi.element.subtitle }}</p>
     </l-tooltip>
-    <l-icon v-if="poi.element.symbol"
-    :icon-url="iconUrl" :icon-size="iconSize"/>
+    <l-icon 
+      v-if="poi.element.symbol"
+      :icon-url="iconUrl" 
+      :icon-size="iconSize"
+    />
   </l-marker>
 </template>
 

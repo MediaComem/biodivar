@@ -706,6 +706,9 @@ export default {
   methods: {
     setupEdition() {
         this.form = JSON.parse(JSON.stringify(this.poi.poi));
+        if (!this.form.symbol) {
+          this.form.symbol = this.defaultForm.symbol;
+        }
         this.symbolFileAr.url = getSymbolUrl(this.form.symbol.id);
         this.symbolFileAudio.url = getSymbolAudiUrl(this.form.symbol.id);
         this.symbolFile.url = getIcon(this.form.symbol);

@@ -71,8 +71,8 @@ function createPoi(poi) {
     },
     position: {
       distance: 0,
-      alpha: 0,
-      height: 0,
+      rotation: 0,
+      elevation: 0,
     },
     biovers: currentBioversId,
     extrusion: 0,

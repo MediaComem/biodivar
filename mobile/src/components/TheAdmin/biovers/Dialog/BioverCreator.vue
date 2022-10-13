@@ -47,6 +47,8 @@
 <script>
 import { mapActions } from 'vuex';
 
+import { useStore } from '../../../../composables/store.js';
+
 import { createBiover } from '../../../../utils/api.js';
 
 export default {
@@ -76,8 +78,10 @@ export default {
   },
   methods: {
     async save() {
+      const { biovers } = useStore();
       const newBiover = await createBiover(this.form);
       this.addNewBiover(newBiover.data);
+      biovers.value.push(newBiover.data);
       this.form = JSON.parse(JSON.stringify(this.defaultForm));
       this.$emit('closeDialog');
     },
