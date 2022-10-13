@@ -165,7 +165,7 @@ export const bioversStore = {
     },
     REMOVE_INTO_POI(state, poi) {
       const index = state.pois.findIndex((e) => e.bioverId === poi.biovers);
-      const poiIndex = state.pois[index].pois.findIndex((e) => e.id === poi.id);
+      const poiIndex = state.pois[index].pois.findIndex((e) => e.element.id === poi.id);
       state.pois[index].pois.splice(poiIndex, 1);
     },
     ADD_INTO_PATH(state, path) {
