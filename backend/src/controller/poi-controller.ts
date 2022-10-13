@@ -280,6 +280,20 @@ export const updatePoi = async (
               },
             }
           } : undefined,
+          position: poi.position ? {
+            upsert: {
+              create: {
+                distance: poi.position.distance,
+                rotation: poi.position.rotation,
+                elevation: poi.position.elevation,
+              },
+              update: {
+                distance: poi.position.distance,
+                rotation: poi.position.rotation,
+                elevation: poi.position.elevation,
+              },
+            }
+          } : undefined,
           symbol: poi.symbol ? {
             upsert: {
               create: {
@@ -301,6 +315,13 @@ export const updatePoi = async (
                 scale: poi.symbol.scale,
                 loop: poi.symbol.loop,
                 creation_date: new Date(),
+                position: poi.symbol.position ? {
+                    create: {
+                      distance: poi.symbol.position.distance,
+                      rotation: poi.symbol.position.rotation,
+                      elevation: poi.symbol.position.elevation,
+                    },
+                } : undefined,
               },
               update: {
                 media_type: poi.symbol.media_type,
@@ -321,6 +342,20 @@ export const updatePoi = async (
                 scale: poi.symbol.scale,
                 loop: poi.symbol.loop,
                 update_date: new Date(),
+                position: poi.symbol.position ? {
+                  upsert: {
+                    create: {
+                      distance: poi.symbol.position.distance,
+                      rotation: poi.symbol.position.rotation,
+                      elevation: poi.symbol.position.elevation,
+                    },
+                    update: {
+                      distance: poi.symbol.position.distance,
+                      rotation: poi.symbol.position.rotation,
+                      elevation: poi.symbol.position.elevation,
+                    },
+                  }
+                } : undefined,
               },
             }
           } : undefined,
