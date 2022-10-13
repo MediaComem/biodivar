@@ -183,7 +183,7 @@ export const bioversStore = {
     },
     REMOVE_INTO_PATH(state, path) {
       const index = state.paths.findIndex((e) => e.bioverId === path.biovers);
-      const pathIndex = state.paths[index].paths.findIndex((e) => e.id === path.id);
+      const pathIndex = state.paths[index].paths.findIndex((e) => e.element.id === path.id);
       state.paths[index].paths.splice(pathIndex, 1);
     },
     IMPORT_POI(state, pois) {
