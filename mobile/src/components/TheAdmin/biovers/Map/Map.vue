@@ -41,7 +41,7 @@ import {
 } from '@vue-leaflet/vue-leaflet';
 import 'leaflet/dist/leaflet.css';
 
-import { mapGetters, mapState } from 'vuex';
+import { mapGetters, mapState, mapActions } from 'vuex';
 
 import Poi from './Poi.vue';
 import Path from './Path.vue';
@@ -94,11 +94,16 @@ export default {
         if ((this.ownOrPublic(this.getCurrentBioverId) === 'public' && !this.bioverIsEditable(this.getCurrentBioverId))) {
           return;
         }
+        this.updateWait(true);
         this.latlng = event.latlng;
         this.showCreationDialog = true;
       }
     },
     openPoiEdition(event) {
+      if ((this.ownOrPublic(this.getCurrentBioverId) === 'public' && !this.bioverIsEditable(this.getCurrentBioverId))) {
+          return;
+      }
+      this.updateWait(true);
       this.poiToUpdate = { poi: event };
       this.showEditionDialog = true;
     },
@@ -121,6 +126,7 @@ export default {
       });
       this.boundingBox = [[boundingBox.minlat, boundingBox.minlong],[boundingBox.maxlat, boundingBox.maxlong]];
     },
+    ...mapActions('global', ['updateWait']),
   },
   mounted() {
     this.unsubscribeActions = this.$store.subscribeAction({

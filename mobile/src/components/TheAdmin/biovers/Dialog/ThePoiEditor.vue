@@ -584,10 +584,11 @@ export default {
       }
     },
     coordinate(newVal) {
-        if (newVal) {
-            this.form.coordinate.lat = newVal.lat;
-            this.form.coordinate.long = newVal.lng;
-        }
+      if (newVal) {
+        this.form.coordinate.lat = newVal.lat;
+        this.form.coordinate.long = newVal.lng;
+        this.updateWait(false);
+      }
     },
   },
   data() {
@@ -726,6 +727,7 @@ export default {
         } else {
           this.form.metadata = JSON.parse(this.form.metadata);
         }
+        this.updateWait(false);
     },
     resetEditor() {
         this.form = JSON.parse(JSON.stringify(this.defaultForm));
@@ -881,29 +883,36 @@ export default {
       }
     },
     async createPoi() {
+      this.updateWait(true);
       this.cancelDialog = false;
       await this.saveSymbolAndMedias();
       this.form.biovers = this.getCurrentBioverId;
       const newPoi = await savePoi(this.form);
       this.addNewPoi(newPoi.data);
       this.showCreationDialog = false;
+      this.updateWait(false);
       this.$emit('closeDialog');
     },
     async updatePoi() {
+      this.updateWait(true);
       this.cancelDialog = false;
       await this.saveSymbolAndMedias();
       const updatedPoi = await updatePoi(this.form);
       this.updatePoiStore(updatedPoi.data);
       this.showCreationDialog = false;
+      this.updateWait(false);
       this.$emit('closeDialog');
     },
     async deletePoi() {
+      this.updateWait(true);
       this.deleteDialog = false;
       this.removePoi(this.form);
       await deletePoi(this.form);
       this.showCreationDialog = false;
+      this.updateWait(false);
       this.$emit('closeDialog');
     },
+    ...mapActions('global', ['updateWait']),
     ...mapActions('biovers', ['addNewPoi', 'updatePoiStore', 'removePoi']),
   },
   computed: {
@@ -915,6 +924,7 @@ export default {
   },
   mounted() {
     this.form = JSON.parse(JSON.stringify(this.defaultForm));
+    this.updateWait(false);
   },
 }
 </script>

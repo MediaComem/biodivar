@@ -681,6 +681,7 @@ export default {
       this.globalCheckAnalizer();
     },
     openEdition(poi) {
+      this.updateWait(true);
       this.poiToUpdate = { poi: poi.element };
       this.showEditionDialog = true;
       this.menuState = undefined;
@@ -712,6 +713,7 @@ export default {
       this.columnDialog = true;
       this.menuState = undefined;
     },
+    ...mapActions('global', ['updateWait']),
     ...mapActions('biovers', ['updatePoiToDisplay', 'resetPoisModification', 'selectAllPois', 'unselectAllPois', 'copyPoi', 'addNewPoi', 'removePoi']),
   },
 };
