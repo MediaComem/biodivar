@@ -13,6 +13,8 @@
 
   import BaseMap from './TheMap/BaseMap.vue';
 
+  import Waiting from './app/Waiting.vue';
+
   const { section, isMobileOrTablet, isIOS, isAuth, biovers, mapOpen, username } = useStore();
 
   const { removeUser } = storage();
@@ -61,6 +63,7 @@
 
   <div v-if="section == 'menu'">
     <base-modal style="text-align: center;">
+      <Waiting/>
       <div data-role="screen">
         <header>
         <div class="logo" @click="menu = false">

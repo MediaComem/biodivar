@@ -19,6 +19,10 @@ const saveDone = ref(false);
 const pois = ref([]);
 const paths = ref([]);
 
+function setWaiting(state) {
+  store.dispatch('global/updateWait', state);
+}
+
 function importPois(importedPois) {
   store.dispatch('biovers/importPois', importedPois);
 }
@@ -142,14 +146,17 @@ function sent() {
 }
 
 function handleExceed() {
+  setWaiting(true)
   if (upload.value.uploadFiles.length > 1) {
     upload.value.uploadFiles.splice(0, 1);
   }
   sent();
+  setWaiting(false)
 }
 
 async function save() {
   if (!couldPublish.value) return;
+  setWaiting(true)
   if (pois.value.length > 0) {
     const createdPois = await savePois(pois.value);
     updateImportPois(createdPois.data);
@@ -162,6 +169,7 @@ async function save() {
 
   resetUpload();
   upload.value.uploadFiles.splice(0, 1);
+  setWaiting(false);
   saveDone.value = true;
   setTimeout(() => {
     saveDone.value = false;

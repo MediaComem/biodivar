@@ -1,6 +1,7 @@
 import { createStore } from 'vuex';
 import VuexPersistence from 'vuex-persist';
 
+import { globalStore } from './global-store';
 import { bioversStore } from './biovers-store';
 
 const vuexLocal = new VuexPersistence({
@@ -19,6 +20,7 @@ const vuexLocal = new VuexPersistence({
 // eslint-disable-next-line import/prefer-default-export
 export const store = createStore({
   modules: {
+    global: globalStore,
     biovers: bioversStore,
   },
   plugins: [vuexLocal.plugin],
