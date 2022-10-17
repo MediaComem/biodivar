@@ -474,7 +474,7 @@
              <div v-if="menuState && menuState.id === poi.element.id && menuState.state" class="menu">
                 <p class="menu-element" @click="downloadPoi(poi)">Exporter le POI</p>
                 <p class="menu-element" @click="copy(poi)">Copier le POI</p>
-                <p class="menu-element" @click="openEdition(poi)">Editer le POI</p>
+                <p class="menu-element" :class="{'disable': isAllowedToEdit() }" @click="openEdition(poi)">Editer le POI</p>
                 <p class="menu-element" @click="openDeletionDialog(poi)">Supprimer le POI</p>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
@@ -537,9 +537,12 @@ export default {
       if (value && value.type === 'POI') return false;
       return true;
     },
-    ...mapGetters('biovers', ['getPoisByBiover', 'ownOrPublic', 'bioverIsEditable', 'getCopyElement', 'getPoiColumnsPreference']),
+    ...mapGetters('biovers', ['getPoisByBiover', 'ownOrPublic', 'bioverIsEditable', 'getCopyElement', 'getPoiColumnsPreference', 'getCurrentBioverId']),
   },
   methods: {
+    isAllowedToEdit() {
+      return (this.ownOrPublic(this.getCurrentBioverId) === 'public' && !this.bioverIsEditable(this.getCurrentBioverId));
+    },
     dateFormatter(date) {
       return fullDateFormatter(date);
     },
@@ -681,6 +684,9 @@ export default {
       this.globalCheckAnalizer();
     },
     openEdition(poi) {
+      if (this.isAllowedToEdit()) {
+          return;
+      }
       this.updateWait(true);
       this.poiToUpdate = { poi: poi.element };
       this.showEditionDialog = true;
