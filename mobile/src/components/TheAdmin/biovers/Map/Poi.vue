@@ -22,7 +22,7 @@
       <p v-if="poi.element.subtitle_is_visible">{{ poi.element.subtitle }}</p>
     </l-tooltip>
     <l-icon 
-      v-if="poi.element.symbol"
+      v-if="displayIcon && poi.element.symbol"
       :icon-url="iconUrl" 
     />
   </l-marker>
@@ -48,7 +48,11 @@ export default {
     poi: {
       deep: true,
       handler() {
-        this.url = getIcon(this.poi.element.symbol);
+        this.displayIcon = false;
+        setTimeout(() => {
+          this.url = getIcon(this.poi.element.symbol);
+          this.displayIcon = true;
+        }, 200)
       },
     },
   },
@@ -63,6 +67,7 @@ export default {
     return {
       url: '',
       shouldDisplayTooltip: false,
+      displayIcon: true,
     };
   },
   computed: {
