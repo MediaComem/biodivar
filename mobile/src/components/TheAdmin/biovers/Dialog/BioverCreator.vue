@@ -82,10 +82,11 @@ export default {
       const newBiover = await createBiover(this.form);
       this.addNewBiover(newBiover.data);
       biovers.value.push(newBiover.data);
+      this.addBioverToDisplay(newBiover.data);
       this.form = JSON.parse(JSON.stringify(this.defaultForm));
       this.$emit('closeDialog');
     },
-    ...mapActions('biovers', ['addNewBiover']),
+    ...mapActions('biovers', ['addNewBiover', 'addBioverToDisplay']),
   },
   mounted() {
     this.form = JSON.parse(JSON.stringify(this.defaultForm));
