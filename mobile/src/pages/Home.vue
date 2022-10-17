@@ -16,7 +16,7 @@
 <div v-if="!isIOS">
   <p v-if="pins.length > 0" style="text-align: start">{{ $t('TheMenu.Pin') }}</p>
   <div v-for="(biover, index) in pins" :key="index">
-    <BioversItem :biover="biover" />
+    <BioversItem :biover="biover"/>
   </div>
   <div data-role="item">
     <the-home-item :src="'./assets/symbol-biovers.svg'" :link="'#biovers'" :title="$t('TheMenu.Item.BioverTitle')" :description="$t('TheMenu.Item.BioverDescription')"></the-home-item>

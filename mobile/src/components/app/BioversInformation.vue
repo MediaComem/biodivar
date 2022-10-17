@@ -2,22 +2,34 @@
   import BioverActions from './BioverActions.vue';
   import { useStore } from '../../composables/store.js';
   import { useRouter } from '../../composables/router.js';
+  import { store } from '../../store/store.js';
 
   import { dateFormatter, hourFormatter } from '../../utils/formatter.js';
 
   const { isMobileOrTablet, section, selectedBiovers } = useStore();
   const { page, route } = useRouter();
 
-  const emit = defineEmits(['visibility', 'editable', 'favori', 'pin', 'map'])
+  const emit = defineEmits(['visibility', 'editable', 'favori', 'pin'])
 
   const props = defineProps({
     biover: Object
   });
 
-
   function enterAR() {
     selectedBiovers.value = props.biover;
     section.value = 'ar';
+  }
+
+  function openInMap() {
+    if (window.location.hash !== '#admin') {
+      window.location.hash = '#admin';
+    }
+    store.dispatch('biovers/addBioverToDisplay', props.biover);
+    store.dispatch('biovers/addPoiToDisplay', props.biover.id);
+    store.dispatch('biovers/addPathToDisplay', props.biover.id);
+    store.dispatch('biovers/addTraceToDisplay', props.biover.id);
+    store.dispatch('biovers/addEventToDisplay', props.biover.id);
+    emit('close');
   }
 </script>
 
@@ -69,16 +81,11 @@
             <p class="information-text">15.3 MB</p>
         </div>
     </div>
-    <div class="button" v-if="route !== '#admin'">
-        <base-button class="enter" @click="enterAR()">
-          <img src="../../assets/shared/home.svg" />{{ $t('TheMenu.Information.Enter') }}
-        </base-button>
-    </div>
-    <div class="button-admin" v-else>
+    <div class="button-admin">
         <base-button class="enter-admin" @click="enterAR()">
           <p class="material-symbols-sharp icon-margin">view_in_ar</p>{{ $t('TheMenu.Information.Enter') }}
         </base-button>
-        <base-button class="enter-admin" @click="emit('map', props.biover)">
+        <base-button class="enter-admin" @click="openInMap()">
           <p class="material-symbols-sharp icon-margin">map</p>Ouvrir sur la carte
         </base-button>
     </div>

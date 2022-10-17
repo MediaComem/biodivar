@@ -2,7 +2,7 @@
   <div>
     <p v-if="pins.length > 0" style="text-align: start">{{ $t('TheMenu.Pin') }}</p>
     <div v-for="(biover, index) in pins" :key="index">
-      <BioversItem :biover="biover" @map="selectedBiovers"/>
+      <BioversItem :biover="biover"/>
     </div>
     <div class="return"><a class="link" href="#menu"><img src="../assets/shared/arrow_back.svg"/></a><p class="text">CARTE</p></div>
     <div style="height: 50vh">
@@ -36,14 +36,7 @@ export default {
     BioversItem,
   },
   methods: {
-    selectedBiovers(event) {
-      this.addBioverToDisplay(event);
-      this.addPoiToDisplay(event.id);
-      this.addPathToDisplay(event.id);
-      this.addTraceToDisplay(event.id);
-      this.addEventToDisplay(event.id);
-    },
-    ...mapActions('biovers', ['getBiovers', 'resetBiovers', 'addBioverToDisplay', 'addPoiToDisplay', 'addPathToDisplay', 'addTraceToDisplay', 'addEventToDisplay', 'loadPoiColumns', 'loadPathColumns', 'loadTraceColumns', 'loadEventColumns']),
+    ...mapActions('biovers', ['getBiovers', 'resetBiovers', 'loadPoiColumns', 'loadPathColumns', 'loadTraceColumns', 'loadEventColumns']),
   },
   computed: {
     pins() {

@@ -12,8 +12,6 @@
       biovers: Object,
   });
 
-  const emit = defineEmits(['map'])
-
   const search = ref('');
 
   const own = computed(() => {
@@ -34,10 +32,6 @@
     })
     return biovers;
   })
-
-  function mapAction(event) {
-    emit('map', event);
-  }
 </script>
 
 
@@ -49,19 +43,19 @@
       <hr>
       <Accordeon class="own" :header="`mes biovers (${own.length})`" :length="own.length" :should-be-open="false">
           <div v-for="(item, index) in own" :key="index">
-              <BioversItem :biover="item" @map="mapAction"/>
+              <BioversItem :biover="item"/>
           </div>
       </Accordeon>
       <hr>
       <Accordeon class="favori" :header="`favoris (${favoriBiovers.length})`" :length="favoriBiovers.length" :should-be-open="false">
           <div v-for="(item, index) in favoriBiovers" :key="index">
-              <BioversItem :biover="item" @map="mapAction"/>
+              <BioversItem :biover="item"/>
           </div>
       </Accordeon>
       <hr>
       <Accordeon class="public" :header="`publiques (${publicBiovers.length})`" :length="publicBiovers.length" :should-be-open="false">
           <div v-for="(item, index) in publicBiovers" :key="index">
-              <BioversItem :biover="item" @map="mapAction"/>
+              <BioversItem :biover="item"/>
           </div>
       </Accordeon>
     </div>

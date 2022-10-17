@@ -59,8 +59,6 @@
     biover: Object,
   })
 
-  const emit = defineEmits(['map'])
-
   function closeAllDialog() {
     editTitleDialog.value = false;
     duplicateBioverDialog.value = false;
@@ -187,10 +185,6 @@
     }
     pinDialog.value = false;
   }
-
-  function mapAction(event) {
-    emit('map', event);
-  }
 </script>
 
 <template>
@@ -223,7 +217,7 @@
             </div>
         </div>
     </div>
-  <BioversInformation v-if="isOpen" :biover="props.biover" @visibility="openDialog('visibility')" @editable="openDialog('edition')" @favori="openDialog('favori')" @pin="openDialog('pin')" @map="mapAction"/>
+  <BioversInformation v-if="isOpen" :biover="props.biover" @visibility="openDialog('visibility')" @editable="openDialog('edition')" @favori="openDialog('favori')" @pin="openDialog('pin')"/>
   <BioverMoreAction :enabled="more" :biover="props.biover" @edit="openDialog('title')" @duplicate="openDialog('duplicate')" @delete="openDialog('delete')" @visibility="openDialog('visibility')" @editable="openDialog('edition')" @favori="openDialog('favori')" @pin="openDialog('pin')" @close="more = false"/>
   <BioverTitleDialog v-if="editTitleDialog" :biover="props.biover" @close="editTitleDialog = false" @save="saveTitle" />
   <BioverDuplicateDialog v-if="duplicateBioverDialog" :biover="props.biover" @close="duplicateBioverDialog = false" @duplicate="duplicate" />
