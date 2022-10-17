@@ -20,9 +20,9 @@
           <Poi
             v-if="poi.display &&
             (ownOrPublic(poi.element.biovers) === 'own'
-            || (ownOrPublic(poi.element.biovers) === 'public'
-            && poi.element.is_public)) && poi.element.coordinate"
+            || (ownOrPublic(poi.element.biovers) === 'public')) && poi.element.coordinate"
             :poi="poi"
+            :meter="meterInPixel"
             @update-poi="openPoiEdition"
           />
       </div>
@@ -76,6 +76,9 @@ export default {
       minZoom: 3,
       maxZoom: 22,
       boundingBox: [[-90, -180],[90,  180]],
+      meterInPixel: 0,
+      zoom: 0,
+      map: undefined,
     };
   },
   computed: {
@@ -129,6 +132,11 @@ export default {
     ...mapActions('global', ['updateWait']),
   },
   mounted() {
+    this.map = this.$refs.map;
+    setInterval(() => {
+      const zoom = this.$refs.map.leafletObject._zoom;
+      this.meterInPixel = 40075016.686 * Math.abs(Math.cos(this.map.center[1] * Math.PI/180)) / Math.pow(2, zoom+8);
+    }, 1000)
     this.unsubscribeActions = this.$store.subscribeAction({
       after: (action) => {
         if (action.type === 'biovers/addBioverToDisplay' || action.type === 'biovers/removeBioverToDisplay'|| action.type === 'biovers/updateImportPois' || action.type === 'biovers/importPaths' || action.type === 'biovers/getBiovers') {
@@ -138,6 +146,7 @@ export default {
     });
   },
   unmounted() {
+    this.map = undefined;
     this.unsubscribeActions();
   }
 };

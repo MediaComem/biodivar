@@ -351,7 +351,7 @@
               <p class="material-symbols-sharp">north_east</p>
               <label for="position_symbole_x">distance</label>
               <input id="position_symbole_x" type="number" v-model="form.position.distance" step="0.1" style="width: 50px; padding-left: 5px; padding-right: 5px;">
-              <el-slider class="slider-width-position" v-model="form.position.distance" :max="10" :step="0.1" :min="-10"/>
+              <el-slider class="slider-width-position" v-model="form.position.distance" :max="100" :step="0.1" :min="-100"/>
             </div>
             <div class="col4 border">
               <p class="material-symbols-sharp">architecture</p>

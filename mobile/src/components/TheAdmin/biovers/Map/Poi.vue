@@ -2,8 +2,8 @@
   <l-circle
     ref="circle"
     :lat-lng='[poi.element.coordinate.lat, poi.element.coordinate.long]'
-    :radius="poi.element.radius"
-    :weight="poi.element.style_stroke_width"
+    :radius="poi.element.radius - poi.element.style_stroke_width / 2"
+    :weight="getWeight * 2"
     :color="poi.element.stroke_color"
     :opacity="poi.element.stroke_opacity / 100"
     :fill="true" 
@@ -24,7 +24,6 @@
     <l-icon 
       v-if="poi.element.symbol"
       :icon-url="iconUrl" 
-      :icon-size="iconSize"
     />
   </l-marker>
 </template>
@@ -43,6 +42,7 @@ import { getIcon } from '../../../../utils/api.js';
 export default {
   props: {
     poi: Object,
+    meter: Number,
   },
   watch: {
     poi: {
@@ -71,6 +71,9 @@ export default {
     },
     iconSize() {
       return [this.poi.element.symbol.width, this.poi.element.symbol.height];
+    },
+    getWeight() {
+      return this.poi.element.style_stroke_width / this.meter;
     },
     ...mapGetters('biovers', ['ownOrPublic', 'bioverIsEditable']),
   },
