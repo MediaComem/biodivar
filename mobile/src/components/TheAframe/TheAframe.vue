@@ -7,7 +7,6 @@
   import '../aframe/look-at-roll-yaw';
   import '../aframe/hit-test-marker';
   import '../aframe/visible-from';
-  import '../aframe/invisible-from';
   import '../aframe/enter-ar-on-init';
   import '../aframe/poi-radius';
   import '../aframe/emit-when-near';
