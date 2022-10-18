@@ -60,8 +60,7 @@
     <a-entity faces-north>
       <template v-for="poi of selectedBiovers.Poi">
         <a-entity
-          position="0 0 -5"
-          aposition="0 0 10000"
+          position="0 0 10000"
           :gps-position="`latitude: ${poi.coordinate.lat}; longitude: ${poi.coordinate.long}`"
           :visible-from="`distance: ${poi.scope}`"
         >
@@ -174,7 +173,7 @@
     </a-entity>
 
     <a-entity id="camera-rig" position="0 1.6 0">
-      <a-entity id="head" camera pitch-roll-look-controls wasd-controls></a-entity>
+      <a-entity id="head" camera pitch-roll-look-controls></a-entity>
     </a-entity>
 
   </a-scene>
