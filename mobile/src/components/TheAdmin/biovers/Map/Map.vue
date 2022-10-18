@@ -97,7 +97,7 @@
     <div id="map">
         <div v-if="map">
             <div v-for="(poi, index) of getPois" :key="index">
-                <BasePoi :map="map" :poi="poi.element" :meter="getMetersInPixel" @update-poi="openPoiEdition"/>
+                <BasePoi :map="map" :poi="poi.element" :meter="getMetersInPixel" :selected="poi.display" @update-poi="openPoiEdition"/>
             </div>
         </div>
         <div v-if="map">

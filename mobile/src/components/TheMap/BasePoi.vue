@@ -4,9 +4,10 @@
   import { getIcon } from '../../utils/api';
 
   const props = defineProps({
-      map: Object,
-      poi: Object,
-      meter: Number,
+    map: Object,
+    poi: Object,
+    meter: Number,
+    selected: Boolean,
   });
 
   const emit = defineEmits(['updatePoi']);
@@ -63,15 +64,21 @@
       const subtitle = poi.subtitle_is_visible ? `<p>${poi.subtitle}</p>` : '';
 
       tooltip.value = L.tooltip({
-        permanent: true,
+        permanent: props.selected,
         direction: 'top',
       });
 
       tooltip.value.setContent(`${title}${subtitle}`)
 
-      marker.value.bindTooltip(tooltip.value).openTooltip();
+      marker.value.bindTooltip(tooltip.value);
       marker.value.on('click', openEdition)
   }
+
+  watch(() => props.selected, () => {
+      props.map.removeLayer(marker.value);
+      props.map.removeLayer(circle.value);
+      setupPoi(props.poi);
+  }, { deep: true });
 
   watch(() => props.poi, (newVal) => {
       props.map.removeLayer(marker.value);
