@@ -210,7 +210,6 @@
                   negate="false"
                   material="transparent:true; opacity: 1; alphaTest: 0.1;"
                   side="double"
-                  color="red"
                 ></a-text>
               </a-entity>
 
