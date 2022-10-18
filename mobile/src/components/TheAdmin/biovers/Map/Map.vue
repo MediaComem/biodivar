@@ -69,12 +69,21 @@
 
   onMounted(() => {
     map.value = L.map('map').setView([0, 0], 7);
-    L.tileLayer(`https://api.maptiler.com/maps/50a99959-5522-4b4a-8489-28de9d3af0ed/{z}/{x}/{y}.png?key=${KEY}`, {
-        minZoom: 1,
-        maxZoom: 19,
-        name: "Base",
+    const base = L.tileLayer(`https://api.maptiler.com/maps/50a99959-5522-4b4a-8489-28de9d3af0ed/{z}/{x}/{y}.png?key=${KEY}`, {
+        minZoom: 3,
+        maxZoom: 22,
         attribution: '© BiodivAR'
     }).addTo(map.value);
+    const dark = L.tileLayer(`https://api.maptiler.com/maps/ch-swisstopo-lbm-dark/{z}/{x}/{y}.png?key=${KEY}`, {
+        minZoom: 3,
+        maxZoom: 22,
+        attribution: '© BiodivAR'
+    }).addTo(map.value);
+    var baseLayers = {
+      "Dark": dark,
+      "Base": base
+    };
+    L.control.layers(baseLayers).addTo(map.value);
     map.value.on('click', getPosition);
   })
 
