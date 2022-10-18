@@ -1,5 +1,5 @@
 <script setup>
-  import { onMounted, onUnmounted } from '@vue/runtime-core';
+  import { onMounted, onUnmounted, computed } from '@vue/runtime-core';
 
   import { mapStore } from '../../composables/map';
   import { useStore } from '../../composables/store';
@@ -13,6 +13,8 @@
   const { map, position } = mapStore();
 
   const { selectedBiovers } = useStore();
+
+  const getMetersInPixel = computed(() => 40075016.686 * Math.abs(Math.cos(map.value.getCenter().lat * Math.PI/180)) / Math.pow(2, map.value.getZoom()+8));
 
   onMounted(() => {
     map.value = L.map('map').setView(position.value, 18);
@@ -34,12 +36,12 @@
         <BaseUserMarker v-if="map" />
         <div v-if="map">
             <div v-for="(poi, index) of selectedBiovers.Poi" :key="index">
-                <BasePoi :poi="poi" :symbol="poi"/>
+                <BasePoi :map="map" :poi="poi" :meter="getMetersInPixel"/>
             </div>
         </div>
         <div v-if="map">
             <div v-for="(path, index) of selectedBiovers.Path" :key="index">
-                <BasePath :coordinate="path.coordinate"/>
+                <BasePath :map="map" :coordinate="path.coordinate"/>
             </div>
         </div>
     </div>

@@ -1,12 +1,9 @@
 <script setup>
   import { onMounted } from "@vue/runtime-core";
 
-  import { mapStore } from '../../composables/map';
-
-  let { map } = mapStore();
-
   const props = defineProps({
-      coordinate: Object,
+    map: Object,
+    coordinate: Object,
   });
 
   onMounted(() => {
@@ -14,7 +11,7 @@
       props.coordinate.forEach(element => {
           latlngs.push([element.lat, element.long]);
       });
-      L.polyline(latlngs, {color: 'red'}).addTo(map.value);
+      L.polyline(latlngs, {color: 'red'}).addTo(props.map);
   })
 </script>
 

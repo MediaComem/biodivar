@@ -1,47 +1,86 @@
 <script setup>
-  import { onMounted } from "@vue/runtime-core";
-
-  import { mapStore } from '../../composables/map';
+  import { onMounted, computed, watch, ref } from "@vue/runtime-core";
 
   import { getIcon } from '../../utils/api';
 
-  let { map } = mapStore();
-
   const props = defineProps({
+      map: Object,
       poi: Object,
+      meter: Number,
   });
 
-  onMounted(() => {
-      const markerIcon = L.icon({
-        iconUrl: getIcon(props.poi.symbol),
-        iconSize: [props.poi.symbol.width, props.poi.symbol.height],
-      });
+  const emit = defineEmits(['updatePoi']);
 
-      const marker = L.marker([
-        props.poi.coordinate.lat,
-        props.poi.coordinate.long], {icon: markerIcon}).addTo(map.value);
+  const markerIcon = ref(null);
+  const marker = ref(null);
+  const circle = ref(null);
+  const tooltip = ref(null);
 
-      L.circle([
+
+  function openEdition() {
+    emit('updatePoi', props.poi);
+  }
+
+  function getWeight(poi) { 
+    return poi.style_stroke_width / props.meter 
+  };
+
+  function setupIcon(poi) {
+    return L.icon({
+      iconUrl: getIcon(poi.symbol),
+      iconSize: [50,50],
+      iconAnchor: [25 + ((Math.cos(poi.position.rotation) * poi.position.distance) / props.meter), 25 + (Math.sin(poi.position.rotation) * poi.position.distance)],
+    });
+  }
+
+  function setupMarker(poi) {
+    return L.marker([
+        poi.coordinate.lat,
+        poi.coordinate.long], {icon: markerIcon.value}).addTo(props.map);
+  }
+
+  function setupCircle(poi) {
+    return L.circle([
         props.poi.coordinate.lat,
         props.poi.coordinate.long], 
-        {radius: props.poi.radius, fill: 
-        props.poi.style_fill, 
-        fillOpacity: 1,
-        color: "RGB(0, 231, 200, 0.5)",
-        fillColor: "RGB(205, 231, 65, 0.5)"
-      }).addTo(map.value);
+        {
+          radius: poi.radius - poi.style_stroke_width / 2,
+          weight: getWeight(poi) * 2,
+          color: `${poi.stroke_color}`,
+          opacity: `${poi.stroke_opacity / 100}`,
+          fill: true, 
+          fillColor: `${poi.fill_color}`,
+          fillOpacity: `${poi.fill_opacity / 100}`,
+      }).addTo(props.map);
+  }
 
-      const title = props.poi.title_is_visible ? `<p>${props.poi.title}</p>` : '';
-      const subtitle = props.poi.subtitle_is_visible ? `<p>${props.poi.subtitle}</p>` : '';
+  function setupPoi(poi) {
+      markerIcon.value = setupIcon(poi);
+      marker.value = setupMarker(poi);
+      circle.value = setupCircle(poi);
 
-      const tooltip = L.tooltip({
+      const title = poi.title_is_visible ? `<p>${poi.title}</p>` : '';
+      const subtitle = poi.subtitle_is_visible ? `<p>${poi.subtitle}</p>` : '';
+
+      tooltip.value = L.tooltip({
         permanent: true,
         direction: 'top',
       });
 
-      tooltip.setContent(`${title}${subtitle}`)
+      tooltip.value.setContent(`${title}${subtitle}`)
 
-      marker.bindTooltip(tooltip).openTooltip();
+      marker.value.bindTooltip(tooltip.value).openTooltip();
+      marker.value.on('click', openEdition)
+  }
+
+  watch(() => props.poi, (newVal) => {
+      props.map.removeLayer(marker.value);
+      props.map.removeLayer(circle.value);
+      setupPoi(newVal);
+  }, { deep: true });
+
+  onMounted(() => {
+      setupPoi(props.poi);
   })
 </script>
 
