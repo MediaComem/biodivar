@@ -31,7 +31,7 @@
     return str === 'mp3' ||  str === 'wav' ||  str === 'm4a';
   }
 
-  console.log(selectedBiovers.value);
+  // console.log(selectedBiovers.value);
 
 </script>
 
@@ -57,7 +57,7 @@
     </a-assets>
 
     <a-entity faces-north>
-      <template v-for="poi of selectedBiovers.Poi">
+      <template v-for="poi of selectedBiovers.Poi" :key="`poi-${poi.id}`">
         <a-entity
           position="0 0 10000"
           :gps-position="`latitude: ${poi.coordinate.lat}; longitude: ${poi.coordinate.long}`"
@@ -136,7 +136,7 @@
                 distance: ${poi.radius};
                 event: radius-enter;
                 eventFar: radius-exit;
-                throttle: 250;
+                throttle: 125;
               `"
               :poi-radius="`
                 radius: ${poi.radius};
@@ -158,14 +158,89 @@
             ></a-entity>
           </a-entity>
 
-          <!-- todo handle other media -->
-          <!--template v-for="media of poi.media">
+          <!-- POI Medias -->
+          <template v-for="m of poi.media" :key="`media-${m.id}`">
             <a-entity
-              :sound="`src: url(${getMediaUrl(media)}); on: click; positional: false;`"
-              :emit-when-near="`distance: ${poi.radius};`"
-              :position="`0 ${poi.media.position.y} 0`"
-            ></a-entity>
-          </template-->
+              :visible="m.is_visible_in_radius ? 'false' : null"
+              :listen-to__enter="`target: #poi-radius-${poi.id}; event: radius-enter; emit: media-show`"
+              :listen-to__exit="`target: #poi-radius-${poi.id}; event: radius-exit; emit: media-hide`"
+              event-set__show="event: media-show; attribute: visible; value: true"
+              :event-set__hide="m.is_visible_in_radius ? `event: media-hide; attribute: visible; value: false` : null"
+            >
+              <!-- Gltf media -->
+              <a-entity
+                v-if="isGltf(m.media_type)"
+                :rotation="`0 ${m.position.rotation} 0`"
+              >
+                <a-entity
+                  :gltf-model="`url(${getMediaUrl(m)})`"
+                  :scale="`${m.scale} ${m.scale} ${m.scale}`"
+                  :position="`${m.position.distance} ${m.position.elevation} 0`"
+                  :look-at-roll-yaw="`enabled: ${m.is_facing ? 'true' : 'false'}`"
+                ></a-entity>
+              </a-entity>
+
+              <!-- Image media -->
+              <a-entity
+                v-if="isImage(m.media_type)"
+                :rotation="`0 ${m.position.rotation} 0`"
+              >
+                <a-image
+                  :src="`url(${getMediaUrl(m)})`"
+                  :scale="`${m.scale} ${m.scale} ${m.scale}`"
+                  :position="`${m.position.distance} ${m.position.elevation} 0`"
+                  :look-at-roll-yaw="`enabled: ${m.is_facing ? 'true' : 'false'}`"
+                  material="transparent:true; opacity: 1; alphaTest: .1;"
+                ></a-image>
+              </a-entity>
+
+              <!-- Text media -->
+              <a-entity
+                v-if="m.text"
+                :rotation="`0 ${m.position.rotation} 0`"
+              >
+                <a-text
+                  :scale="`${m.scale} ${m.scale} ${m.scale}`"
+                  :position="`${m.position.distance} ${m.position.elevation} 0`"
+                  :look-at-roll-yaw="`enabled: ${m.is_facing ? 'true' : 'false'}`"
+                  align="center"
+                  :value="m.text"
+                  font="assets/biodivar-sans-Book-msdf.json"
+                  font-image="assets/biodivar-sans-Book-msdf.png"
+                  negate="false"
+                  material="transparent:true; opacity: 1; alphaTest: 0.1;"
+                  side="double"
+                  color="red"
+                ></a-text>
+              </a-entity>
+
+              <!-- Audio media -->
+              <a-entity
+                v-if="isAudio(m.media_type)"
+                :rotation="`0 ${m.position.rotation} 0`"
+              >
+                <a-entity
+                  :position="`${m.position.distance} ${m.position.elevation} 0`"
+                  :visible="m.is_visible_in_radius ? 'false' : null"
+                  :sound="`
+                    src: url(${getMediaUrl(m)});
+                    loop: ${m.loop ? 'true' : 'false'};
+                    volume: ${m.scale}
+                  `"
+                  sound-play-stop="eventPlay: play-sound; eventStop: stop-sound;"
+                  :listen-to__enter="m.is_visible_in_radius ? `target: #poi-radius-${poi.id}; event: radius-enter; emit: play-sound` : null"
+                  :listen-to__exit="m.is_visible_in_radius ? `target: #poi-radius-${poi.id}; event: radius-exit; emit: stop-sound` : null"
+                  :emit-when-near="m.is_visible_in_radius ? null : `
+                    distance: ${poi.symbol.audio_distance};
+                    event: play-sound;
+                    eventFar: stop-sound;
+                    throttle: 250;
+                  `"
+                ></a-entity>
+
+              </a-entity>
+            </a-entity>
+          </template>
 
         </a-entity>
       </template>

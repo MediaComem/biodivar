@@ -115,6 +115,7 @@
         font-image="assets/biodivar-sans-Book-msdf.png"
         negate="false"
         material="transparent:true; opacity: 1; alphaTest: 0.1;"
+        side="double"
       ></a-text>
     </a-entity>
   </a-entity>
