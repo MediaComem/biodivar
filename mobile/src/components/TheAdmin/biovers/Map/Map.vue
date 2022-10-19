@@ -23,6 +23,9 @@
     return store.getters['biovers/getPois']
   });
   const getPaths = computed(() => store.getters['biovers/getPaths']);
+  const ownOrPublic = computed(() => store.getters['biovers/ownOrPublic'])
+  const bioverIsEditable = computed(() => store.getters['biovers/bioverIsEditable'])
+  const getCurrentBioverId = computed(() => store.getters['biovers/getCurrentBioverId'])
   const getMetersInPixel = computed(() => 40075016.686 * Math.abs(Math.cos(map.value.getCenter().lat * Math.PI/180)) / Math.pow(2, map.value.getZoom()+8));
 
   function updateWait(state) {
@@ -31,13 +34,23 @@
 
   function getPosition(event) {
       if (event.latlng && this.getCurrentBioverId !== -1) {
+        if (isAllowedToEdit(getCurrentBioverId.value)) {
+          return;
+        }
         updateWait(true);
         latlng.value = event.latlng;
         showCreationDialog.value = true;
       }
   }
 
+  function isAllowedToEdit(bioverId) {
+    return (ownOrPublic.value(bioverId) === 'public' && !bioverIsEditable.value(bioverId));
+  }
+
   function openPoiEdition(event) {
+      if (isAllowedToEdit(event.biovers)) {
+          return;
+      }
       updateWait(true);
       poiToUpdate.value = { poi: event };
       showEditionDialog.value = true;

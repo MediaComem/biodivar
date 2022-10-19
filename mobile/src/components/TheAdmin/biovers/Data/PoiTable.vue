@@ -475,7 +475,7 @@
                 <p class="menu-element" @click="downloadPoi(poi)">Exporter le POI</p>
                 <p class="menu-element" @click="copy(poi)">Copier le POI</p>
                 <p class="menu-element" :class="{'disable': isAllowedToEdit() }" @click="openEdition(poi)">Editer le POI</p>
-                <p class="menu-element" @click="openDeletionDialog(poi)">Supprimer le POI</p>
+                <p class="menu-element" :class="{'disable': isAllowedToEdit() }"  @click="openDeletionDialog(poi)">Supprimer le POI</p>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </td>
@@ -693,6 +693,9 @@ export default {
       this.menuState = undefined;
     },
     openDeletionDialog(poi) {
+      if (this.isAllowedToEdit()) {
+          return;
+      }
       this.poiToDelete = poi;
       this.deleteDialog = true;
       this.menuState = undefined;
