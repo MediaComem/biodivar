@@ -98,6 +98,7 @@
     };
     L.control.layers(baseLayers).addTo(map.value);
     map.value.on('click', getPosition);
+    map.value.whenReady(computeBoxingBox);
   })
 
   onUnmounted(() => {
