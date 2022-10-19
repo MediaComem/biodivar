@@ -886,11 +886,13 @@ export default {
       if (this.form.media.length > 0) {
         for (let i = 0; i < this.form.media.length; i++) {
             delete this.form.media[i].display_url;
-            const formData = new FormData();
-            formData.append('file', this.form.media[i].content);
-            const path = await saveMedia(formData);
-            if (path.data) {
-                this.form.media[i].url = path.data;
+            if (this.form.media[i].content) {
+              const formData = new FormData();
+              formData.append('file', this.form.media[i].content);
+              const path = await saveMedia(formData);
+              if (path.data) {
+                  this.form.media[i].url = path.data;
+              }
             }
         } 
       }
