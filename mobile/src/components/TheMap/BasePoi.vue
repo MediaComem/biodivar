@@ -66,8 +66,8 @@
       marker.value = setupMarker(poi);
       circle.value = setupCircle(poi);
 
-      const title = poi.title_is_visible ? `<p>${poi.title}</p>` : '';
-      const subtitle = poi.subtitle_is_visible ? `<p>${poi.subtitle}</p>` : '';
+      const title = `<p>${poi.title}</p>`;
+      const subtitle = `<p>${poi.subtitle}</p>`;
 
       tooltip.value = L.tooltip({
         permanent: props.selected,
