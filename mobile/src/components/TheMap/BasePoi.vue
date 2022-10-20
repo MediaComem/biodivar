@@ -52,7 +52,7 @@
         props.poi.coordinate.long], 
         {
           radius: poi.radius - poi.style_stroke_width / 2,
-          weight: getWeight(poi) * 2,
+          weight: getWeight(poi),
           color: `${poi.stroke_color}`,
           opacity: `${poi.stroke_opacity / 100}`,
           fill: true, 
@@ -77,7 +77,7 @@
       tooltip.value.setContent(`${title}${subtitle}`)
 
       marker.value.bindTooltip(tooltip.value);
-      marker.value.on('click', openEdition)
+      marker.value.on('click', openEdition);
   }
 
   watch(() => props.selected, () => {
@@ -91,6 +91,10 @@
       currentMap.value.removeLayer(circle.value);
       setupPoi(newVal);
   }, { deep: true });
+
+  watch(() => props.meter, () => {
+    circle.value.setStyle({weight: getWeight(props.poi)});
+  });
 
   onMounted(() => {
       props.admin ? currentMap.value = mapAdmin.value : currentMap.value = map.value;

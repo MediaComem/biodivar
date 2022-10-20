@@ -101,8 +101,11 @@
     };
     L.control.layers(baseLayers).addTo(map.value);*/
     mapAdmin.value.on('click', getPosition);
-    mapAdmin.value.on('zoom', updateMetersInPixel);
-    mapAdmin.value.whenReady(computeBoxingBox);
+    mapAdmin.value.on('zoomend', updateMetersInPixel);
+    mapAdmin.value.whenReady(() => {
+      computeBoxingBox();
+      updateMetersInPixel();
+    });
   })
 
   onUnmounted(() => {
