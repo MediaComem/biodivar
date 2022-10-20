@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="border-element">
-      <div v-show="currentBioversId === 0">
+      <div v-show="currentBioversId <= 0">
         <BioversLayout v-if="allBiovers && allBiovers.length > 0" class="biover-layout-border" :biovers="allBiovers" @map="selectedBiovers" />
       </div>
       <div v-for="biovers in bioversToDisplay" :key="biovers.name" class="data-layout">
