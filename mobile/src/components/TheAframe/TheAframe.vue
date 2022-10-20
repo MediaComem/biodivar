@@ -1,5 +1,6 @@
 <script setup>
   import { useStore } from '../../composables/store.js';
+  import { useEventListener } from '../../composables/event.js';
 
   import '../aframe/gps-position';
   import '../aframe/faces-north';
@@ -17,7 +18,7 @@
 
   import { getSymbolUrl, getSymbolAudiUrl, getMediaUrl } from '../../utils/api.js';
 
-  const { selectedBiovers } = useStore();
+  const { selectedBiovers, section } = useStore();
 
   function isImage(str) {
     return str === 'png' ||  str === 'jpg' ||  str === 'svg';
@@ -31,6 +32,16 @@
     return str === 'mp3' ||  str === 'wav' ||  str === 'm4a';
   }
 
+  // auto exit AR on mobile lock or app change
+  useEventListener(document, 'visibilitychange', () => {
+    if (!document.hidden) return;
+    section.value = 'menu';
+  });
+
+  useEventListener('[webxr]', 'exit-vr', () => {
+    section.value = 'menu';
+  });
+
   // console.log(selectedBiovers.value);
 
 </script>
@@ -38,11 +49,12 @@
 <template>
   <a-scene
     renderer="colorManagement: true"
-    gps-position="minAccuracy: 100; minDistance: 2; cam3DoF: true"
+    gps-position="minAccuracy: 100; minDistance: 2; cam3DoF: false"
     webxr="requiredFeatures: hit-test,local-floor,dom-overlay; overlayElement: [data-role='hud']; referenceSpaceType: local-floor"
     aar-hit-test="src: assets/ar-hit-test-marker.png"
     ahit-test-marker
     vr-mode-ui="enabled: false"
+    embedded
     enter-ar-on-init
   >
 
