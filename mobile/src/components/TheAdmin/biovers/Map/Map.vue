@@ -1,7 +1,8 @@
 <script setup>
   import { onMounted, onUnmounted, ref, computed, watch } from '@vue/runtime-core';
 
-  import { useStore } from 'vuex';
+  import { mapStore } from '../../../../composables/map.js';
+  import { store } from '../../../../store/store.js';
 
   import ThePoiEditor from '../Dialog/ThePoiEditor.vue';
   import BasePoi from '../../../TheMap/BasePoi.vue';
@@ -9,9 +10,7 @@
 
   const KEY = import.meta.env.VITE_APP_MAP_KEY;
 
-  const store = useStore();
-
-  const map = ref(undefined);
+  const { mapAdmin } = mapStore();
 
   const latlng = ref(undefined);
   const showCreationDialog = ref(false);
@@ -26,7 +25,11 @@
   const ownOrPublic = computed(() => store.getters['biovers/ownOrPublic'])
   const bioverIsEditable = computed(() => store.getters['biovers/bioverIsEditable'])
   const getCurrentBioverId = computed(() => store.getters['biovers/getCurrentBioverId'])
-  const getMetersInPixel = computed(() => 40075016.686 * Math.abs(Math.cos(map.value.getCenter().lat * Math.PI/180)) / Math.pow(2, map.value.getZoom()+8));
+  const metersInPixel = ref(0);
+
+  function updateMetersInPixel() {
+    metersInPixel.value = 40075016.686 * Math.abs(Math.cos(mapAdmin.value.getCenter().lat * Math.PI/180)) / Math.pow(2, mapAdmin.value.getZoom()+8);
+  }
 
   function updateWait(state) {
     store.dispatch('global/updateWait', state);
@@ -73,7 +76,7 @@
           }
         })
       });
-      map.value.fitBounds([[boundingBox.minlat, boundingBox.minlong],[boundingBox.maxlat, boundingBox.maxlong]]);
+      mapAdmin.value.fitBounds([[boundingBox.minlat, boundingBox.minlong],[boundingBox.maxlat, boundingBox.maxlong]]);
     }
 
     watch(() => pois, () => {
@@ -81,42 +84,43 @@
     }, { deep: true });
 
   onMounted(() => {
-    map.value = L.map('map').setView([0, 0], 7);
-    const base = L.tileLayer(`https://api.maptiler.com/maps/50a99959-5522-4b4a-8489-28de9d3af0ed/{z}/{x}/{y}.png?key=${KEY}`, {
+    mapAdmin.value = L.map('map').setView([0, 0], 7);
+    /*const base = L.tileLayer(`https://api.maptiler.com/maps/50a99959-5522-4b4a-8489-28de9d3af0ed/{z}/{x}/{y}.png?key=${KEY}`, {
         minZoom: 3,
         maxZoom: 22,
-        attribution: '© BiodivAR'
-    }).addTo(map.value);
+        attribution: 'BiodivAR'
+    }).addTo(map.value);*/
     const dark = L.tileLayer(`https://api.maptiler.com/maps/ch-swisstopo-lbm-dark/{z}/{x}/{y}.png?key=${KEY}`, {
         minZoom: 3,
         maxZoom: 22,
-        attribution: '© BiodivAR'
-    }).addTo(map.value);
-    var baseLayers = {
+        attribution: 'BiodivAR'
+    }).addTo(mapAdmin.value);
+    /*var baseLayers = {
       "Dark": dark,
       "Base": base
     };
-    L.control.layers(baseLayers).addTo(map.value);
-    map.value.on('click', getPosition);
-    map.value.whenReady(computeBoxingBox);
+    L.control.layers(baseLayers).addTo(map.value);*/
+    mapAdmin.value.on('click', getPosition);
+    mapAdmin.value.on('zoom', updateMetersInPixel);
+    mapAdmin.value.whenReady(computeBoxingBox);
   })
 
   onUnmounted(() => {
-      map.value = null;
+      mapAdmin.value = null;
   })
 
 </script>
 
 <template>
     <div id="map">
-        <div v-if="map">
+        <div v-if="mapAdmin">
             <div v-for="(poi, index) of getPois" :key="index">
-                <BasePoi :map="map" :poi="poi.element" :meter="getMetersInPixel" :selected="poi.display" @update-poi="openPoiEdition"/>
+                <BasePoi :admin="true" :poi="poi.element" :meter="metersInPixel" :selected="poi.display" @update-poi="openPoiEdition"/>
             </div>
         </div>
-        <div v-if="map">
+        <div v-if="mapAdmin">
             <div v-for="(path, index) of getPaths" :key="index">
-                <BasePath :map="map" :coordinate="path.element.coordinate"/>
+                <BasePath :admin="true" :coordinate="path.element.coordinate"/>
             </div>
         </div>
     </div>

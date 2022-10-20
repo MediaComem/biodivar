@@ -1,16 +1,22 @@
 <script setup>
-  import { onMounted, computed, watch, ref } from "@vue/runtime-core";
+  import { onMounted, watch, ref, onBeforeUnmount } from "@vue/runtime-core";
+
+  import { mapStore } from '../../composables/map.js';
 
   import { getIcon } from '../../utils/api';
 
   const props = defineProps({
-    map: Object,
+    admin: Boolean,
     poi: Object,
     meter: Number,
     selected: Boolean,
   });
 
   const emit = defineEmits(['updatePoi']);
+
+  const { map, mapAdmin } = mapStore();
+
+  const currentMap = ref(null);
 
   const markerIcon = ref(null);
   const marker = ref(null);
@@ -37,7 +43,7 @@
   function setupMarker(poi) {
     return L.marker([
         poi.coordinate.lat,
-        poi.coordinate.long], {icon: markerIcon.value}).addTo(props.map);
+        poi.coordinate.long], {icon: markerIcon.value}).addTo(currentMap.value);
   }
 
   function setupCircle(poi) {
@@ -52,7 +58,7 @@
           fill: true, 
           fillColor: `${poi.fill_color}`,
           fillOpacity: `${poi.fill_opacity / 100}`,
-      }).addTo(props.map);
+      }).addTo(currentMap.value);
   }
 
   function setupPoi(poi) {
@@ -75,19 +81,25 @@
   }
 
   watch(() => props.selected, () => {
-      props.map.removeLayer(marker.value);
-      props.map.removeLayer(circle.value);
+      currentMap.value.removeLayer(marker.value);
+      currentMap.value.removeLayer(circle.value);
       setupPoi(props.poi);
   }, { deep: true });
 
   watch(() => props.poi, (newVal) => {
-      props.map.removeLayer(marker.value);
-      props.map.removeLayer(circle.value);
+      currentMap.value.removeLayer(marker.value);
+      currentMap.value.removeLayer(circle.value);
       setupPoi(newVal);
   }, { deep: true });
 
   onMounted(() => {
+      props.admin ? currentMap.value = mapAdmin.value : currentMap.value = map.value;
       setupPoi(props.poi);
+  })
+
+  onBeforeUnmount(() => {
+    currentMap.value.removeLayer(marker.value);
+    currentMap.value.removeLayer(circle.value);
   })
 </script>
 

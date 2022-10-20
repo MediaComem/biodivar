@@ -1,17 +1,30 @@
 <script setup>
   import { onMounted } from "@vue/runtime-core";
 
+  import { mapStore } from '../../composables/map.js';
+
   const props = defineProps({
+    admin: Boolean,
     map: Object,
     coordinate: Object,
   });
 
+  const { map, mapAdmin } = mapStore();
+
+  const currentMap = ref(null);
+  const polyline = ref(null);
+
   onMounted(() => {
+      props.admin ? currentMap.value = mapAdmin.value : currentMap.value = map.value;
       const latlngs = [];
       props.coordinate.forEach(element => {
           latlngs.push([element.lat, element.long]);
       });
-      L.polyline(latlngs, {color: 'red'}).addTo(props.map);
+      polyline.value = L.polyline(latlngs, {color: 'red'}).addTo(currentMap.value);
+  })
+
+  onBeforeUnmount(() => {
+    currentMap.value.removeLayer(polyline.value);
   })
 </script>
 

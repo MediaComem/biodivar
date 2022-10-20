@@ -2,6 +2,7 @@ import { ref, shallowRef, watchEffect} from 'vue';
 import { computeCompass } from '../utils/device.js';
 
 const map = ref(null);
+const mapAdmin = ref(null);
 const position = shallowRef([0, 0]);
 const yaw = ref(0);
 
@@ -18,6 +19,6 @@ window.addEventListener('deviceorientationabsolute', event => {
 
 export function mapStore() {
 
-    return { map, position, yaw };
+    return { map, mapAdmin, position, yaw };
 
 }
