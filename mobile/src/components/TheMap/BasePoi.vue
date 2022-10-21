@@ -12,7 +12,7 @@
     selected: Boolean,
   });
 
-  const emit = defineEmits(['updatePoi']);
+  const emit = defineEmits(['updatePoi', 'openPopup']);
 
   const { map, mapAdmin } = mapStore();
 
@@ -21,8 +21,10 @@
   const markerIcon = ref(null);
   const marker = ref(null);
   const circle = ref(null);
-  const tooltip = ref(null);
+  const popup = ref(null);
+  const openFromClick = ref(false);
 
+  const timeout = ref(null);
 
   function openEdition() {
     emit('updatePoi', props.poi);
@@ -65,35 +67,67 @@
       markerIcon.value = setupIcon(poi);
       marker.value = setupMarker(poi);
       circle.value = setupCircle(poi);
-
-      const title = `<p>${poi.title}</p>`;
-      const subtitle = `<p>${poi.subtitle}</p>`;
-
-      tooltip.value = L.tooltip({
-        permanent: props.selected,
-        direction: 'top',
+      marker.value.on('click', () => {
+        popup.value.openOn(currentMap.value);
+        emit('openPopup');
       });
+      marker.value.on('mouseover', () => {
+        if (timeout.value) {
+          clearTimeout(timeout.value);
+          timeout.value = undefined;
+        }
+        if (!popup.value.isOpen()) {
+          popup.value.openOn(currentMap.value);
+        }
+      });
+      marker.value.on('mouseout', () => {
+        timeout.value = setTimeout(() => {
+          if(popup.value.isOpen() && !openFromClick.value) {
+            currentMap.value.removeLayer(popup.value);
+          }
+          timeout.value = undefined;
+        }, 1000)
+      });
+      const content = L.DomUtil.create('div', '');
+      const title = L.DomUtil.create('p', '', content);
+      title.innerHTML = `${poi.title}`;
+      const subtitle = L.DomUtil.create('p', '', content);
+      subtitle.innerHTML = `${poi.subtitle}`;
+      const button = L.DomUtil.create('button', '', content);
+      button.innerHTML = 'Edit';
+      L.DomEvent.addListener(button, 'click', openEdition, this);
+      L.DomEvent.addListener(content, 'mouseover', () => {
+        if (timeout.value) {
+          clearTimeout(timeout.value);
+          timeout.value = undefined;
+        }
+      }, this);
+      L.DomEvent.addListener(content, 'mouseout',  () =>{
+        timeout.value = setTimeout(() => {
+          if(popup.value.isOpen() && !openFromClick.value) {
+            currentMap.value.removeLayer(popup.value);
+          }
+        }, 200)
+      }, this);
 
-      tooltip.value.setContent(`${title}${subtitle}`)
-
-      marker.value.bindTooltip(tooltip.value);
-      marker.value.on('click', openEdition);
+      popup.value = L.popup({closeButton: false});
+      popup.value.setLatLng([props.poi.coordinate.lat,props.poi.coordinate.long]);
+      popup.value.setContent(content);
   }
-
-  watch(() => props.selected, () => {
-      currentMap.value.removeLayer(marker.value);
-      currentMap.value.removeLayer(circle.value);
-      setupPoi(props.poi);
-  }, { deep: true });
 
   watch(() => props.poi, (newVal) => {
       currentMap.value.removeLayer(marker.value);
       currentMap.value.removeLayer(circle.value);
+      if (popup.value.isOpen()) currentMap.value.removeLayer(popup.value);
       setupPoi(newVal);
   }, { deep: true });
 
   watch(() => props.meter, () => {
     circle.value.setStyle({weight: getWeight(props.poi)});
+  });
+
+  watch(() => props.selected, (newVal) => {
+    openFromClick.value = newVal;
   });
 
   onMounted(() => {
@@ -104,9 +138,16 @@
   onBeforeUnmount(() => {
     currentMap.value.removeLayer(marker.value);
     currentMap.value.removeLayer(circle.value);
+    if (popup.value.isOpen()) currentMap.value.removeLayer(popup.value);
   })
 </script>
 
 <template>
   
 </template>
+
+<style>
+.tooltip {
+  z-index: 999999;
+}
+</style>

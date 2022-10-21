@@ -27,6 +27,8 @@
   const getCurrentBioverId = computed(() => store.getters['biovers/getCurrentBioverId'])
   const metersInPixel = ref(0);
 
+  const clickOutside = ref(false);
+
   function updateMetersInPixel() {
     metersInPixel.value = 40075016.686 * Math.abs(Math.cos(mapAdmin.value.getCenter().lat * Math.PI/180)) / Math.pow(2, mapAdmin.value.getZoom()+8);
   }
@@ -36,10 +38,11 @@
   }
 
   function getPosition(event) {
-      if (event.latlng && this.getCurrentBioverId !== -1) {
+      if (event.latlng && this.getCurrentBioverId !== -1 && !showEditionDialog.value) {
         if (isAllowedToEdit(getCurrentBioverId.value)) {
           return;
         }
+        clickOutside.value = false;
         updateWait(true);
         latlng.value = event.latlng;
         showCreationDialog.value = true;
@@ -54,7 +57,9 @@
       if (isAllowedToEdit(event.biovers)) {
           return;
       }
+      clickOutside.value = false;
       updateWait(true);
+      showCreationDialog.value = false;
       poiToUpdate.value = { poi: event };
       showEditionDialog.value = true;
     }
@@ -84,7 +89,7 @@
     }, { deep: true });
 
   onMounted(() => {
-    mapAdmin.value = L.map('map').setView([0, 0], 7);
+    mapAdmin.value = L.map('map', {zoomAnimation: true}).setView([0, 0], 7);
     /*const base = L.tileLayer(`https://api.maptiler.com/maps/50a99959-5522-4b4a-8489-28de9d3af0ed/{z}/{x}/{y}.png?key=${KEY}`, {
         minZoom: 3,
         maxZoom: 22,
@@ -118,7 +123,7 @@
     <div id="map">
         <div v-if="mapAdmin">
             <div v-for="(poi, index) of getPois" :key="index">
-                <BasePoi :admin="true" :poi="poi.element" :meter="metersInPixel" :selected="poi.display" @update-poi="openPoiEdition"/>
+                <BasePoi :admin="true" :poi="poi.element" :meter="metersInPixel" :selected="clickOutside" @update-poi="openPoiEdition" @open-popup="clickOutside = true"/>
             </div>
         </div>
         <div v-if="mapAdmin">
