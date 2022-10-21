@@ -36,7 +36,7 @@
         <BaseUserMarker v-if="map" />
         <div v-if="map">
             <div v-for="(poi, index) of selectedBiovers.Poi" :key="index">
-                <BasePoi :admin="false" :poi="poi" :meter="getMetersInPixel" :selected="false"/>
+                <BasePoi :admin="false" :poi="poi" :meter="getMetersInPixel" :selected="0"/>
             </div>
         </div>
         <div v-if="map">
