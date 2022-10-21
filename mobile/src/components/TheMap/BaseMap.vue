@@ -18,10 +18,10 @@
 
   onMounted(() => {
     map.value = L.map('map').setView(position.value, 18);
-    L.tileLayer(`https://api.maptiler.com/maps/50a99959-5522-4b4a-8489-28de9d3af0ed/{z}/{x}/{y}.png?key=${KEY}`, {
-        minZoom: 1,
-        maxZoom: 19,
-        attribution: '© BiodivAR'
+    const dark = L.tileLayer(`https://api.maptiler.com/maps/ch-swisstopo-lbm-dark/{z}/{x}/{y}.png?key=${KEY}`, {
+        minZoom: 3,
+        maxZoom: 22,
+        attribution: 'BiodivAR'
     }).addTo(map.value);
   })
 

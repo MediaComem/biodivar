@@ -93,9 +93,12 @@
       title.innerHTML = `${poi.title}`;
       const subtitle = L.DomUtil.create('p', '', content);
       subtitle.innerHTML = `${poi.subtitle}`;
-      const button = L.DomUtil.create('button', '', content);
-      button.innerHTML = 'Edit';
-      L.DomEvent.addListener(button, 'click', openEdition, this);
+      if (props.admin) {
+        const button = L.DomUtil.create('button', '', content);
+        button.innerHTML = 'Edit';
+        L.DomEvent.addListener(button, 'click', openEdition, this);
+      }
+      
       L.DomEvent.addListener(content, 'mouseover', () => {
         if (timeout.value) {
           clearTimeout(timeout.value);
