@@ -34,11 +34,15 @@
     return poi.style_stroke_width / props.meter 
   };
 
+  function toRadians (angle) {
+    return angle * (Math.PI / 180);
+  }
+
   function setupIcon(poi) {
     return L.icon({
       iconUrl: getIcon(poi.symbol),
       iconSize: [50,50],
-      iconAnchor: [25 + ((Math.cos(poi.position.rotation) * poi.position.distance) / props.meter), 25 + (Math.sin(poi.position.rotation) * poi.position.distance)],
+      iconAnchor: [25 + ((Math.cos(toRadians(poi.position.rotation)) * poi.position.distance) / props.meter), 25 - ((Math.sin(toRadians(poi.position.rotation)) * poi.position.distance) / props.meter)],
     });
   }
 
@@ -127,6 +131,7 @@
 
   watch(() => props.meter, () => {
     circle.value.setStyle({weight: getWeight(props.poi)});
+    marker.value.setIcon(setupIcon(props.poi));
   });
 
   watch(() => props.selected, (newVal) => {
