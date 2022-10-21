@@ -9,7 +9,7 @@
     admin: Boolean,
     poi: Object,
     meter: Number,
-    selected: Boolean,
+    selected: Number,
   });
 
   const emit = defineEmits(['updatePoi', 'openPopup']);
@@ -22,7 +22,7 @@
   const marker = ref(null);
   const circle = ref(null);
   const popup = ref(null);
-  const openFromClick = ref(false);
+  const openFromClick = ref(0);
 
   const timeout = ref(null);
 
@@ -73,7 +73,7 @@
       circle.value = setupCircle(poi);
       marker.value.on('click', () => {
         popup.value.openOn(currentMap.value);
-        emit('openPopup');
+        emit('openPopup', props.poi.id);
       });
       marker.value.on('mouseover', () => {
         if (timeout.value) {
@@ -86,7 +86,7 @@
       });
       marker.value.on('mouseout', () => {
         timeout.value = setTimeout(() => {
-          if(popup.value.isOpen() && !openFromClick.value) {
+          if(popup.value.isOpen() && openFromClick.value !== props.poi.id) {
             currentMap.value.removeLayer(popup.value);
           }
           timeout.value = undefined;
@@ -111,7 +111,7 @@
       }, this);
       L.DomEvent.addListener(content, 'mouseout',  () =>{
         timeout.value = setTimeout(() => {
-          if(popup.value.isOpen() && !openFromClick.value) {
+          if(popup.value.isOpen() && openFromClick.value !== props.poi.id) {
             currentMap.value.removeLayer(popup.value);
           }
         }, 200)

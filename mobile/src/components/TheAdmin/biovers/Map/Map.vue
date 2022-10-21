@@ -27,7 +27,7 @@
   const getCurrentBioverId = computed(() => store.getters['biovers/getCurrentBioverId'])
   const metersInPixel = ref(0);
 
-  const clickOutside = ref(false);
+  const clickPoi = ref(0);
 
   function updateMetersInPixel() {
     metersInPixel.value = 40075016.686 * Math.abs(Math.cos(mapAdmin.value.getCenter().lat * Math.PI/180)) / Math.pow(2, mapAdmin.value.getZoom()+8);
@@ -42,7 +42,7 @@
         if (isAllowedToEdit(getCurrentBioverId.value)) {
           return;
         }
-        clickOutside.value = false;
+        clickPoi.value = 0;
         updateWait(true);
         latlng.value = event.latlng;
         showCreationDialog.value = true;
@@ -57,7 +57,7 @@
       if (isAllowedToEdit(event.biovers)) {
           return;
       }
-      clickOutside.value = false;
+      clickPoi.value = 0;
       updateWait(true);
       showCreationDialog.value = false;
       poiToUpdate.value = { poi: event };
@@ -123,7 +123,7 @@
     <div id="map">
         <div v-if="mapAdmin">
             <div v-for="(poi, index) of getPois" :key="index">
-                <BasePoi :admin="true" :poi="poi.element" :meter="metersInPixel" :selected="clickOutside" @update-poi="openPoiEdition" @open-popup="clickOutside = true"/>
+                <BasePoi :admin="true" :poi="poi.element" :meter="metersInPixel" :selected="clickPoi" @update-poi="openPoiEdition" @open-popup="clickPoi = $event"/>
             </div>
         </div>
         <div v-if="mapAdmin">
