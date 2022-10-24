@@ -191,19 +191,19 @@ export default {
     },
     downloadEvents() {
       if (!this.globalChecked) return;
-      this.download(computeGeoJSONFromEvents(this.getEventByBiovers(this.bioverId)))
+      this.download(computeGeoJSONFromEvents(this.getEventByBioversAndUser(this.bioverId)))
       this.menuState = undefined;
     },
     ...mapActions('biovers', ['selectAllEvents', 'unselectAllEvents', 'updateEventToDisplay']),
   },
   computed: {
     getSortedData() {
-      return sort.sort(this.getEventByBiovers(this.bioverId), this.sortElement, this.orderElement);
+      return sort.sort(this.getEventByBioversAndUser(this.bioverId), this.sortElement, this.orderElement);
     },
     allAreUnselected() {
       return this.getSortedData.filter((event) => event.display).length === 0;
     },
-    ...mapGetters('biovers', ['getEventByBiovers', 'getEventColumnsPreference']),
+    ...mapGetters('biovers', ['getEventByBioversAndUser', 'getEventColumnsPreference']),
   },
 };
 </script>

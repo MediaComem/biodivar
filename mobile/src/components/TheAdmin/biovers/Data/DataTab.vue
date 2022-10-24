@@ -27,14 +27,14 @@
         :class="{'button-focus': currentTab === 4}"
       >
         <p class="material-symbols-sharp text-margin">bar_chart</p>
-        <p>Trace [{{ getTraceByBiovers(bioverId).length }}]</p>
+        <p>Trace [{{ getTraceByBioversAndUser(bioverId).length }}]</p>
       </button>
       <button
         @click="selectTab(5)"
         :class="{'button-focus': currentTab === 5}"
       >
         <p class="material-symbols-sharp text-margin">bar_chart</p>
-        <p>Event [{{ getEventByBiovers(bioverId).length }}]</p>
+        <p>Event [{{ getEventByBioversAndUser(bioverId).length }}]</p>
       </button>
     </div>
 
@@ -79,7 +79,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('biovers', ['getPoisByBiover', 'getPathsByBiover', 'getTraceByBiovers', 'getEventByBiovers']),
+    ...mapGetters('biovers', ['getPoisByBiover', 'getPathsByBiover', 'getTraceByBioversAndUser', 'getEventByBioversAndUser']),
   },
 };
 </script>

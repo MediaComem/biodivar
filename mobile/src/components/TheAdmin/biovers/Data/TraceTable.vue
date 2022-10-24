@@ -119,12 +119,12 @@ export default {
   },
   computed: {
     getSortedData() {
-      return sort.sort(this.getTraceByBiovers(this.bioverId), this.sortElement, this.orderElement);
+      return sort.sort(this.getTraceByBioversAndUser(this.bioverId), this.sortElement, this.orderElement);
     },
     allAreUnselected() {
       return this.getSortedData.filter((trace) => trace.display).length === 0;
     },
-    ...mapGetters('biovers', ['getTraceByBiovers', 'getTraceColumnsPreference']),
+    ...mapGetters('biovers', ['getTraceByBioversAndUser', 'getTraceColumnsPreference']),
   },
   methods: {
     dateFormatter(date) {
@@ -186,7 +186,7 @@ export default {
     },
     downloadTraces() {
       if (!this.globalChecked) return;
-      this.download(computeGeoJSONFromTraces(this.getTraceByBiovers(this.bioverId)))
+      this.download(computeGeoJSONFromTraces(this.getTraceByBioversAndUser(this.bioverId)))
       this.menuState = undefined;
     },
     ...mapActions('biovers', ['selectAllTraces', 'unselectAllTraces', 'updateTraceToDisplay']),

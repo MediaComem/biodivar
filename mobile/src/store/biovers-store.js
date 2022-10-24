@@ -1,7 +1,10 @@
 import { getBiovers, getBioversByUser } from '../utils/api.js';
 import filterUtils from '../utils/filters.js';
 import { getPoiColumns, getPathColumns, getTracesColumns, getEventsColumns } from '../utils/columns.js';
+import { useStore } from '../composables/store.js';
 
+const { username } = useStore();
+ 
 export const bioversStore = {
   namespaced: true,
   state() {
@@ -751,12 +754,31 @@ export const bioversStore = {
       }
       return state.traces[index].traces;
     },
+    getTraceByBioversAndUser: (state) => (id) => {
+      const index = state.traces.findIndex((trace) => trace.bioverId === id);
+      if (index === -1) {
+        return [];
+      }
+      return state.traces[index].traces.filter((trace) => {
+        return trace.element.User.username.toLocaleLowerCase() === username.value.toLocaleLowerCase();
+      });
+    },
     getEventByBiovers: (state) => (id) => {
       const index = state.events.findIndex((event) => event.bioverId === id);
       if (index === -1) {
         return [];
       }
       return state.events[index].events;
+    },
+    getEventByBioversAndUser: (state) => (id) => {
+      const index = state.events.findIndex((event) => event.bioverId === id);
+      if (index === -1) {
+        return [];
+      }
+      console.log()
+      return state.events[index].events.filter((event) => {
+        return event.element.User.username.toLocaleLowerCase() === username.value.toLocaleLowerCase();
+      });
     },
     getPois(state) {
       const poisToDisplay = [];
