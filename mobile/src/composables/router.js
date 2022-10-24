@@ -14,7 +14,7 @@ const hash = ref(window.location.hash);
 
 window.addEventListener('hashchange', () => hash.value = window.location.hash);
 
-const route = computed(() => routes[hash.value] ? hash.value : Object.keys(routes)[0]);
+const route = computed(() => routes[hash.value] ? hash.value : Object.keys(routes)[1]);
 const page = computed(() => routes[route.value]);
 
 export function useRouter() {

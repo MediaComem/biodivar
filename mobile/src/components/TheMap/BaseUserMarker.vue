@@ -25,6 +25,7 @@
     const markerIconSvg = L.icon({
       iconUrl: './assets/bluedot_D.svg',
       iconSize: [80, 80],
+      iconAnchor: [40, 40],
       className: 'rotated-marker-svg'
     });
 

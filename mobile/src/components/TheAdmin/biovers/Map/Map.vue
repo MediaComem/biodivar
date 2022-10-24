@@ -81,7 +81,7 @@
           }
         })
       });
-      mapAdmin.value.fitBounds([[boundingBox.minlat, boundingBox.minlong],[boundingBox.maxlat, boundingBox.maxlong]]);
+      mapAdmin.value.flyToBounds([[boundingBox.minlat, boundingBox.minlong],[boundingBox.maxlat, boundingBox.maxlong]], {duration: 1, easeLinearity: 0});
     }
 
     watch(() => pois, () => {
