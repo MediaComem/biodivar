@@ -123,7 +123,7 @@
     <div id="map">
         <div v-if="mapAdmin">
             <div v-for="(poi, index) of getPois" :key="index">
-                <BasePoi :admin="true" :poi="poi.element" :meter="metersInPixel" :selected="clickPoi" @update-poi="openPoiEdition" @open-popup="clickPoi = $event"/>
+                <BasePoi :admin="true" :poi="poi.element" :meter="metersInPixel" :selected="clickPoi" :editable="!isAllowedToEdit(getCurrentBioverId)" @update-poi="openPoiEdition" @open-popup="clickPoi = $event"/>
             </div>
         </div>
         <div v-if="mapAdmin">

@@ -10,6 +10,7 @@
     poi: Object,
     meter: Number,
     selected: Number,
+    editable: Boolean,
   });
 
   const emit = defineEmits(['updatePoi', 'openPopup']);
@@ -71,6 +72,12 @@
       }).addTo(currentMap.value);
   }
 
+  function setPopupEdition(button) {
+    if (props.editable) {
+      L.DomEvent.addListener(button, 'click', openEdition, this);
+    }
+  }
+
   function setupPoi(poi) {
       markerIcon.value = setupIcon(poi);
       marker.value = setupMarker(poi);
@@ -101,10 +108,11 @@
       title.innerHTML = `${poi.title}`;
       const subtitle = L.DomUtil.create('p', '', content);
       subtitle.innerHTML = `${poi.subtitle}`;
-      if (props.admin) {
-        const button = L.DomUtil.create('button', '', content);
+      if (props.admin && props.editable) {
+        const button = L.DomUtil.create('button', '' ,content);
+        button.id = `poi-popup-${props.poi.id}`
         button.innerHTML = 'Edit';
-        L.DomEvent.addListener(button, 'click', openEdition, this);
+        setPopupEdition(button);
       }
       
       L.DomEvent.addListener(content, 'mouseover', () => {
@@ -159,9 +167,3 @@
 <template>
   
 </template>
-
-<style>
-.tooltip {
-  z-index: 999999;
-}
-</style>
