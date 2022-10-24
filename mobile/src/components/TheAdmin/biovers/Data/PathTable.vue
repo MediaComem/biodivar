@@ -120,7 +120,7 @@
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
         </tr>
-        <tr v-for="(path, index) in getSortedData" :key="index">
+        <tr v-for="(path, index) in getSortedData" :key="index" class="table-background">
           <td class="first-column">
             <input type="checkbox" :checked="path.display" @click="selectElement(path)">
           </td>

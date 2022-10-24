@@ -123,3 +123,11 @@ table {
       background-color: gray;
       color: lightgray;
     }
+
+    .table-background:hover {
+      background-color: #666666;
+    }
+
+    .table-hover {
+      background-color: #666666;
+    }

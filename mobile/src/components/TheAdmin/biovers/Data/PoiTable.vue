@@ -426,7 +426,7 @@
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
         </tr>
-        <tr v-for="(poi, index) in getSortedData" :key="index">
+        <tr v-for="(poi, index) in getSortedData" :key="index" class="table-background" :class="{'table-hover': getCurrentTabClick.includes(poi.element.id)}" @mouseover="over(poi.element.id)" @mouseleave="leave" @click="openPopup(poi.element.id)">
           <td class="first-column">
             <input type="checkbox" :checked="poi.display" @click="selectElement(poi)">
           </td>
@@ -520,6 +520,7 @@ export default {
       deleteDialog: false,
       showEditionDialog: false,
       poiToUpdate: {},
+      leaveTimeout: undefined,
     };
   },
   computed: {
@@ -537,9 +538,23 @@ export default {
       if (value && value.type === 'POI') return false;
       return true;
     },
+    ...mapGetters('global', ['getCurrentTabClick']),
     ...mapGetters('biovers', ['getPoisByBiover', 'ownOrPublic', 'bioverIsEditable', 'getCopyElement', 'getPoiColumnsPreference', 'getCurrentBioverId']),
   },
   methods: {
+    over(id) {
+      clearTimeout(this.leaveTimeout);
+      this.updateOver(id);
+    },
+    leave() {
+      this.leaveTimeout = setTimeout(() => {
+        this.updateOver(0);
+      }, 300);
+    },
+    openPopup(id) {
+      clearTimeout(this.leaveTimeout);
+      this.addOrRemoveClickElement(id);
+    },
     isAllowedToEdit() {
       return (this.ownOrPublic(this.getCurrentBioverId) === 'public' && !this.bioverIsEditable(this.getCurrentBioverId));
     },
@@ -722,7 +737,7 @@ export default {
       this.columnDialog = true;
       this.menuState = undefined;
     },
-    ...mapActions('global', ['updateWait']),
+    ...mapActions('global', ['updateWait', 'updateOver', 'addOrRemoveClickElement']),
     ...mapActions('biovers', ['updatePoiToDisplay', 'resetPoisModification', 'selectAllPois', 'unselectAllPois', 'copyPoi', 'addNewPoi', 'removePoi']),
   },
 };
