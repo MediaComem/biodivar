@@ -1,22 +1,16 @@
-<script setup>
-import { computed } from 'vue';
-
-  
+<script setup>  
 const emit = defineEmits(['close'])
 
 const props = defineProps({
-    mode: Boolean,
+    logo: String,
+    title: String,
 });
-
-const title = computed(() => {
-    return props.mode ? "éditer point d'intérêt" : "nouveau point d'intérêt";
-})
 </script>
 
 <template>
     <div class="layout">
-        <p class="material-symbols-sharp symbol-location">add_location_alt</p>
-        <p class="title">{{ title }}</p>
+        <p class="material-symbols-sharp symbol-location">{{ props.logo }}</p>
+        <p class="title">{{ props.title }}</p>
         <p class="material-symbols-sharp symbol-close" @click="emit('close')">close</p>
     </div>
 </template>

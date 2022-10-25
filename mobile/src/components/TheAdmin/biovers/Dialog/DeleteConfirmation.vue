@@ -91,6 +91,17 @@ export default {
     text-transform: uppercase;
 }
 
+@media screen and (max-width: 999px) {
+  .title {
+      font-size: 14px;
+  }
+
+    .layout {
+      width: 70vw;
+      left: 15vw;
+    }
+}
+
 .symbol-close {
     grid-area: 1 / 3 / 2 / 4;
     font-size: 20px;

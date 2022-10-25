@@ -1,7 +1,7 @@
 <template>
   <div v-if="dialogVisible" class="overlay" @click="cancelDialog = true"></div>
   <div v-if="dialogVisible" class="modal-edition">
-    <PoiEditorHeader :mode="isEdit" @close="cancelDialog = true" />
+    <DialogHeader :title="isEdit ? 'éditer point dintérêt' : 'nouveau point dintérêt'" :logo="'add_location_alt'" @close="cancelDialog = true" />
     <div class="embedded">
       <the-aframe-editor
         :showSymbol="tab === 0"
@@ -558,7 +558,7 @@ import { mapActions, mapGetters } from 'vuex';
 
 import Accordeon from '../../../app/UIElement/Accordeon.vue';
 
-import PoiEditorHeader from './PoiEditorHeader.vue';
+import DialogHeader from './DialogHeader.vue';
 import DeleteConfirmation from './DeleteConfirmation.vue';
 import CancelConfirmation from './CancelConfirmation.vue';
 import TheAframeEditor from '../../../TheAframe/TheAframeEditor.vue';
@@ -569,7 +569,7 @@ import { savePoi, updatePoi, deletePoi, saveSymbol, saveMedia, getSymbolUrl, get
 
 export default {
   name: 'App',
-  components: { TheAframeEditor, AframeMedia, PoiEditorHeader, DeleteConfirmation, CancelConfirmation, Accordeon },
+  components: { TheAframeEditor, AframeMedia, DialogHeader, DeleteConfirmation, CancelConfirmation, Accordeon },
   props: {
     poi: Object,
     coordinate: Object,
@@ -966,16 +966,32 @@ p {
   z-index: 1000000;
 }
 
-.modal-edition {
-  background-color: white;
-  width: 70vw;
-  height: 95vh;
-  position: fixed;
-  top: 2.5vh;
-  left: 15vw;
-  z-index: 10000000;
-  padding-left: 10px;
-  padding-right: 10px;
+@media screen and (min-width: 1000px) {
+  .modal-edition {
+    background-color: white;
+    width: 70vw;
+    height: 95vh;
+    position: fixed;
+    top: 2.5vh;
+    left: 15vw;
+    z-index: 10000000;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+@media screen and (max-width: 999px) {
+  .modal-edition {
+    background-color: white;
+    width: 95vw;
+    height: 95vh;
+    position: fixed;
+    top: 2.5vh;
+    left: 2.5vw;
+    z-index: 10000000;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
 
 #title, #description {
@@ -1081,6 +1097,13 @@ textarea {
 .container-layout {
   padding-left: 20px;
   padding-right: 20px;
+}
+
+@media screen and (max-width: 999px) {
+  .container-layout {
+    width: 1000px;
+    overflow-x: auto;
+  }
 }
 
 .col-main {

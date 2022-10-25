@@ -92,7 +92,6 @@ export default {
   margin-left: 8px;
   margin-right: 8px;
   border-bottom: 1px solid white;
-  height: 38px;
 }
 
 .data-table-layout {

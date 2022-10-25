@@ -210,6 +210,7 @@ async function save() {
 <style scoped>
 .action-layout {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .button {
