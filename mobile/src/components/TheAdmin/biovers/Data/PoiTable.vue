@@ -426,7 +426,7 @@
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
         </tr>
-        <tr v-for="(poi, index) in getSortedData" :key="index" class="table-background" :class="{'table-hover': getCurrentTabClick.includes(poi.element.id)}" @mouseover="over(poi.element.id)" @mouseleave="leave" @click="openPopup(poi.element.id)">
+        <tr :ref="`poi-${poi.element.id}`" v-for="(poi, index) in getSortedData" :key="index" class="table-background" :class="{'table-hover': getCurrentTabClick.includes(poi.element.id)}" @mouseover="over(poi.element.id)" @mouseleave="leave" @click="openPopup(poi.element.id)">
           <td class="first-column">
             <input type="checkbox" :checked="poi.display" @click="selectElement(poi)">
           </td>
@@ -508,6 +508,23 @@ export default {
   props: {
     bioverId: Number,
   },
+  watch: {
+    getCurrentTabClick: {
+      handler(newVal) {
+        if (this.clickOnThisView) {
+          this.clickOnThisView = false;
+        }  /*else {
+          const rect = this.$refs[`poi-${newVal[newVal.length - 1]}`][0].getBoundingClientRect();
+         window.scrollTo({
+            left: 0,
+            top: rect.top,
+            behavior: "smooth",
+          });
+        }*/
+      },
+      deep: true,
+    },
+  },
   data() {
     return {
       globalChecked: true,
@@ -521,6 +538,8 @@ export default {
       showEditionDialog: false,
       poiToUpdate: {},
       leaveTimeout: undefined,
+      clickOnThisView: false,
+      popupTimeout: undefined,
     };
   },
   computed: {
@@ -552,8 +571,11 @@ export default {
       }, 300);
     },
     openPopup(id) {
+      this.clickOnThisView = true;
       clearTimeout(this.leaveTimeout);
-      this.addOrRemoveClickElement(id);
+      this.popupTimeout = setTimeout(() => {
+        this.addOrRemoveClickElement(id);
+      }, 300);
     },
     isAllowedToEdit() {
       return (this.ownOrPublic(this.getCurrentBioverId) === 'public' && !this.bioverIsEditable(this.getCurrentBioverId));
@@ -605,6 +627,10 @@ export default {
       this.sortElement = value;
     },
     selectElement(selectedPoi) {
+      setTimeout(() => {
+        clearInterval(this.popupTimeout);
+        this.popupTimeout = undefined;
+      }, 150)
       this.updatePoiToDisplay({
         bioverId: this.bioverId,
         poi: selectedPoi,
@@ -620,6 +646,10 @@ export default {
       }
     },
     openMenu(rowId) {
+      setTimeout(() => {
+        clearInterval(this.popupTimeout);
+        this.popupTimeout = undefined;
+      }, 150)
       this.menuState = {id: rowId, state: true};
     },
     download(file) {

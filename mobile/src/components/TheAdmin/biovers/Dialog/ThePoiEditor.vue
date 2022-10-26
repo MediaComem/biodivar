@@ -576,7 +576,7 @@ export default {
     showDialog: Boolean,
     isEdit: Boolean,
   },
-  emits: ['closeDialog'],
+  emits: ['closeDialog', 'closeAfterSave'],
   watch: {
     showDialog(newVal) {
       this.dialogVisible = newVal;
@@ -906,7 +906,7 @@ export default {
       this.addNewPoi(newPoi.data);
       this.showCreationDialog = false;
       this.updateWait(false);
-      this.$emit('closeDialog');
+      this.$emit('closeAfterSave');
     },
     async updatePoi() {
       this.updateWait(true);
@@ -916,7 +916,7 @@ export default {
       this.updatePoiStore(updatedPoi.data);
       this.showCreationDialog = false;
       this.updateWait(false);
-      this.$emit('closeDialog');
+      this.$emit('closeAfterSave');
     },
     async deletePoi() {
       this.updateWait(true);
@@ -925,7 +925,7 @@ export default {
       await deletePoi(this.form);
       this.showCreationDialog = false;
       this.updateWait(false);
-      this.$emit('closeDialog');
+      this.$emit('closeAfterSave');
     },
     ...mapActions('global', ['updateWait']),
     ...mapActions('biovers', ['addNewPoi', 'updatePoiStore', 'removePoi']),

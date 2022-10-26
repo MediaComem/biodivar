@@ -15,6 +15,7 @@
   const latlng = ref(undefined);
   const showCreationDialog = ref(false);
   const showEditionDialog = ref(false);
+  const shouldNotUpdateBounding = ref(false);
   const poiToUpdate = ref({});
 
   const pois = computed(() => store.state.biovers.pois);
@@ -28,6 +29,12 @@
   const metersInPixel = ref(0);
 
   const clickPoi = ref(0);
+
+  function closeEditor() {
+    showCreationDialog.value = false;
+    showEditionDialog.value = false;
+    shouldNotUpdateBounding.value = false;
+  }
 
   function updateMetersInPixel() {
     metersInPixel.value = 40075016.686 * Math.abs(Math.cos(mapAdmin.value.getCenter().lat * Math.PI/180)) / Math.pow(2, mapAdmin.value.getZoom()+8);
@@ -44,6 +51,7 @@
         }
         clickPoi.value = 0;
         updateWait(true);
+        shouldNotUpdateBounding.value = true;
         latlng.value = event.latlng;
         showCreationDialog.value = true;
       }
@@ -59,6 +67,7 @@
       }
       clickPoi.value = 0;
       updateWait(true);
+      shouldNotUpdateBounding.value = true;
       showCreationDialog.value = false;
       poiToUpdate.value = { poi: event };
       showEditionDialog.value = true;
@@ -85,7 +94,11 @@
     }
 
     watch(() => pois, () => {
+      if (shouldNotUpdateBounding.value) {
+        shouldNotUpdateBounding.value = false;
+      } else {
         computeBoxingBox();
+      }
     }, { deep: true });
 
   onMounted(() => {
@@ -123,19 +136,19 @@
     <div id="map">
         <div v-if="mapAdmin">
             <div v-for="(poi, index) of getPois" :key="index">
-                <BasePoi :admin="true" :poi="poi.element" :meter="metersInPixel" :selected="clickPoi" :editable="!isAllowedToEdit(getCurrentBioverId)" @update-poi="openPoiEdition" @open-popup="clickPoi = $event"/>
+                <BasePoi v-if="poi.display" :admin="true" :poi="poi.element" :meter="metersInPixel" :selected="clickPoi" :editable="!isAllowedToEdit(getCurrentBioverId)" @update-poi="openPoiEdition" @open-popup="clickPoi = $event"/>
             </div>
         </div>
         <div v-if="mapAdmin">
             <div v-for="(path, index) of getPaths" :key="index">
-                <BasePath :admin="true" :coordinate="path.element.coordinate"/>
+                <BasePath v-if="path.display" :admin="true" :coordinate="path.element.coordinate"/>
             </div>
         </div>
     </div>
     <ThePoiEditor :showDialog="showCreationDialog" :isEdit="false" :coordinate="latlng"
-    @close-dialog="showCreationDialog = false" />
+    @close-dialog="closeEditor" @close-after-save="showCreationDialog = false"/>
     <ThePoiEditor :isEdit="true" :poi="poiToUpdate" :showDialog="showEditionDialog"
-    @close-dialog="showEditionDialog = false"/>
+    @close-dialog="closeEditor" @close-after-save="showEditionDialog = false"/>
 </template>
 
 <style scoped>

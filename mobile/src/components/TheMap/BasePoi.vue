@@ -33,6 +33,10 @@
   const hoverPoiInTable = computed(() => store.getters['global/getcurrentTableOver'])
   const currentTabClick = computed(() => store.getters['global/getCurrentTabClick'])
 
+  function addOrRemoveClickElement() {
+    store.dispatch('global/addOrRemoveClickElement', props.poi.id);
+  }
+
   function removeClickPopup() {
     store.dispatch('global/removeClickElement', props.poi.id);
   }
@@ -93,6 +97,7 @@
       marker.value = setupMarker(poi);
       circle.value = setupCircle(poi);
       marker.value.on('click', () => {
+        addOrRemoveClickElement(props.poi.id);
         popup.value.openOn(currentMap.value);
         emit('openPopup', props.poi.id);
       });
@@ -151,7 +156,10 @@
       currentMap.value.removeLayer(circle.value);
       if (popup.value.isOpen()) currentMap.value.removeLayer(popup.value);
       removeClickPopup();
-      setupPoi(newVal);
+      setTimeout(() => {
+        setupPoi(newVal);
+      }, 200)
+      
   }, { deep: true });
 
   watch(() => props.meter, () => {
