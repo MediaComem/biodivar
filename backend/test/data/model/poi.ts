@@ -165,9 +165,9 @@ export const dropPoi = async (prisma: PrismaClient) => {
 };
 
 export const position_test: PositionModel = {
-  x: 2.5,
-  alpha: 5.6,
-  y: 22.5,
+  distance: 2.5,
+  rotation: 5.6,
+  elevation: 22.5,
 }
 
 export const coordinate_test: CoordinateModel = {
@@ -176,8 +176,6 @@ export const coordinate_test: CoordinateModel = {
   alt: 14.4,
   creation_date: new Date(),
 };
-
-const position: Prisma.PositionCreateWithoutPoiInput = position_test as Prisma.PositionCreateWithoutPoiInput;
 
 export const test_poi: PoiModel = {
   title: "POI 1",

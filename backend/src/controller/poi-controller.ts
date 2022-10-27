@@ -11,13 +11,11 @@ export const createPoi = async (
   logger: winston.Logger
 ) => {
   try {
-
     const coordinate: Prisma.CoordinateCreateWithoutPoiInput = poi.coordinate as Prisma.CoordinateCreateWithoutPoiInput;
     if (!coordinate.creation_date) {
       coordinate.creation_date = new Date();
     }
     const position: Prisma.PositionCreateWithoutPoiInput = poi.position as Prisma.PositionCreateWithoutPoiInput;
-
     const newPoi = await prisma.poi.create({
       data: {
         title: poi.title ? poi.title : '',

@@ -20,6 +20,9 @@ export const getMediaById = async (prisma: PrismaClient, id: number) => {
       id: id,
       deleted_date: null,
     },
+    include: {
+      position: true,
+    }
   });
 };
 
@@ -86,7 +89,6 @@ export const updateMedia = async (
   logger: winston.Logger
 ) => {
   try {
-    const position: Prisma.PositionUpdateWithoutMediaInput = media.position as Prisma.PositionUpdateWithoutMediaInput
     return await prisma.media.update({
       where: {
         id: media.id,
