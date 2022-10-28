@@ -25,6 +25,7 @@
   const markerIcon = ref(null);
   const marker = ref(null);
   const circle = ref(null);
+  const scopeCircle = ref(null);
   const popup = ref(null);
   const openFromClick = ref(0);
 
@@ -86,6 +87,20 @@
       }).addTo(currentMap.value);
   }
 
+  function setupScopeCircle(poi) {
+    return L.circle([
+        props.poi.coordinate.lat,
+        props.poi.coordinate.long], 
+        {
+          radius: poi.scope,
+          weight: 1,
+          color: `#FFFFFF`,
+          opacity: `0.1`,
+          fill: false,
+          dashArray: [20, 20],
+      }).addTo(currentMap.value);
+  }
+
   function setPopupEdition(button) {
     if (props.editable) {
       L.DomEvent.addListener(button, 'click', openEdition, this);
@@ -96,6 +111,7 @@
       markerIcon.value = setupIcon(poi);
       marker.value = setupMarker(poi);
       circle.value = setupCircle(poi);
+      scopeCircle.value = setupScopeCircle(poi);
       marker.value.on('click', () => {
         addOrRemoveClickElement(props.poi.id);
         popup.value.openOn(currentMap.value);
