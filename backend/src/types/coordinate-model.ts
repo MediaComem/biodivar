@@ -9,6 +9,7 @@ export interface CoordinateModel {
   poi_id?: number;
   path_id?: number;
   user_trace_id?: number;
+  event_id?: number;
 }
 
 export interface CoordinateModels extends Array<CoordinateModel> {}

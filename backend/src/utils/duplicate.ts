@@ -24,6 +24,27 @@ export const preparePoisFromBioversDuplication = (biovers: Biovers, poi: PoiMode
     && Object.keys(coordinate).length === 0
     && Object.getPrototypeOf(coordinate) === Object.prototype) {
       poi.coordinate = undefined;
+    } else {
+      delete poi.coordinate?.id;
+      delete poi.coordinate?.creation_date;
+      delete poi.coordinate?.update_date;
+      delete poi.coordinate?.deleted_date;
+      delete poi.coordinate?.poi_id;
+      delete poi.coordinate?.path_id;
+      delete poi.coordinate?.user_trace_id; 
+      delete poi.coordinate?.event_id; 
+    }
+
+    const position = poi.position;
+    if (position
+    && Object.keys(position).length === 0
+    && Object.getPrototypeOf(position) === Object.prototype) {
+      poi.position = undefined;
+    } else {
+      delete poi.position?.id;
+      delete poi.position?.media_id;
+      delete poi.position?.symbol_id;
+      delete poi.position?.poi_id;
     }
 
     return poi;
@@ -53,6 +74,7 @@ export const preparePathsFromBioversDuplication = (biovers: Biovers, path: PathM
           delete coordinate[keyC].poi_id;
           delete coordinate[keyC].path_id;
           delete coordinate[keyC].user_trace_id;
+          delete coordinate[keyC].event_id;
           arrayOfCoordinate.push(coordinate[keyC])
         }
         path.coordinate = arrayOfCoordinate;

@@ -1,4 +1,5 @@
 export interface PositionModel {
+    id?: number;
     distance: number;
     rotation: number;
     elevation: number;
