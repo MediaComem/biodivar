@@ -23,6 +23,7 @@
         maxZoom: 22,
         attribution: 'BiodivAR'
     }).addTo(map.value);
+    
   })
 
   onUnmounted(() => {

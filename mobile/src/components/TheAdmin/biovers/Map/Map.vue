@@ -29,6 +29,7 @@
   const metersInPixel = ref(0);
 
   const clickPoi = ref(0);
+  const couldCreate = ref(false);
 
   function closeEditor() {
     showCreationDialog.value = false;
@@ -45,7 +46,7 @@
   }
 
   function getPosition(event) {
-      if (event.latlng && this.getCurrentBioverId !== -1 && !showEditionDialog.value) {
+      if (couldCreate.value && event.latlng && this.getCurrentBioverId !== -1 && !showEditionDialog.value) {
         if (isAllowedToEdit(getCurrentBioverId.value)) {
           return;
         }
@@ -93,6 +94,10 @@
       mapAdmin.value.flyToBounds([[boundingBox.minlat, boundingBox.minlong],[boundingBox.maxlat, boundingBox.maxlong]], {duration: 1, easeLinearity: 0});
     }
 
+    function poiCreatorController(event) {
+      couldCreate.value = event.detail;
+    }
+
     watch(() => pois, () => {
       if (shouldNotUpdateBounding.value) {
         shouldNotUpdateBounding.value = false;
@@ -102,6 +107,8 @@
     }, { deep: true });
 
   onMounted(() => {
+    window.addEventListener('poi-creator-control', poiCreatorController);
+
     mapAdmin.value = L.map('map', {zoomAnimation: true}).setView([0, 0], 7);
     /*const base = L.tileLayer(`https://api.maptiler.com/maps/50a99959-5522-4b4a-8489-28de9d3af0ed/{z}/{x}/{y}.png?key=${KEY}`, {
         minZoom: 3,
@@ -113,6 +120,8 @@
         maxZoom: 22,
         attribution: 'BiodivAR'
     }).addTo(mapAdmin.value);
+    
+    L.poiCreator().addTo(mapAdmin.value);
     /*var baseLayers = {
       "Dark": dark,
       "Base": base
@@ -127,7 +136,8 @@
   })
 
   onUnmounted(() => {
-      mapAdmin.value = null;
+    window.removeEventListener('poi-creator-control', poiCreatorController);
+    mapAdmin.value = null;
   })
 
 </script>

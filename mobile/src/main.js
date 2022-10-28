@@ -17,6 +17,7 @@ import BaseMessage from './components/base/BaseMessage.vue';
 import BaseModal from './components/base/BaseModal.vue';
 import BaseRadio from './components/base/BaseRadio.vue';
 
+import "./components/TheMap/custom-leaflet-style.css";
 
 import './composables/localStorage.js';
 
