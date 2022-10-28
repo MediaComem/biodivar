@@ -590,7 +590,7 @@ export default {
       return user && user.username ? user.username : '';
     },
     positionFormatter(symbol) {
-      return symbol && symbol.position ? `{ x: ${symbol.position.x}, y: ${symbol.position.y}, alpha: ${symbol.position.alpha}}` : '';
+      return symbol && symbol.position ? `{ distance: ${symbol.position.distance}, rotation: ${symbol.position.rotation}, elevation: ${symbol.position.elevation}}` : '';
     },
     globalCheckAnalizer() {
       if (this.allAreUnselected) {

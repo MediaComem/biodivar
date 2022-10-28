@@ -22,6 +22,9 @@ export function hourFormatter(date)  {
 }
 
 export function fullDateFormatter(date)  {
+  if (!date) {
+    return '';
+  }
   return dateFormatter(date)+ ' ' + hourFormatter(date);
 }
 
