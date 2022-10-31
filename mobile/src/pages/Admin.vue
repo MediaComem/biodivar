@@ -5,7 +5,7 @@
       <BioversItem :biover="biover"/>
     </div>
     <div class="return"><a class="link" href="#menu"><img src="../assets/shared/arrow_back.svg"/></a><p class="text">CARTE</p></div>
-    <div style="height: 50vh">
+    <div>
       <Map />
     </div>
     <div class="upload-layout">

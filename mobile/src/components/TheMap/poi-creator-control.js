@@ -6,19 +6,17 @@ L.PoiCreator = L.Control.extend({
     onAdd: function(map) {
         let state = false;
         
-        const div = L.DomUtil.create('div', 'leaflet-control-poicreator-interior');
-        const img = L.DomUtil.create('img', '', div);
+        const div = L.DomUtil.create('div', 'leaflet-control-interior');
+        const p = L.DomUtil.create('p', 'material-symbols-sharp leaflet-control-input', div);
 
-        img.width = 20;
-
-        img.src = '/assets/map/add_location.svg';
+        p.innerHTML = 'add_location';
 
         L.DomEvent
             .addListener(div, 'click', L.DomEvent.stopPropagation)
             .addListener(div, 'click', L.DomEvent.preventDefault)
             .addListener(div, 'click', () => {
                 state = !state;
-                state ? div.classList.add("leaflet-control-poicreator-interior-select") : div.classList.remove("leaflet-control-poicreator-interior-select");
+                state ? div.classList.add("leaflet-control-interior-select") : div.classList.remove("leaflet-control-interior-select");
                 window.dispatchEvent(new CustomEvent('poi-creator-control', {detail: state}));
             });
 

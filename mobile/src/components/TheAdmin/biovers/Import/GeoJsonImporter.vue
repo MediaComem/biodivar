@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useStore } from 'vuex';
 
 import BioverCreator from '../Dialog/BioverCreator.vue';
@@ -63,7 +63,7 @@ function createPathCoordinates(coordiantes) {
 
 function createPoi(poi) {
   return {
-    title: poi.properties.common_name.fr,
+    title: poi.properties.title,
     title_is_visible: true,
     subtitle: '',
     subtitle_is_visible: false,
@@ -118,31 +118,15 @@ function createElement(data) {
   }
 }
 
-function sent() {
-  let fileContent = '';
+function sent(event) {
+  const result = event.detail.features;
 
-  const fr = new FileReader();
-  fr.onload = () => {
-    fileContent = fr.result;
-    const result = JSON.parse(fileContent);
-    if (Array.isArray(result)) {
-      result.forEach((type) => {
-        type.features.forEach((data) => {
-          createElement(data);
-        });
-      });
-    } else {
-      result.features.forEach((data) => {
-        createElement(data);
-      });
-    }
-    importPois(pois.value);
-    importPaths(paths.value);
-    couldPublish.value = true;
-  };
-  if (upload.value.uploadFiles) {
-    fr.readAsText(upload.value.uploadFiles[0].raw);
-  }
+  result.forEach((feature) => {
+    createElement(feature);
+  });
+  importPois(pois.value);
+  importPaths(paths.value);
+  couldPublish.value = true;
 }
 
 function handleExceed() {
@@ -168,7 +152,6 @@ async function save() {
   }
 
   resetUpload();
-  upload.value.uploadFiles.splice(0, 1);
   setWaiting(false);
   saveDone.value = true;
   setTimeout(() => {
@@ -176,6 +159,14 @@ async function save() {
     couldPublish.value = false;
   }, 2000);
 }
+
+onMounted(() => {
+  window.addEventListener('custom-upload-control', sent);
+})
+
+onUnmounted(() => {
+  window.removeEventListener('custom-upload-control', sent);
+})
 </script>
 
 <template>
@@ -183,24 +174,10 @@ async function save() {
     <base-button class="button" @click="openBioversCreator">
       <p class="material-symbols-sharp text-formatting">add_circle</p> Créer un nouveau biovers
     </base-button>
-    <BioverCreator :showDialog="bioversCreator" @closeDialog="closeBioversCreator"/>
-    <el-upload
-      ref="upload"
-      style="display: flex;"
-      accept=".json,.geojson"
-      action="https://jsonplaceholder.typicode.com/posts/"
-      :auto-upload="false"
-      :on-change="handleExceed"
-    >
-      <template #trigger>
-        <base-button class="button">
-          <p class="material-symbols-sharp text-formatting">upload_file</p> Importer .json
-        </base-button>
-      </template>
-      <base-button :class="{button: couldPublish, disable: !couldPublish}" @click="save">
-        <p class="material-symbols-sharp text-formatting">publish</p> Publier
-      </base-button>
-    </el-upload>
+    <BioverCreator :showDialog="bioversCreator" @closeDialog="closeBioversCreator"/>      
+    <base-button :class="{button: couldPublish, disable: !couldPublish}" @click="save">
+      <p class="material-symbols-sharp text-formatting">publish</p> Publier
+    </base-button>
     <template v-if="saveDone">
       <el-alert :title="$t('import.result')" type="success" />
     </template>

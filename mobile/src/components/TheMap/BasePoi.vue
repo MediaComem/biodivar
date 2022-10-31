@@ -97,7 +97,7 @@
           color: `#FFFFFF`,
           opacity: `0.1`,
           fill: false,
-          dashArray: [20, 20],
+          dashArray: [5, 5],
       }).addTo(currentMap.value);
   }
 
@@ -225,6 +225,7 @@
     removeClickPopup();
     currentMap.value.removeLayer(marker.value);
     currentMap.value.removeLayer(circle.value);
+    currentMap.value.removeLayer(scopeCircle.value);
     if (popup.value.isOpen()) currentMap.value.removeLayer(popup.value);
   })
 </script>

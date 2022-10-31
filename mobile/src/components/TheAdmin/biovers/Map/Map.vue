@@ -3,6 +3,7 @@
 
   import { mapStore } from '../../../../composables/map.js';
   import { store } from '../../../../store/store.js';
+  import { computeGeoJSONFromPOIs } from '../../../../utils/geojson.js';
 
   import ThePoiEditor from '../Dialog/ThePoiEditor.vue';
   import BasePoi from '../../../TheMap/BasePoi.vue';
@@ -98,6 +99,27 @@
       couldCreate.value = event.detail;
     }
 
+    function download(file) {
+      const anchor = document.createElement('a');
+      anchor.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(file);
+      anchor.target = '_blank';
+      anchor.download = 'export_poi.json';
+      anchor.click();
+    }
+    
+    function downloadAvailablePois(event) {
+      const boundingBox = event.detail;
+      const minLat = boundingBox._southWest.lat;
+      const maxLat = boundingBox._northEast.lat;
+      const minLong = boundingBox._southWest.lng;
+      const maxLong = boundingBox._northEast.lng;
+      /*const toBeDownload = getPois.value.filter((poi) => {
+        const coordinate = poi.element.coordinate;
+        return coordinate.lat > minLat && coordinate.lat < maxLat && coordinate.long > minLong && coordinate.long < maxLong;
+      })*/
+      download(computeGeoJSONFromPOIs(getPois.value))
+    }
+
     watch(() => pois, () => {
       if (shouldNotUpdateBounding.value) {
         shouldNotUpdateBounding.value = false;
@@ -108,25 +130,30 @@
 
   onMounted(() => {
     window.addEventListener('poi-creator-control', poiCreatorController);
+    window.addEventListener('custom-download-control', downloadAvailablePois);
 
-    mapAdmin.value = L.map('map', {zoomAnimation: true}).setView([0, 0], 7);
+    mapAdmin.value = L.map('map', {zoomAnimation: true, zoomControl: false}).setView([0, 0], 7);
     /*const base = L.tileLayer(`https://api.maptiler.com/maps/50a99959-5522-4b4a-8489-28de9d3af0ed/{z}/{x}/{y}.png?key=${KEY}`, {
         minZoom: 3,
         maxZoom: 22,
         attribution: 'BiodivAR'
-    }).addTo(map.value);*/
+    }).addTo(mapAdmin.value);*/
     const dark = L.tileLayer(`https://api.maptiler.com/maps/ch-swisstopo-lbm-dark/{z}/{x}/{y}.png?key=${KEY}`, {
         minZoom: 3,
         maxZoom: 22,
         attribution: 'BiodivAR'
     }).addTo(mapAdmin.value);
     
+    L.zoomIn().addTo(mapAdmin.value);
+    L.zoomOut().addTo(mapAdmin.value);
     L.poiCreator().addTo(mapAdmin.value);
+    L.uploadControl().addTo(mapAdmin.value);
+    L.downloadControl().addTo(mapAdmin.value);
     /*var baseLayers = {
       "Dark": dark,
       "Base": base
     };
-    L.control.layers(baseLayers).addTo(map.value);*/
+    L.control.layers(baseLayers).addTo(mapAdmin.value);*/
     mapAdmin.value.on('click', getPosition);
     mapAdmin.value.on('zoomend', updateMetersInPixel);
     mapAdmin.value.whenReady(() => {
@@ -137,6 +164,7 @@
 
   onUnmounted(() => {
     window.removeEventListener('poi-creator-control', poiCreatorController);
+    window.removeEventListener('custom-download-control', downloadAvailablePois);
     mapAdmin.value = null;
   })
 
@@ -163,7 +191,9 @@
 
 <style scoped>
   #map {
-    height: 100%;
+    height: 50vh;
     width: 100%;
+    max-width: 100%;
+    resize: both;
   }
 </style>

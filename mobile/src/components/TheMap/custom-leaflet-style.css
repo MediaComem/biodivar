@@ -1,4 +1,4 @@
-.leaflet-control-poicreator-interior {
+.leaflet-control-interior {
     width: 30px;
     height: 30px;
     display: flex;
@@ -12,10 +12,23 @@
     border-radius: 2px;
 }
 
-.leaflet-control-poicreator-interior:hover {
+.leaflet-control-interior:hover {
     background-color: #F4F4F4;
 }
 
-.leaflet-control-poicreator-interior-select {
+.leaflet-control-interior-select {
     background-color: #666666;;
+}
+
+.leaflet-control-input {
+    width: 20px;
+    height: 20px;
+    margin:0;
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5px;
+}
+
+.leaflet-top {
+    top: 12px;
 }
