@@ -38,7 +38,7 @@
       <base-message data-type="error" v-if="error">
         {{ $t('TheLogin.error.login') }}
       </base-message>
-      <p>{{ $t('TheLogin.no-account') }} <a @click="emit('register')">{{ $t('TheLogin.inscription') }}</a></p>
+      <p>Pas encore de compte&thinsp;? <a @click="emit('register')">{{ $t('TheLogin.inscription') }}</a></p>
       <base-input class="user">
         <input type="text" v-model="username" :placeholder="$t('TheLogin.placeholder.login.user')">
       </base-input>
@@ -52,7 +52,7 @@
       <base-button><img src="../../assets/login/connexion.svg" />
       {{ $t('TheLogin.button.connexion') }}
       </base-button>
-      <a class="link" @click="forgotPassword = true">{{ $t('TheLogin.forgot-password') }}</a>
+      <a class="link" @click="forgotPassword = true">Mot de passe oublié&thinsp;?</a>
     </base-form>
 </template>
 
@@ -73,7 +73,6 @@
 
   .link {
     display: block;
-    font-family: 'BiodivAR Medium';
     font-size: 14px;
     line-height: 14px;
   }

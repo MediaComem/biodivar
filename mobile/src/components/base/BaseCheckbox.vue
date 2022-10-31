@@ -13,8 +13,8 @@
     max-width: var(--max-width);
     align-items: center;
     display: inline-flex;
-    --bg-color: #E8E8E8;
-    --highlight-color: #009FE3;
+    --bg-color: none;
+    --highlight-color: none;
   }
 
   form :slotted(input) {
@@ -24,6 +24,12 @@
     height: 1rem;
     width: 1rem;
     margin: 0 0.5rem 0 0;
+    border: 1px solid black;
+  }
+
+  form :slotted(input:hover) {
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 1px solid black;
   }
 
   form :slotted(input:checked) {
@@ -31,16 +37,17 @@
   }
 
   form :slotted(input:checked::after) {
-    content: 'X';
+    content: '×';
     color: black;
-    display: flex;
-    align-content: center;
-    justify-content: center;
+    position: relative;
+    top: -2px;
+    left: 3px;
   }
 
   form :slotted(label) {
     color: var(--color);
-    font-family: 'BiodivAR Medium';
+    font-family: 'BiodivAR Roman';
+    font-variation-settings: "wght" 110, "ital" 0;
     font-size: 14px;
     line-height: 14px;
     margin: 1rem auto 1rem auto;
@@ -48,7 +55,6 @@
 
   form :slotted(a) {
     color: var(--link-color);
-    font-family: 'BiodivAR Medium';
     font-size: 14px;
     line-height: 14px;
     cursor: pointer;

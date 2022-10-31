@@ -11,7 +11,7 @@
 
 <template>
 
-  <div>
+  <div class="layout">
     <img data-role="header" alt="Biodivar" src="../../assets/shared/logo.svg" />
 
     <h1 data-role="title">
@@ -50,12 +50,19 @@
   }
 
   [data-role="title"] {
-    font-family: 'BiodivAR Round Medium';
+    font-family: 'BiodivAR Roman';
     font-weight: 500;
-    font-size: 16px;
-    line-height: 16px;
+    font-size: 20px;
+    line-height: 20px;
+    font-variation-settings: "wght" 110, "ital" 50;
     text-align: center;
     color: var(--color);
     margin: 0 0 4rem 0;
+  }
+
+  .layout {
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
   }
 </style>

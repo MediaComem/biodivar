@@ -10,9 +10,10 @@
 
 <style scoped>
   [data-role="button"] {
-    font-family: 'BiodivAR Bold';
+    font-family: 'BiodivAR Roman';
     font-size: 16px;
     line-height: 16px;
+    font-variation-settings: "wght" 149, "ital" 0;
     width: calc(100% - 2rem);
     border-radius: 1rem;
     border: none;
@@ -23,9 +24,10 @@
     text-transform: uppercase;
     cursor: pointer;
     display: flex;
-    align-items: center;
+    align-items: end;
     justify-content: center;
     height: var(--height);
+    letter-spacing: 0.02em;
   }
 
   [data-role="button"] :slotted(img) {

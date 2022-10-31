@@ -148,7 +148,13 @@
    @font-face {
     font-family: "BiodivAR Title";
     src: local("ttf"),
-    url(./assets/fonts/desktop/biodivar-title.ttf) format('truetype');
+    url(./assets/fonts/BiodivAR-titleGX.ttf) format('truetype');
+  }
+
+  @font-face {
+    font-family: "BiodivAR Roman";
+    src: local("ttf"),
+    url(./assets/fonts/BiodivAR-RomanGX.ttf) format('truetype');
   }
 
   * { box-sizing: border-box }
@@ -156,5 +162,16 @@
     height: 100%;
     font-feature-settings: "calt" 0;
     font-variant-ligatures: no-contextual;
+    letter-spacing: 0.02em;
+  }
+
+  p {
+    font-family: "BiodivAR Roman";
+    font-variation-settings: "wght" 110, "ital" 0;
+  }
+
+  a {
+    font-family: "BiodivAR Roman";
+    font-variation-settings: "wght" 110, "ital" 0;
   }
 </style>

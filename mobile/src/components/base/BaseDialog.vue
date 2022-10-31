@@ -33,7 +33,8 @@
   }
 
   dialog :slotted(header) {
-    font-family: 'BiodivAR Bold';
+    font-family: 'BiodivAR Roman';
+    font-variation-settings: "wght" 149, "ital" 0;
     text-align: center;
     color: var(--color);
     font-size: 16px;
@@ -42,7 +43,7 @@
   }
 
   dialog :slotted(p) {
-    font-family: 'BiodivAR Book';
+    font-variation-settings: "wght" 85, "ital" 0;
     font-size: 12px;
     line-height: 12px;
   }
@@ -51,7 +52,8 @@
     margin: 1rem 0 3rem 0;
   }
   dialog :slotted(p.sent-margin) {
-    font-family: 'BiodivAR Bold';
+    font-family: 'BiodivAR Roman';
+    font-variation-settings: "wght" 149, "ital" 0;
     font-size: 16px;
     line-height: 16px;
     margin: 1rem 0 5rem 0;

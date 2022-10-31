@@ -1,29 +1,28 @@
 {
     "TheLogin": {
-        "title": "Réalité augmentée géolocalisée pour l'exploration de la nature",
-        "no-account": "Pas encore de compte? ",
+        "title": "Réalité augmentée pour l’exploration de la nature",
         "inscription": "Inscrivez-vous",
         "forgot-password": "Mot de passe oublié?",
         "reset-password": "Réinitialiser le mot de passe",
         "already-register": "Déjà inscrit·e ?",
         "connect": "Connectez-vous",
-        "aggree": "J'accepte les",
+        "aggree": "J’accepte les",
         "creation": "Créer un compte",
         "email-send": "Vous recevrez un email contenant un lien pour réinitialiser votre mot de passe dans quelques minutes",
         "placeholder": {
             "login": {
-                "user": "email ou nom d'utilisateur",
+                "user": "email ou nom d’utilisateur",
                 "password": "mot de passe"
             },
             "register": {
-                "username": "nom d'utilisateur",
-                "email": "email utilisateur",
+                "username": "nom d’utilisateur",
+                "email": "email",
                 "password": "mot de passe",
                 "confirm": "confirmer mot de passe"
             }
         },
         "license": {
-            "link": "conditions générales",
+            "link": "conditions d’utilisation",
             "general": "Conditions générales (CG)"
         },
         "reset": {

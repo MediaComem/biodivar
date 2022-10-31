@@ -21,9 +21,10 @@
   }
 
   [data-role="input"] :slotted(input) {
-    font-family: 'BiodivAR Medium';
+    font-family: 'BiodivAR Roman';
     font-size: 14px;
     line-height: 14px;
+    font-variation-settings: "wght" 110, "ital" 0;
     width: calc(100% - 2rem);
     max-width: var(--max-width);
     padding: 1rem 1rem;
@@ -31,15 +32,19 @@
     border: 1px solid var(--border-color);
     background-color: var(--bg-color);
     background-image: var(--icon-link);
-    background-position: 1rem 0.7rem;
+    background-position: 0.3rem 0.25rem;
     background-repeat: no-repeat;
-    padding-left: 3rem;
+    padding-left: 2.3rem;
     margin: 0 1rem 1rem 1rem;
     color: var(--color);
+    letter-spacing: 0.02em;
+    padding-top: 8px;
+    padding-bottom: 8px;
   }
 
   [data-role="input"] :slotted(input::placeholder) {
     color: var(--color);
+    opacity:  1;
   }
 
   [data-role="input"] ::slotted(input::-webkit-autofill) {
@@ -49,7 +54,7 @@
   [data-role="input"] :slotted(span) {
     display: block;
     position: absolute;
-    right: 35px;
-    top: 20%;
+    right: 25px;
+    top: 10%;
   }
 </style>
