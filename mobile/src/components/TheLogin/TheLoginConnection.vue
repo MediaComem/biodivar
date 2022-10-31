@@ -38,7 +38,7 @@
       <base-message data-type="error" v-if="error">
         {{ $t('TheLogin.error.login') }}
       </base-message>
-      <p>Pas encore de compte&thinsp;? <a @click="emit('register')">{{ $t('TheLogin.inscription') }}</a></p>
+      <p>Pas encore de compte&thinsp;?&nbsp;<a @click="emit('register')">{{ $t('TheLogin.inscription') }}</a></p>
       <base-input class="user">
         <input type="text" v-model="username" :placeholder="$t('TheLogin.placeholder.login.user')">
       </base-input>

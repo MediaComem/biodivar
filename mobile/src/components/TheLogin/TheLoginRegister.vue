@@ -79,7 +79,7 @@
       <base-message data-type="error" v-show="error === 6">
         {{ $t('TheLogin.error.license') }}
       </base-message>
-      <p>{{ $t('TheLogin.already-register') }} <a @click="emit('connection')">{{ $t('TheLogin.connect') }}</a></p>
+      <p>Déjà inscrit·e&thinsp;?&nbsp;<a @click="emit('connection')">{{ $t('TheLogin.connect') }}</a></p>
       <base-input class="user">
         <input type="text" v-model="username" :placeholder="$t('TheLogin.placeholder.register.username')">
       </base-input>

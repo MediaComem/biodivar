@@ -11,7 +11,7 @@
 
 <style scoped>
   [data-role="footer"] {
-    height: 70px;
+    height: 100px;
     max-width: var(--max-width);
     width: 100%;
     display: inline-flex;
@@ -32,6 +32,6 @@
   }
 
   .image {
-    height: 50px;
+    height: 70px;
   }
 </style>
