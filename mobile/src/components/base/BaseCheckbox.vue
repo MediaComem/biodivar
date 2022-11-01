@@ -37,11 +37,21 @@
   }
 
   form :slotted(input:checked::after) {
-    content: '×';
-    color: black;
-    position: relative;
-    top: -2px;
-    left: 3px;
+      content: '×';
+      color: black;
+      position: relative;
+      top: 0px;
+      left: 3px;
+    }
+
+  @-moz-document url-prefix() {
+    form :slotted(input:checked::after) {
+      content: '×';
+      color: black;
+      position: relative;
+      top: -2px;
+      left: 3px;
+    }
   }
 
   form :slotted(label) {

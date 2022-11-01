@@ -19,7 +19,7 @@
   const emit = defineEmits(['register', 'connection'])
 
   async function registerUser() {
-    if (validateEmail() && validatePassword() && validateAggreement()) {
+    if (validateUsername() && validateEmail() && validatePassword() && validateAggreement()) {
       const resp = await register(username.value, email.value, password.value);
       if (resp?.statusCode === 200) {
         emit('register');
@@ -27,6 +27,14 @@
         error.value = 0;
       } 
     }
+  }
+
+  function validateUsername() {
+    if (username.value === '') {
+      error.value = 7;
+      return false;
+    }
+    return true;
   }
 
   function validatePassword() {
@@ -79,6 +87,9 @@
       <base-message data-type="error" v-show="error === 6">
         {{ $t('TheLogin.error.license') }}
       </base-message>
+      <base-message data-type="error" v-show="error === 7">
+        S'il vous plaît, entrer un nom d’utilisateur
+      </base-message>
       <p>Déjà inscrit·e&thinsp;?&nbsp;<a @click="emit('connection')">{{ $t('TheLogin.connect') }}</a></p>
       <base-input class="user">
         <input type="text" v-model="username" :placeholder="$t('TheLogin.placeholder.register.username')">
@@ -89,22 +100,24 @@
       <base-input class="password">
         <input :type="showPassword ? 'text' : 'password'" v-model="password" :placeholder="$t('TheLogin.placeholder.register.password')">
         <span @click="showPassword = !showPassword">
-          <img v-if="showPassword" src="../../assets/login/visibility_off.svg">
-          <img v-else src="../../assets/login/remove_red_eye.svg">
+          <p v-if="showPassword" class="material-symbols-sharp icon-margin">visibility_off</p>
+          <p v-else class="material-symbols-sharp icon-margin">remove_red_eye</p>
         </span>
       </base-input>
       <base-input class="password">
         <input :type="showConfirmPassword ? 'text' : 'password'" v-model="confirmPassword" :placeholder="$t('TheLogin.placeholder.register.confirm')">
         <span @click="showConfirmPassword = !showConfirmPassword">
-          <img v-if="showConfirmPassword" src="../../assets/login/visibility_off.svg">
-          <img v-else src="../../assets/login/remove_red_eye.svg">
+          <p v-if="showConfirmPassword" class="material-symbols-sharp icon-margin">visibility_off</p>
+          <p v-else class="material-symbols-sharp icon-margin">remove_red_eye</p>
         </span>
       </base-input>
       <base-checkbox>
         <input type="checkbox" v-model="aggreement">
         <label>{{ $t('TheLogin.aggree') }} <a @click="showAggreement = true">{{ $t('TheLogin.license.link') }}</a></label>
       </base-checkbox>
-      <base-button><img src="../../assets/login/person_add.svg" />{{ $t('TheLogin.creation') }}</base-button>
+      <base-button>
+       <p class="material-symbols-sharp icon-margin-button">person_add</p><p class="button-text">{{ $t('TheLogin.creation') }}</p>
+      </base-button>
     </base-form>
 </template>
 
@@ -128,5 +141,21 @@
     --bg-color: none;
     --color: black;
     --border-color: #000000;
+  }
+
+  .icon-margin {
+    margin: 0px;
+  }
+
+  .icon-margin-button {
+    margin: 0px;
+    padding-right: 6px;
+  }
+
+  .button-text {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 1.5px;
+    font-variation-settings: "wght" 149, "ital" 0;
   }
 </style>

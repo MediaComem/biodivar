@@ -45,12 +45,12 @@
       <base-input class="password">
         <input :type="showPassword ? 'text' : 'password'" v-model="password" :placeholder="$t('TheLogin.placeholder.login.password')">
         <span @click="showPassword = !showPassword">
-          <img v-if="showPassword" src="../../assets/login/visibility_off.svg">
-          <img v-else src="../../assets/login/remove_red_eye.svg">
+          <p v-if="showPassword" class="material-symbols-sharp icon-margin">visibility_off</p>
+          <p v-else class="material-symbols-sharp icon-margin">remove_red_eye</p>
         </span>
       </base-input>
-      <base-button><img src="../../assets/login/connexion.svg" />
-      {{ $t('TheLogin.button.connexion') }}
+      <base-button>
+      <p class="material-symbols-sharp icon-margin-button">login</p><p class="button-text">{{ $t('TheLogin.button.connexion') }}</p>
       </base-button>
       <a class="link" @click="forgotPassword = true">Mot de passe oublié&thinsp;?</a>
     </base-form>
@@ -75,5 +75,21 @@
     display: block;
     font-size: 14px;
     line-height: 14px;
+  }
+
+  .icon-margin {
+    margin: 0px;
+  }
+
+  .icon-margin-button {
+    margin: 0px;
+    padding-right: 6px;
+  }
+
+  .button-text {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 1.5px;
+    font-variation-settings: "wght" 149, "ital" 0;
   }
 </style>
