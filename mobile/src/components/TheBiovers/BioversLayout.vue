@@ -70,8 +70,9 @@
   }
 
   hr {
-      border-top: 1px solid #BDBDBD;
-      margin: 0 1rem 0 1rem;
+    border: none;
+    border-top: 1px solid #BDBDBD;
+    margin: 0 1rem 0 1rem;
   }
 
   .search {

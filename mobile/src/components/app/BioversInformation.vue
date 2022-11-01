@@ -40,32 +40,32 @@
     </div>
     <div>
         <div class="element">
-            <img src="../../assets/shared/help.svg" alt="Help">
+            <p class="material-symbols-sharp text-margin">info</p>
             <p class="information-text">{{ props.biover.description }}</p>
         </div>
         <div class="element">
-            <img src="../../assets/shared/my_location.svg" alt="Location">
+            <p class="material-symbols-sharp text-margin">my_location</p>
             <p class="information-text">Yverdon-les-Bains, Suisse</p>
         </div>
-        <div class="element">
-            <img src="../../assets/shared/restore.svg" alt="Restore">
+        <!--div class="element">
+            <p class="material-symbols-sharp text-margin">restore</p>
             <p class="information-text">{{ $t('TheMenu.Information.LastConnection') }} 31/03/2022, 8h51</p>
-        </div>
+        </div-->
         <div class="element">
-            <img src="../../assets/shared/create.svg" alt="Create">
-            <p v-if="props.biover.update_date" class="information-text">{{ $t('TheMenu.Information.LastEdition') }} {{ dateFormatter(props.biover.update_date) }}&#8239;: {{ hourFormatter(props.biover.update_date) }} </p>
+            <p class="material-symbols-sharp text-margin">create</p>
+            <p v-if="props.biover.update_date" class="information-text">{{ $t('TheMenu.Information.LastEdition') }} {{ dateFormatter(props.biover.update_date) }}, {{ hourFormatter(props.biover.update_date) }} </p>
             <p v-else class="information-text">{{ $t('TheMenu.Information.NoUpdate') }}</p>
         </div>
         <div class="element">
-            <img src="../../assets/shared/architecture.svg" alt="Architecture">
-            <p class="information-text">{{ $t('TheMenu.Information.Create') }} {{ dateFormatter(props.biover.creation_date) }}&#8239;: {{ hourFormatter(props.biover.creation_date) }} {{ $t('TheMenu.Information.By') }} {{ props.biover.User.username }}</p>
+            <p class="material-symbols-sharp text-margin">architecture</p>
+            <p class="information-text">{{ $t('TheMenu.Information.Create') }} {{ dateFormatter(props.biover.creation_date) }}, {{ hourFormatter(props.biover.creation_date) }} {{ $t('TheMenu.Information.By') }} {{ props.biover.User.username }}</p>
         </div>
         <div class="element">
-            <img src="../../assets/shared/location_on.svg" alt="LocationOn">
+            <p class="material-symbols-sharp text-margin">pin_drop</p>
             <p class="information-text">{{ props.biover.Poi.length }} {{ $t('TheMenu.Information.POI') }}</p>
         </div>
         <div class="element">
-            <img src="../../assets/shared/gesture.svg" alt="Gesture">
+            <p class="material-symbols-sharp text-margin">gesture</p>
             <p class="information-text">{{ props.biover.Path.length }} {{ $t('TheMenu.Information.Traces') }}</p>
         </div>
         <!--div class="element">
@@ -76,19 +76,17 @@
             <img src="../../assets/shared/visibility.svg" alt="Gesture">
             <p class="information-text">41 vues</p>
         </div-->
-         <div class="element">
-            <img src="../../assets/shared/storage.svg" alt="Gesture">
+         <!--div class="element">
+            <p class="material-symbols-sharp text-margin">storage</p>
             <p class="information-text">15.3 MB</p>
-        </div>
+        </div-->
     </div>
-    <div class="button-admin">
-        <base-button class="enter-admin" @click="enterAR()">
-          <p class="material-symbols-sharp icon-margin">view_in_ar</p>{{ $t('TheMenu.Information.Enter') }}
-        </base-button>
-        <base-button class="enter-admin" @click="openInMap()">
-          <p class="material-symbols-sharp icon-margin">map</p>Ouvrir sur la carte
-        </base-button>
-    </div>
+      <base-button class="enter-map" @click="openInMap()">
+        <p class="material-symbols-sharp icon-margin">map</p><p class="button-text">Ouvrir sur la carte</p>
+      </base-button>
+      <base-button class="enter-admin" @click="enterAR()">
+        <p class="material-symbols-sharp icon-margin">view_in_ar</p><p class="button-text">Ouvrir en RA</p>
+      </base-button>
   </div>
 </template>
 
@@ -105,17 +103,25 @@
   .element {
     display: flex;
     text-align: start;
-    margin: 0 0 0 2rem;
+    margin: 0 0 0.3rem 1rem;
   }
 
   .information-text {
     color: #BDBDBD;
     margin: 0;
-    margin-left: 4px;
+    margin-left: 10px;
     user-select: none;
-    font-family: 'BiodivAR Book';
     font-size: 12px;
     line-height: 12px;
+    margin-top: 3px;
+    font-variation-settings: "wght" 85, "ital" 0;
+  }
+
+  .button-text {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 1.5px;
+    font-variation-settings: "wght" 149, "ital" 0;
   }
 
   .button-admin {
@@ -150,8 +156,20 @@
     --height: 38px;
   }
 
+  .enter-map {
+    --link-color: white;
+    --highlight-color: #699A3F;
+    --height: 38px;
+  }
+
   .icon-margin {
     margin: 0px;
     padding-right: 6px;
+  }
+
+  .text-margin {
+    margin: 0;
+    color: #BDBDBD;
+    font-size: 18px;
   }
 </style>

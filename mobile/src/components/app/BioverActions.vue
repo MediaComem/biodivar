@@ -98,7 +98,7 @@
     background-color: #8DC26F;
     border: solid 1px #8DC26F;
     border-radius: 2rem;
-    margin: 1rem 1rem 0 1rem;
+    margin: 0rem 0rem 0 1rem;
     padding: 0.5rem 1rem 0.5rem 1rem;
     height: 36px;
     cursor: pointer;
@@ -115,12 +115,13 @@
   }
 
   p {
-    font-family: 'BiodivAR Medium';
+    font-family: 'BiodivAR Roman';
     font-size: 14px;
     line-height: 14px;
     padding-left: 0.3rem;
     margin: 0;
     text-align: center;
+    font-variation-settings: "wght" 110, "ital" 0;
   }
 
   .element-menu {

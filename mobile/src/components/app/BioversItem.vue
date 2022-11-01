@@ -1,8 +1,6 @@
 <script setup>
   import { ref } from '@vue/reactivity';
 
-  import Splitting from 'splitting';
-
   import { useStore } from '../../composables/store';
   import vuex from 'vuex';
 
@@ -52,8 +50,6 @@
   const notificationMessage = ref('');
   const shouldDisplayNotification = ref(false);
   const notificationType = ref('');
-
-  Splitting();
 
   const props = defineProps({
     biover: Object,
@@ -271,28 +267,28 @@
     font-size: 18px;
     line-height: 16px;
     width: calc(100% - 20px);
-    margin-left: 0.5rem;
     margin-bottom: 0.5rem;
+    margin-top: -4px;
   }
 
   .menu {
     width: 100%;
     background-color: #323232;
     border: solid 1px #323232;
-    border-radius: 2rem;
     display: inline-flex;
     margin-bottom: 1rem;
-    padding-bottom: 1rem;
   }
 
   .menu-open {
     max-height: 1000px;
     height: auto;
+    border-radius: 24px;
   }
 
   .menu-close {
     max-height: 48px;
     height: 48px;
+    border-radius: 24px;
   }
 
   .menu-transition {
@@ -308,11 +304,13 @@
   }
 
   p {
+    font-family: 'BiodivAR Title';
     user-select: none;
     color: white;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-variation-settings: "wdth" 13.6885, "wght" 89.8896;
+    font-variation-settings: "wdth" 40, "wght" 90;
+    letter-spacing: 0.04em;
   }
 
   p .char {

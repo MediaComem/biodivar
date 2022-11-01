@@ -105,7 +105,7 @@
     border-bottom: solid black 1px;
     margin-bottom: 1rem;
     display: flex;
-    padding: 10px 10px 1rem 10px;
+    padding: 10px 10px 10px 10px;
     background-color: #699A3F;
   }
 
@@ -126,7 +126,7 @@
   li {
     display: flex;
     align-items: center;
-    padding-left: 1rem;
+    padding-left: 0.5rem;
     z-index: 100;
     height: 40px;
   }
@@ -148,7 +148,7 @@
   }
 
   .logo {
-    height: 22px;
+    height: 34px;
     width: 80%;
     justify-content: flex-start;
     display: flex;
@@ -217,8 +217,9 @@
   }
 
   .font {
-    font-family: 'BiodivAR Medium';
+    font-family: 'BiodivAR Roman';
     font-size: 16px;
     line-height: 16px;
+    font-variation-settings: "wght" 110, "ital" 0;
   }
 </style>

@@ -8,7 +8,7 @@ export function dateFormatter(date)  {
     const year = t.getFullYear();
     const month = dateIfAddZero(t.getMonth() + 1);
     const day = dateIfAddZero(t.getDate());
-    return `${day}/${month}-${year}`;
+    return `${day}/${month}/${year}`;
 }
 
 export function hourFormatter(date)  {

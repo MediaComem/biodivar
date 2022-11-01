@@ -15,7 +15,7 @@
     line-height: 16px;
     font-variation-settings: "wght" 149, "ital" 0;
     width: calc(100% - 2rem);
-    border-radius: 1rem;
+    border-radius: 1.5rem;
     border: none;
     background: var(--highlight-color);
     color: var(--link-color);
@@ -28,6 +28,10 @@
     justify-content: center;
     height: var(--height);
     letter-spacing: 0.02em;
+  }
+
+  button:hover {
+    opacity: 0.9;
   }
 
   [data-role="button"] :slotted(img) {

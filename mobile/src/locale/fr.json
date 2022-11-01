@@ -126,13 +126,13 @@
             "FromUnPin": "Ajouter au éplingé"
         },
         "Information": {
-            "POI": "points d'intérêt",
-            "Traces": "traces",
+            "POI": "points d’intérêt·s",
+            "Traces": "trace·s",
             "Enter": "ENTRER",
-            "NoUpdate": "Pas d'édition effectué sur ce biover",
+            "NoUpdate": "pas d’édition effectuée sur ce biovers",
             "Create": "créé le",
-            "LastConnection": "Dernière connection le",
-            "LastEdition": "Dernière édition le",
+            "LastConnection": "dernière connexion le",
+            "LastEdition": "dernière édition le",
             "By": "par"
         }
     },
