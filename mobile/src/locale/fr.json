@@ -11,43 +11,44 @@
         "email-send": "Vous recevrez un email contenant un lien pour réinitialiser votre mot de passe dans quelques minutes",
         "placeholder": {
             "login": {
-                "user": "email ou nom d’utilisateur",
+                "user": "mail ou nom d’utilisateur",
                 "password": "mot de passe"
             },
             "register": {
                 "username": "nom d’utilisateur",
-                "email": "email",
+                "email": "mail",
                 "password": "mot de passe",
                 "confirm": "confirmer mot de passe"
             }
         },
         "license": {
             "link": "conditions d’utilisation",
-            "general": "Conditions générales (CG)"
+            "general": "Conditions d’utilisation"
         },
         "reset": {
             "title": "Mot de passe oublié?",
-            "description": "Entrez l'adresse email associée à votre compte. Vous recevrez un lien qui vous permettra de réinitialiser votre mot de passe"
+            "description": "Entrez l’adresse mail associée à votre compte. Vous recevrez un lien qui vous permettra de réinitialiser votre mot de passe"
         },
         "button": {
             "connexion": "connexion",
             "inscription": "inscription",
-            "home": "Retour à la page d'accueil"
+            "home": "Retour à la page d’accueil"
         },
         "error": {
-            "login": "Erreur dans le nom d'utilisateur ou le mot de passe",
-            "login-failure": "Erreur durant l'enregistrement de l'utilisateur",
+            "no-user": "Veuillez entrer un nom d’utilisateur",
+            "login": "Erreur dans le nom d’utilisateur ou le mot de passe",
+            "login-failure": "Erreur durant l’enregistrement de l’utilisateur",
             "password-length": "Le mot de passe doit contenir au moins 4 caractères",
-            "password-confirm": "Les mot de passes ne correspondent pas",
-            "no-mail": "S'il vous plaît, entrer une adresse email",
-            "valid-email": "Entrer une adresse mail valide",
-            "license": "Veuillez lire et accepter les conditions générales",
-            "mail-not-found": "L'adresse ne correspond pas à un compter BiodivAR"
+            "password-confirm": "Les mots de passes ne correspondent pas",
+            "no-mail": "Veuillez entrer une adresse mail",
+            "valid-email": "Veuillez entrer une adresse mail valide",
+            "license": "Veuillez lire et accepter les conditions d’utilisation",
+            "mail-not-found": "L’adresse ne correspond à aucun compte"
         }
     },
     "TheMenu": {
-        "Pin": "biovers épinglé·s :",
-        "Unsuported": "Cet appareil ne supportant pas webXR, vous ne pouvez l'utiliser avec cette application",
+        "Pin": "biovers épinglé·s:",
+        "Unsuported": "Cet appareil ne supporte pas webXR, vous ne pouvez pas utiliser l’application",
         "Item": {
             "BioverTitle": "Biovers",
             "BioverDescription": "accéder à vos environnements virtuels partagés",
@@ -63,41 +64,39 @@
             "HelpDescription": "à propos du projet BiodivAR"     
         },
         "Shared": {
-            "Public": "Publique",
-            "Private": "Privé"
+            "Public": "public",
+            "Private": "privé"
         },
         "Dialog": {
-            "DeleteHeader": "Suppression du biovers ",
-            "DeleteText": "Etes-vous sûr de vouloir supprimer ce biovers?",
-            "DeleteButton": "Delete",
-            "DuplicateHeader": "Dupliquer le biovers",
-            "DuplicationDescription": "Description",
-            "DuplicatePlaceholder": "Nom du nouveau biovers",
-            "DuplicateButton": "Dupliquer",
-            "EditableHeader": "Changer le droit de modification du biovers",
-            "EditableDescription": "Description",
-            "Editable": "Editable",
-            "NotEditable": "Non-Editable",
+            "DeleteHeader": "Suppression de ",
+            "DeleteText": "Êtes-vous sûr·e de vouloir supprimer ce biovers\u2009?",
+            "DeleteButton": "Supprimer",
+            "DuplicateHeader": "Dupliquer ",
+            "DuplicationDescription": "Vous pouvez dupliquer tout biovers public.",
+            "DuplicatePlaceholder": "nom du nouveau biovers",
+            "DuplicateButton": "dupliquer",
+            "EditableDescription": "Lorsqu’un biovers est modifiable, tout le monde peut y apporter des modifications. S’il est non-modifiable, vous seul pouvez le faire.",
+            "Editable": "modifiable",
+            "NotEditable": "non-modifiable",
             "Update": "Update",
-            "TitleHeader": "Modification du titre",
-            "TitleDescription": "Description",
-            "TitlePlaceholder": "Nom du biovers",
+            "TitleHeader": "Modifier les paramètres du biovers",
+            "TitleDescription": "Vous pouvez modifier le nom, la description et l’emplacement de votre biovers.",
+            "TitlePlaceholder": "nom du biovers",
             "DescriptionPlaceholder": "Description du biovers",
             "Save": "Sauvegarder",
-            "VisibilityHeader": "Changer la visibilité du biovers ",
-            "VisibilityDescription": "Description",
-            "Public": "Publique",
-            "Private": "Privé",
-            "FavoriHeader_1": "Ajouter le ",
-            "FavoriHeader_2": "au favori",
-            "FavoriDescription": "Description",
-            "FavoriAdd": "Ajouter au favori",
-            "FavoriRemove": "Retirer des favori",
-            "PinHeader_1": "Ajouter le ",
-            "PinHeader_2": "au épinglé",
-            "PinDescription": "Description",
-            "PinAdd": "Ajouter au épinglé",
-            "PinRemove": "Retirer des épinglés"
+            "VisibilityHeader": "Changer la visibilité de ",
+            "VisibilityDescription": "Lorsqu’un biovers est public, tout le monde peut le visualiser et le visiter en RA. Lorsqu’il est privé, vous seul·e y avez accès.",
+            "Public": "public",
+            "Private": "privé",
+            "FavoriHeader_1": "Ajouter ",
+            "FavoriHeader_2": "aux favoris",
+            "FavoriDescription": "Vos biovers favoris apparaissent dans la section correspondante.",
+            "FavoriAdd": "ajouter aux favoris",
+            "FavoriRemove": "retirer des favoris",
+            "PinHeader": "Ajouter ou retirer une épingle à ",
+            "PinDescription": "Lorsqu’un biovers est épinglé, il apparaît en permanence au sommet de la fenêtre de l’application.",
+            "PinAdd": "ajouter une épingle",
+            "PinRemove": "retirer l’épingle"
         },
         "Action": {
             "Pin": "Epingler",
@@ -112,18 +111,18 @@
             "ToUnedit": "rendre non-éditable"
         },
         "More": {
-            "AR": "ouvrir dans la RA [mobile]",
-            "Desktop": "ouvrir dans la carte [desktop]",
-            "Title": "modifier titre/description",
-            "Duplicate": "dupliquer ce biovers",
-            "Delete": "supprimer ce biovers",
+            "AR": "ouvrir en RA",
+            "Desktop": "ouvrir sur la carte",
+            "Title": "modifier paramètres",
+            "Duplicate": "dupliquer le biovers",
+            "Delete": "supprimer le biovers",
             "Private": "rendre privé",
-            "Publique": "rendre publique",
-            "ToEdit": "rendre éditable",
-            "ToUnEdit": "rendre non-éditable",
+            "Publique": "rendre public",
+            "ToEdit": "rendre modifiable",
+            "ToUnEdit": "rendre non-modifiable",
             "ToFavorite": "retirer des favoris",
-            "ToPin": "retirer l'épingle",
-            "FromUnPin": "Ajouter au éplingé"
+            "ToPin": "retirer l’épingle",
+            "FromUnPin": "ajouter une épingle"
         },
         "Information": {
             "POI": "points d’intérêt·s",

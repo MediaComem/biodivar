@@ -29,31 +29,29 @@
 
 </script>
 
-
 <template>
   <div>
     <div data-role="menu" class="transition" :class="{enable: props.enabled, disable: !props.enabled}" >
       <div data-role="header">
         <p data-role="header-text">{{ props.biover.name }}</p>
         <div data-role="header-cross">
-          <img src="../../assets/shared/cross.svg" alt="cross" @click="emit('close')">
+          <p class="material-symbols-sharp icon-margin icon-font fill-font" style="margin-top: 10px; margin-right: 0.5rem; padding-right: 0px;" @click="emit('close')">close</p>
         </div>
       </div>
       <ul>
-        <li v-if="isMobileOrTablet" @click="section = 'ar'"><img alt="OpenAR" src="../../assets/shared/more/view_in_ar.svg"> {{ $t('TheMenu.More.AR') }}</li>
-        <li @click="openInMap"><img alt="Map" src="../../assets/shared/more/map.svg"> {{ $t('TheMenu.More.Desktop') }}</li>
-        <li :class="{'not-allowed': !editableRight}" @click="editableRight ? emit('edit') : ''"><img alt="Title" src="../../assets/shared/more/edit.svg"> {{ $t('TheMenu.More.Title') }}</li>
-        <li @click="emit('duplicate')"><img alt="Copy" src="../../assets/shared/more/file_copy.svg"> {{ $t('TheMenu.More.Duplicate') }}</li>
-        <li :class="{'not-allowed': !editableRight}" @click="editableRight ? emit('delete') : ''"><img alt="Delete" src="../../assets/shared/more/delete.svg"> {{ $t('TheMenu.More.Delete') }}</li>
-        <li v-if="props.biover.is_public" :class="{'not-allowed': !editableRight}" @click="editableRight ? emit('visibility') : ''"><img alt="Visibility" src="../../assets/shared/more/remove_red_eye.svg"> {{ $t('TheMenu.More.Private') }}</li>
-        <li v-if="!props.biover.is_public" :class="{'not-allowed': !editableRight}" @click="editableRight ? emit('visibility') : ''"><img alt="Visibility" src="../../assets/shared/more/visibility_off.svg"> {{ $t('TheMenu.More.Publique') }}</li>
-        <li v-if="props.biover.is_editable" :class="{'not-allowed': !editableRight}" @click="editableRight ?emit('editable') : ''"><img alt="Edit" src="../../assets/shared/more/edit.svg"> {{ $t('TheMenu.More.ToUnEdit') }}</li>
-        <li v-if="!props.biover.is_editable" :class="{'not-allowed': !editableRight}" @click="editableRight ?emit('editable') : ''"><img alt="Edit" src="../../assets/shared/more/edit_off.svg"> {{ $t('TheMenu.More.ToEdit') }}</li>
-        <li v-if="isInFavori(props.biover.id)" @click="emit('favori')"><img alt="Star" src="../../assets/shared/more/star.svg"> {{ $t('TheMenu.More.ToFavorite') }}</li>
-        <li v-if="!isInFavori(props.biover.id)" @click="emit('favori')"><img alt="Star" src="../../assets/shared/more/star_border.svg"> {{ $t('TheMenu.Dialog.FavoriAdd') }}</li>
-        <li v-if="isInPins(props.biover.id)" @click="emit('pin')"><img alt="PushPin" src="../../assets/shared/more/push_pin_fill.svg"> {{ $t('TheMenu.More.ToPin') }}</li>
-        <li v-if="!isInPins(props.biover.id)" @click="emit('pin')"><img alt="PushPin" src="../../assets/shared/more/push_pin.svg"> {{ $t('TheMenu.More.FromUnPin') }}</li>
-        <!--li><img alt="Share" src="../../assets/shared/more/share.svg"> partager ce biovers</li-->
+        <li @click="section = 'ar'"><p class="material-symbols-sharp icon-margin icon-font">view_in_ar</p> {{ $t('TheMenu.More.AR') }}</li>
+        <li @click="openInMap"><p class="material-symbols-sharp icon-margin icon-font">map</p> {{ $t('TheMenu.More.Desktop') }}</li>
+        <li v-if="props.biover.is_public" :class="{'not-allowed': !editableRight}" @click="editableRight ? emit('visibility') : ''"><p class="material-symbols-sharp icon-margin icon-font fill-font">remove_red_eye</p> {{ $t('TheMenu.More.Private') }}</li>
+        <li v-if="!props.biover.is_public" :class="{'not-allowed': !editableRight}" @click="editableRight ? emit('visibility') : ''"><p class="material-symbols-sharp icon-margin icon-font fill-font">visibility_off</p> {{ $t('TheMenu.More.Publique') }}</li>
+        <li v-if="props.biover.is_editable" :class="{'not-allowed': !editableRight}" @click="editableRight ?emit('editable') : ''"><p class="material-symbols-sharp icon-margin icon-font fill-font">edit</p> {{ $t('TheMenu.More.ToUnEdit') }}</li>
+        <li v-if="!props.biover.is_editable" :class="{'not-allowed': !editableRight}" @click="editableRight ?emit('editable') : ''"><p class="material-symbols-sharp icon-margin icon-font fill-font">edit_off</p> {{ $t('TheMenu.More.ToEdit') }}</li>
+        <li v-if="isInFavori(props.biover.id)" @click="emit('favori')"><p class="material-symbols-sharp icon-margin icon-font fill-font">star</p> {{ $t('TheMenu.More.ToFavorite') }}</li>
+        <li v-if="!isInFavori(props.biover.id)" @click="emit('favori')"><p class="material-symbols-sharp icon-margin icon-font">star</p> {{ $t('TheMenu.Dialog.FavoriAdd') }}</li>
+        <li v-if="isInPins(props.biover.id)" @click="emit('pin')"><p class="material-symbols-sharp icon-margin icon-font fill-font">push_pin</p> {{ $t('TheMenu.More.ToPin') }}</li>
+        <li v-if="!isInPins(props.biover.id)" @click="emit('pin')"><p class="material-symbols-sharp icon-margin icon-font">push_pin</p> {{ $t('TheMenu.More.FromUnPin') }}</li>
+        <li :class="{'not-allowed': !editableRight}" @click="editableRight ? emit('edit') : ''"><p class="material-symbols-sharp icon-margin icon-font fill-font">edit</p> {{ $t('TheMenu.More.Title') }}</li>
+        <li @click="emit('duplicate')"><p class="material-symbols-sharp icon-margin icon-font">file_copy</p> {{ $t('TheMenu.More.Duplicate') }}</li>
+        <li :class="{'not-allowed': !editableRight}" @click="editableRight ? emit('delete') : ''"><p class="material-symbols-sharp icon-margin icon-font">delete</p> {{ $t('TheMenu.More.Delete') }}</li>
       </ul>
     </div>
     <div v-if="props.enabled" class="outside" @click="emit('close')"/>  
@@ -97,10 +95,11 @@
   }
 
   [data-role="header-text"] {
-    font-family: 'BiodivAR Round Medium';
+    font-family: 'BiodivAR Title';
+    font-variation-settings: "wdth" 60, "wght" 90;
     font-size: 18px;
-    line-height: 16px;
-    margin-left: 1rem;
+    line-height: 18px;
+    margin-left: 0.5rem;
     padding-right: 1rem;
     display: block;
     text-align: start;
@@ -109,6 +108,10 @@
     text-overflow: ellipsis;
     overflow: hidden; 
     white-space: nowrap;
+    height: 25px;
+    padding-left: 3px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
   }
 
   [data-role="header-cross"] {
@@ -123,20 +126,17 @@
   }
 
   li {
-    font-family: 'BiodivAR Medium';
+    font-family: 'BiodivAR Roman';
+    font-variation-settings: "wght" 110, "ital" 0;
     font-size: 16px;
     line-height: 16px;
     display: flex;
     align-items: center;
     border-bottom: solid 1px #BDBDBD;
     height: 40px;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
     cursor: pointer;
-  }
-
-  img {
-    padding-right: 10px;
   }
 
   li:hover {
@@ -164,5 +164,18 @@
  .not-allowed:hover {
     background-color: #F2F2F2;
  }
+
+ .icon-font {
+    font-size: 20px;
+  }
+
+  .icon-margin {
+    padding-right: 10px;
+    margin: 0px;
+  }
+
+  .fill-font {
+    font-variation-settings: "FILL" 1;
+  }
 </style>
 

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <p v-if="pins.length > 0" style="text-align: start">{{ $t('TheMenu.Pin') }}</p>
+    <p v-if="pins.length > 0" class="font-pin" style="text-align: start">{{ $t('TheMenu.Pin') }}</p>
     <div v-for="(biover, index) in pins" :key="index">
       <BioversItem :biover="biover"/>
     </div>
-    <div class="return"><a class="link" href="#menu"><img src="../assets/shared/arrow_back.svg"/></a><p class="text">CARTE</p></div>
+    <div class="return"><a class="link" href="#menu"><p class="material-symbols-sharp icon-font icon-margin">arrow_back</p></a><p class="text font">CARTE</p></div>
     <div>
       <Map />
     </div>
@@ -47,8 +47,6 @@ export default {
     ...mapGetters('biovers', ['getPoiColumnsPreference', 'getPathColumnsPreference', 'getTraceColumnsPreference', 'getEventColumnsPreference']),
   },
   async mounted() {
-    this.resetBiovers();
-    this.getBiovers();
     if (this.getPoiColumnsPreference === undefined) {
       this.loadPoiColumns();
     }
@@ -70,9 +68,30 @@ export default {
   width: 100%;
 }
 
-img {
-  padding-right: 1rem;
-}
+.font-pin {
+    font-family: 'BiodivAR Roman';
+    font-variation-settings: "wght" 85, "ital" 0;
+    font-size: 12px;
+    line-height: 12px;
+    letter-spacing: 0.04em;
+  }
+
+.font {
+    font-family: 'BiodivAR Roman';
+    font-variation-settings: "wght" 110, "ital" 0;
+    font-size: 18px;
+    line-height: 14px;
+    letter-spacing: 0.02em;
+  }
+
+.icon-font {
+    font-size: 20px;
+  }
+
+  .icon-margin {
+    margin: 0px;
+    padding-right: 6px;
+  }
 
 .link {
   padding-bottom: 1rem;
@@ -80,10 +99,12 @@ img {
 
 .return {
   display: flex;
+      height: 36px;
 }
 
 .text {
   margin: 0;
+  padding-top: 5px;
 }
 
 a {

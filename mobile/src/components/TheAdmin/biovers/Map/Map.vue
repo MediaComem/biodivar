@@ -141,7 +141,7 @@
     const dark = L.tileLayer(`https://api.maptiler.com/maps/ch-swisstopo-lbm-dark/{z}/{x}/{y}.png?key=${KEY}`, {
         minZoom: 3,
         maxZoom: 22,
-        attribution: 'BiodivAR'
+        attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e \u003ca href=\"https://www.swisstopo.admin.ch/en/home.html\" target=\"_blank\"\u003e\u0026copy; swisstopo\u003c/a\u003e"
     }).addTo(mapAdmin.value);
     
     L.zoomIn().addTo(mapAdmin.value);

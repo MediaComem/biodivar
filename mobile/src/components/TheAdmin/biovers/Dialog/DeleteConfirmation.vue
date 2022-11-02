@@ -8,10 +8,10 @@
       </div>
       <base-input class="dialog-input-color">
         <base-button class="delete" @click="$emit('validate')">
-          <img src="../../../../assets/shared/more/delete_white.svg" />Supprimer
+          <p class="material-symbols-sharp icon-margin icon-font">delete</p><p class="button-text">Supprimer</p>
         </base-button>
         <base-button class="cancel" @click="$emit('closeDialog')">
-          <img src="../../../../assets/shared/cross_white.svg" />Annuler
+          <p class="material-symbols-sharp icon-margin icon-font">close</p><p class="button-text">Annuler</p>
         </base-button>
       </base-input>
     </div>
@@ -51,7 +51,7 @@ export default {
 
   .delete {
     --link-color: white;
-    --highlight-color: rgba(255, 0, 0, 0.5);
+    --highlight-color: rgb(255, 0, 0);
   }
 
   .cancel {
@@ -111,4 +111,20 @@ export default {
     margin: 0;
     cursor: pointer;
 }
+
+  .icon-font {
+    font-size: 20px;
+  }
+
+  .icon-margin {
+    margin: 0px;
+    padding-right: 6px;
+  }
+
+  .button-text {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 1.5px;
+    font-variation-settings: "wght" 149, "ital" 0;
+  }
 </style>

@@ -31,15 +31,12 @@
     box-sizing: border-box;
     border: 1px solid var(--border-color);
     background-color: var(--bg-color);
-    background-image: var(--icon-link);
-    background-position: 0.3rem 0.25rem;
-    background-repeat: no-repeat;
     padding-left: 2.3rem;
     margin: 0 1rem 1rem 1rem;
     color: var(--color);
     letter-spacing: 0.02em;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding-top: 6px;
+    padding-bottom: 6px;
   }
 
   [data-role="input"] :slotted(input::placeholder) {

@@ -73,10 +73,6 @@ table {
     justify-content: center;
   }
   
-  img {
-      height: 20px;
-  }
-  
   .transition {
       transition: all 0.3s;
     }

@@ -11,11 +11,12 @@
 <style scoped>
   [data-role="radio"] {
     width: 100%;
+    height: 40px;
     max-width: var(--max-width);
     margin-bottom: 2rem;
     border: solid black 1px;
     margin: 0 auto 1rem auto;
-    border-radius: 2rem;
+    border-radius: 20px;
     display: flex;
   }
 
@@ -24,14 +25,15 @@
     font-size: 14px;
     line-height: 14px;
     font-variation-settings: "wght" 110, "ital" 0;
-    width: 49%;
-    border-radius: 1rem;
+    width: 50%;
+    height: 34px;
+    border-radius: 17px;
     border: none;
     background: var(--highlight-color);
     color: var(--bg-color);
-    padding: 0.5rem;
+    padding: 8px;
     cursor: pointer;
-    margin: 0.5%;
+    margin: 2px;
     letter-spacing: 0.02em;
   }
 

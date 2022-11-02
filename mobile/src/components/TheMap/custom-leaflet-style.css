@@ -8,8 +8,8 @@
     background-color: #FFFFFF;
     margin-top: -2px !important;
     margin-left: 12px !important;
-    border-top: 1px solid #ccc;
-    border-radius: 2px;
+    border: 1px solid black;
+    border-radius: 0px;
 }
 
 .leaflet-control-interior:hover {

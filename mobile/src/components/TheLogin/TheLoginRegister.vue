@@ -88,16 +88,19 @@
         {{ $t('TheLogin.error.license') }}
       </base-message>
       <base-message data-type="error" v-show="error === 7">
-        S'il vous plaît, entrer un nom d’utilisateur
+        {{ $t('TheLogin.error.no-user') }}
       </base-message>
       <p>Déjà inscrit·e&thinsp;?&nbsp;<a @click="emit('connection')">{{ $t('TheLogin.connect') }}</a></p>
       <base-input class="user">
+      <p class="material-symbols-sharp icon-margin icon-position" style="top: 3px">perm_identity</p>
         <input type="text" v-model="username" :placeholder="$t('TheLogin.placeholder.register.username')">
       </base-input>
       <base-input class="email">
+        <p class="material-symbols-sharp icon-margin icon-position" style="top: 3px">email</p>
         <input type="text" v-model="email" :placeholder="$t('TheLogin.placeholder.register.email')">
       </base-input>
       <base-input class="password">
+        <p class="material-symbols-sharp icon-margin icon-position" style="top: 3px">lock_outline</p>
         <input :type="showPassword ? 'text' : 'password'" v-model="password" :placeholder="$t('TheLogin.placeholder.register.password')">
         <span @click="showPassword = !showPassword">
           <p v-if="showPassword" class="material-symbols-sharp icon-margin">visibility_off</p>
@@ -105,6 +108,7 @@
         </span>
       </base-input>
       <base-input class="password">
+        <p class="material-symbols-sharp icon-margin icon-position" style="top: 3px">lock_outline</p>
         <input :type="showConfirmPassword ? 'text' : 'password'" v-model="confirmPassword" :placeholder="$t('TheLogin.placeholder.register.confirm')">
         <span @click="showConfirmPassword = !showConfirmPassword">
           <p v-if="showConfirmPassword" class="material-symbols-sharp icon-margin">visibility_off</p>
@@ -123,21 +127,18 @@
 
 <style scoped>
   .user {
-    --icon-link: url("../../assets/login/perm_identity.svg");
     --bg-color: none;
     --color: black;
     --border-color: #000000;
   }
 
   .password {
-    --icon-link: url("../../assets/login/lock_outline.svg");
     --bg-color: none;
     --color: black;
     --border-color: #000000;
   }
 
   .email {
-    --icon-link: url("../../assets/login/email.svg");
     --bg-color: none;
     --color: black;
     --border-color: #000000;
@@ -157,5 +158,10 @@
     margin-bottom: 0px;
     padding-bottom: 1.5px;
     font-variation-settings: "wght" 149, "ital" 0;
+  }
+
+  .icon-position {
+    position: absolute;
+    left: 21px;
   }
 </style>

@@ -9,10 +9,10 @@
 
 <template>
   <base-dialog class="edit-element"  @close="emit('close')">
-    <img src="../../../assets/shared/more/push_pin_fill.svg">
-    <header>{{ $t('TheMenu.Dialog.PinHeader_1') }} {{ props.biover.name }} {{ $t('TheMenu.Dialog.PinHeader_2') }}</header>
-    <p>{{ $t('TheMenu.Dialog.PinDescription') }}</p>
-    <base-radio>
+    <p class="material-symbols-sharp icon-margin icon-font fill-font header-icon-layout">push_pin</p>
+    <header>{{ $t('TheMenu.Dialog.PinHeader') }} {{ props.biover.name }}</header>
+    <p class="description">{{ $t('TheMenu.Dialog.PinDescription') }}</p>
+    <base-radio class="layout-radio">
       <button :class="{ 'active': pinState }" @click="pinState = !pinState">
         {{ $t('TheMenu.Dialog.PinAdd') }}
       </button>
@@ -22,7 +22,7 @@
     </base-radio>
     <base-input class="dialog-input-color">
       <base-button class="editable" @click="emit('pinAction', pinState)">
-        <img style="width:25px; height:25px" src="../../../assets/shared/more/save_alt.svg" />{{ $t('TheMenu.Dialog.Update') }}
+        <p class="material-symbols-sharp icon-margin">done</p><p class="button-text">enregistrer</p>
       </base-button>
     </base-input>
   </base-dialog>
@@ -32,5 +32,47 @@
   .editable {
     --link-color: white;
     --highlight-color: #009FE3;
+  }
+
+  .layout-radio {
+    margin-left: 16px !important;
+    margin-right: 16px !important;
+    width: calc(100% - 32px) !important;
+  }
+
+  .header-icon-layout {
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .icon-font {
+    font-size: 20px;
+  }
+
+  .icon-margin {
+    margin: 0px;
+    padding-right: 6px;
+  }
+
+  .fill-font {
+    font-variation-settings: "FILL" 1;
+  }
+
+  .description-transform {
+    transform: scaleY(-1);
+  }
+
+  .button-text {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 3px;
+    font-variation-settings: "wght" 149, "ital" 0;
+    text-transform: uppercase;
+  }
+
+  .description {
+    margin-bottom: 2rem;
   }
 </style>

@@ -6,35 +6,35 @@
         :class="{'button-focus': currentTab === 1}"
       >
         <p class="material-symbols-sharp text-margin">pin_drop</p>
-        <p>points d'intérêt [{{ getPoisByBiover(bioverId).length }}]</p>
+        <p class="name-element">points d'intérêt [{{ getPoisByBiover(bioverId).length }}]</p>
       </button>
       <button
         @click="selectTab(2)"
         :class="{'button-focus': currentTab === 2}"
       >
         <p class="material-symbols-sharp text-margin">gesture</p>
-        <p>traces [{{ getPathsByBiover(bioverId).length }}]</p>
+        <p class="name-element">traces [{{ getPathsByBiover(bioverId).length }}]</p>
       </button>
       <button
         @click="selectTab(3)"
         :class="{'button-focus': currentTab === 3}"
       >
         <p class="material-symbols-sharp text-margin">gesture</p>
-        <p>paramètres</p>
+        <p class="name-element">paramètres</p>
       </button>
       <button
         @click="selectTab(4)"
         :class="{'button-focus': currentTab === 4}"
       >
         <p class="material-symbols-sharp text-margin">bar_chart</p>
-        <p>Trace [{{ getTraceByBioversAndUser(bioverId).length }}]</p>
+        <p class="name-element">Trace [{{ getTraceByBioversAndUser(bioverId).length }}]</p>
       </button>
       <button
         @click="selectTab(5)"
         :class="{'button-focus': currentTab === 5}"
       >
         <p class="material-symbols-sharp text-margin">bar_chart</p>
-        <p>Event [{{ getEventByBioversAndUser(bioverId).length }}]</p>
+        <p class="name-element">Event [{{ getEventByBioversAndUser(bioverId).length }}]</p>
       </button>
     </div>
 
@@ -94,6 +94,10 @@ export default {
   border-bottom: 1px solid white;
 }
 
+.name-element {
+      margin-top: 17px;
+}
+
 .data-table-layout {
   padding-bottom: 8px;
 }
@@ -116,10 +120,6 @@ button {
 .button-focus {
   background-color: black;
   border-bottom: 1px solid black;
-}
-
-img {
-  padding-right: 8px;
 }
 
 p {

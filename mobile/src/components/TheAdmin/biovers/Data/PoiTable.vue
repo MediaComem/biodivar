@@ -9,413 +9,272 @@
           </th>
           <th class="column second-column">
             <div class="header-value">
-              <p>#</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'id' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort"
-                @click="setSort('id')">
+              <p class="no-margin">#</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'id' && !orderElement}" @click="setSort('id')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.coordinate" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">location_searching</p>
-              <p>COORDONNEES</p>
+              <p class="no-margin">COORDONNEES</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.title" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">short_text</p>
-              <p>TITRE</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'title' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort"
-                @click="setSort('title')">
+              <p class="no-margin">TITRE</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'title' && !orderElement}" @click="setSort('title')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.subtitle" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp description-transform text-margin">short_text</p>
-              <p>SOUS-TITRE</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'subtitle' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort"
-                @click="setSort('subtitle')">
+              <p class="no-margin">SOUS-TITRE</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'subtitle' && !orderElement}" @click="setSort('subtitle')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.created_date" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">date_range</p>
-              <p>CREER LE</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'creation_date' && !isSymbol && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort"
-                @click="setSort('creation_date')">
+              <p class="no-margin">CREER LE</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'creation_date' && !orderElement}" @click="setSort('creation_date')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.author" class="column">
             <div class="header-value">
                <p class="material-symbols-sharp text-margin">architecture</p>
-              <p>AUTEUR-E</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'username' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort"
-                @click="setSort('username')">
+              <p class="no-margin">AUTEUR-E</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'username' && !orderElement}" @click="setSort('username')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.updated_date" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">edit</p>
-              <p>MODIFIER LE</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'update_date' && !isSymbol && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort"
-                @click="setSort('update_date')">
+              <p class="no-margin">MODIFIER LE</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'update_date' && !orderElement}" @click="setSort('update_date')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.contributor" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">architecture</p>
-              <p>DERNIER CONTRIBUTEUR-TRICE</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'contributor' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort"
-                @click="setSort('contributor')">
+              <p class="no-margin">DERNIER CONTRIBUTEUR-TRICE</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'contributor' && !orderElement}" @click="setSort('contributor')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.scope" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">visibility</p>
-              <p>PORTEE</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'scope' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('scope')">
+              <p class="no-margin">PORTEE</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'scope' && !orderElement}" @click="setSort('scope')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.trigger" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">touch_app</p>
-              <p>DECLENCHEUR</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'trigger_mode' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('trigger_mode')">
+              <p class="no-margin">DECLENCHEUR</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'trigger_mode' && !orderElement}" @click="setSort('trigger_mode')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.ar_file_name" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">location_on</p>
-              <p>AR FILE NAME</p>
+              <p class="no-margin">AR FILE NAME</p>
             </div>
           </th>
            <th v-if="getPoiColumnsPreference.ar_visibility" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">visibility</p>
-              <p>VISIBILITE AR</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'is_visible_ar' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort"
-                @click="setSort('is_visible_ar', true)">
+              <p class="no-margin">VISIBILITE AR</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'is_visible_ar' && !orderElement}" @click="setSort('is_visible_ar', true)">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.ar_is_facing" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">camera_front</p>
-              <p>FACE A LA CAMERA</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'is_facing_user' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort"
-                @click="setSort('is_facing_user', true)">
+              <p class="no-margin">FACE A LA CAMERA</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'is_facing_user' && !orderElement}" @click="setSort('is_facing_user', true)">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.symbol_wireframe" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">grid_4x4</p>
-              <p>WIREFRAME DU SYMBOLE</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'wireframe' && isSymbol && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('wireframe', true)">
+              <p class="no-margin">WIREFRAME DU SYMBOLE</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'wireframe' && !orderElement}" @click="setSort('wireframe', true)">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.autoplay" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">replay</p>
-              <p>LECTURE AUTOMATIQUE</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'autoplay' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('autoplay', true)">
+              <p class="no-margin">LECTURE AUTOMATIQUE</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'autoplay' && !orderElement}" @click="setSort('autoplay', true)">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.loop" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">replay</p>
-              <p>LECTURE EN BOUCLER</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'loop' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('loop', true)">
+              <p class="no-margin">LECTURE EN BOUCLER</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'loop' && !orderElement}" @click="setSort('loop', true)">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.scale" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">photo_size_select_small</p>
-              <p>ECHELLE</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'scale' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('scale', true)">
+              <p class="no-margin">ECHELLE</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'scale' && !orderElement}" @click="setSort('scale', true)">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.symbol_position" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">merge</p>
-              <p>POSITION DU SYMBOL</p>
+              <p class="no-margin">POSITION DU SYMBOL</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.symbol_animation" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">animation</p>
-              <p>ANIMATION</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'amplitude' && isSymbol && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('amplitude', true)">
+              <p class="no-margin">ANIMATION</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'amplitude' && !orderElement}" @click="setSort('amplitude', true)">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.audio_file" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">music_note</p>
-              <p>AUDIO FILE NAME</p>
+              <p class="no-margin">AUDIO FILE NAME</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.audio_autoplay" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">replay</p>
-              <p>AUDIO LECTURE AUTOMATIQUE</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'audio_autoplay' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('audio_autoplay', true)">
+              <p class="no-margin">AUDIO LECTURE AUTOMATIQUE</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'audio_autoplay' && !orderElement}" @click="setSort('audio_autoplay', true)">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.audio_loop" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">replay</p>
-              <p>AUDIO LECTURE EN BOUCLER</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'audio_loop' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('audio_loop', true)">
+              <p class="no-margin">AUDIO LECTURE EN BOUCLER</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'audio_loop' && !orderElement}" @click="setSort('audio_loop', true)">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.audio_scope" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">visibility</p>
-              <p>PORTEE DE L'AUDIO</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'audio_distance' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('audio_distance', true)">
+              <p class="no-margin">PORTEE DE L'AUDIO</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'audio_distance' && !orderElement}" @click="setSort('audio_distance', true)">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.icon_file" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">map</p>
-              <p>ICON FILE NAME</p>
+              <p class="no-margin">ICON FILE NAME</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.is_visible" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">visibility</p>
-              <p>IS VISIBLE</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'is_visible' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('is_visible', true)">
+              <p class="no-margin">IS VISIBLE</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'is_visible' && !orderElement}" @click="setSort('is_visible', true)">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.symbol_created_date" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">date_range</p>
-              <p>SYMBOL CREATION DATE</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'creation_date' && isSymbol && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('creation_date', true)">
+              <p class="no-margin">SYMBOL CREATION DATE</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'creation_date' && !orderElement}" @click="setSort('creation_date', true)">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.symbol_updated_date" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">edit</p>
-              <p>SYMBOL MODITION DATE</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'update_date' && isSymbol && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('update_date', true)">
+              <p class="no-margin">SYMBOL MODITION DATE</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'update_date' && !orderElement}" @click="setSort('update_date', true)">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.style_type" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">circle</p>
-              <p>TYPE DE FORME</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'style_type' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('style_type')">
+              <p class="no-margin">TYPE DE FORME</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'style_type' && !orderElement}" @click="setSort('style_type')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.extrusion" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">expand</p>
-              <p>EXTRUSION</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'extrusion' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('extrusion')">
+              <p class="no-margin">EXTRUSION</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'extrusion' && !orderElement}" @click="setSort('extrusion')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.radius" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">share_location</p>
-              <p>RAYON</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'radius' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('radius')">
+              <p class="no-margin">RAYON</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'radius' && !orderElement}" @click="setSort('radius')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.position" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">merge</p>
-              <p>POSITION</p>
+              <p class="no-margin">POSITION</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.stroke_width" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">line_weight</p>
-              <p>EPAISSEUR DU CONTOUR</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'style_stroke_width' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('style_stroke_width')">
+              <p class="no-margin">EPAISSEUR DU CONTOUR</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'style_stroke_width' && !orderElement}" @click="setSort('style_stroke_width')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.stroke_color" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">colorize</p>
-              <p>COULEUR DU CONTOUR</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'stroke_color' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('stroke_color')">
+              <p class="no-margin">COULEUR DU CONTOUR</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'stroke_color' && !orderElement}" @click="setSort('stroke_color')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.stroke_opacity" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">opacity</p>
-              <p>OPACITE DU CONTOUR</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'stroke_opacity' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('stroke_opacity')">
+              <p class="no-margin">OPACITE DU CONTOUR</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'stroke_opacity' && !orderElement}" @click="setSort('stroke_opacity')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.wireframe" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">grid_4x4</p>
-              <p>WIREFRAME DU REMPLISSAGE</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'wireframe' && !isSymbol && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('wireframe')">
+              <p class="no-margin">WIREFRAME DU REMPLISSAGE</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'wireframe' && !orderElement}" @click="setSort('wireframe')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.fill_color" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">colorize</p>
-              <p>COULEUR DU REMPLISSAGE</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'fill_color' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('fill_color')">
+              <p class="no-margin">COULEUR DU REMPLISSAGE</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'fill_color' && !orderElement}" @click="setSort('fill_color')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.fill_opacity" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">opacity</p>
-              <p>OPACITE DU REMPLISSAGE</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'fill_opacity' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('fill_opacity')">
+              <p class="no-margin">OPACITE DU REMPLISSAGE</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'fill_opacity' && !orderElement}" @click="setSort('fill_opacity')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.animation" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">animation</p>
-              <p>ANIMATION</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'amplitude' && !isSymbol && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('amplitude')">
+              <p class="no-margin">ANIMATION</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'amplitude' && !orderElement}" @click="setSort('amplitude')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPoiColumnsPreference.metadata" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">database</p>
-              <p>METADATA</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'metadata' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort" @click="setSort('metadata')">
+              <p class="no-margin">METADATA</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'metadata' && !orderElement}" @click="setSort('metadata')">arrow_drop_down</p>
             </div>
           </th>
           <th class="last-column last-column-header">
-             <p class="material-symbols-sharp no-margin clickable" @click="openMenu(0)">more_vert</p>
+             <p class="material-symbols-sharp no-margin clickable dot-margin" @click="openMenu(0)">more_vert</p>
              <div v-if="menuState && menuState.id === 0 && menuState.state" class="menu">
                 <p class="menu-element" :class="{'disable': !globalChecked }" @click="downloadPois">Exporter les POIs</p>
                 <p class="menu-element" :class="{'disable': !globalChecked }" @click="copies()">Copier les POIs</p>
@@ -470,7 +329,7 @@
           <td v-if="getPoiColumnsPreference.animation" class="column">{{ poi.element.amplitude }}</td>
           <td v-if="getPoiColumnsPreference.metadata" class="column">{{ poi.element.metadata }}</td>
           <td class="last-column">
-             <p class="material-symbols-sharp no-margin clickable" @click="openMenu(poi.element.id)">more_vert</p>
+             <p class="material-symbols-sharp no-margin clickable dot-margin" @click="openMenu(poi.element.id)">more_vert</p>
              <div v-if="menuState && menuState.id === poi.element.id && menuState.state" class="menu">
                 <p class="menu-element" @click="downloadPoi(poi)">Exporter le POI</p>
                 <p class="menu-element" @click="copy(poi)">Copier le POI</p>
@@ -790,5 +649,22 @@ export default {
 
 .text-margin {
   padding-right: 6px;
+  margin: 0px;
+  margin-top: -3px;
+}
+
+.icon-font {
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.icon-margin {
+  margin: 0px;
+  margin-top: -3px;
+}
+
+.dot-margin {
+  margin-top: 2px;
 }
 </style>

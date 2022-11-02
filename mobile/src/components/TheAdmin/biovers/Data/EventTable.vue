@@ -9,71 +9,46 @@
           </th>
           <th class="column second-column">
             <div class="header-value">
-              <p>#</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'id' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort"
-                @click="setSort('id')">
+              <p class="no-margin">#</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'id' && !orderElement}" @click="setSort('id')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getEventColumnsPreference.created_date" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">date_range</p>
-              <p>CREER LE</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'creation_date' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort"
-                @click="setSort('creation_date')">
+              <p class="no-margin">CREER LE</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'creation_date' && !orderElement}" @click="setSort('creation_date')">arrow_drop_down</p>
             </div>
           </th>
            <th v-if="getEventColumnsPreference.author" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">architecture</p>
-              <p>AUTHEUR</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'subtitle' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort"
-                @click="setSort('subtitle')">
+              <p class="no-margin">AUTHEUR</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'username' && !orderElement}" @click="setSort('username')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getEventColumnsPreference.gps_accuracy" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">crisis_alert</p>
-              <p>PRECISION DU GPS</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'gps_accuracy' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort"
-                @click="setSort('gps_accuracy')">
+              <p class="no-margin">PRECISION DU GPS</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'gps_accuracy' && !orderElement}" @click="setSort('gps_accuracy')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getEventColumnsPreference.coordinate" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">location_searching</p>
-              <p>COORDONNEES</p>
+              <p class="no-margin">COORDONNEES</p>
             </div>
           </th>
           <th v-if="getEventColumnsPreference.data" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">database</p>
-              <p>EVENT</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'data' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort"
-                @click="setSort('data')">
+              <p class="no-margin">EVENT</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'data' && !orderElement}" @click="setSort('data')">arrow_drop_down</p>
             </div>
           </th>
           <th class="last-column last-column-header">
-             <p class="material-symbols-sharp no-margin clickable" @click="openMenu(0)">more_vert</p>
+             <p class="material-symbols-sharp no-margin clickable dot-margin" @click="openMenu(0)">more_vert</p>
              <div v-if="menuState && menuState.id === 0 && menuState.state" class="menu">
                 <p class="menu-element" :class="{'disable': !globalChecked }" @click="downloadEvents">Exporter les Events</p>
                 <p class="menu-element" @click="openColumnSelector()">Définir les colonnes</p>
@@ -92,7 +67,7 @@
           <td v-if="getEventColumnsPreference.coordinate" class="column">({{ getCoordinate(event) }})</td>
           <td v-if="getEventColumnsPreference.data" class="column">({{ event.element.data }})</td>
           <td class="last-column">
-             <p class="material-symbols-sharp no-margin clickable" @click="openMenu(event.element.id)">more_vert</p>
+             <p class="material-symbols-sharp no-margin clickable dot-margin" @click="openMenu(event.element.id)">more_vert</p>
              <div v-if="menuState && menuState.id === event.element.id && menuState.state" class="menu">
                 <p class="menu-element" @click="downloadEvent(event)">Exporter l'Event</p>
              </div>
@@ -221,5 +196,22 @@ export default {
 
 .text-margin {
   padding-right: 6px;
+  margin: 0px;
+  margin-top: -3px;
+}
+
+.icon-font {
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.icon-margin {
+  margin: 0px;
+  margin-top: -3px;
+}
+
+.dot-margin {
+  margin-top: 2px;
 }
 </style>

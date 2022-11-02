@@ -9,103 +9,73 @@
           </th>
           <th class="column second-column">
             <div class="header-value">
-              <p>#</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'id' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort"
-                @click="setSort('id')">
+              <p class="no-margin">#</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'id' && !orderElement}" @click="setSort('id')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPathColumnsPreference.scope" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">visibility</p>
-              <p>VISIBILITE</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'visible_from' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort"
-                @click="setSort('visible_from')">
+              <p class="no-margin">VISIBILITE</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'visible_from' && !orderElement}" @click="setSort('visible_from')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPathColumnsPreference.created_date" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">date_range</p>
-              <p>CREER LE</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'creation_date' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort"
-                @click="setSort('creation_date')">
+              <p class="no-margin">CREER LE</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'creation_date' && !orderElement}" @click="setSort('creation_date')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPathColumnsPreference.author" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">architecture</p>
-              <p>AUTEUR-E</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'username' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort"
-                @click="setSort('username')">
+              <p class="no-margin">AUTEUR-E</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'username' && !orderElement}" @click="setSort('username')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPathColumnsPreference.updated_date" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">edit</p>
-              <p>MODIFIER LE</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'update_date' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort"
-                @click="setSort('update_date')">
+              <p class="no-margin">MODIFIER LE</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'update_date' && !orderElement}" @click="setSort('update_date')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPathColumnsPreference.contributor" class="column">
             <div class="header-value">
                <p class="material-symbols-sharp text-margin">architecture</p>
-              <p>DERNIER CONTRIBUTEUR-TRICE</p>
-              <img
-                class="transition"
-                :class="{'change-icon': sortElement === 'contributor' && !orderElement}"
-                src="../../../../assets/tables/sort-arrow.svg"
-                alt="sort"
-                @click="setSort('contributor')">
+              <p class="no-margin">DERNIER CONTRIBUTEUR-TRICE</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'contributor' && !orderElement}" @click="setSort('contributor')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPathColumnsPreference.elevation" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">north</p>
-              <p>STYLE ELEVATION</p>
+              <p class="no-margin">STYLE ELEVATION</p>
             </div>
           </th>
           <th v-if="getPathColumnsPreference.animation" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">animation</p>
-              <p>ANIMATION</p>
+              <p class="no-margin">ANIMATION</p>
             </div>
           </th>
           <th v-if="getPathColumnsPreference.stroke_width" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">line_weight</p>
-              <p>STYLE STOKE WIDTH</p>
+              <p class="no-margin">STYLE STOKE WIDTH</p>
             </div>
           </th>
           <th v-if="getPathColumnsPreference.style_type" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">circle</p>
-              <p>STYLE TYPE</p>
+              <p class="no-margin">STYLE TYPE</p>
             </div>
           </th>
           <th v-if="getPathColumnsPreference.coordinate" class="column before-last-column">
             <div class="header-value">
               <p class="material-symbols-sharp">location_searching</p>
-              <p>COORDONNEES</p>
+              <p class="no-margin">COORDONNEES</p>
             </div>
           </th>
           <th class="last-column last-column-header">
@@ -346,5 +316,18 @@ export default {
 
 .text-margin {
   padding-right: 6px;
+  margin: 0px;
+  margin-top: -3px;
+}
+
+.icon-font {
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.icon-margin {
+  margin: 0px;
+  margin-top: -3px;
 }
 </style>

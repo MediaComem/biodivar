@@ -1,8 +1,6 @@
 <script setup>
   import { ref, onMounted } from 'vue'
 
-  import Footer from './app/UIElement/Footer.vue';
-
   import TheAframe from './TheAframe/TheAframe.vue';
   import TheHud from './TheHud/TheHud.vue';
   import { useRouter } from '../composables/router.js';
@@ -10,6 +8,7 @@
   import { storage } from '../composables/localStorage.js';
   import { logout, getBiovers, getBioversByUser } from '../utils/api.js';
   import { isMobileDevice } from '../utils/device.js';
+  import { store } from '../store/store.js';
 
   import BaseMap from './TheMap/BaseMap.vue';
 
@@ -56,6 +55,9 @@
     difference.forEach((biover) => {
       biovers.value.push(biover);
     })
+
+    store.dispatch('biovers/resetBiovers');
+    store.dispatch('biovers/getBiovers');
   });
 </script>
 
@@ -73,12 +75,12 @@
         </div>
         <div class="account">
           <div class="acount-layout" @click="menu = !menu">
-            <img class="acount-image" alt="Account" src="../assets/shared/account_circle.svg">
+            <p class="material-symbols-sharp icon-margin icon-font">account_circle</p>
             <p>{{ username }}</p>
           </div>
           <ul v-if="menu">
-            <li class="menu-item-divider font"><img class="menu-item" alt="Pencil" src="../assets/shared/edit.svg"> {{ $t('Header.Modify') }}</li>
-            <li @click="disconnect()" class="font"><img class="menu-item" alt="Disconnect" src="../assets/shared/logout.svg"> {{ $t('Header.Logout') }}</li>
+            <li class="menu-item-divider font"><p class="material-symbols-sharp icon-margin icon-font fill-font">edit</p>{{ $t('Header.Modify') }}</li>
+            <li @click="disconnect()" class="font"><p class="material-symbols-sharp icon-margin icon-font">logout</p>{{ $t('Header.Logout') }}</li>
           </ul>
           <div v-if="menu" class="dialog-overlay" @click="closeDialog()"/>
         </div>
@@ -178,7 +180,7 @@
   }
 
   .acount-layout > p {
-    margin: 0px 6px 0px 6px;
+    margin: 0px 6px 0px 0px;
     height: 24px;
     align-items: center;
     display: flex;
@@ -221,5 +223,17 @@
     font-size: 16px;
     line-height: 16px;
     font-variation-settings: "wght" 110, "ital" 0;
+  }
+
+  .icon-font {
+    font-size: 24px;
+  }
+
+  .icon-margin {
+    margin: 0px;
+  }
+
+  .fill-font {
+    font-variation-settings: "FILL" 1;
   }
 </style>

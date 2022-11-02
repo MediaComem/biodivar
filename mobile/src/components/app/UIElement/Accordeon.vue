@@ -1,7 +1,8 @@
 <script setup>
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
 
   const props = defineProps({
+      image: String,
       header: String,
       length: Number,
       shouldBeOpen: Boolean,
@@ -11,13 +12,17 @@
   const emit = defineEmits(['delete'])
 
   const open = ref(props.shouldBeOpen);
+
+  watch(() => props.shouldBeOpen, (newVal) => {
+    open.value = newVal;
+  });
 </script>
 
 
 <template>
 <div>
     <div class="title">
-        <div class="image transition" :class="{rotate: open}" @click="open = !open"/>
+        <p class="material-symbols-sharp icon-margin icon-font fill-font transition" :class="{rotate: open}" @click="open = !open">{{ props.image }}</p>
         <p class="text" @click="open = !open">{{ props.header }}</p>
         <p v-if="props.couldDelete" class="material-symbols-sharp delete-font" @click="emit('delete')">delete</p>
     </div>
@@ -37,21 +42,26 @@
 
   .title {
       width: 100%;
-      height: 40px;
+      height: 32px;
       display: flex;
       padding-left: 0;
       margin: 1rem 1rem 0rem 1rem;
-      padding-bottom: 1rem;
+      padding-bottom: 0.9rem;
       cursor: pointer;
   }
 
-  .image {
-      background-image: var(--icon-link);
-      width: 20px;
-      height: 20px;
-      background-repeat: no-repeat;
-      background-position: left center;
-      transform: rotate(0deg);
+  .icon-font {
+    font-size: 20px;
+  }
+
+  .icon-margin {
+    margin: 0px;
+    padding-right: 0px;
+    margin-top: -4px;
+  }
+
+  .fill-font {
+    font-variation-settings: "FILL" 1;
   }
 
   .rotate {
@@ -63,13 +73,14 @@
   }
 
   .text {
-      font-family: 'BiodivAR Medium';
       font-size: 14px;
       line-height: 14px;
       margin: 0;
       padding-left: 0.5rem;
       display: flex;
       align-items: center;
+      margin-top: -4px;
+      letter-spacing: 0.02em;
   }
 
     .delete-font {

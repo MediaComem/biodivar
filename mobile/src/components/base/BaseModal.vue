@@ -15,7 +15,7 @@
     left: 0;
     width: 100%;
     min-height: 100%;
-    background: #8DC26F;;
+    background: #8DC26F;
     overflow-x: hidden;
   }
 

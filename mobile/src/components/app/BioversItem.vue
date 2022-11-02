@@ -6,12 +6,6 @@
 
   import { duplicateBiovers, updateBiovers, deleteBiovers } from '../../utils/api.js';
   
-  import PushPin from '../../assets/vue-svg/PushPin.vue';
-  import Stars from '../../assets/vue-svg/Stars.vue';
-  import Architecture from '../../assets/vue-svg/Architecture.vue';
-  import RedEye from '../../assets/vue-svg/RedEye.vue';
-  import Edit from '../../assets/vue-svg/Edit.vue';
-  import More from '../../assets/vue-svg/More.vue';
   import World from '../../assets/shared/world.vue';
 
   import BioversInformation from './BioversInformation.vue';
@@ -189,27 +183,29 @@
         <div data-role="left" @click="isOpen = !isOpen">
             <World :animate="isOpen"/>
             <div class="align text">
-                <p data-splitting>{{ props.biover.name }}</p>
+                <p class="font" :class="{'animation': isOpen}">{{ props.biover.name }}</p>
             </div>
         </div>
         <div data-role="right">
             <div class="align">
-              <PushPin :stroke="isInPins(props.biover.id) ? 'white' : '#666666'" :color="isInPins(props.biover.id) ? 'white' : 'none'"/>
+              <p class="material-symbols-sharp icon-margin icon-font" :class="{'fill-font': isInPins(props.biover.id)}" :style="{color: isInPins(props.biover.id) ? 'white' : '#666666'}">push_pin</p>
             </div>
             <div class="align">
-                <Stars :stroke="isInFavori(props.biover.id) ? 'white' : '#666666'" :color="isInFavori(props.biover.id) ? 'white' : 'none'"/>
+              <p class="material-symbols-sharp icon-margin icon-font" :class="{'fill-font': isInFavori(props.biover.id)}" :style="{color: isInFavori(props.biover.id) ? 'white' : '#666666'}">star</p>
             </div>
             <div class="align">
-                <Architecture :color="username === props.biover.User.username ? 'white' : '#666666'"/>
+              <p class="material-symbols-sharp icon-margin icon-font" :style="{color: username === props.biover.User.username ? 'white' : '#666666'}">architecture</p>
             </div>
             <div class="align">
-                <RedEye :fill="props.biover.is_public" />
+              <p v-if="props.biover.is_public" class="material-symbols-sharp icon-margin icon-font fill-font" style="color: white;">remove_red_eye</p>
+              <p v-else class="material-symbols-sharp icon-margin icon-font" style="color: #666666;">visibility_off</p>
             </div>
             <div class="align">
-                <Edit :fill="props.biover.is_editable"/>
+              <p v-if="props.biover.is_editable" class="material-symbols-sharp icon-margin icon-font fill-font" style="color: white;">edit</p>
+              <p v-else class="material-symbols-sharp icon-margin icon-font" style="color: #666666;">edit_off</p>
             </div>
             <div class="align more">
-                <More :color="'white'" @click="more = !more"/>
+              <p class="material-symbols-sharp icon-margin icon-font icon-more" style="color: white;" @click="more = !more">more_vert</p>
             </div>
         </div>
     </div>
@@ -266,7 +262,7 @@
     font-family: 'BiodivAR Title';
     font-size: 18px;
     line-height: 16px;
-    width: calc(100% - 20px);
+    width: calc(100% - 50px);
     margin-bottom: 0.5rem;
     margin-top: -4px;
   }
@@ -299,24 +295,30 @@
     transform: rotate(90deg);
   }
 
-  .img-transition {
-    transition: transform 0.25s ease;
-  }
-
-  p {
+  .font {
     font-family: 'BiodivAR Title';
+    font-variation-settings: "wdth" 40, "wght" 90;
     user-select: none;
     color: white;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-variation-settings: "wdth" 40, "wght" 90;
     letter-spacing: 0.04em;
+    width: inherit;
+    text-align: start;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    height: 30px;
+    margin: 0px;
+    margin-top: 15px;
   }
 
-  p .char {
-    --delay: calc((var(--char-index) + 1) * 400ms);
+  .fill-font {
+    font-variation-settings: "FILL" 1;
+  }
+  
+  .animation {
     animation: variable 6000ms infinite both;
-    animation-delay: var(--delay);
+    animation-delay: 800ms;
   }
 
   @keyframes variable {
@@ -327,19 +329,27 @@
     100% {font-variation-settings: 'wght' 60, 'wdth' 10}
   }
 
-  img {
-    width: 18px;
-    height: 18px;
-    margin-left: 1rem;
-  }
-
   .dialog-overlay {
     height: 100vh;
     width: 100vw;
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #8DC26F;
+    background-color: black;
     opacity: 0.5;
+  }
+
+  .icon-font {
+    font-size: 18px;
+  }
+
+  .icon-margin {
+    margin: 0px;
+    padding-right: 2px;
+  }
+
+  .icon-more {
+    padding-right: 0px;
+    margin-right: -8px;
   }
 </style>

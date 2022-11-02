@@ -13,13 +13,20 @@
   });
 
   const search = ref('');
+  const ownOpen = ref(false);
+  const publicOpen = ref(false);
+  const favoriOpen = ref(false);
 
   const own = computed(() => {
-    return props.biovers.filter((b) => b.User.username.toLowerCase() === username.value.toLowerCase() && b.name.toLowerCase().includes(search.value.toLowerCase()));
+    const result = props.biovers.filter((b) => b.User.username.toLowerCase() === username.value.toLowerCase() && b.name.toLowerCase().includes(search.value.toLowerCase()));
+    ownOpen.value = search.value !== '' && result.length > 0;
+    return result;
   })
 
   const publicBiovers = computed(() => {
-    return props.biovers.filter((b) => b.is_public && b.name.toLowerCase().includes(search.value.toLowerCase()));
+    const result = props.biovers.filter((b) => b.is_public && b.name.toLowerCase().includes(search.value.toLowerCase()));
+    publicOpen.value = search.value !== '' && result.length > 0;
+    return result;
   })
 
   const favoriBiovers = computed(() => {
@@ -30,6 +37,7 @@
             biovers.push(element);
         }
     })
+    favoriOpen.value = search.value !== '' && biovers.length > 0;
     return biovers;
   })
 </script>
@@ -38,23 +46,24 @@
 <template>
     <div data-role="layout">
       <base-input class="search">
+        <p class="material-symbols-sharp icon-margin icon-font fill-font">search</p>
         <input type="text" v-model="search">
       </base-input>
       <hr>
-      <Accordeon class="own" :header="`mes biovers (${own.length})`" :length="own.length" :should-be-open="false">
-          <div v-for="(item, index) in own" :key="index">
+      <Accordeon class="own" :header="`mes biovers (${own.length})`" :length="own.length" :should-be-open="ownOpen" :image="'architecture'">
+          <div v-for="(item, index) in own" :key="index" class="margin">
               <BioversItem :biover="item"/>
           </div>
       </Accordeon>
       <hr>
-      <Accordeon class="favori" :header="`favoris (${favoriBiovers.length})`" :length="favoriBiovers.length" :should-be-open="false">
-          <div v-for="(item, index) in favoriBiovers" :key="index">
+      <Accordeon class="favori" :header="`favoris (${favoriBiovers.length})`" :length="favoriBiovers.length" :should-be-open="favoriOpen" :image="'star'">
+          <div v-for="(item, index) in favoriBiovers" :key="index" class="margin">
               <BioversItem :biover="item"/>
           </div>
       </Accordeon>
       <hr>
-      <Accordeon class="public" :header="`publiques (${publicBiovers.length})`" :length="publicBiovers.length" :should-be-open="false">
-          <div v-for="(item, index) in publicBiovers" :key="index">
+      <Accordeon class="public" :header="`publiques (${publicBiovers.length})`" :length="publicBiovers.length" :should-be-open="publicOpen" :image="'remove_red_eye'">
+          <div v-for="(item, index) in publicBiovers" :key="index" class="margin">
               <BioversItem :biover="item"/>
           </div>
       </Accordeon>
@@ -75,26 +84,31 @@
     margin: 0 1rem 0 1rem;
   }
 
+  .margin {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
   .search {
-      --icon-link: url("../../assets/biovers/search.svg");
-      padding-top: 1rem;
+      padding-top: 0.8rem;
       --bg-color: #E0E0E0;
       --border-color: #000000;
+      margin-bottom: -2px;
   }
 
   .search input {
     border-color: #E0E0E0 !important;
   }
 
-  .own {
-      --icon-link: url("../../assets/biovers/architecture.svg");
+  .icon-font {
+    font-size: 20px;
   }
 
-  .public {
-      --icon-link: url("../../assets/biovers/visibility.svg");
-  }
-
-  .favori {
-      --icon-link: url("../../assets/biovers/grade.svg");
+  .icon-margin {
+    margin: 0px;
+    padding-right: 6px;
+    position: absolute;
+    top: 18px;
+    left: 21px;
   }
 </style>

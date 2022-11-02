@@ -14,7 +14,7 @@
 
 <template>
 <div v-if="!isIOS">
-  <p v-if="pins.length > 0" style="text-align: start">{{ $t('TheMenu.Pin') }}</p>
+  <p v-if="pins.length > 0" class="font-pin" style="text-align: start">{{ $t('TheMenu.Pin') }}</p>
   <div v-for="(biover, index) in pins" :key="index">
     <BioversItem :biover="biover"/>
   </div>
@@ -42,5 +42,12 @@
   gap: 10px;
 }
 
+.font-pin {
+    font-family: 'BiodivAR Roman';
+    font-variation-settings: "wght" 85, "ital" 0;
+    font-size: 12px;
+    line-height: 12px;
+    letter-spacing: 0.04em;
+  }
 
 </style>

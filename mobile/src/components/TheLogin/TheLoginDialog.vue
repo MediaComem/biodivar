@@ -23,31 +23,32 @@
 <template>
     <div>
         <base-dialog class="text-only" v-if="showAggreement" @close="showAggreement = false">
-            <img src="../../assets/login/aggreement-icon.svg" alt="aggreement">
+            <p class="material-symbols-sharp icon-margin-button header-icon-layout">handshake</p>
             <header>{{ $t('TheLogin.license.general') }}</header>
             <p v-for="(element, index) in licenseAggreement" :key="index">{{ element }}</p>
         </base-dialog>
 
         <base-dialog class="input" v-if="forgotPassword && !send" @close="forgotPassword = false">
-            <img src="../../assets/login/memory.svg" alt="memory">
+            <p class="material-symbols-sharp icon-margin-button header-icon-layout">memory</p>
             <header>{{ $t('TheLogin.reset.title') }}</header>
             <p>{{ $t('TheLogin.reset.description') }}</p>
             <base-message data-type="error" v-if="error">
               {{ $t('TheLogin.error.mail-not-found') }}
             </base-message>
             <base-input class="dialog-input-color">
-                <input class="email" type="text" v-model="email" placeholder="email utilisateur">
+              <p class="material-symbols-sharp icon-margin icon-position" style="top: 5px">email</p>
+              <input class="email" type="text" v-model="email" placeholder="email utilisateur">
             </base-input>
             <base-button class="reset" @click="passwordReset()">
-                <img src="../../assets/login/refresh.svg" />{{ $t('TheLogin.reset-password') }}
+              <p class="material-symbols-sharp icon-margin-button">refresh</p><p class="button-text">{{ $t('TheLogin.reset-password') }}</p>
             </base-button>
         </base-dialog>
 
         <base-dialog v-if="send" class="result" @close="send = false">
-            <img class="sent-margin" src="../../assets/login/mark_email_unread.svg" alt="memory">
+            <p class="material-symbols-sharp icon-margin-button header-icon-layout">mark_email_unread</p>
             <p class="sent-margin">{{ $t('TheLogin.email-send') }}</p>
             <base-button class="home" @click="send= false">
-                <img src="../../assets/shared/home.svg" />{{ $t('TheLogin.button.home') }}
+              <p class="material-symbols-sharp icon-margin-button">home</p><p class="button-text">{{ $t('TheLogin.button.home') }}</p>
             </base-button>
         </base-dialog>
     </div>
@@ -55,7 +56,6 @@
 
 <style scoped>
   .email {
-    --icon-link: url("../../assets/login/email.svg");
     --bg-color: white;
     --color: black;
   }
@@ -68,5 +68,35 @@
   .home {
     --link-color: white;
     --highlight-color: #323232;
+  }
+
+  .header-icon-layout {
+    font-size: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  .icon-position {
+    position: absolute;
+    left: 21px;
+  }
+
+  .icon-margin {
+    margin: 0px;
+  }
+
+  .icon-margin-button {
+    margin: 0px;
+    padding-right: 6px;
+  }
+
+  .button-text {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 1.5px;
+    font-variation-settings: "wght" 149, "ital" 0;
   }
 </style>

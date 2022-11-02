@@ -45,20 +45,20 @@
         </div>
         <div class="element">
             <p class="material-symbols-sharp text-margin">my_location</p>
-            <p class="information-text">Yverdon-les-Bains, Suisse</p>
+            <p class="information-text">{{ props.biover.location }}</p>
         </div>
         <!--div class="element">
             <p class="material-symbols-sharp text-margin">restore</p>
             <p class="information-text">{{ $t('TheMenu.Information.LastConnection') }} 31/03/2022, 8h51</p>
         </div-->
         <div class="element">
+            <p class="material-symbols-sharp text-margin">architecture</p>
+            <p class="information-text">{{ $t('TheMenu.Information.Create') }} {{ dateFormatter(props.biover.creation_date) }}, {{ hourFormatter(props.biover.creation_date) }} {{ $t('TheMenu.Information.By') }} {{ props.biover.User.username }}</p>
+        </div>
+        <div class="element">
             <p class="material-symbols-sharp text-margin">create</p>
             <p v-if="props.biover.update_date" class="information-text">{{ $t('TheMenu.Information.LastEdition') }} {{ dateFormatter(props.biover.update_date) }}, {{ hourFormatter(props.biover.update_date) }} </p>
             <p v-else class="information-text">{{ $t('TheMenu.Information.NoUpdate') }}</p>
-        </div>
-        <div class="element">
-            <p class="material-symbols-sharp text-margin">architecture</p>
-            <p class="information-text">{{ $t('TheMenu.Information.Create') }} {{ dateFormatter(props.biover.creation_date) }}, {{ hourFormatter(props.biover.creation_date) }} {{ $t('TheMenu.Information.By') }} {{ props.biover.User.username }}</p>
         </div>
         <div class="element">
             <p class="material-symbols-sharp text-margin">pin_drop</p>
@@ -69,11 +69,11 @@
             <p class="information-text">{{ props.biover.Path.length }} {{ $t('TheMenu.Information.Traces') }}</p>
         </div>
         <!--div class="element">
-            <img src="../../assets/shared/local_florist.svg" alt="Gesture">
+            <p class="material-symbols-sharp text-margin">gesture</p>
             <p class="information-text">7 espèces identifiées</p>
         </div>
         <div class="element">
-            <img src="../../assets/shared/visibility.svg" alt="Gesture">
+            <p class="material-symbols-sharp text-margin">gesture</p>
             <p class="information-text">41 vues</p>
         </div-->
          <!--div class="element">

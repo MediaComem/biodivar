@@ -4,7 +4,7 @@
       <div class="button-border-layout">
         <button class="button-layout button-selection" @click="selectTab(0)">
           <p class="material-symbols-sharp text-margin">apps</p>
-          <p class="text-margin">Biovers</p>
+          <p class="text-margin name-element">Biovers</p>
         </button>
       </div>
       <div v-for="biovers in bioversToDisplay" :key="biovers.name" class="button-border-layout" :class="{'remove-border': biovers.biover.id === currentBioversId}">
@@ -13,7 +13,7 @@
           class="button-layout button-biovers"
         >
             <World :animate="biovers.biover.id === currentBioversId" @click="selectTab(biovers.biover.id)"/>
-            <p class="text-margin" @click="selectTab(biovers.biover.id)">{{ biovers.title }}</p>
+            <p class="text-margin name-element" @click="selectTab(biovers.biover.id)">{{ biovers.title }}</p>
             <p class="material-symbols-sharp" @click="closeTab(biovers.biover.id)">close</p>
         </button>
       </div>
@@ -120,6 +120,10 @@ export default {
   background-color: black;
   border-style: solid;
   border-color: white;
+}
+
+.name-element {
+      margin-top: 17px;
 }
 
 .text-margin {

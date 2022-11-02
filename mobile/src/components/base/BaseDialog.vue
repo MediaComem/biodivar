@@ -5,7 +5,7 @@
 <template>
   <dialog open>
     <div data-role="close" >
-      <img src="../../assets/shared/cross.svg" alt="cross" @click="emit('close')">
+      <p class="material-symbols-sharp icon-margin icon-font" style="cursor: pointer" @click="emit('close')">close</p>
     </div>
     <div data-role="slot">
       <slot></slot>
@@ -39,7 +39,7 @@
     color: var(--color);
     font-size: 16px;
     line-height: 16px;
-    margin: 1rem 0 2rem 0;
+    margin: 1rem 0 1rem 0;
   }
 
   dialog :slotted(p) {
@@ -48,9 +48,6 @@
     line-height: 12px;
   }
 
-  dialog :slotted(img.sent-margin) {
-    margin: 1rem 0 3rem 0;
-  }
   dialog :slotted(p.sent-margin) {
     font-family: 'BiodivAR Roman';
     font-variation-settings: "wght" 149, "ital" 0;
@@ -91,5 +88,14 @@
     --color: black;
     --bg-color: white;
     --border-color: #000000;
+  }
+
+  .icon-font {
+    font-size: 20px;
+  }
+
+  .icon-margin {
+    margin: 0px;
+    padding-right: 0px;
   }
 </style>

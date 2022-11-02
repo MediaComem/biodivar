@@ -8,15 +8,18 @@
         </template>
         <p class="parameter-name">titre du biovers</p>
         <base-input class="title">
-            <input type="text" v-model="biovers.biover.name" placeholder="Nom du biovers">
+            <p class="material-symbols-sharp icon-position" style="top: -22px" >short_text</p>
+            <input type="text" v-model="biovers.biover.name" placeholder="nom du biovers">
         </base-input>
         <p class="parameter-name">sous-titre du biovers</p>
         <base-input class="subtitle">
-            <input type="text" v-model="biovers.biover.description" placeholder="Sous-titre du biovers">
+            <p class="material-symbols-sharp icon-position description-transform" style="top: -22px" >short_text</p>
+            <input type="text" v-model="biovers.biover.description" placeholder="sous-titre du biovers">
         </base-input>
         <p class="parameter-name">emplacement du biovers</p>
         <base-input class="location">
-            <input type="text" v-model="biovers.biover.location" placeholder="Emplacement du biovers">
+            <p class="material-symbols-sharp icon-position" style="top: -21px" >my_location</p>
+            <input type="text" v-model="biovers.biover.location" placeholder="emplacement du biovers">
         </base-input>
         <div class="item">
             <BioverActions :biover="biovers.biover" @visibility="visibilityDialog = true" @editable="editableDialog = true" @favori="favoriDialog = true" @pin="pinDialog = true" />
@@ -26,7 +29,7 @@
         <BioverFavoriDialog v-if="favoriDialog" :biover="biovers.biover" :favori-state="isInFavori(biovers.biover.id)" @close="favoriDialog = false" @favori-action="favoriEdition" />
         <BioverPinDialog v-if="pinDialog" :biover="biovers.biover" :pin-state="isInPins(biovers.biover.id)" @close="pinDialog = false" @pin-action="pinEdition" />
          <base-button class="save" @click="save">
-            <p class="material-symbols-sharp text-formatting">done</p> Sauvegarder les modifications
+            <p class="material-symbols-sharp icon-margin icon-font">done</p><p class="button-text">Sauvegarder les modifications</p>
         </base-button>
     </div>
     <div v-else>
@@ -132,21 +135,18 @@ export default {
 @import './table.css';
 
 .title {
-    --icon-link: url("../../../../assets/tables/title_icon.svg");
     --bg-color: none;
     --color: white;
     --border-color: #FFFFFF;
 }
 
 .subtitle {
-    --icon-link: url("../../../../assets/tables/subtitle_icon.svg");
     --bg-color: none;
     --color: white;
     --border-color: #FFFFFF;
 }
 
 .location {
-    --icon-link: url("../../../../assets/tables/location_icon.svg");
     --bg-color: none;
     --color: white;
     --border-color: #FFFFFF;
@@ -182,4 +182,30 @@ export default {
     padding-left: 16px;
     margin-bottom: 3px;
 }
+
+.icon-font {
+    font-size: 20px;
+}
+
+.icon-margin {
+    margin: 0px;
+    padding-right: 6px;
+}
+
+.button-text {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 1.5px;
+    font-variation-settings: "wght" 149, "ital" 0;
+}
+
+.icon-position {
+    color: white;
+    position: absolute;
+    left: 21px;
+}
+
+.description-transform {
+    transform: scaleY(-1);
+  }
 </style>

@@ -8,12 +8,12 @@
 
 <template>
   <base-dialog class="edit-element"  @close="emit('close')">
-    <img src="../../../assets/shared/more/delete.svg">
+    <p class="material-symbols-sharp icon-margin icon-font header-icon-layout" >delete</p>
     <header>{{ $t('TheMenu.Dialog.DeleteHeader') }} {{ props.biover.name }}</header>
-    <p>{{ $t('TheMenu.Dialog.DeleteText') }}</p>
+    <p class="description">{{ $t('TheMenu.Dialog.DeleteText') }}</p>
     <base-input class="dialog-input-color">
       <base-button class="delete" @click="emit('delete')">
-        <img src="../../../assets/shared/more/delete_white.svg" />{{ $t('TheMenu.Dialog.DeleteButton')}}
+        <p class="material-symbols-sharp icon-margin icon-font">delete</p><p class="button-text">{{ $t('TheMenu.Dialog.DeleteButton') }}</p>
       </base-button>
     </base-input>
   </base-dialog>
@@ -22,6 +22,34 @@
 <style scoped>
   .delete {
     --link-color: white;
-    --highlight-color: rgba(255, 0, 0, 0.5);
+    --highlight-color: rgb(255, 0, 0);
+  }
+
+  .header-icon-layout {
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .icon-font {
+    font-size: 20px;
+  }
+
+  .icon-margin {
+    margin: 0px;
+    padding-right: 6px;
+  }
+
+  .button-text {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    font-variation-settings: "wght" 149, "ital" 0;
+    text-transform: uppercase;
+  }
+
+  .description {
+    margin-bottom: 2rem;
   }
 </style>

@@ -31,10 +31,6 @@
   }
 
   button:hover {
-    opacity: 0.9;
-  }
-
-  [data-role="button"] :slotted(img) {
-    padding-right: 0.5rem;
+    opacity: 0.8;
   }
 </style>

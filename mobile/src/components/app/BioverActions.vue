@@ -1,14 +1,7 @@
 <script setup>
   import { ref } from '@vue/reactivity';
-
-  import PushPin from '../../assets/vue-svg/PushPin.vue';
-  import Stars from '../../assets/vue-svg/Stars.vue';
-  import RedEye from '../../assets/vue-svg/RedEye.vue';
-  import Edit from '../../assets/vue-svg/Edit.vue';
-
   import { couldEdit } from '../../utils/authorization.js';
   import { useStore } from '../../composables/store.js';
-
 
   const { isInFavori, favori, isInPins } = useStore();
 
@@ -28,61 +21,61 @@
   <div data-role="actions">
     <div v-if="isInPins(props.biover.id)" data-role="action">
       <div data-role="action-element" @click="emit('pin')">
-        <PushPin :color="'black'" />
-        <p style="width:80%">épinglé</p>
-        <img src="../../assets/shared/arrow_drop_down.svg" alt="Arrow">
+        <p class="material-symbols-sharp icon-margin icon-font fill-font" style="color: black">push_pin</p>
+        <p class="font" style="width:80%">épinglé</p>
+        <p class="material-symbols-sharp icon-font arrow-margin" style="color: black">arrow_drop_down</p>
       </div>
     </div>
-    <div v-else data-role="action">
+    <div v-else data-role="action-remove">
       <div data-role="action-element" @click="emit('pin')">
-        <PushPin :stroke="'black'" :color="'none'" />
-        <p style="width:80%">non-épinglé</p>
-        <img src="../../assets/shared/arrow_drop_down.svg" alt="Arrow">
+        <p class="material-symbols-sharp icon-margin icon-font" style="color: black">push_pin</p>
+        <p class="font" style="width:80%">non-épinglé</p>
+        <p class="material-symbols-sharp icon-font arrow-margin" style="color: black">arrow_drop_down</p>
       </div>
     </div>
     <!-- Favori -->
     <div v-if="isInFavori(props.biover.id)" data-role="action">
       <div data-role="action-element" @click="emit('favori')">
-        <img src="../../assets/shared/more/star.svg" alt="Arrow">
-        <p>{{ $t('TheMenu.Action.Star') }}</p>
-        <img src="../../assets/shared/arrow_drop_down.svg" alt="Arrow">
+        <p class="material-symbols-sharp icon-margin icon-font fill-font" style="color: black">star</p>
+        <p class="font">favori</p>
+        <p class="material-symbols-sharp icon-font arrow-margin" style="color: black">arrow_drop_down</p>
       </div>
     </div>
-    <div v-else data-role="action">
+    <div v-else data-role="action-remove">
       <div ref="star" data-role="action-element" @click="emit('favori')">
-        <img src="../../assets/shared/more/star_border.svg" alt="Arrow">
-        <p>Non-Favori</p>
-        <img src="../../assets/shared/arrow_drop_down.svg" alt="Arrow">
+        <p class="material-symbols-sharp icon-margin icon-font" style="color: black">star</p>
+        <p class="font">non-favori</p>
+        <p class="material-symbols-sharp icon-font arrow-margin" style="color: black">arrow_drop_down</p>
       </div>
     </div>
     <!-- Visibility -->
     <div v-if="props.biover.is_public" data-role="action" :class="{'not-allowed': !editableRight}">
       <div data-role="action-element" @click="editableRight ? emit('visibility') : ''">
-        <img alt="Visibility" src="../../assets/shared/more/remove_red_eye.svg">
-        <p>{{ $t('TheMenu.Shared.Public') }}</p>
-        <img v-if="editableRight" src="../../assets/shared/arrow_drop_down.svg" alt="Arrow">
+        <p class="material-symbols-sharp icon-margin icon-font fill-font" style="color: black">remove_red_eye</p>
+        <p class="font">public</p>
+        <p v-if="editableRight" class="material-symbols-sharp icon-font arrow-margin" style="color: black">arrow_drop_down</p>
       </div>
     </div>
-    <div v-else data-role="action" :class="{'not-allowed': !editableRight}">
+    <div v-else data-role="action-remove" :class="{'not-allowed': !editableRight}">
       <div data-role="action-element" @click="editableRight ? emit('visibility') : ''">
-        <img alt="Visibility" src="../../assets/shared/more/visibility_off.svg">
-        <p>{{ $t('TheMenu.Shared.Private') }}</p>
-        <img v-if="editableRight" src="../../assets/shared/arrow_drop_down.svg" alt="Arrow">
+        <p class="material-symbols-sharp icon-margin icon-font fill-font" style="color: black">visibility_off</p>
+        <p class="font">privé</p>
+        <p v-if="editableRight" class="material-symbols-sharp icon-font arrow-margin" style="color: black">arrow_drop_down</p>
       </div>
     </div>
     <!-- Edition -->
-    <div v-if="!props.biover.is_editable" data-role="action" :class="{'not-allowed': !editableRight}">
+    <div v-if="!props.biover.is_editable" data-role="action-remove" :class="{'not-allowed': !editableRight}">
       <div data-role="action-element" @click="editableRight ? emit('editable') : ''">
-        <img alt="Edit" src="../../assets/shared/more/edit_off.svg">
-        <p>{{ $t('TheMenu.Action.Unedit') }}</p>
-        <img v-if="editableRight" src="../../assets/shared/arrow_drop_down.svg" alt="Arrow">
+        <p class="material-symbols-sharp icon-margin icon-font fill-font" style="color: black">edit_off</p>
+        <p class="font">non-modifiable</p>
+        <p v-if="editableRight" class="material-symbols-sharp icon-font arrow-margin" style="color: black">arrow_drop_down</p>
       </div>
     </div>
     <div v-else data-role="action" :class="{'not-allowed': !editableRight}">
       <div data-role="action-element" @click="editableRight ? emit('editable') : ''">
-        <img alt="Edit" src="../../assets/shared/more/edit.svg">
-        <p>{{ $t('TheMenu.Action.Edit') }}</p>
-        <img v-if="editableRight" src="../../assets/shared/arrow_drop_down.svg" alt="Arrow">
+        <p class="material-symbols-sharp icon-margin icon-font fill-font" style="color: black">edit</p>
+        <p class="font">modifiable</p>
+        <p v-if="editableRight" class="material-symbols-sharp icon-font arrow-margin" style="color: black">arrow_drop_down</p>
       </div>
     </div>
   </div>
@@ -98,7 +91,17 @@
     background-color: #8DC26F;
     border: solid 1px #8DC26F;
     border-radius: 2rem;
-    margin: 0rem 0rem 0 1rem;
+    margin: 0rem 0rem 5px 1rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    height: 36px;
+    cursor: pointer;
+  }
+
+  [data-role="action-remove"] {
+    background-color: #BDBDBD;
+    border: solid 1px #BDBDBD;
+    border-radius: 2rem;
+    margin: 0rem 0rem 5px 1rem;
     padding: 0.5rem 1rem 0.5rem 1rem;
     height: 36px;
     cursor: pointer;
@@ -114,7 +117,7 @@
     opacity: 0.5;
   }
 
-  p {
+  .font {
     font-family: 'BiodivAR Roman';
     font-size: 14px;
     line-height: 14px;
@@ -122,6 +125,7 @@
     margin: 0;
     text-align: center;
     font-variation-settings: "wght" 110, "ital" 0;
+    margin-top: 1px;
   }
 
   .element-menu {
@@ -143,5 +147,27 @@
     align-items: center;
     display: flex;
     font-size: 14px;
+  }
+
+  .icon-font {
+    font-size: 18px;
+  }
+
+  .icon-margin {
+    margin: 0px;
+    margin-top: -1px;
+    padding-right: 6px;
+    margin-left: -8px;
+    margin-right: -4px;
+  }
+
+  .arrow-margin {
+    margin: 0px;
+    margin-top: -2px;
+    margin-right: -8px;
+  }
+
+  .fill-font {
+    font-variation-settings: "FILL" 1;
   }
 </style>

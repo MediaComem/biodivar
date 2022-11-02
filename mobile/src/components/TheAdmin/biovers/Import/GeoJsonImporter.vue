@@ -172,11 +172,11 @@ onUnmounted(() => {
 <template>
   <div class="action-layout">
     <base-button class="button" @click="openBioversCreator">
-      <p class="material-symbols-sharp text-formatting">add_circle</p> Créer un nouveau biovers
+      <p class="material-symbols-sharp icon-margin icon-font">add_circle</p><p class="button-text">Créer un nouveau biovers</p>
     </base-button>
     <BioverCreator :showDialog="bioversCreator" @closeDialog="closeBioversCreator"/>      
     <base-button :class="{button: couldPublish, disable: !couldPublish}" @click="save">
-      <p class="material-symbols-sharp text-formatting">publish</p> Publier
+      <p class="material-symbols-sharp icon-margin icon-font">publish</p><p class="button-text">Publier</p>
     </base-button>
     <template v-if="saveDone">
       <el-alert :title="$t('import.result')" type="success" />
@@ -212,11 +212,26 @@ onUnmounted(() => {
   margin: 0px;
 }
 
-.el-upload {
-  padding-right: 15px;
-}
+.header-icon-layout {
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-.text-formatting {
-  margin: 0
-}
+  .icon-font {
+    font-size: 20px;
+  }
+
+  .icon-margin {
+    margin: 0px;
+    padding-right: 6px;
+  }
+
+  .button-text {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 1.5px;
+    font-variation-settings: "wght" 149, "ital" 0;
+  }
 </style>
