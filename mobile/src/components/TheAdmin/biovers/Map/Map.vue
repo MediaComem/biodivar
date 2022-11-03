@@ -171,6 +171,7 @@
 </script>
 
 <template>
+  <div class="content">
     <div id="map">
         <div v-if="mapAdmin">
             <div v-for="(poi, index) of getPois" :key="index">
@@ -183,17 +184,24 @@
             </div>
         </div>
     </div>
-    <ThePoiEditor :showDialog="showCreationDialog" :isEdit="false" :coordinate="latlng"
+  </div>
+  <ThePoiEditor :showDialog="showCreationDialog" :isEdit="false" :coordinate="latlng"
     @close-dialog="closeEditor" @close-after-save="showCreationDialog = false"/>
-    <ThePoiEditor :isEdit="true" :poi="poiToUpdate" :showDialog="showEditionDialog"
+  <ThePoiEditor :isEdit="true" :poi="poiToUpdate" :showDialog="showEditionDialog"
     @close-dialog="closeEditor" @close-after-save="showEditionDialog = false"/>
 </template>
 
 <style scoped>
-  #map {
+  .content {
     height: 50vh;
     width: 100%;
     max-width: 100%;
     resize: both;
+    overflow: auto;
+  }
+
+  #map {
+    height: 100%;
+    width: 100%;
   }
 </style>
