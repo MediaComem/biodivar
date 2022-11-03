@@ -4,6 +4,7 @@
     border-radius: 50%;
     background-color: #F2F2F2;
     cursor: pointer;
+    z-index: 100;
 }
 
 .icon-layout {

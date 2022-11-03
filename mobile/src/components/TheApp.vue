@@ -35,6 +35,10 @@
     menu.value = false;
   }
 
+  function closeMap() {
+    window.dispatchEvent(new CustomEvent('close-ar-map', {}));
+  }
+
    onMounted(async () => {
     isMobileOrTablet.value = isMobileDevice();
     isIOS.value = AFRAME.utils.device.isIOS();
@@ -96,6 +100,7 @@
     <the-aframe></the-aframe>
     <the-hud>
       <BaseMap v-if="mapOpen" />
+      <div v-if="mapOpen" class="dialog-map-overlay" @click="closeMap"></div>
     </the-hud>
   </div>
 
@@ -199,6 +204,14 @@
   }
 
   .dialog-overlay {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
+  .dialog-map-overlay {
     height: 100vh;
     width: 100vw;
     position: fixed;

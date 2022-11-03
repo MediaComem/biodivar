@@ -56,6 +56,7 @@
     height: 95vh;
     width: 100vw;
     left: 0;
+    z-index: 100;
   }
 
   #map {
