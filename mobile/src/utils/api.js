@@ -107,3 +107,8 @@ export function getMediaUrl(media) {
 export function saveMedia(media) {
   return postJsonBinary(API + 'media/create', media, 'multipart/form-data');
 }
+
+// Trace part
+export function saveTrace(trace) {
+  return postJson(API + 'user_trace/create', trace);
+}

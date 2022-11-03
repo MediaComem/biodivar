@@ -16,7 +16,8 @@
   import '../aframe/listen-to';
   import '../aframe/event-set';
 
-  import { getSymbolUrl, getSymbolAudiUrl, getMediaUrl } from '../../utils/api.js';
+  import { getSymbolUrl, getSymbolAudiUrl, getMediaUrl, saveTrace } from '../../utils/api.js';
+  import { onMounted, onUnmounted } from '@vue/runtime-core';
 
   const { selectedBiovers, section } = useStore();
 
@@ -42,7 +43,39 @@
     section.value = 'menu';
   });
 
-  // console.log(selectedBiovers.value);
+  let wakeLock = null;
+  let timerTrace = null;
+  let position = null;
+
+  onMounted(async () => {
+    wakeLock = await navigator.wakeLock.request('screen');
+
+    const id = navigator.geolocation.watchPosition(
+      pos => position = pos,
+      error => console.error(error),
+      { enableHighAccuracy: true, enableHighAccuracy: true}
+    );
+
+    timerTrace = setInterval(() => {
+      if (!position) return;
+      const lat = position.coords.latitude;
+      const long = position.coords.longitude;
+      const gps_accuracy = position.coords.accuracy;
+      const alt = position.coords.altitude ?? 0;
+      saveTrace({
+        is_public: true,
+        gps_accuracy,
+        biovers: selectedBiovers.value.id,
+        coordinate: { lat, long, alt },
+      });
+    }, 5000);
+
+  });
+
+  onUnmounted(() => {
+    if (wakeLock) wakeLock.release();
+    if (timerTrace) clearInterval(timerTrace);
+  });
 
 </script>
 
