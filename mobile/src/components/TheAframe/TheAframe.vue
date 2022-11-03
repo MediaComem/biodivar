@@ -68,7 +68,7 @@
         biovers: selectedBiovers.value.id,
         coordinate: { lat, long, alt },
       });
-    }, 5000);
+    }, 1000);
 
   });
 
