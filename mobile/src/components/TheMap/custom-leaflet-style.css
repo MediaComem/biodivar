@@ -12,6 +12,19 @@
     border-radius: 0px;
 }
 
+.leaflet-control-interior-cross {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    text-align: center;
+    margin-top: -2px !important;
+    margin-left: 12px !important;
+    border-radius: 0px;
+    color: white;
+}
+
 .leaflet-control-interior:hover {
     background-color: #F4F4F4;
 }

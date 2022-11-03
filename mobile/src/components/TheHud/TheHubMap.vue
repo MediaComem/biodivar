@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, onMounted } from '@vue/runtime-core';
+  import { ref, onMounted, onUnmounted } from '@vue/runtime-core';
   import { useStore } from '../../composables/store';
   import { mapStore } from '../../composables/map';
   import { clearHubTimeout, setHubTimeout } from './hub-utils.js';
@@ -21,10 +21,20 @@
     }
   }
 
+  function closeMap() {
+    mapYPosition.value = maxYPosition.value;
+    setHubTimeout();
+  }
+
   onMounted(() => {
+    window.addEventListener('close-ar-map', closeMap);
     minYPosition.value = screen.availHeight - (screen.availHeight * 0.95);
     maxYPosition.value = screen.availHeight - (screen.availHeight * 0.1);
     mapYPosition.value = maxYPosition.value;
+  })
+
+  onUnmounted(() => {
+    window.removeEventListener('close-ar-map', closeMap);
   })
 </script>
 

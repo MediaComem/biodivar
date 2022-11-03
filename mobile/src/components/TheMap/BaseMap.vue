@@ -17,13 +17,13 @@
   const getMetersInPixel = computed(() => 40075016.686 * Math.abs(Math.cos(map.value.getCenter().lat * Math.PI/180)) / Math.pow(2, map.value.getZoom()+8));
 
   onMounted(() => {
-    map.value = L.map('map').setView(position.value, 18);
+    map.value = L.map('map', {zoomControl: false}).setView(position.value, 18);
     const dark = L.tileLayer(`https://api.maptiler.com/maps/ch-swisstopo-lbm-dark/{z}/{x}/{y}.png?key=${KEY}`, {
         minZoom: 3,
         maxZoom: 22,
         attribution: ''
     }).addTo(map.value);
-    
+    L.closeMap().addTo(map.value);
   })
 
   onUnmounted(() => {

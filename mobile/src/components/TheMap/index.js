@@ -4,3 +4,4 @@ export { UploadControl } from "./upload-control.js";
 export { ZoomIn } from "./zoom-in-control.js";
 export { ZoomOut } from "./zoom-out-control.js";
 export { DownloadControl } from "./download-control.js";
+export { CloseMap } from "./close-map.js";
