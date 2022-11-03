@@ -1,12 +1,12 @@
 <script setup>
   import { login } from '../../utils/api.js';
-  import { ref } from '@vue/reactivity';
+  import { ref, onMounted, onUnmounted } from 'vue';
   import { useStore } from '../../composables/store.js';
   import { storage } from '../../composables/localStorage.js';
   import { keepAlive } from '../../composables/keepAlive.js';
   import { isMobileDevice } from '../../utils/device.js';
 
-  const { isAuth, username, forgotPassword, section } = useStore();
+  const { isAuth, username, forgotPassword, section, registerValidated } = useStore();
 
   const { storeUser } = storage();
 
@@ -31,12 +31,25 @@
       error.value = true;
     }
   }
+
+  onMounted(() => {
+    if (registerValidated.value) {
+      setTimeout(() => registerValidated.value = false, 3000);
+    }
+  })
+
+  onUnmounted(() => {
+    registerValidated.value = false;
+  })
 </script>
 
 <template>
     <base-form @submit.prevent="checkAuth()">
       <base-message data-type="error" v-if="error">
         {{ $t('TheLogin.error.login') }}
+      </base-message>
+      <base-message v-if="registerValidated">
+        compte créé avec succès
       </base-message>
       <p>Pas encore de compte&thinsp;?&nbsp;<a @click="emit('register')">{{ $t('TheLogin.inscription') }}</a></p>
       <base-input class="user">

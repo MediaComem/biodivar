@@ -4,7 +4,7 @@
   import { useStore } from '../../composables/store.js';
   import { emailRegex } from '../../utils/validation.js';
 
-  const { username, showAggreement } = useStore();
+  const { username, showAggreement, registerValidated } = useStore();
 
   const email = ref('');
   const password = ref('');
@@ -22,6 +22,7 @@
     if (validateUsername() && validateEmail() && validatePassword() && validateAggreement()) {
       const resp = await register(username.value, email.value, password.value);
       if (resp?.statusCode === 200) {
+        registerValidated.value = true;
         emit('register');
       } else {
         error.value = 0;

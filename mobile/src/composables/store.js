@@ -35,6 +35,8 @@ const hubDisplay = ref(true);
 
 const hubDisplayTimeout = ref(null);
 
+const registerValidated = ref(false);
+
 watch(favori, (val) => {
   storeFavori(favori.value);
 }, { deep: true } );
@@ -64,6 +66,6 @@ const getPinsBiovers = () => {
 
 export function useStore() {
 
-  return { isAuth, section, biovers, username, showAggreement, forgotPassword, send, isMobileOrTablet, isIOS, selectedBiovers, pins, mapOpen, favori, hubDisplay, hubDisplayTimeout, isInFavori, isInPins, getPinsBiovers };
+  return { isAuth, section, biovers, username, showAggreement, forgotPassword, send, isMobileOrTablet, isIOS, selectedBiovers, pins, mapOpen, favori, hubDisplay, hubDisplayTimeout, registerValidated, isInFavori, isInPins, getPinsBiovers };
 
 }
