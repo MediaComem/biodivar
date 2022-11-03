@@ -11,3 +11,10 @@ export function couldEdit(biovers)  {
     }
     return false;
 }
+
+export function isCurrentOwner(biovers) {
+    if (username.value === biovers.User.username) {
+        return true;
+    }
+    return false;
+}

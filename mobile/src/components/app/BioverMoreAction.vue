@@ -2,11 +2,12 @@
   import { ref } from 'vue';
   import { store } from '../../store/store.js';
   import { useStore } from '../../composables/store.js';
-  import { couldEdit } from '../../utils/authorization.js';
+  import { couldEdit, isCurrentOwner } from '../../utils/authorization.js';
 
   const { isMobileOrTablet, section, username, isInFavori, isInPins } = useStore();
 
   const editableRight = ref(couldEdit(props.biover));
+  const isOwner = ref(isCurrentOwner(props.biover));
 
   const props = defineProps({
     enabled: Boolean,
@@ -41,10 +42,10 @@
       <ul>
         <li @click="section = 'ar'"><p class="material-symbols-sharp icon-margin icon-font">view_in_ar</p> {{ $t('TheMenu.More.AR') }}</li>
         <li @click="openInMap"><p class="material-symbols-sharp icon-margin icon-font">map</p> {{ $t('TheMenu.More.Desktop') }}</li>
-        <li v-if="props.biover.is_public" :class="{'not-allowed': !editableRight}" @click="editableRight ? emit('visibility') : ''"><p class="material-symbols-sharp icon-margin icon-font fill-font">remove_red_eye</p> {{ $t('TheMenu.More.Private') }}</li>
-        <li v-if="!props.biover.is_public" :class="{'not-allowed': !editableRight}" @click="editableRight ? emit('visibility') : ''"><p class="material-symbols-sharp icon-margin icon-font fill-font">visibility_off</p> {{ $t('TheMenu.More.Publique') }}</li>
-        <li v-if="props.biover.is_editable" :class="{'not-allowed': !editableRight}" @click="editableRight ?emit('editable') : ''"><p class="material-symbols-sharp icon-margin icon-font fill-font">edit</p> {{ $t('TheMenu.More.ToUnEdit') }}</li>
-        <li v-if="!props.biover.is_editable" :class="{'not-allowed': !editableRight}" @click="editableRight ?emit('editable') : ''"><p class="material-symbols-sharp icon-margin icon-font fill-font">edit_off</p> {{ $t('TheMenu.More.ToEdit') }}</li>
+        <li v-if="props.biover.is_public" :class="{'not-allowed': !isOwner}" @click="isOwner ? emit('visibility') : ''"><p class="material-symbols-sharp icon-margin icon-font fill-font">remove_red_eye</p> {{ $t('TheMenu.More.Private') }}</li>
+        <li v-if="!props.biover.is_public" :class="{'not-allowed': !isOwner}" @click="isOwner ? emit('visibility') : ''"><p class="material-symbols-sharp icon-margin icon-font fill-font">visibility_off</p> {{ $t('TheMenu.More.Publique') }}</li>
+        <li v-if="props.biover.is_editable" :class="{'not-allowed': !isOwner}" @click="isOwner ?emit('editable') : ''"><p class="material-symbols-sharp icon-margin icon-font fill-font">edit</p> {{ $t('TheMenu.More.ToUnEdit') }}</li>
+        <li v-if="!props.biover.is_editable" :class="{'not-allowed': !isOwner}" @click="isOwner ?emit('editable') : ''"><p class="material-symbols-sharp icon-margin icon-font fill-font">edit_off</p> {{ $t('TheMenu.More.ToEdit') }}</li>
         <li v-if="isInFavori(props.biover.id)" @click="emit('favori')"><p class="material-symbols-sharp icon-margin icon-font fill-font">star</p> {{ $t('TheMenu.More.ToFavorite') }}</li>
         <li v-if="!isInFavori(props.biover.id)" @click="emit('favori')"><p class="material-symbols-sharp icon-margin icon-font">star</p> {{ $t('TheMenu.Dialog.FavoriAdd') }}</li>
         <li v-if="isInPins(props.biover.id)" @click="emit('pin')"><p class="material-symbols-sharp icon-margin icon-font fill-font">push_pin</p> {{ $t('TheMenu.More.ToPin') }}</li>

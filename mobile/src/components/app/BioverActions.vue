@@ -1,6 +1,6 @@
 <script setup>
   import { ref } from '@vue/reactivity';
-  import { couldEdit } from '../../utils/authorization.js';
+  import { couldEdit, isCurrentOwner } from '../../utils/authorization.js';
   import { useStore } from '../../composables/store.js';
 
   const { isInFavori, favori, isInPins } = useStore();
@@ -12,6 +12,7 @@
   const pushPin = ref(false);
 
   const editableRight = ref(couldEdit(props.biover));
+  const isOwner = ref(isCurrentOwner(props.biover));
 
   const emit = defineEmits(['visibility', 'editable', 'favori', 'pin'])
 </script>
@@ -49,33 +50,33 @@
       </div>
     </div>
     <!-- Visibility -->
-    <div v-if="props.biover.is_public" data-role="action" :class="{'not-allowed': !editableRight}">
-      <div data-role="action-element" @click="editableRight ? emit('visibility') : ''">
+    <div v-if="props.biover.is_public" data-role="action" :class="{'not-allowed': !isOwner}">
+      <div data-role="action-element" @click="isOwner ? emit('visibility') : ''">
         <p class="material-symbols-sharp icon-margin icon-font fill-font" style="color: black">remove_red_eye</p>
         <p class="font">public</p>
-        <p v-if="editableRight" class="material-symbols-sharp icon-font arrow-margin" style="color: black">arrow_drop_down</p>
+        <p v-if="isOwner" class="material-symbols-sharp icon-font arrow-margin" style="color: black">arrow_drop_down</p>
       </div>
     </div>
-    <div v-else data-role="action-remove" :class="{'not-allowed': !editableRight}">
-      <div data-role="action-element" @click="editableRight ? emit('visibility') : ''">
+    <div v-else data-role="action-remove" :class="{'not-allowed': !isOwner}">
+      <div data-role="action-element" @click="isOwner ? emit('visibility') : ''">
         <p class="material-symbols-sharp icon-margin icon-font fill-font" style="color: black">visibility_off</p>
         <p class="font">privé</p>
-        <p v-if="editableRight" class="material-symbols-sharp icon-font arrow-margin" style="color: black">arrow_drop_down</p>
+        <p v-if="isOwner" class="material-symbols-sharp icon-font arrow-margin" style="color: black">arrow_drop_down</p>
       </div>
     </div>
     <!-- Edition -->
-    <div v-if="!props.biover.is_editable" data-role="action-remove" :class="{'not-allowed': !editableRight}">
-      <div data-role="action-element" @click="editableRight ? emit('editable') : ''">
+    <div v-if="!props.biover.is_editable" data-role="action-remove" :class="{'not-allowed': !isOwner}">
+      <div data-role="action-element" @click="isOwner ? emit('editable') : ''">
         <p class="material-symbols-sharp icon-margin icon-font fill-font" style="color: black">edit_off</p>
         <p class="font">non-modifiable</p>
-        <p v-if="editableRight" class="material-symbols-sharp icon-font arrow-margin" style="color: black">arrow_drop_down</p>
+        <p v-if="isOwner" class="material-symbols-sharp icon-font arrow-margin" style="color: black">arrow_drop_down</p>
       </div>
     </div>
-    <div v-else data-role="action" :class="{'not-allowed': !editableRight}">
-      <div data-role="action-element" @click="editableRight ? emit('editable') : ''">
+    <div v-else data-role="action" :class="{'not-allowed': !isOwner}">
+      <div data-role="action-element" @click="isOwner ? emit('editable') : ''">
         <p class="material-symbols-sharp icon-margin icon-font fill-font" style="color: black">edit</p>
         <p class="font">modifiable</p>
-        <p v-if="editableRight" class="material-symbols-sharp icon-font arrow-margin" style="color: black">arrow_drop_down</p>
+        <p v-if="isOwner" class="material-symbols-sharp icon-font arrow-margin" style="color: black">arrow_drop_down</p>
       </div>
     </div>
   </div>
