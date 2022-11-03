@@ -31,6 +31,7 @@ bioversRoutes.push({
     try {
       const biovers = await getPublicBiovers(
         request.server.app.prisma,
+        request.state.biodivar.id,
         request.server.app.logger
       );
       if (biovers) {

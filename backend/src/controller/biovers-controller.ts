@@ -73,6 +73,7 @@ export const getBioversByUser = async (
       UserTrace: {
         where: {
           deleted_date: null,
+          author: user_id,
         },
         include: {
           coordinate: true,
@@ -84,6 +85,9 @@ export const getBioversByUser = async (
         }
       },
       Event: {
+        where: {
+          author: user_id,
+        },
         include: {
           coordinate: true,
           User: {
@@ -178,6 +182,7 @@ export const getBioversById = async (
         UserTrace: {
           where: {
             deleted_date: null,
+            author: user_id,
           },
           include: {
             coordinate: true,
@@ -189,6 +194,9 @@ export const getBioversById = async (
           }
         },
         Event: {
+          where: {
+            author: user_id,
+          },
           include: {
             coordinate: true,
             User: {
@@ -209,6 +217,7 @@ export const getBioversById = async (
 
 export const getPublicBiovers = async (
   prisma: PrismaClient,
+  user_id: number,
   logger: winston.Logger
 ) => {
   try {
@@ -279,6 +288,7 @@ export const getPublicBiovers = async (
         UserTrace: {
           where: {
             deleted_date: null,
+            author: user_id,
           },
           include: {
             coordinate: true,
@@ -290,6 +300,9 @@ export const getPublicBiovers = async (
           }
         },
         Event: {
+          where: {
+            author: user_id,
+          },
           include: {
             coordinate: true,
             User: {
@@ -380,6 +393,7 @@ export const createBiovers = async (
         UserTrace: {
           where: {
             deleted_date: null,
+            author: biovers.owner,
           },
           include: {
             coordinate: true,
@@ -391,6 +405,9 @@ export const createBiovers = async (
           }
         },
         Event: {
+          where: {
+            author: biovers.owner,
+          },
           include: {
             coordinate: true,
             User: {
@@ -483,6 +500,7 @@ export const updateBiovers = async (
           UserTrace: {
             where: {
               deleted_date: null,
+              author: biovers.owner,
             },
             include: {
               coordinate: true,
@@ -494,6 +512,9 @@ export const updateBiovers = async (
             }
           },
           Event: {
+            where: {
+              author: biovers.owner,
+            },
             include: {
               coordinate: true,
               User: {
