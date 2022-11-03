@@ -18,6 +18,8 @@
   const showEditionDialog = ref(false);
   const shouldNotUpdateBounding = ref(false);
   const poiToUpdate = ref({});
+  const mapAdminContainer = ref(null);
+  const observer = ref(null);
 
   const pois = computed(() => store.state.biovers.pois);
   const getPois = computed(() => {
@@ -160,9 +162,15 @@
       computeBoxingBox();
       updateMetersInPixel();
     });
+
+    observer.value = new ResizeObserver(() => {
+      mapAdmin.value.invalidateSize();
+    });
+    observer.value.observe(mapAdminContainer.value);
   })
 
   onUnmounted(() => {
+    observer.value.disconnect();
     window.removeEventListener('poi-creator-control', poiCreatorController);
     window.removeEventListener('custom-download-control', downloadAvailablePois);
     mapAdmin.value = null;
@@ -171,7 +179,7 @@
 </script>
 
 <template>
-  <div class="content">
+  <div ref="mapAdminContainer" class="content">
     <div id="map">
         <div v-if="mapAdmin">
             <div v-for="(poi, index) of getPois" :key="index">
