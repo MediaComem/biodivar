@@ -1,29 +1,58 @@
 <script setup>
+  import { ref, onMounted } from '@vue/runtime-core';
   import { useStore } from '../../composables/store';
+  import { mapStore } from '../../composables/map';
+  import { clearHubTimeout, setHubTimeout } from './hub-utils.js';
 
-  const { mapOpen } = useStore();
+  const { mapOpen, hubDisplay, hubDisplayTimeout } = useStore();
+  const { mapYPosition } = mapStore();
 
-  function openMap() {
-      mapOpen.value = !mapOpen.value;
+  const minYPosition = ref(0);
+  const maxYPosition = ref(0);
+
+  function move(event) {
+    clearHubTimeout();
+    const yPosition = event.touches[0].pageY;
+    if (yPosition > minYPosition.value && yPosition < maxYPosition.value) {
+      mapYPosition.value = yPosition;
+    }
+    if (mapYPosition.value > maxYPosition.value - 15) {
+      setHubTimeout();
+    }
   }
+
+  onMounted(() => {
+    minYPosition.value = screen.availHeight - (screen.availHeight * 0.95);
+    maxYPosition.value = screen.availHeight - (screen.availHeight * 0.1);
+    mapYPosition.value = maxYPosition.value;
+  })
 </script>
 
 <template>
-  <svg
-    @click="openMap()"
-    version="1.0"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    x="0px"
-    y="0px"
-    viewBox="0 0 40 40"
-    style="enable-background:new 0 0 40 40; z-index: 100"
-    xml:space="preserve"
-  >
-    <g stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m3 6.6 6.00001-3.6v14.4l-6.00001 3.6z"/><path d="m14.9999 6.6 6-3.6v14.4l-6 3.6z"/><path d="m14.9999 6.6-5.99999-3.6v14.4l5.99999 3.6z"/></g>
-  </svg>
+  <div class="half-circle" :style="{'top': mapYPosition - 4 + 'px'}" @touchmove="move">
+    <p class="material-symbols-sharp icon-layout icon-margin icon-font">map</p>
+  </div>
 </template>
 
-<style>
+<style scoped>
+@import './hub.css';
 
+.half-circle {
+    width: 60px;
+    height: 30px;
+    background-color: #2F80ED;
+    border-top-left-radius: 32px;
+    border-top-right-radius: 32px;
+    border-bottom: 0;
+    cursor: pointer;
+    position: absolute;
+    left: calc(50vw - 30px);
+    z-index: 10000;
+}
+
+.icon-layout {
+  padding-top: 4px;
+  align-items: start;
+  color: white;
+}
 </style>

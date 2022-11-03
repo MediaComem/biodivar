@@ -96,7 +96,6 @@
     <the-aframe></the-aframe>
     <the-hud>
       <BaseMap v-if="mapOpen" />
-      <div v-if="mapOpen" class="dialog-map-overlay" @click="mapOpen = false"></div>
     </the-hud>
   </div>
 
@@ -205,17 +204,6 @@
     position: fixed;
     top: 0;
     left: 0;
-  }
-
-
-  .dialog-map-overlay {
-    height: 100vh;
-    width: 100vw;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: black;
-    opacity: 0.5;
   }
 
   .font {

@@ -10,7 +10,7 @@
 
   const KEY = import.meta.env.VITE_APP_MAP_KEY;
 
-  const { map, position } = mapStore();
+  const { map, position, mapYPosition } = mapStore();
 
   const { selectedBiovers } = useStore();
 
@@ -21,7 +21,7 @@
     const dark = L.tileLayer(`https://api.maptiler.com/maps/ch-swisstopo-lbm-dark/{z}/{x}/{y}.png?key=${KEY}`, {
         minZoom: 3,
         maxZoom: 22,
-        attribution: 'BiodivAR'
+        attribution: ''
     }).addTo(map.value);
     
   })
@@ -33,7 +33,8 @@
 </script>
 
 <template>
-    <div id="map">
+  <div class="content" :style="{'top': mapYPosition + 25 + 'px'}">
+    <div id="map" >
         <BaseUserMarker v-if="map" />
         <div v-if="map">
             <div v-for="(poi, index) of selectedBiovers.Poi" :key="index">
@@ -46,15 +47,19 @@
             </div>
         </div>
     </div>
+  </div>
 </template>
 
 <style scoped>
+  .content {
+    position: fixed !important;
+    height: 95vh;
+    width: 100vw;
+    left: 0;
+  }
+
   #map {
-    position: absolute !important;
-    height: 90vh;
-    width: 90vw;
-    top: 5vh;
-    left: 5vw;
-    z-index: 1000;
+    height: 100%;
+    width: 100%;
   }
 </style>
