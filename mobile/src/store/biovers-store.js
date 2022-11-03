@@ -504,11 +504,13 @@ export const bioversStore = {
       commit('DELETE_BIOVERS', bioverId);
     },
     addBioverToDisplay({ commit, state }, event) {
-      let selectBiover = state.ownBiovers.find((e) => e.name === event.name);
-      if (!selectBiover) {
-        selectBiover = state.publicBiovers.find((e) => e.name === event.name);
+      if (state.bioversToDisplay.findIndex((e) => e.biover.id === event.id) === -1) {
+        let selectBiover = state.ownBiovers.find((e) => e.id === event.id);
+        if (!selectBiover) {
+          selectBiover = state.publicBiovers.find((e) => e.id === event.id);
+        }
+        commit('SELECT_BIOVER', selectBiover);
       }
-      commit('SELECT_BIOVER', selectBiover);
     },
     removeBioverToDisplay({ commit }, id) {
       commit('REMOVE_BIOVER', id);
@@ -775,7 +777,6 @@ export const bioversStore = {
       if (index === -1) {
         return [];
       }
-      console.log()
       return state.events[index].events.filter((event) => {
         return event.element.User.username.toLocaleLowerCase() === username.value.toLocaleLowerCase();
       });
