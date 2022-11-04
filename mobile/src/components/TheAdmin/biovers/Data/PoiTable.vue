@@ -399,6 +399,7 @@ export default {
       leaveTimeout: undefined,
       clickOnThisView: false,
       popupTimeout: undefined,
+      poiToDelete: undefined,
     };
   },
   computed: {

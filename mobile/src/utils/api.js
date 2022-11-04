@@ -112,3 +112,16 @@ export function saveMedia(media) {
 export function saveTrace(trace) {
   return postJson(API + 'user_trace/create', trace);
 }
+
+export function deleteTrace(trace) {
+  return postJson(API + 'user_trace/delete', trace);
+}
+
+// Event part
+export function saveEvent(trace) {
+  return postJson(API + 'event/create', trace);
+}
+
+export function deleteEvent(trace) {
+  return postJson(API + 'event/delete', trace);
+}

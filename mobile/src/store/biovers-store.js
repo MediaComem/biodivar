@@ -203,6 +203,16 @@ export const bioversStore = {
       const pathIndex = state.paths[index].paths.findIndex((e) => e.element.id === path.id);
       state.paths[index].paths.splice(pathIndex, 1);
     },
+    REMOVE_INTO_TRACE(state, trace) {
+      const index = state.traces.findIndex((e) => e.bioverId === trace.biovers);
+      const traceIndex = state.traces[index].traces.findIndex((e) => e.element.id === trace.id);
+      state.traces[index].traces.splice(traceIndex, 1);
+    },
+    REMOVE_INTO_EVENT(state, event) {
+      const index = state.events.findIndex((e) => e.bioverId === event.biovers);
+      const eventIndex = state.events[index].events.findIndex((e) => e.element.id === event.id);
+      state.events[index].events.splice(eventIndex, 1);
+    },
     IMPORT_POI(state, pois) {
       if (pois.length === 0) {
         state.uploadInProgress = true;
@@ -360,6 +370,36 @@ export const bioversStore = {
       } else {
         let pathIndex = state.ownBiovers[index].Path.findIndex((p) => p.id === path.id);
         state.ownBiovers[index].Path.splice(pathIndex, 1);
+      }
+    },
+    REMOVE_TRACE_INTO_BIOVER(state, trace) {
+      const bioverToDisplayIndex = state.bioversToDisplay
+        .findIndex((biover) => biover.biover.id === trace.biovers);
+      const bioversToDisplayTraceIndex = state.bioversToDisplay[bioverToDisplayIndex].biover.UserTrace.findIndex((p) => p.id === trace.id);
+      state.bioversToDisplay[bioverToDisplayIndex].biover.UserTrace.splice(bioversToDisplayTraceIndex, 1);
+      let index = state.ownBiovers.findIndex((biovers) => biovers.id === trace.biovers);
+      if (index === -1) {
+        index = state.publicBiovers.findIndex((biovers) => biovers.id === trace.biovers);
+        let traceIndex = state.publicBiovers[index].UserTrace.findIndex((p) => p.id === trace.id);
+        state.publicBiovers[index].UserTrace.splice(traceIndex, 1);
+      } else {
+        let traceIndex = state.ownBiovers[index].UserTrace.findIndex((p) => p.id === trace.id);
+        state.ownBiovers[index].UserTrace.splice(traceIndex, 1);
+      }
+    },
+    REMOVE_EVENT_INTO_BIOVER(state, event) {
+      const bioverToDisplayIndex = state.bioversToDisplay
+        .findIndex((biover) => biover.biover.id === event.biovers);
+      const bioversToDisplayEventIndex = state.bioversToDisplay[bioverToDisplayIndex].biover.Event.findIndex((p) => p.id === event.id);
+      state.bioversToDisplay[bioverToDisplayIndex].biover.Event.splice(bioversToDisplayEventIndex, 1);
+      let index = state.ownBiovers.findIndex((biovers) => biovers.id === event.biovers);
+      if (index === -1) {
+        index = state.publicBiovers.findIndex((biovers) => biovers.id === event.biovers);
+        let eventIndex = state.publicBiovers[index].Event.findIndex((p) => p.id === event.id);
+        state.publicBiovers[index].Event.splice(eventIndex, 1);
+      } else {
+        let eventIndex = state.ownBiovers[index].Event.findIndex((p) => p.id === event.id);
+        state.ownBiovers[index].Event.splice(eventIndex, 1);
       }
     },
     RESET_POI_MODIFICATION(state) {
@@ -646,6 +686,14 @@ export const bioversStore = {
     removePath({ commit }, path) {
       commit('REMOVE_INTO_PATH', path);
       commit('REMOVE_PATH_INTO_BIOVER', path);
+    },
+    removeTrace({ commit }, trace) {
+      commit('REMOVE_INTO_TRACE', trace);
+      commit('REMOVE_TRACE_INTO_BIOVER', trace);
+    },
+    removeEvent({ commit }, trace) {
+      commit('REMOVE_INTO_EVENT', trace);
+      commit('REMOVE_EVENT_INTO_BIOVER', trace);
     },
     updatePoiStore({ commit }, poi) {
       commit('UPDATE_POI', poi);

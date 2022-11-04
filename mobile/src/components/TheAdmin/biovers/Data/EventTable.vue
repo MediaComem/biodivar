@@ -51,6 +51,7 @@
              <p class="material-symbols-sharp no-margin clickable dot-margin" @click="openMenu(0)">more_vert</p>
              <div v-if="menuState && menuState.id === 0 && menuState.state" class="menu">
                 <p class="menu-element" :class="{'disable': !globalChecked }" @click="downloadEvents">Exporter les Events</p>
+                <p class="menu-element" :class="{'disable': !globalChecked }" @click="openDeletionDialog()">Supprimer les évenements</p>
                 <p class="menu-element" @click="openColumnSelector()">Définir les colonnes</p>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
@@ -70,6 +71,7 @@
              <p class="material-symbols-sharp no-margin clickable dot-margin" @click="openMenu(event.element.id)">more_vert</p>
              <div v-if="menuState && menuState.id === event.element.id && menuState.state" class="menu">
                 <p class="menu-element" @click="downloadEvent(event)">Exporter l'Event</p>
+                <p class="menu-element" :class="{'disable': isAllowedToEdit() }"  @click="openDeletionDialog(event)">Supprimer l'évenement</p>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </td>    
@@ -77,6 +79,7 @@
       </table>
     </div>
   </div>
+  <DeleteConfirmation v-if="deleteDialog" :dialogVisible="deleteDialog" title="Êtes-vous sûr de vouloir supprimer cette evenement utilisateur?" @closeDialog="deleteDialog = false" @validate="confirmDeletion()" />
   <EventColumnsSelector v-if="columnDialog" :showDialog="columnDialog" @close-dialog="columnDialog = false" />
 </div>
   
@@ -86,14 +89,16 @@
 import { mapGetters, mapActions } from 'vuex';
 
 import EventColumnsSelector from '../Dialog/EventColumnsSelector.vue';
+import DeleteConfirmation from '../Dialog/DeleteConfirmation.vue';
 
 import { dateFormatter } from '../../../../utils/formatter.js';
 import sort from '../../../../utils/sort';
 import { computeGeoJSONFromEvent, computeGeoJSONFromEvents } from '../../../../utils/geojson.js';
 
+import { deleteEvent } from '../../../../utils/api.js';
 
 export default {
-  components: { EventColumnsSelector },
+  components: { EventColumnsSelector, DeleteConfirmation },
   props: {
     bioverId: Number,
   },
@@ -104,6 +109,8 @@ export default {
       orderElement: false,
       menuState: undefined,
       columnDialog: false,
+      deleteDialog: false,
+      eventToDelete: undefined,
     }
   },
   methods: {
@@ -169,7 +176,36 @@ export default {
       this.download(computeGeoJSONFromEvents(this.getEventByBioversAndUser(this.bioverId)))
       this.menuState = undefined;
     },
-    ...mapActions('biovers', ['selectAllEvents', 'unselectAllEvents', 'updateEventToDisplay']),
+    isAllowedToEdit() {
+      return (this.ownOrPublic(this.getCurrentBioverId) === 'public' && !this.bioverIsEditable(this.getCurrentBioverId));
+    },
+    openDeletionDialog(trace) {
+      if (this.isAllowedToEdit()) {
+          return;
+      }
+      this.eventToDelete = trace;
+      this.deleteDialog = true;
+      this.menuState = undefined;
+    },
+    confirmDeletion() {
+      this.eventToDelete ? this.eventDeletion(this.eventToDelete) : this.eventsDeletion();
+      this.deleteDialog = false;
+    },
+    async eventsDeletion() {
+      if (!this.globalChecked) return;
+      const events = this.getSortedData.filter((event) => event.display);
+      for (let i = 0; i < events.length; i++ ) {
+        await deleteEvent(events[i].element);
+        this.removeEvent(events[i].element);
+      }
+      this.globalCheckAnalizer();
+    },
+    async eventDeletion(event) {
+      await deleteEvent(event.element);
+      this.removeEvent(event.element);
+      this.menuState = undefined;
+    },
+    ...mapActions('biovers', ['selectAllEvents', 'unselectAllEvents', 'updateEventToDisplay', 'removeEvent']),
   },
   computed: {
     getSortedData() {
@@ -178,7 +214,7 @@ export default {
     allAreUnselected() {
       return this.getSortedData.filter((event) => event.display).length === 0;
     },
-    ...mapGetters('biovers', ['getEventByBioversAndUser', 'getEventColumnsPreference']),
+    ...mapGetters('biovers', ['getEventByBioversAndUser', 'getEventColumnsPreference', 'ownOrPublic', 'bioverIsEditable', 'getCurrentBioverId']),
   },
 };
 </script>

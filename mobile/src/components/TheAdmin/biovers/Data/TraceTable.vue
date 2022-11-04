@@ -43,6 +43,7 @@
              <p class="material-symbols-sharp no-margin clickable" @click="openMenu(0)">more_vert</p>
              <div v-if="menuState && menuState.id === 0 && menuState.state" class="menu">
                 <p class="menu-element" :class="{'disable': !globalChecked }" @click="downloadTraces">Exporter les Traces</p>
+                <p class="menu-element" :class="{'disable': !globalChecked }" @click="openDeletionDialog()">Supprimer les traces utilisateurs</p>
                 <p class="menu-element" @click="openColumnSelector()">Définir les colonnes</p>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
@@ -61,6 +62,7 @@
              <p class="material-symbols-sharp no-margin clickable" @click="openMenu(trace.element.id)">more_vert</p>
              <div v-if="menuState && menuState.id === trace.element.id && menuState.state" class="menu">
                 <p class="menu-element" @click="downloadTrace(trace)">Exporter l'Event</p>
+                <p class="menu-element" :class="{'disable': isAllowedToEdit() }"  @click="openDeletionDialog(trace)">Supprimer la trace</p>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </td>   
@@ -68,6 +70,7 @@
       </table>
     </div>
   </div>
+  <DeleteConfirmation v-if="deleteDialog" :dialogVisible="deleteDialog" title="Êtes-vous sûr de vouloir supprimer cette trace utilisateur?" @closeDialog="deleteDialog = false" @validate="confirmDeletion()" />
   <TraceColumnsSelector v-if="columnDialog" :showDialog="columnDialog" @close-dialog="columnDialog = false" />
 </div>
   
@@ -77,14 +80,17 @@
 import { mapGetters, mapActions } from 'vuex';
 
 import TraceColumnsSelector from '../Dialog/TraceColumnsSelector.vue';
+import DeleteConfirmation from '../Dialog/DeleteConfirmation.vue';
 
 import { dateFormatter } from '../../../../utils/formatter.js';
 import sort from '../../../../utils/sort';
 
 import { computeGeoJSONFromTrace, computeGeoJSONFromTraces } from '../../../../utils/geojson.js';
 
+import { deleteTrace } from '../../../../utils/api.js';
+
 export default {
-  components: { TraceColumnsSelector },
+  components: { TraceColumnsSelector, DeleteConfirmation },
   props: {
     bioverId: Number,
   },
@@ -95,6 +101,8 @@ export default {
       globalChecked: true,
       menuState: undefined,
       columnDialog: false,
+      deleteDialog: false,
+      traceToDelete: undefined,
     }
   },
   computed: {
@@ -104,7 +112,7 @@ export default {
     allAreUnselected() {
       return this.getSortedData.filter((trace) => trace.display).length === 0;
     },
-    ...mapGetters('biovers', ['getTraceByBioversAndUser', 'getTraceColumnsPreference']),
+    ...mapGetters('biovers', ['getTraceByBioversAndUser', 'getTraceColumnsPreference', 'ownOrPublic', 'bioverIsEditable', 'getCurrentBioverId']),
   },
   methods: {
     dateFormatter(date) {
@@ -169,7 +177,36 @@ export default {
       this.download(computeGeoJSONFromTraces(this.getTraceByBioversAndUser(this.bioverId)))
       this.menuState = undefined;
     },
-    ...mapActions('biovers', ['selectAllTraces', 'unselectAllTraces', 'updateTraceToDisplay']),
+    isAllowedToEdit() {
+      return (this.ownOrPublic(this.getCurrentBioverId) === 'public' && !this.bioverIsEditable(this.getCurrentBioverId));
+    },
+    openDeletionDialog(trace) {
+      if (this.isAllowedToEdit()) {
+          return;
+      }
+      this.traceToDelete = trace;
+      this.deleteDialog = true;
+      this.menuState = undefined;
+    },
+    confirmDeletion() {
+      this.traceToDelete ? this.traceDeletion(this.traceToDelete) : this.tracesDeletion();
+      this.deleteDialog = false;
+    },
+    async tracesDeletion() {
+      if (!this.globalChecked) return;
+      const traces = this.getSortedData.filter((trace) => trace.display);
+      for (let i = 0; i < traces.length; i++ ) {
+        await deleteTrace(traces[i].element);
+        this.removeTrace(traces[i].element);
+      }
+      this.globalCheckAnalizer();
+    },
+    async traceDeletion(trace) {
+      await deleteTrace(trace.element);
+      this.removeTrace(trace.element);
+      this.menuState = undefined;
+    },
+    ...mapActions('biovers', ['selectAllTraces', 'unselectAllTraces', 'updateTraceToDisplay', 'removeTrace']),
   },
 };
 </script>
