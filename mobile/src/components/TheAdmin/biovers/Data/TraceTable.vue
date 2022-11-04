@@ -213,29 +213,4 @@ export default {
 
 <style scoped>
 @import './table.css';
-
-.material-symbols-sharp {
-  font-size: 15px;
-}
-
-.no-margin {
-  margin: 0px;
-}
-
-.text-margin {
-  padding-right: 6px;
-  margin: 0px;
-  margin-top: -3px;
-}
-
-.icon-font {
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.icon-margin {
-  margin: 0px;
-  margin-top: -3px;
-}
 </style>

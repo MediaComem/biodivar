@@ -8,17 +8,17 @@
         </template>
         <p class="parameter-name">titre du biovers</p>
         <base-input class="title">
-            <p class="material-symbols-sharp icon-position" style="top: -22px" >short_text</p>
+            <p class="material-symbols-sharp icon-position" style="top: -9px" >short_text</p>
             <input type="text" v-model="biovers.biover.name" placeholder="nom du biovers">
         </base-input>
         <p class="parameter-name">sous-titre du biovers</p>
         <base-input class="subtitle">
-            <p class="material-symbols-sharp icon-position description-transform" style="top: -22px" >short_text</p>
+            <p class="material-symbols-sharp icon-position description-transform" style="top: -9px" >short_text</p>
             <input type="text" v-model="biovers.biover.description" placeholder="sous-titre du biovers">
         </base-input>
         <p class="parameter-name">emplacement du biovers</p>
         <base-input class="location">
-            <p class="material-symbols-sharp icon-position" style="top: -21px" >my_location</p>
+            <p class="material-symbols-sharp icon-position" style="top: -8px" >my_location</p>
             <input type="text" v-model="biovers.biover.location" placeholder="emplacement du biovers">
         </base-input>
         <div class="item">
