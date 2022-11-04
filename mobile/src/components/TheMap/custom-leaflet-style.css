@@ -65,3 +65,26 @@
 .leaflet-top {
     top: 12px;
 }
+
+.leaflet-custom-tooltip-button {
+    background-color: #2F80ED;
+    border: 0;
+    color: white;
+    display: flex;
+    cursor: pointer;
+    border-radius: 15px;
+    width: 100%;
+    justify-content: center;
+}
+
+.leaflet-custom-tooltip-button-icon {
+    margin: 0 !important;
+    font-size: 16px;
+    padding-top: 3px;
+    padding-right: 2px;
+}
+
+.leaflet-custom-tooltip-button-text {
+    margin: 0 !important;
+    padding-top: 5px;
+}

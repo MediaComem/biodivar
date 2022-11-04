@@ -141,9 +141,9 @@
       const subtitle = L.DomUtil.create('p', '', content);
       subtitle.innerHTML = `${poi.subtitle}`;
       if (props.editable) {
-        const button = L.DomUtil.create('button', '' ,content);
+        const button = L.DomUtil.create('button', 'leaflet-custom-tooltip-button' ,content);
         button.id = `poi-popup-${props.poi.id}`
-        button.innerHTML = 'Edit';
+        button.innerHTML = '<p class="material-symbols-sharp leaflet-custom-tooltip-button-icon">edit_location_alt</p><p class="leaflet-custom-tooltip-button-text">Modifier</p>';
         setPopupEdition(button);
       }
       
