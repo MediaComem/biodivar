@@ -193,7 +193,7 @@
         </div>
     </div>
   </div>
-  <ThePoiEditor :showDialog="showCreationDialog" :isEdit="false" :coordinate="latlng"
+  <ThePoiEditor :showDialog="showCreationDialog" :isEdit="false" :coordinate="latlng" :bioversId="getCurrentBioverId"
     @close-dialog="closeEditor" @close-after-save="showCreationDialog = false"/>
   <ThePoiEditor :isEdit="true" :poi="poiToUpdate" :showDialog="showEditionDialog"
     @close-dialog="closeEditor" @close-after-save="showEditionDialog = false"/>

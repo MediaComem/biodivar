@@ -554,7 +554,9 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
+
+import { useStore } from '../../../../composables/store.js';
 
 import Accordeon from '../../../app/UIElement/Accordeon.vue';
 
@@ -575,6 +577,7 @@ export default {
     coordinate: Object,
     showDialog: Boolean,
     isEdit: Boolean,
+    bioversId: Number,
   },
   emits: ['closeDialog', 'closeAfterSave'],
   watch: {
@@ -901,9 +904,10 @@ export default {
       this.updateWait(true);
       this.cancelDialog = false;
       await this.saveSymbolAndMedias();
-      this.form.biovers = this.getCurrentBioverId;
+      this.form.biovers = this.bioversId;
       const newPoi = await savePoi(this.form);
       this.addNewPoi(newPoi.data);
+      useStore().updatedBiovers(newPoi.data);
       this.showCreationDialog = false;
       this.updateWait(false);
       this.$emit('closeAfterSave');
@@ -941,7 +945,6 @@ export default {
         left: `calc(${this.leftTooltipPosition}px - 15vw)`,
       }
     } ,
-    ...mapGetters('biovers', ['getCurrentBioverId'])
   },
   mounted() {
     this.form = JSON.parse(JSON.stringify(this.defaultForm));

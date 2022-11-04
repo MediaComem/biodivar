@@ -20,7 +20,7 @@ const forgotPassword = ref(false);
 
 const send = ref(false);
 
-const selectedBiovers = ref(new Object);
+const selectedBiovers = ref(null);
 
 const isMobileOrTablet = ref(true);
 const isIOS = ref(false);
@@ -64,8 +64,21 @@ const getPinsBiovers = () => {
   return result;
 }
 
+const updatedBiovers = (newPoi) => {
+  const bioversIndex = biovers.value.findIndex((b) => b.id === newPoi.biovers);
+  biovers.value[bioversIndex].Poi.push(newPoi);
+  
+  if (selectedBiovers.value) {
+    selectedBiovers.value.Poi.push(newPoi);
+  }
+}
+
+const resetSelectedBiovers = () => {
+  selectedBiovers.value = null;
+}
+
 export function useStore() {
 
-  return { isAuth, section, biovers, username, showAggreement, forgotPassword, send, isMobileOrTablet, isIOS, selectedBiovers, pins, mapOpen, favori, hubDisplay, hubDisplayTimeout, registerValidated, isInFavori, isInPins, getPinsBiovers };
+  return { isAuth, section, biovers, username, showAggreement, forgotPassword, send, isMobileOrTablet, isIOS, selectedBiovers, pins, mapOpen, favori, hubDisplay, hubDisplayTimeout, registerValidated, isInFavori, isInPins, getPinsBiovers, updatedBiovers, resetSelectedBiovers };
 
 }

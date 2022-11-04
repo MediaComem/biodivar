@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, watch } from 'vue'
 
   import TheAframe from './TheAframe/TheAframe.vue';
   import TheHud from './TheHud/TheHud.vue';
@@ -14,7 +14,7 @@
 
   import Waiting from './app/Waiting.vue';
 
-  const { section, isMobileOrTablet, isIOS, isAuth, biovers, mapOpen, username } = useStore();
+  const { section, isMobileOrTablet, isIOS, isAuth, biovers, mapOpen, username, resetSelectedBiovers } = useStore();
 
   const { removeUser } = storage();
 
@@ -38,6 +38,12 @@
   function closeMap() {
     window.dispatchEvent(new CustomEvent('close-ar-map', {}));
   }
+
+  watch(() => section.value, (newVal) => {
+    if (newVal === 'menu') {
+      resetSelectedBiovers();
+    }
+  })
 
    onMounted(async () => {
     isMobileOrTablet.value = isMobileDevice();
