@@ -113,7 +113,6 @@ export const createPoi = async (
         delete poi.media[i].content;
         poi.media[i].creation_date = new Date();
         poi.media[i].poi_id = newPoi.id;
-        poi.media[i].metadata = JSON.stringify(poi.media[i].metadata);
         await createMedia(prisma, poi.media[i], logger);
       };
     }
