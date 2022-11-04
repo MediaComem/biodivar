@@ -907,7 +907,7 @@ export default {
       this.form.biovers = this.bioversId;
       const newPoi = await savePoi(this.form);
       this.addNewPoi(newPoi.data);
-      useStore().updatedBiovers(newPoi.data);
+      useStore().addPoiInBiovers(newPoi.data);
       this.showCreationDialog = false;
       this.updateWait(false);
       this.$emit('closeAfterSave');
@@ -918,6 +918,7 @@ export default {
       await this.saveSymbolAndMedias();
       const updatedPoi = await updatePoi(this.form);
       this.updatePoiStore(updatedPoi.data);
+      useStore().updatePoiInBiovers(updatedPoi.data);
       this.showCreationDialog = false;
       this.updateWait(false);
       this.$emit('closeAfterSave');

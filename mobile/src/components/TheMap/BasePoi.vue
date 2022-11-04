@@ -140,7 +140,7 @@
       title.innerHTML = `${poi.title}`;
       const subtitle = L.DomUtil.create('p', '', content);
       subtitle.innerHTML = `${poi.subtitle}`;
-      if (props.admin && props.editable) {
+      if (props.editable) {
         const button = L.DomUtil.create('button', '' ,content);
         button.id = `poi-popup-${props.poi.id}`
         button.innerHTML = 'Edit';

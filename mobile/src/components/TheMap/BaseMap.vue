@@ -20,6 +20,9 @@
   const showCreationDialog = ref(false);
   const latlng = ref(undefined);
   const couldCreate = ref(false);
+  const showEditionDialog = ref(false);
+  const poiToUpdate = ref({});
+  const clickPoi = ref(0);
 
   const ownOrPublic = computed(() => store.getters['biovers/ownOrPublic'])
   const bioverIsEditable = computed(() => store.getters['biovers/bioverIsEditable'])
@@ -42,6 +45,17 @@
       showCreationDialog.value = true;
     }
   }
+
+  function openPoiEdition(event) {
+    if (isAllowedToEdit(event.biovers)) {
+      return;
+    }
+    
+    clickPoi.value = 0;
+    showCreationDialog.value = false;
+    poiToUpdate.value = { poi: event };
+    showEditionDialog.value = true;
+    }
 
   onMounted(() => {
     window.addEventListener('poi-creator-control-ra', poiCreatorController);
@@ -69,7 +83,7 @@
         <BaseUserMarker v-if="map" />
         <div v-if="map">
             <div v-for="(poi, index) of selectedBiovers.Poi" :key="index">
-                <BasePoi :admin="false" :poi="poi" :meter="getMetersInPixel" :selected="0"/>
+                <BasePoi :admin="false" :poi="poi" :meter="getMetersInPixel" :selected="clickPoi" :editable="!isAllowedToEdit(selectedBiovers.id)" @update-poi="openPoiEdition" @open-popup="clickPoi = $event"/>
             </div>
         </div>
         <div v-if="map">
@@ -81,6 +95,8 @@
   </div>
   <ThePoiEditor :showDialog="showCreationDialog" :isEdit="false" :coordinate="latlng" :bioversId="selectedBiovers.id"
     @close-dialog="showCreationDialog = false" @close-after-save="showCreationDialog = false"/>
+  <ThePoiEditor :isEdit="true" :poi="poiToUpdate" :showDialog="showEditionDialog"
+    @close-dialog="showEditionDialog = false" @close-after-save="showEditionDialog = false"/>
 </template>
 
 <style scoped>

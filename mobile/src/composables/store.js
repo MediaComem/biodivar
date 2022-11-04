@@ -64,12 +64,23 @@ const getPinsBiovers = () => {
   return result;
 }
 
-const updatedBiovers = (newPoi) => {
+const addPoiInBiovers = (newPoi) => {
   const bioversIndex = biovers.value.findIndex((b) => b.id === newPoi.biovers);
   biovers.value[bioversIndex].Poi.push(newPoi);
-  
+
   if (selectedBiovers.value) {
     selectedBiovers.value.Poi.push(newPoi);
+  }
+}
+
+const updatePoiInBiovers = (newPoi) => {
+  const bioversIndex = biovers.value.findIndex((b) => b.id === newPoi.biovers);
+  const poiIndex = biovers.value[bioversIndex].Poi.findIndex((p) => p.id === newPoi.id)
+  biovers.value[bioversIndex].Poi[poiIndex] = newPoi;
+
+  if (selectedBiovers.value) {
+    const selectedPoiIndex = selectedBiovers.value.Poi.findIndex((p) => p.id === newPoi.id)
+    selectedBiovers.value.Poi[selectedPoiIndex] = newPoi;
   }
 }
 
@@ -79,6 +90,6 @@ const resetSelectedBiovers = () => {
 
 export function useStore() {
 
-  return { isAuth, section, biovers, username, showAggreement, forgotPassword, send, isMobileOrTablet, isIOS, selectedBiovers, pins, mapOpen, favori, hubDisplay, hubDisplayTimeout, registerValidated, isInFavori, isInPins, getPinsBiovers, updatedBiovers, resetSelectedBiovers };
+  return { isAuth, section, biovers, username, showAggreement, forgotPassword, send, isMobileOrTablet, isIOS, selectedBiovers, pins, mapOpen, favori, hubDisplay, hubDisplayTimeout, registerValidated, isInFavori, isInPins, getPinsBiovers, addPoiInBiovers, updatePoiInBiovers, resetSelectedBiovers };
 
 }
