@@ -550,6 +550,11 @@ export default {
           if (poi.media[i].position) {
             delete poi.media[i].position.id;
           }
+          if (!poi.media[i].metadata) {
+            poi.media[i].metadata = [];
+          } else {
+            poi.media[i].metadata = JSON.parse(poi.media[i].metadata);
+          }
         }
       }
       if (poi.position == null) {
@@ -557,6 +562,11 @@ export default {
       } else {
         delete poi.position.id;
         delete poi.position.poi_id;
+      }
+      if (!poi.metadata) {
+        poi.metadata = [];
+      } else {
+        poi.metadata = (JSON.parse(poi.metadata));
       }
       delete poi.id;
       const newPoi = await savePoi(poi);

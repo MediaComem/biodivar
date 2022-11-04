@@ -728,7 +728,7 @@ export default {
             if (!this.form.media[i].metadata) {
               this.form.media[i].metadata = [];
             } else {
-              this.form.media[i].metadata = JSON.parse(JSON.parse(this.form.media[i].metadata));
+              this.form.media[i].metadata = JSON.parse(this.form.media[i].metadata);
             }
             this.form.media[i].display_url = getMediaUrl(this.form.media[i]);
             
@@ -736,12 +736,12 @@ export default {
         if (!this.form.metadata) {
           this.form.metadata = [];
         } else {
-          this.form.metadata = JSON.parse((JSON.parse(this.form.metadata)));
+          this.form.metadata = (JSON.parse(this.form.metadata));
         }
         this.updateWait(false);
     },
     resetEditor() {
-        this.form = JSON.parse(JSON.stringify(this.defaultForm));
+        this.form = JSON.stringify(this.defaultForm);
         this.symbolFile = {
             url: '',
             content: undefined,
