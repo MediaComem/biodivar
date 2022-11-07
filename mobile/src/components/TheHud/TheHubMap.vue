@@ -3,20 +3,40 @@
   import { useStore } from '../../composables/store';
   import { mapStore } from '../../composables/map';
   import { clearHubTimeout, setHubTimeout } from './hub-utils.js';
+  import { saveEvent } from '../../utils/api.js';
 
-  const { mapOpen, hubDisplay, hubDisplayTimeout } = useStore();
-  const { mapYPosition } = mapStore();
+  const { mapOpen, hubDisplay, hubDisplayTimeout, selectedBiovers } = useStore();
+  const { mapYPosition, position, accuracy } = mapStore();
 
   const minYPosition = ref(0);
   const maxYPosition = ref(0);
+  const openEventSent = ref(false);
+
+  function createEvent(event) {
+    saveEvent({
+      is_public: true,
+      gps_accuracy: accuracy.value,
+      biovers: selectedBiovers.value.id,
+      coordinate: { lat: position.value[0], long: position.value[1], alt: position.value[2] ?? 0 },
+      data: event,
+    });
+  }
 
   function move(event) {
     clearHubTimeout();
     const yPosition = event.touches[0].pageY;
     if (yPosition > minYPosition.value && yPosition < maxYPosition.value) {
       mapYPosition.value = yPosition;
+      if (!openEventSent.value && mapYPosition.value < maxYPosition.value - 15) {
+        openEventSent.value = true;
+        createEvent('open-map');
+      }
     }
     if (mapYPosition.value > maxYPosition.value - 15) {
+      if (openEventSent.value) {
+        openEventSent.value = false;
+        createEvent('close-map');
+      }
       setHubTimeout();
     }
   }

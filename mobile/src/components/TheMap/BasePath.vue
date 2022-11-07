@@ -5,7 +5,6 @@
 
   const props = defineProps({
     admin: Boolean,
-    map: Object,
     coordinate: Object,
   });
 

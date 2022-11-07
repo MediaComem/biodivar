@@ -4,12 +4,14 @@ import { computeCompass } from '../utils/device.js';
 const map = ref(null);
 const mapAdmin = ref(null);
 const position = shallowRef([0, 0]);
+const accuracy = shallowRef(0);
 const yaw = ref(0);
 const mapYPosition = ref(0);
 
 window.addEventListener('gps-position-update', evt => {
   const pos = evt.detail;
-  position.value = [pos.latitude, pos.longitude];
+  position.value = [pos.latitude, pos.longitude, pos.altitude];
+  accuracy.value = pos.accuracy;
 });
 
 window.addEventListener('deviceorientationabsolute', event => {
@@ -20,6 +22,6 @@ window.addEventListener('deviceorientationabsolute', event => {
 
 export function mapStore() {
 
-    return { map, mapAdmin, position, yaw, mapYPosition };
+    return { map, mapAdmin, position, accuracy, yaw, mapYPosition };
 
 }
