@@ -13,7 +13,7 @@
 
   const KEY = import.meta.env.VITE_APP_MAP_KEY;
 
-  const { map, position, mapYPosition } = mapStore();
+  const { map, position, mapYPosition, couldMove } = mapStore();
 
   const { selectedBiovers } = useStore();
 
@@ -78,7 +78,7 @@
 </script>
 
 <template>
-  <div class="content" :style="{'top': mapYPosition + 25 + 'px'}">
+  <div class="content" :class="{'transition': !couldMove}" :style="{'top': mapYPosition + 25 + 'px'}">
     <div id="map" >
         <BaseUserMarker v-if="map" />
         <div v-if="map">
@@ -106,6 +106,10 @@
     width: 100vw;
     left: 0;
     z-index: 100;
+  }
+
+  .transition {
+    transition: top 200ms ease;
   }
 
   #map {

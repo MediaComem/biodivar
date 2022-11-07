@@ -7,6 +7,7 @@ const position = shallowRef([0, 0]);
 const accuracy = shallowRef(0);
 const yaw = ref(0);
 const mapYPosition = ref(0);
+const couldMove = ref(false);
 
 window.addEventListener('gps-position-update', evt => {
   const pos = evt.detail;
@@ -22,6 +23,6 @@ window.addEventListener('deviceorientationabsolute', event => {
 
 export function mapStore() {
 
-    return { map, mapAdmin, position, accuracy, yaw, mapYPosition };
+    return { map, mapAdmin, position, accuracy, yaw, mapYPosition, couldMove };
 
 }

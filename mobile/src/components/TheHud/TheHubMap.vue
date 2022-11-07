@@ -6,11 +6,13 @@
   import { saveEvent } from '../../utils/api.js';
 
   const { mapOpen, hubDisplay, hubDisplayTimeout, selectedBiovers } = useStore();
-  const { mapYPosition, position, accuracy } = mapStore();
+  const { couldMove, mapYPosition, position, accuracy } = mapStore();
 
   const minYPosition = ref(0);
   const maxYPosition = ref(0);
   const openEventSent = ref(false);
+  const moveTimeout = ref(null);
+  const openInProgress = ref(false);
 
   function createEvent(event) {
     saveEvent({
@@ -22,28 +24,63 @@
     });
   }
 
-  function move(event) {
-    clearHubTimeout();
-    const yPosition = event.touches[0].pageY;
-    if (yPosition > minYPosition.value && yPosition < maxYPosition.value) {
-      mapYPosition.value = yPosition;
-      if (!openEventSent.value && mapYPosition.value < maxYPosition.value - 15) {
-        openEventSent.value = true;
-        createEvent('open-map');
+  function touchstart() {
+    moveTimeout.value = setTimeout(() => {
+      couldMove.value = true;
+    }, 300);
+  }
+
+  function touchend() {
+    if (!couldMove.value) {
+      if (mapYPosition.value > (maxYPosition.value - minYPosition.value) / 2) {
+        openMap();
+      } else {
+        closeMap();
       }
     }
-    if (mapYPosition.value > maxYPosition.value - 15) {
-      if (openEventSent.value) {
-        openEventSent.value = false;
-        createEvent('close-map');
+    couldMove.value = false;
+    clearTimeout(moveTimeout.value);
+    moveTimeout.value = null;
+  }
+
+  function move(event) {
+    if (couldMove.value) {
+      clearHubTimeout();
+      const yPosition = event.touches[0].pageY;
+      if (yPosition > minYPosition.value && yPosition < maxYPosition.value) {
+        mapYPosition.value = yPosition;
+        if (!openEventSent.value && mapYPosition.value < maxYPosition.value - 15) {
+          openEventSent.value = true;
+          createEvent('open-map');
+        }
       }
-      setHubTimeout();
+      if (mapYPosition.value > maxYPosition.value - 15) {
+        if (openEventSent.value) {
+          openEventSent.value = false;
+          createEvent('close-map');
+        }
+        setHubTimeout();
+      }
     }
   }
 
+  function openMap() {
+    openInProgress.value = true;
+    clearHubTimeout();
+    mapYPosition.value = minYPosition.value;
+    openEventSent.value = true;
+    createEvent('open-map');
+    setTimeout(() => openInProgress.value = false, 500);
+  }
+
   function closeMap() {
-    mapYPosition.value = maxYPosition.value;
-    setHubTimeout();
+    clearHubTimeout();
+    if (!openInProgress.value) {
+      mapYPosition.value = maxYPosition.value;
+      openEventSent.value = false;
+      createEvent('close-map');
+      setHubTimeout();
+    }
   }
 
   onMounted(() => {
@@ -59,7 +96,7 @@
 </script>
 
 <template>
-  <div class="half-circle" :style="{'top': mapYPosition - 4 + 'px'}" @touchmove="move">
+  <div class="half-circle" :class="{'transition': !couldMove}" :style="{'top': mapYPosition - 4 + 'px'}" @touchmove="move" @touchstart="touchstart" @touchend="touchend">
     <p class="material-symbols-sharp icon-layout icon-margin icon-font">map</p>
   </div>
 </template>
@@ -79,6 +116,11 @@
     left: calc(50vw - 30px);
     z-index: 10000;
 }
+
+ .transition {
+    transition: top 200ms ease;
+    transition-delay: 15ms;
+  }
 
 .icon-layout {
   padding-top: 4px;
