@@ -91,7 +91,7 @@ import { mapGetters, mapActions } from 'vuex';
 import EventColumnsSelector from '../Dialog/EventColumnsSelector.vue';
 import DeleteConfirmation from '../Dialog/DeleteConfirmation.vue';
 
-import { dateFormatter } from '../../../../utils/formatter.js';
+import { fullDateFormatter } from '../../../../utils/formatter.js';
 import sort from '../../../../utils/sort';
 import { computeGeoJSONFromEvent, computeGeoJSONFromEvents } from '../../../../utils/geojson.js';
 
@@ -115,7 +115,7 @@ export default {
   },
   methods: {
     dateFormatter(date) {
-      return dateFormatter(date);
+      return fullDateFormatter(date);
     },
     getCoordinate(event) {
       return event.element.coordinate ? `${event.element.coordinate.lat},${event.element.coordinate.long}` : '';

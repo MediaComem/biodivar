@@ -82,7 +82,7 @@ import { mapGetters, mapActions } from 'vuex';
 import TraceColumnsSelector from '../Dialog/TraceColumnsSelector.vue';
 import DeleteConfirmation from '../Dialog/DeleteConfirmation.vue';
 
-import { dateFormatter } from '../../../../utils/formatter.js';
+import { fullDateFormatter } from '../../../../utils/formatter.js';
 import sort from '../../../../utils/sort';
 
 import { computeGeoJSONFromTrace, computeGeoJSONFromTraces } from '../../../../utils/geojson.js';
@@ -116,7 +116,7 @@ export default {
   },
   methods: {
     dateFormatter(date) {
-      return dateFormatter(date);
+      return fullDateFormatter(date);
     },
     getCoordinate(poi) {
       return poi.element.coordinate ? `${poi.element.coordinate.lat},${poi.element.coordinate.long}` : '';
