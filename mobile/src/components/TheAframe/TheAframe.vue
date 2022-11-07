@@ -16,7 +16,7 @@
   import '../aframe/listen-to';
   import '../aframe/event-set';
 
-  import { getSymbolUrl, getSymbolAudiUrl, getMediaUrl, saveTrace } from '../../utils/api.js';
+  import { getSymbolUrl, getSymbolAudiUrl, getMediaUrl, saveTrace, saveEvent } from '../../utils/api.js';
   import { onMounted, onUnmounted } from '@vue/runtime-core';
 
   const { selectedBiovers, section } = useStore();
@@ -46,35 +46,85 @@
   let wakeLock = null;
   let timerTrace = null;
   let position = null;
+  let bioversId = selectedBiovers.value.id;
+
+  function saveEventPoiEnter(evt) {
+    if (!position) return;
+    if (!evt.detail?.poiId) return
+    saveEvent({
+      is_public: true,
+      gps_accuracy: position.coords.accuracy,
+      biovers: bioversId,
+      coordinate: { lat: position.coords.latitude, long: position.coords.longitude, alt: position.coords.altitude ?? 0 },
+      data: 'biovers-enter-poi-' + evt.detail.poiId,
+    });
+  }
+
+  function saveEventPoiExit(evt) {
+    if (!position) return;
+    if (!evt.detail?.poiId) return
+    saveEvent({
+      is_public: true,
+      gps_accuracy: position.coords.accuracy,
+      biovers: bioversId,
+      coordinate: { lat: position.coords.latitude, long: position.coords.longitude, alt: position.coords.altitude ?? 0 },
+      data: 'biovers-exit-poi-' + evt.detail.poiId,
+    });
+  }
 
   onMounted(async () => {
     wakeLock = await navigator.wakeLock.request('screen');
+    let gpsFirstSet = true;
 
     const id = navigator.geolocation.watchPosition(
-      pos => position = pos,
+      pos => {
+        position = pos;
+        // Save event when user enter AR and GPS pos set
+        if (!gpsFirstSet) return;
+        gpsFirstSet = false;
+        saveEvent({
+          is_public: true,
+          gps_accuracy: position.coords.accuracy,
+          biovers: bioversId,
+          coordinate: { lat: position.coords.latitude, long: position.coords.longitude, alt: position.coords.altitude ?? 0 },
+          data: 'biovers-open',
+        });
+      },
       error => console.error(error),
       { enableHighAccuracy: true, enableHighAccuracy: true}
     );
 
+    // save GPS coord of user every second
     timerTrace = setInterval(() => {
       if (!position) return;
-      const lat = position.coords.latitude;
-      const long = position.coords.longitude;
-      const gps_accuracy = position.coords.accuracy;
-      const alt = position.coords.altitude ?? 0;
       saveTrace({
         is_public: true,
-        gps_accuracy,
-        biovers: selectedBiovers.value.id,
-        coordinate: { lat, long, alt },
+        gps_accuracy: position.coords.accuracy,
+        biovers: bioversId,
+        coordinate: { lat: position.coords.latitude, long: position.coords.longitude, alt: position.coords.altitude ?? 0 },
       });
     }, 1000);
 
+    // Save event when a user enter a POI radius
+    window.addEventListener('radius-enter', saveEventPoiEnter);
+    // Save event when a user exit a POI radius
+    window.addEventListener('radius-exit', saveEventPoiExit);
   });
 
   onUnmounted(() => {
     if (wakeLock) wakeLock.release();
     if (timerTrace) clearInterval(timerTrace);
+    window.removeEventListener('radius-enter', saveEventPoiEnter);
+    window.removeEventListener('radius-exit', saveEventPoiExit);
+    // Save event when user leave AR and GPS pos set
+    if (!position) return;
+    saveEvent({
+      is_public: true,
+      gps_accuracy: position.coords.accuracy,
+      biovers: bioversId,
+      coordinate: { lat: position.coords.latitude, long: position.coords.longitude, alt: position.coords.altitude ?? 0 },
+      data: 'biovers-close',
+    });
   });
 
 </script>
@@ -150,6 +200,7 @@
               :sound="`
                 src: url(${getSymbolAudiUrl(poi.symbol.id)});
                 loop: ${poi.symbol.audio_loop ? 'true' : 'false'};
+                distanceModel: linear;
               `"
               sound-play-stop="eventPlay: play-sound; eventStop: stop-sound;"
               :emit-when-near="`
@@ -182,6 +233,7 @@
                 event: radius-enter;
                 eventFar: radius-exit;
                 throttle: 125;
+                poiId: ${poi.id};
               `"
               :poi-radius="`
                 radius: ${poi.radius};
@@ -269,7 +321,8 @@
                   :sound="`
                     src: url(${getMediaUrl(m)});
                     loop: ${m.loop ? 'true' : 'false'};
-                    volume: ${m.scale}
+                    volume: ${m.scale};
+                    distanceModel: linear;
                   `"
                   sound-play-stop="eventPlay: play-sound; eventStop: stop-sound;"
                   :listen-to__enter="m.is_visible_in_radius ? `target: #poi-radius-${poi.id}; event: radius-enter; emit: play-sound` : null"
