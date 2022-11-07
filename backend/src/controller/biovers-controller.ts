@@ -87,6 +87,7 @@ export const getBioversByUser = async (
       Event: {
         where: {
           author: user_id,
+          deleted_date: null,
         },
         include: {
           coordinate: true,
@@ -196,6 +197,7 @@ export const getBioversById = async (
         Event: {
           where: {
             author: user_id,
+            deleted_date: null,
           },
           include: {
             coordinate: true,
@@ -302,6 +304,7 @@ export const getPublicBiovers = async (
         Event: {
           where: {
             author: user_id,
+            deleted_date: null,
           },
           include: {
             coordinate: true,
@@ -407,6 +410,7 @@ export const createBiovers = async (
         Event: {
           where: {
             author: biovers.owner,
+            deleted_date: null,
           },
           include: {
             coordinate: true,
@@ -514,6 +518,7 @@ export const updateBiovers = async (
           Event: {
             where: {
               author: biovers.owner,
+              deleted_date: null,
             },
             include: {
               coordinate: true,
