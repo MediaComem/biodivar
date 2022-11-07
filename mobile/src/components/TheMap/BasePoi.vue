@@ -1,5 +1,5 @@
 <script setup>
-  import { onMounted, watch, ref, onBeforeUnmount, computed } from "@vue/runtime-core";
+  import { onMounted, watch, ref, onUnmounted, computed } from "@vue/runtime-core";
   import { useStore } from 'vuex';
 
   import { mapStore } from '../../composables/map.js';
@@ -173,10 +173,7 @@
       currentMap.value.removeLayer(scopeCircle.value);
       if (popup.value.isOpen()) currentMap.value.removeLayer(popup.value);
       removeClickPopup();
-      setTimeout(() => {
-        setupPoi(newVal);
-      }, 200)
-      
+      setupPoi(newVal);
   }, { deep: true });
 
   watch(() => props.meter, () => {
@@ -222,7 +219,7 @@
       setupPoi(props.poi);
   })
 
-  onBeforeUnmount(() => {
+  onUnmounted(() => {
     removeClickPopup();
     currentMap.value.removeLayer(marker.value);
     currentMap.value.removeLayer(circle.value);
