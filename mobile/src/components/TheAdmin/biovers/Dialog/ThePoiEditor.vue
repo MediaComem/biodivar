@@ -557,6 +557,7 @@
 import { mapActions } from 'vuex';
 
 import { useStore } from '../../../../composables/store.js';
+import { mapStore } from '../../../../composables/map.js';
 
 import Accordeon from '../../../app/UIElement/Accordeon.vue';
 
@@ -566,7 +567,7 @@ import CancelConfirmation from './CancelConfirmation.vue';
 import TheAframeEditor from '../../../TheAframe/TheAframeEditor.vue';
 import AframeMedia from '../../../TheAframe/AframeMedia.vue';
 
-import { savePoi, updatePoi, deletePoi, saveSymbol, saveMedia, getSymbolUrl, getIcon, getMediaUrl, getSymbolAudiUrl } from '../../../../utils/api.js';
+import { savePoi, updatePoi, deletePoi, saveSymbol, saveMedia, getSymbolUrl, getIcon, getMediaUrl, getSymbolAudiUrl, saveEvent } from '../../../../utils/api.js';
 
 
 export default {
@@ -900,6 +901,16 @@ export default {
         } 
       }
     },
+    async createEvent(event, bioversId) {
+      const { accuracy, position } = mapStore();
+      await saveEvent({
+        is_public: true,
+        gps_accuracy: accuracy.value,
+        biovers: bioversId,
+        coordinate: { lat: position.value[0], long: position.value[1], alt: position.value[2] ?? 0 },
+        data: event,
+      });
+    },
     async createPoi() {
       this.updateWait(true);
       this.cancelDialog = false;
@@ -908,6 +919,7 @@ export default {
       const newPoi = await savePoi(this.form);
       this.addNewPoi(newPoi.data);
       useStore().addPoiInBiovers(newPoi.data);
+      await this.createEvent('create-poi-' + newPoi.data.id, this.bioversId);
       this.showCreationDialog = false;
       this.updateWait(false);
       this.$emit('closeAfterSave');
@@ -919,6 +931,7 @@ export default {
       const updatedPoi = await updatePoi(this.form);
       this.updatePoiStore(updatedPoi.data);
       useStore().updatePoiInBiovers(updatedPoi.data);
+      await this.createEvent('update-poi-' + updatedPoi.data.id, updatedPoi.data.biovers);
       this.showCreationDialog = false;
       this.updateWait(false);
       this.$emit('closeAfterSave');
