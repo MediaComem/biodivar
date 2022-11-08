@@ -154,16 +154,16 @@ export const bioversStore = {
         .traces[traceIndex].display;
     },
     ADD_INTO_POI(state, poi) {
-      let index = state.pois.findIndex((e) => e.bioverId === state.currentBioversId);
+      let index = state.pois.findIndex((e) => e.bioverId === poi.biovers);
       if (index === -1) {
         state.pois.push({
           bioverId: poi.biovers,
           pois: [],
         })
-        index = state.pois.findIndex((e) => e.bioverId === state.currentBioversId);
+        index = state.pois.findIndex((e) => e.bioverId === poi.biovers);
       }
       const bioverToDisplayIndex = state.bioversToDisplay
-        .findIndex((biover) => biover.biover.id === state.currentBioversId);
+        .findIndex((biover) => biover.biover.id === poi.biovers);
       const poiElementToAdd = {
         name: state.bioversToDisplay[bioverToDisplayIndex].title,
         element: poi,
@@ -320,11 +320,11 @@ export const bioversStore = {
     },
     ADD_POI_INTO_BIOVER(state, poi) {
       const bioverToDisplayIndex = state.bioversToDisplay
-        .findIndex((biover) => biover.biover.id === state.currentBioversId);
+        .findIndex((biover) => biover.biover.id === poi.biovers);
       state.bioversToDisplay[bioverToDisplayIndex].biover.Poi.push(poi);
-      let index = state.ownBiovers.findIndex((biovers) => biovers.id === state.currentBioversId);
+      let index = state.ownBiovers.findIndex((biovers) => biovers.id === poi.biovers);
       if (index === -1) {
-        index = state.publicBiovers.findIndex((biovers) => biovers.id === state.currentBioversId);
+        index = state.publicBiovers.findIndex((biovers) => biovers.id === poi.biovers);
         state.publicBiovers[index].Poi.push(poi);
       } else {
         state.ownBiovers[index].Poi.push(poi);
