@@ -13,7 +13,7 @@
 
   const KEY = import.meta.env.VITE_APP_MAP_KEY;
 
-  const { map, position, mapYPosition, couldMove } = mapStore();
+  const { map, position, mapYPosition, couldMove, maxHeightMap } = mapStore();
 
   const { selectedBiovers } = useStore();
 
@@ -22,6 +22,8 @@
   const couldCreate = ref(false);
   const showEditionDialog = ref(false);
   const poiToUpdate = ref({});
+  const mapContainer = ref(null);
+  const observer = ref(null);
   const clickPoi = ref(0);
 
   const ownOrPublic = computed(() => store.getters['biovers/ownOrPublic'])
@@ -68,9 +70,15 @@
     map.value.on('click', getPosition);
     L.closeMap().addTo(map.value);
     L.poiCreatorRa().addTo(map.value);
+
+    observer.value = new ResizeObserver(() => {
+      map.value.invalidateSize();
+    });
+    observer.value.observe(mapContainer.value);
   })
 
   onUnmounted(() => {
+    observer.value.disconnect();
     window.removeEventListener('poi-creator-control-ra', poiCreatorController);
     map.value = null;
   })
@@ -78,7 +86,7 @@
 </script>
 
 <template>
-  <div class="content" :class="{'transition': !couldMove}" :style="{'top': mapYPosition + 25 + 'px'}">
+  <div ref="mapContainer" class="content" :class="{'transition': !couldMove}" :style="{'height': maxHeightMap - mapYPosition + 'px', 'top': mapYPosition + 25 + 'px'}">
     <div id="map" >
         <BaseUserMarker v-if="map" />
         <div v-if="map">
@@ -102,7 +110,6 @@
 <style scoped>
   .content {
     position: fixed !important;
-    height: 95vh;
     width: 100vw;
     left: 0;
     z-index: 100;

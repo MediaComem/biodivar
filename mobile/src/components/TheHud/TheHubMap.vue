@@ -6,7 +6,7 @@
   import { saveEvent } from '../../utils/api.js';
 
   const { mapOpen, hubDisplay, hubDisplayTimeout, selectedBiovers } = useStore();
-  const { couldMove, mapYPosition, position, accuracy } = mapStore();
+  const { couldMove, mapYPosition, position, accuracy, map, maxHeightMap } = mapStore();
 
   const minYPosition = ref(0);
   const maxYPosition = ref(0);
@@ -87,6 +87,7 @@
     window.addEventListener('close-ar-map', closeMap);
     minYPosition.value = screen.availHeight - (screen.availHeight * 0.95);
     maxYPosition.value = screen.availHeight - (screen.availHeight * 0.1);
+    maxHeightMap.value = screen.availHeight
     mapYPosition.value = maxYPosition.value;
   })
 
