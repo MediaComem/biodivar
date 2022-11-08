@@ -48,8 +48,6 @@
   let position = null;
   let bioversId = selectedBiovers.value.id;
 
-  console.log(selectedBiovers.value);
-
   function saveEventPoiEnter(evt) {
     if (!position) return;
     if (!evt.detail?.poiId) return
