@@ -48,6 +48,8 @@
   let position = null;
   let bioversId = selectedBiovers.value.id;
 
+  console.log(selectedBiovers.value);
+
   function saveEventPoiEnter(evt) {
     if (!position) return;
     if (!evt.detail?.poiId) return
@@ -154,7 +156,7 @@
     <a-entity faces-north>
       <template v-for="poi of selectedBiovers.Poi" :key="`poi-${poi.id}`">
         <a-entity
-          position="0 0 10000"
+          position="0 0 1000"
           :gps-position="`latitude: ${poi.coordinate.lat}; longitude: ${poi.coordinate.long}`"
           :visible-from="`distance: ${poi.scope}`"
         >
@@ -201,6 +203,7 @@
                 src: url(${getSymbolAudiUrl(poi.symbol.id)});
                 loop: ${poi.symbol.audio_loop ? 'true' : 'false'};
                 distanceModel: linear;
+                maxDistance: ${poi.symbol.audio_distance};
               `"
               sound-play-stop="eventPlay: play-sound; eventStop: stop-sound;"
               :emit-when-near="`
@@ -216,6 +219,7 @@
               :sound="`
                 src: url(${getSymbolAudiUrl(poi.symbol.id)});
                 loop: ${poi.symbol.audio_loop ? 'true' : 'false'};
+                positional: false;
               `"
               sound-play-stop="eventPlay: play-sound; eventStop: stop-sound;"
               :listen-to__enter="`target: #poi-radius-${poi.id}; event: radius-enter; emit: play-sound`"
@@ -323,6 +327,8 @@
                     loop: ${m.loop ? 'true' : 'false'};
                     volume: ${m.scale};
                     distanceModel: linear;
+                    positional: ${m.autoplay ? 'true' : 'false'};
+                    maxDistance: ${m.is_visible_in_radius ? poi.radius : poi.symbol.audio_distance};
                   `"
                   sound-play-stop="eventPlay: play-sound; eventStop: stop-sound;"
                   :listen-to__enter="m.is_visible_in_radius ? `target: #poi-radius-${poi.id}; event: radius-enter; emit: play-sound` : null"
