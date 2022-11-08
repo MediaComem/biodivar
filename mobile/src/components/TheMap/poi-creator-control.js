@@ -5,6 +5,11 @@ L.PoiCreator = L.Control.extend({
 
     onAdd: function(map) {
         let state = false;
+
+        window.addEventListener('close-poi-editor', () => {
+            state = false;
+            state ? div.classList.add("leaflet-control-interior-select") : div.classList.remove("leaflet-control-interior-select");
+        });
         
         const div = L.DomUtil.create('div', 'leaflet-control-interior');
         const p = L.DomUtil.create('p', 'material-symbols-sharp leaflet-control-input', div);
@@ -24,6 +29,7 @@ L.PoiCreator = L.Control.extend({
     },
 
     onRemove: function(map) {
+        window.removeEventListener('close-poi-editor', () => {});
         // Nothing to do here
     }
 });

@@ -742,7 +742,7 @@ export default {
         this.updateWait(false);
     },
     resetEditor() {
-        this.form = JSON.stringify(this.defaultForm);
+        this.form = JSON.parse(JSON.stringify(this.defaultForm));
         this.symbolFile = {
             url: '',
             content: undefined,

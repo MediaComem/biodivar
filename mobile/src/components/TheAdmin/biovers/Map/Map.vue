@@ -38,6 +38,12 @@
     showCreationDialog.value = false;
     showEditionDialog.value = false;
     shouldNotUpdateBounding.value = false;
+    window.dispatchEvent(new CustomEvent('close-poi-editor', {}));
+  }
+
+  function closeCreationEditorAterSave() {
+    showCreationDialog.value = false;
+    window.dispatchEvent(new CustomEvent('close-poi-editor', {}));
   }
 
   function updateMetersInPixel() {
@@ -194,7 +200,7 @@
     </div>
   </div>
   <ThePoiEditor :showDialog="showCreationDialog" :isEdit="false" :coordinate="latlng" :bioversId="getCurrentBioverId"
-    @close-dialog="closeEditor" @close-after-save="showCreationDialog = false"/>
+    @close-dialog="closeEditor" @close-after-save="closeCreationEditorAterSave"/>
   <ThePoiEditor :isEdit="true" :poi="poiToUpdate" :showDialog="showEditionDialog"
     @close-dialog="closeEditor" @close-after-save="showEditionDialog = false"/>
 </template>
