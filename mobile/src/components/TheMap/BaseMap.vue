@@ -57,7 +57,12 @@
     showCreationDialog.value = false;
     poiToUpdate.value = { poi: event };
     showEditionDialog.value = true;
-    }
+  }
+
+  function closeCreationDialog() {
+    showCreationDialog.value = false
+    window.dispatchEvent(new CustomEvent('close-poi-editor-ra', {}));
+  }
 
   onMounted(() => {
     window.addEventListener('poi-creator-control-ra', poiCreatorController);
@@ -102,7 +107,7 @@
     </div>
   </div>
   <ThePoiEditor :showDialog="showCreationDialog" :isEdit="false" :coordinate="latlng" :bioversId="selectedBiovers.id"
-    @close-dialog="showCreationDialog = false" @close-after-save="showCreationDialog = false"/>
+    @close-dialog="closeCreationDialog" @close-after-save="closeCreationDialog"/>
   <ThePoiEditor :isEdit="true" :poi="poiToUpdate" :showDialog="showEditionDialog"
     @close-dialog="showEditionDialog = false" @close-after-save="showEditionDialog = false"/>
 </template>
