@@ -775,7 +775,6 @@ export default {
       this.form.symbol.position.distance = preferences.symbol.position.distance;
       this.form.symbol.position.rotation = preferences.symbol.position.rotation;
       this.form.symbol.position.elevation = preferences.symbol.position.elevation;
-      console.log(this.form)
     },
     resetEditor() {
         this.form = JSON.parse(JSON.stringify(this.defaultForm));
