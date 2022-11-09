@@ -29,7 +29,8 @@
   <div data-role="hud" @click="openHub">
     <div data-role="hud-grid">
       <the-hud-menu v-if="hubDisplay" data-role="hud-grid-menu"></the-hud-menu>
-      <the-hud-edit v-if="hubDisplay" data-role="hud-grid-edit"></the-hud-edit>
+      <!-- Demande de Julien pour retirer ce bouton pour les tests -->
+      <the-hud-edit v-if="false" data-role="hud-grid-edit"></the-hud-edit>
       <the-hud-map v-if="hubDisplay" data-role="hud-grid-map"></the-hud-map>
       <div v-if="hubDisplay" data-role="hud-grid-debug"></div>
     </div>
