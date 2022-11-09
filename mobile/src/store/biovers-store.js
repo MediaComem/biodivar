@@ -630,7 +630,7 @@ export const bioversStore = {
         data.push({
           name: bioverName,
           element: traceElement,
-          display: true,
+          display: false,
           import: false,
         });
       });
@@ -656,7 +656,7 @@ export const bioversStore = {
         data.push({
           name: bioverName,
           element: eventElement,
-          display: true,
+          display: false,
           import: false,
         });
       });
@@ -843,6 +843,15 @@ export const bioversStore = {
         pathsToDisplay.push(...path.paths);
       });
       return pathsToDisplay;
+    },
+    getEvents(state) {
+      const eventsToDisplay = [];
+      state.events.forEach((event) => {
+        eventsToDisplay.push(...event.events.filter((event) => {
+          return event.element.User.username.toLocaleLowerCase() === username.value.toLocaleLowerCase();
+        }));
+      });
+      return eventsToDisplay;
     },
     ownOrPublic: (state) => (bioverId) => {
       const index = state.ownBiovers.findIndex((b) => b.id === bioverId);

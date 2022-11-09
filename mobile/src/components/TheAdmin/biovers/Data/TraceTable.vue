@@ -98,7 +98,7 @@ export default {
     return {
       sortElement: '',
       orderElement: false,
-      globalChecked: true,
+      globalChecked: false,
       menuState: undefined,
       columnDialog: false,
       deleteDialog: false,

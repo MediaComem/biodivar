@@ -8,6 +8,7 @@
   import ThePoiEditor from '../Dialog/ThePoiEditor.vue';
   import BasePoi from '../../../TheMap/BasePoi.vue';
   import BasePath from '../../../TheMap/BasePath.vue';
+  import BaseEvent from '../../../TheMap/BaseEvent.vue';
 
   const KEY = import.meta.env.VITE_APP_MAP_KEY;
 
@@ -26,6 +27,7 @@
     return store.getters['biovers/getPois']
   });
   const getPaths = computed(() => store.getters['biovers/getPaths']);
+  const getEvents = computed(() => store.getters['biovers/getEvents']);
   const ownOrPublic = computed(() => store.getters['biovers/ownOrPublic'])
   const bioverIsEditable = computed(() => store.getters['biovers/bioverIsEditable'])
   const getCurrentBioverId = computed(() => store.getters['biovers/getCurrentBioverId'])
@@ -195,6 +197,11 @@
         <div v-if="mapAdmin">
             <div v-for="(path, index) of getPaths" :key="index">
                 <BasePath v-if="path.display" :admin="true" :coordinate="path.element.coordinate"/>
+            </div>
+        </div>
+        <div v-if="mapAdmin">
+            <div v-for="(event, index) of getEvents" :key="index">
+                <BaseEvent v-if="event.display" :admin="true" :event="event.element"/>
             </div>
         </div>
     </div>

@@ -104,7 +104,7 @@ export default {
   },
   data() {
     return {
-      globalChecked: true,
+      globalChecked: false,
       sortElement: '',
       orderElement: false,
       menuState: undefined,
