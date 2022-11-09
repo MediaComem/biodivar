@@ -5,6 +5,7 @@
   import TheHud from './TheHud/TheHud.vue';
   import { useRouter } from '../composables/router.js';
   import { useStore } from '../composables/store.js';
+  import { hubStore } from '../composables/hubStore.js';
   import { storage } from '../composables/localStorage.js';
   import { logout, getBiovers, getBioversByUser } from '../utils/api.js';
   import { isMobileDevice } from '../utils/device.js';
@@ -15,6 +16,7 @@
   import Waiting from './app/Waiting.vue';
 
   const { section, isMobileOrTablet, isIOS, isAuth, biovers, mapOpen, username, resetSelectedBiovers } = useStore();
+  const { menuOpen } = hubStore();
 
   const { removeUser } = storage();
 
@@ -37,6 +39,7 @@
 
   function closeMap() {
     window.dispatchEvent(new CustomEvent('close-ar-map', {}));
+    menuOpen.value = false;
   }
 
   watch(() => section.value, (newVal) => {
