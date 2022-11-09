@@ -74,7 +74,10 @@
     }).addTo(map.value);
     map.value.on('click', getPosition);
     L.closeMap().addTo(map.value);
-    L.poiCreatorRa().addTo(map.value);
+    if (!isAllowedToEdit(selectedBiovers.value.id)) {
+      L.poiCreatorRa().addTo(map.value);
+    }
+    
 
     observer.value = new ResizeObserver(() => {
       map.value.invalidateSize();
