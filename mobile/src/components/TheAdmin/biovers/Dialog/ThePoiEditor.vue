@@ -408,7 +408,7 @@
           </div>
       </Accordeon>
       <div class="full-button actions-button">
-        <button class="full-button button-gray"><p class="material-symbols-sharp">bookmark</p> Définir comme paramètres par défaut</button>
+        <button class="full-button button-gray" @click="savePreferences"><p class="material-symbols-sharp">bookmark</p> Définir comme paramètres par défaut</button>
       </div>
       </div>
     </div>
@@ -548,18 +548,21 @@
       <button class="full-button button-blue" @click="isEdit ? updatePoi() : createPoi()" ><p class="material-symbols-sharp">where_to_vote</p> Enregistrer les modifications</button>
     </div>
   </div>
+  <Notification v-if="shouldDisplayNotification" :data-type="'success'">Vos préférences ont été enregistrer</Notification>
   </div>
   <DeleteConfirmation v-if="deleteDialog" :dialogVisible="deleteDialog" title="Êtes-vous sûr de vouloir supprimer ces point d'intérêts?" @closeDialog="deleteDialog = false" @validate="deletePoi()" />
   <CancelConfirmation v-if="cancelDialog" :dialogVisible="cancelDialog" title="Voulez-vous enregistrer les modifications?" @close="close()" @closeDialog="cancelDialog = false" @validate="isEdit ? updatePoi() : createPoi()" />
+  
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 import { useStore } from '../../../../composables/store.js';
 import { mapStore } from '../../../../composables/map.js';
 
 import Accordeon from '../../../app/UIElement/Accordeon.vue';
+import Notification from '../../../app/UIElement/Notification.vue';
 
 import DialogHeader from './DialogHeader.vue';
 import DeleteConfirmation from './DeleteConfirmation.vue';
@@ -572,7 +575,7 @@ import { savePoi, updatePoi, deletePoi, saveSymbol, saveMedia, getSymbolUrl, get
 
 export default {
   name: 'App',
-  components: { TheAframeEditor, AframeMedia, DialogHeader, DeleteConfirmation, CancelConfirmation, Accordeon },
+  components: { TheAframeEditor, AframeMedia, DialogHeader, DeleteConfirmation, CancelConfirmation, Accordeon, Notification },
   props: {
     poi: Object,
     coordinate: Object,
@@ -609,6 +612,7 @@ export default {
       dialogVisible: false,
       deleteDialog: false,
       cancelDialog: false,
+      shouldDisplayNotification: false,
       style_option: [{
         value: 'circle',
         label: 'Cercle',
@@ -741,8 +745,44 @@ export default {
         }
         this.updateWait(false);
     },
+    setupFromPreferences(preferences) {
+      this.form.amplitude = preferences.amplitude;
+      this.form.extrusion = preferences.extrusion;
+      this.form.fill_color = preferences.fill_color;
+      this.form.fill_opacity = preferences.fill_opacity;
+      this.form.fill_type = preferences.fill_type;
+      this.form.radius = preferences.radius;
+      this.form.scope = preferences.scope;
+      this.form.stroke_color = preferences.stroke_color;
+      this.form.stroke_opacity = preferences.stroke_opacity;
+      this.form.style_stroke_width = preferences.style_stroke_width;
+      this.form.style_type = preferences.style_type;
+      this.form.trigger_mode = preferences.trigger_mode;
+      this.form.wireframe = preferences.wireframe;
+      this.form.position.distance = preferences.position.distance;
+      this.form.position.rotation = preferences.position.rotation;
+      this.form.position.elevation = preferences.position.elevation;
+      this.form.symbol.amplitude = preferences.symbol.amplitude;
+      this.form.symbol.audio_autoplay = preferences.symbol.audio_autoplay;
+      this.form.symbol.audio_distance = preferences.symbol.audio_distance;
+      this.form.symbol.audio_loop = preferences.symbol.audio_loop;
+      this.form.symbol.autoplay = preferences.symbol.autoplay;
+      this.form.symbol.is_facing_user = preferences.symbol.is_facing_user;
+      this.form.symbol.is_visible = preferences.symbol.is_visible;
+      this.form.symbol.is_visible_ar = preferences.symbol.is_visible_ar;
+      this.form.symbol.scale = preferences.symbol.scale;
+      this.form.symbol.wireframe = preferences.symbol.wireframe;
+      this.form.symbol.position.distance = preferences.symbol.position.distance;
+      this.form.symbol.position.rotation = preferences.symbol.position.rotation;
+      this.form.symbol.position.elevation = preferences.symbol.position.elevation;
+      console.log(this.form)
+    },
     resetEditor() {
         this.form = JSON.parse(JSON.stringify(this.defaultForm));
+        const preferences = this.getPoiConfigPreferences;
+        if (preferences) {
+          this.setupFromPreferences(preferences);
+        }
         this.symbolFile = {
             url: '',
             content: undefined,
@@ -945,7 +985,48 @@ export default {
       this.updateWait(false);
       this.$emit('closeAfterSave');
     },
-    ...mapActions('global', ['updateWait']),
+    savePreferences() {
+      const formToSave = JSON.parse(JSON.stringify(this.form));
+      delete formToSave.User;
+      delete formToSave.author;
+      delete formToSave.biovers;
+      delete formToSave.id;
+      delete formToSave.last_contributor;
+      delete formToSave.last_contributor_fk;
+      delete formToSave.title;
+      delete formToSave.title_is_visible;
+      delete formToSave.subtitle;
+      delete formToSave.subtitle_is_visible;
+      delete formToSave.creation_date;
+      delete formToSave.update_date;
+      delete formToSave.deleted_date;
+      delete formToSave.position.id;
+      delete formToSave.position.media_id;
+      delete formToSave.position.poi_id;
+      delete formToSave.position.symbol_id;
+      delete formToSave.coordinate;
+      delete formToSave.media;
+      delete formToSave.metadata;
+      delete formToSave.symbol.id;
+      delete formToSave.symbol.url;
+      delete formToSave.symbol.poi_id;
+      delete formToSave.symbol.ar_url;
+      delete formToSave.symbol.audio_url;
+      delete formToSave.symbol.media_type;
+      delete formToSave.symbol.media_type_audio;
+      delete formToSave.symbol.media_type_ar;
+      delete formToSave.symbol.creation_date;
+      delete formToSave.symbol.update_date;
+      delete formToSave.symbol.deleted_date;
+      delete formToSave.symbol.position.id;
+      delete formToSave.symbol.position.media_id;
+      delete formToSave.symbol.position.poi_id;
+      delete formToSave.symbol.position.symbol_id;
+      this.savePoiPreferences(formToSave);
+      this.shouldDisplayNotification = true;
+      setTimeout(() => this.shouldDisplayNotification = false, 3000);
+    },
+    ...mapActions('global', ['updateWait', 'savePoiPreferences']),
     ...mapActions('biovers', ['addNewPoi', 'updatePoiStore', 'removePoi']),
   },
   computed: {
@@ -959,9 +1040,14 @@ export default {
         left: `calc(${this.leftTooltipPosition}px - 15vw)`,
       }
     } ,
+    ...mapGetters('global', ['getPoiConfigPreferences']),
   },
   mounted() {
     this.form = JSON.parse(JSON.stringify(this.defaultForm));
+    const preferences = this.getPoiConfigPreferences;
+    if (preferences) {
+      this.setupFromPreferences(preferences);
+    }
     this.updateWait(false);
   },
 }

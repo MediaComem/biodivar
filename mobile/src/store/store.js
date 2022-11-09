@@ -7,6 +7,9 @@ import { bioversStore } from './biovers-store';
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
   reducer: (state) => ({
+    global: {
+      poiConfigPreferences: state.global.poiConfigPreferences,
+    },
     biovers: {
       userPreference: state.biovers.userPreference,
       poiColumnsPreference: state.biovers.poiColumnsPreference,

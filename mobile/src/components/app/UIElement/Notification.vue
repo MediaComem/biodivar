@@ -12,6 +12,7 @@
     top: 10px;
     right: 10px;
     padding: 1rem 1rem 1rem 1rem;
+    z-index: 100000000;
   }
 
   [data-type="success"] {

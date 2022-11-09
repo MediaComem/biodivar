@@ -5,6 +5,7 @@ export const globalStore = {
             wait: false,
             currentTableOver: 0,
             currentTabClick: [],
+            poiConfigPreferences: null,
         };
     },
     mutations: {
@@ -21,6 +22,9 @@ export const globalStore = {
         REMOVE_CLICK(state, id) {
             const index = state.currentTabClick.findIndex((e) => e === id);
             if (index !== -1) state.currentTabClick.splice(index, 1);
+        },
+        SAVE_POI_PREFERENCES(state, preferences) {
+            state.poiConfigPreferences = preferences;
         }
     },
     actions: {
@@ -36,6 +40,9 @@ export const globalStore = {
         removeClickElement({ commit }, id) {
             commit('REMOVE_CLICK', id);
         },
+        savePoiPreferences({ commit }, preferences) {
+            commit('SAVE_POI_PREFERENCES', preferences);
+        },
     },
     getters: {
         getcurrentTableOver(state) {
@@ -44,5 +51,8 @@ export const globalStore = {
         getCurrentTabClick(state) {
             return state.currentTabClick;
         },
+        getPoiConfigPreferences(state) {
+            return state.poiConfigPreferences;
+        }
     },
 }
