@@ -2,7 +2,7 @@ AFRAME.registerComponent('enter-ar-on-init', {
   schema: {
     delay: {
       type: 'int',
-      default: 0,
+      default: 250,
     },
   },
 

@@ -1,5 +1,12 @@
 AFRAME.registerComponent('faces-north', {
 
+  schema: {
+    enable: {
+      type: 'boolean',
+      default: true,
+    }
+  },
+
   init: function () {
     const success = this.checkDependencies();
     if (!success) return;
@@ -20,6 +27,12 @@ AFRAME.registerComponent('faces-north', {
 
     this._onPositionUpdate = this._onPositionUpdate.bind(this);
     window.addEventListener('gps-position-update', this._onPositionUpdate);
+
+    // manage disable/enable when user is in a POI radius
+    this._onRadiusEnter = this._onRadiusEnter.bind(this);
+    window.addEventListener('radius-enter', this._onRadiusEnter);
+    this._onRadiusExit = this._onRadiusExit.bind(this);
+    window.addEventListener('radius-exit', this._onRadiusExit);
   },
 
   checkDependencies: function () {
@@ -36,6 +49,16 @@ AFRAME.registerComponent('faces-north', {
     window.removeEventListener('gps-position-update', this._onPositionUpdate);
     window.removeEventListener('enter-vr', this._onEnterVrAr);
     window.removeEventListener('exit-vr', this._onExitVrAr);
+    window.removeEventListener('radius-enter', this._onRadiusEnter);
+    window.removeEventListener('radius-exit', this._onRadiusExit);
+  },
+
+  _onRadiusEnter: function (event) {
+    this.data.enable = false;
+  },
+
+  _onRadiusExit: function (event) {
+    this.data.enable = true;
   },
 
   _onEnterVrAr: function() {
@@ -51,6 +74,7 @@ AFRAME.registerComponent('faces-north', {
   },
 
   _onPositionUpdate: function (posEvt) {
+    if (!this.data.enable) return;
     if (this.el.sceneEl.is('vr-mode') || this.el.sceneEl.is('ar-mode')) {
       // Cancel the AR/VR position by moving the geo-plane entity
       // Like this, the AR/VR cam position is the new "origin" of the geo-plane.
