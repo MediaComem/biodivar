@@ -40,7 +40,7 @@
   function closeMap() {
     window.dispatchEvent(new CustomEvent('close-ar-map', {}));
     menuOpen.value = false;
-    parameterOpen.value = false;
+    parameterOpen.value = false;f
   }
 
   watch(() => section.value, (newVal) => {
