@@ -9,6 +9,7 @@
   import BasePoi from '../../../TheMap/BasePoi.vue';
   import BasePath from '../../../TheMap/BasePath.vue';
   import BaseEvent from '../../../TheMap/BaseEvent.vue';
+  import BaseTrace from '../../../TheMap/BaseTrace.vue';
 
   const KEY = import.meta.env.VITE_APP_MAP_KEY;
 
@@ -28,6 +29,7 @@
   });
   const getPaths = computed(() => store.getters['biovers/getPaths']);
   const getEvents = computed(() => store.getters['biovers/getEvents']);
+  const getTraces = computed(() => store.getters['biovers/getTracesForDisplay']);
   const ownOrPublic = computed(() => store.getters['biovers/ownOrPublic'])
   const bioverIsEditable = computed(() => store.getters['biovers/bioverIsEditable'])
   const getCurrentBioverId = computed(() => store.getters['biovers/getCurrentBioverId'])
@@ -116,6 +118,36 @@
       anchor.download = 'export_poi.json';
       anchor.click();
     }
+
+    function prepareTracesToDisplay(traces) {
+      const tracesToDisplay = [];
+      let bundle = [];
+      let lastTime = null;
+      let currentTime = null;
+
+      traces.forEach((trace) => {
+        currentTime = Date.parse(trace.element.creation_date);
+        if (lastTime != null && trace.display && currentTime - lastTime < 10000) {
+          bundle.push(trace.element.coordinate);
+        } else {
+          if (bundle.length > 0) {
+            tracesToDisplay.push(bundle);
+            bundle = [];
+          }
+          if (trace.display) {
+            bundle.push(trace.element.coordinate);
+          }
+        }
+        lastTime = currentTime;
+      })
+
+      if (bundle.length > 0) {
+            tracesToDisplay.push(bundle);
+            bundle = [];
+          }
+
+      return tracesToDisplay;
+    }
     
     function downloadAvailablePois(event) {
       const boundingBox = event.detail;
@@ -202,6 +234,13 @@
         <div v-if="mapAdmin">
             <div v-for="(event, index) of getEvents" :key="index">
                 <BaseEvent v-if="event.display" :admin="true" :event="event.element"/>
+            </div>
+        </div>
+        <div v-if="mapAdmin">
+            <div v-for="(traces, index) of getTraces" :key="index">
+              <div v-for="(traceToDisplay, indexTrace) of prepareTracesToDisplay(traces)" :key="indexTrace">
+                <BaseTrace :admin="true" :coordinate="traceToDisplay"/>
+              </div>
             </div>
         </div>
     </div>
