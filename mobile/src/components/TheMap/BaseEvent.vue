@@ -24,7 +24,7 @@ onMounted(() => {
           weight: 1,
           color: `#ff0000`,
       }).addTo(currentMap.value);
-      popup.value = L.popup()
+      popup.value = L.popup({closeButton: false, autoClose: false, autoPan: false})
         .setLatLng([
         props.event.coordinate.lat,
         props.event.coordinate.long])

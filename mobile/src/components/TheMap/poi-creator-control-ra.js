@@ -9,6 +9,7 @@ L.PoiCreatorRa = L.Control.extend({
         window.addEventListener('close-poi-editor-ra', () => {
             state = false;
             state ? div.classList.add("leaflet-control-interior-select") : div.classList.remove("leaflet-control-interior-select");
+            window.dispatchEvent(new CustomEvent('poi-creator-control-ra', {detail: state}));
         });
         
         const div = L.DomUtil.create('div', 'leaflet-control-interior-poi-ra');
