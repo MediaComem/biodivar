@@ -16,9 +16,15 @@ const getPins = () => {
   return [];
 };
 
+const storeMinDistance = (distance) => { localStorage.setItem('minDistance', distance) };
+const getMinDistance = () => {
+  const distance = localStorage.getItem('minDistance');
+  return distance ? distance : 2;
+}
+
 export function storage() {
 
-  return { storeUser, getUser, removeUser, storeFavori, getFavori, storePins, getPins };
+  return { storeUser, getUser, removeUser, storeFavori, getFavori, storePins, getPins, storeMinDistance, getMinDistance };
 
 }
 
