@@ -16,7 +16,7 @@
   import Waiting from './app/Waiting.vue';
 
   const { section, isMobileOrTablet, isIOS, isAuth, biovers, mapOpen, username, resetSelectedBiovers } = useStore();
-  const { menuOpen } = hubStore();
+  const { menuOpen, parameterOpen } = hubStore();
 
   const { removeUser } = storage();
 
@@ -40,6 +40,7 @@
   function closeMap() {
     window.dispatchEvent(new CustomEvent('close-ar-map', {}));
     menuOpen.value = false;
+    parameterOpen.value = false;
   }
 
   watch(() => section.value, (newVal) => {

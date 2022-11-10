@@ -37,6 +37,8 @@ const hubDisplayTimeout = ref(null);
 
 const registerValidated = ref(false);
 
+const minDistance = ref(2);
+
 watch(favori, (val) => {
   storeFavori(favori.value);
 }, { deep: true } );
@@ -90,6 +92,6 @@ const resetSelectedBiovers = () => {
 
 export function useStore() {
 
-  return { isAuth, section, biovers, username, showAggreement, forgotPassword, send, isMobileOrTablet, isIOS, selectedBiovers, pins, mapOpen, favori, hubDisplay, hubDisplayTimeout, registerValidated, isInFavori, isInPins, getPinsBiovers, addPoiInBiovers, updatePoiInBiovers, resetSelectedBiovers };
+  return { isAuth, section, biovers, username, showAggreement, forgotPassword, send, isMobileOrTablet, isIOS, selectedBiovers, pins, mapOpen, favori, hubDisplay, hubDisplayTimeout, registerValidated, minDistance, isInFavori, isInPins, getPinsBiovers, addPoiInBiovers, updatePoiInBiovers, resetSelectedBiovers };
 
 }

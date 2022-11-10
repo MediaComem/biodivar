@@ -2,7 +2,7 @@ import { useStore } from '../../composables/store';
 import { hubStore } from '../../composables/hubStore';
 
 const { mapOpen, hubDisplay, hubDisplayTimeout } = useStore();
-const { menuOpen } = hubStore();
+const { menuOpen, parameterOpen } = hubStore();
 
 export function clearHubTimeout() {
     clearTimeout(hubDisplayTimeout.value);
@@ -14,6 +14,7 @@ export function setHubTimeout() {
         mapOpen.value = false;
         hubDisplay.value = false;
         menuOpen.value = false;
+        parameterOpen.value = false;
     }, 3000)
 }
 
