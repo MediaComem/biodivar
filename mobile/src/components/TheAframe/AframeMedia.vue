@@ -56,6 +56,7 @@
     >
       <a-entity
         :gltf-model="media"
+        animation-mixer
         :scale="`${scale} ${scale} ${scale}`"
         :position="`${positionX} ${positionY} 0`"
         :look-at-roll-yaw="`enabled: ${facing ? 'true' : 'false'}`"

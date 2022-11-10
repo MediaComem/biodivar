@@ -188,6 +188,10 @@ AFRAME.registerComponent('gps-position', {
     latitude: {
       type: 'number',
       default: 0,
+    },
+    enable: {
+      type: 'boolean',
+      default: true,
     }
   },
 
@@ -224,6 +228,7 @@ AFRAME.registerComponent('gps-position', {
   },
 
   _onPositionUpdate: function (posEvt) {
+    if (!this.data.enable) return;
     const haversineDist = this.system._haversineDist;
     const gpsPos = posEvt.detail;
 

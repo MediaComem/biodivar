@@ -154,9 +154,13 @@
     <a-entity faces-north>
       <template v-for="poi of selectedBiovers.Poi" :key="`poi-${poi.id}`">
         <a-entity
-          position="0 0 1000"
+          position="0 0 -12"
           :gps-position="`latitude: ${poi.coordinate.lat}; longitude: ${poi.coordinate.long}`"
           :visible-from="`distance: ${poi.scope}`"
+          :listen-to__enter="`target: #poi-radius-${poi.id}; event: radius-enter; emit: gps-pos-off`"
+          :listen-to__exit="`target: #poi-radius-${poi.id}; event: radius-exit; emit: gps-pos-on`"
+          event-set__gpson="event: gps-pos-on; attribute: gps-position.enable; value: true"
+          event-set__gpsoff="event: gps-pos-off; attribute: gps-position.enable; value: false"
         >
 
           <!-- POI Symbol -->
@@ -273,6 +277,7 @@
               >
                 <a-entity
                   :gltf-model="`url(${getMediaUrl(m)})`"
+                  animation-mixer
                   :scale="`${m.scale} ${m.scale} ${m.scale}`"
                   :position="`${m.position.distance} ${m.position.elevation} 0`"
                   :look-at-roll-yaw="`enabled: ${m.is_facing ? 'true' : 'false'}`"
@@ -319,14 +324,13 @@
               >
                 <a-entity
                   :position="`${m.position.distance} ${m.position.elevation} 0`"
-                  :visible="m.is_visible_in_radius ? 'false' : null"
                   :sound="`
                     src: url(${getMediaUrl(m)});
                     loop: ${m.loop ? 'true' : 'false'};
                     volume: ${m.scale};
-                    distanceModel: linear;
-                    positional: ${m.autoplay ? 'true' : 'false'};
-                    maxDistance: ${m.is_visible_in_radius ? poi.radius : poi.symbol.audio_distance};
+                    ${m.autoplay ? 'distanceModel: linear;' : 'positional: false;'}
+                    ${m.autoplay && m.is_visible_in_radius ? 'maxDistance: ' +  poi.radius : ''}
+                    ${m.autoplay && !m.is_visible_in_radius ? 'maxDistance: ' +  poi.symbol.audio_distance : ''}
                   `"
                   sound-play-stop="eventPlay: play-sound; eventStop: stop-sound;"
                   :listen-to__enter="m.is_visible_in_radius ? `target: #poi-radius-${poi.id}; event: radius-enter; emit: play-sound` : null"
@@ -348,7 +352,7 @@
     </a-entity>
 
     <a-entity id="camera-rig" position="0 1.6 0">
-      <a-entity id="head" camera pitch-roll-look-controls></a-entity>
+      <a-entity id="head" camera pitch-roll-look-controls wasd-controls></a-entity>
     </a-entity>
 
   </a-scene>

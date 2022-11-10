@@ -18,7 +18,11 @@ AFRAME.registerComponent('sound-play-stop', {
   },
 
   stopSound: function () {
-    this.el.components.sound.pauseSound();
+    if (this.el.components.sound.isPlaying) {
+      this.el.components.sound.pauseSound();
+    } else {
+      this.el.components.sound.stopSound();
+    }
   },
 
   remove: function () {
