@@ -46,13 +46,13 @@
   </div>
 
   <div v-if="menuOpen && !parameterOpen" class="menu-layout">
-    <div class="menu-element" @click="closeMenu()"><p class="material-symbols-sharp menu-icon">close</p><p>{{ selectedBiovers.name }}</p></div>
-    <div class="menu-element" @click="openParameters()"><p class="material-symbols-sharp menu-icon">tune</p><p>paramètres</p></div>
+    <div class="menu-element" @click="closeMenu()" style="border-bottom: 1px solid #666666"><p class="material-symbols-sharp menu-icon">close</p><p>{{ selectedBiovers.name }}</p></div>
+    <div class="menu-element" @click="openParameters()" style="border-bottom: 1px solid #666666"><p class="material-symbols-sharp menu-icon">tune</p><p>paramètres</p></div>
     <div class="menu-element" @click="backToMenu()"><p class="material-symbols-sharp menu-icon">exit_to_app</p><p>sortir de la RA</p></div>
   </div>
 
   <div v-if="parameterOpen" class="menu-layout-parameter">
-    <div class="menu-element" @click="closeParameter()"><p class="material-symbols-sharp menu-icon">west</p><p>paramètres</p></div>
+    <div class="menu-element" @click="closeParameter()" style="border-bottom: 1px solid #666666"><p class="material-symbols-sharp menu-icon">west</p><p>paramètres</p></div>
     <div class="menu-element-parameter">
       <p class="material-symbols-sharp parameter-icon">mode_of_travel</p>
       <p class="parameter-title">actualiser position</p>
@@ -84,7 +84,7 @@ p {
 
 .menu-layout-parameter {
   width: calc(100vw - 1rem);
-  height: 200px;
+  height: 220px;
   background-color: #323232;
   border-radius: 20px;
   padding-left: 5px;
@@ -99,7 +99,7 @@ p {
 }
 
 .menu-element-parameter {
-  height: 100px;
+  height: 120px;
   display: grid;
   grid-template-columns: 72px calc( 100% - 72px);
   grid-template-rows: repeat(3, 33%);
@@ -121,6 +121,8 @@ p {
 
 .parameter-title {
   grid-area: 1 / 2 / 2 / 3;
+  display: flex;
+  align-items: end;
 }
 
 .paramter-description {

@@ -28,7 +28,7 @@
 <template>
   <div data-role="hud" @click="openHub">
     <div data-role="hud-grid">
-      <the-hud-menu v-if="hubDisplay" data-role="hud-grid-menu"></the-hud-menu>
+      <the-hud-menu v-if="hubDisplay"></the-hud-menu>
       <!-- Demande de Julien pour retirer ce bouton pour les tests -->
       <the-hud-edit v-if="false" data-role="hud-grid-edit"></the-hud-edit>
       <the-hud-map v-if="hubDisplay" data-role="hud-grid-map"></the-hud-map>
@@ -44,7 +44,6 @@
     --icon-size: 60px;
   }
 
-  [data-role="hud-grid-menu"] {grid-area: m}
   [data-role="hud-grid-edit"] {grid-area: e}
   [data-role="hud-grid-debug"]  {grid-area: d}
 
@@ -56,7 +55,7 @@
     grid-template-rows: var(--icon-size) auto var(--icon-size);
     grid-template-columns: var(--icon-size) auto var(--icon-size);
     grid-template-areas:
-      "m . e"
+      ". . e"
       "d . ."
       ". c ."
     ;
