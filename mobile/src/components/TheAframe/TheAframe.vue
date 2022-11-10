@@ -348,7 +348,7 @@
       </template>
     </a-entity>
 
-    <a-entity id="camera-rig" position="0 0 0">
+    <a-entity id="camera-rig" position="0 1.7 0">
       <a-entity id="head" camera pitch-roll-look-controls></a-entity>
     </a-entity>
 
