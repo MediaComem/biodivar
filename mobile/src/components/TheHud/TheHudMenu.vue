@@ -46,7 +46,7 @@ p {
 }
 
 .menu-layout {
-  width: 98vw;
+  width: calc(100vw - 1rem);
   height: 300px;
   background-color: #323232;
   border-radius: 20px;
