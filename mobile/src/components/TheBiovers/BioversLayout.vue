@@ -4,15 +4,18 @@
   import Accordeon from '../app/UIElement/Accordeon.vue';
   import BioversItem from '../app/BioversItem.vue';
 
+  import BioverCreator from '../TheAdmin/biovers/Dialog/BioverCreator.vue';
+
   import { useStore } from '../../composables/store';
 
   const { username, favori } = useStore();
 
   const props = defineProps({
-      biovers: Object,
+      biovers: Array,
   });
 
   const search = ref('');
+  const bioversCreator = ref(false);
   const ownOpen = ref(false);
   const publicOpen = ref(false);
   const favoriOpen = ref(false);
@@ -40,6 +43,14 @@
     favoriOpen.value = search.value !== '' && biovers.length > 0;
     return biovers;
   })
+
+  function openBioversCreator() {
+    bioversCreator.value = true;
+  }
+
+  function closeBioversCreator() {
+    bioversCreator.value = false;
+  }
 </script>
 
 
@@ -49,6 +60,9 @@
         <p class="material-symbols-sharp icon-margin icon-font fill-font">search</p>
         <input type="text" v-model="search">
       </base-input>
+      <base-button class="button" @click="openBioversCreator">
+        <p class="material-symbols-sharp icon-button-margin icon-font">add_circle</p><p class="button-text">Créer un nouveau biovers</p>
+      </base-button>
       <hr>
       <Accordeon class="own" :header="`mes biovers (${own.length})`" :length="own.length" :should-be-open="ownOpen" :image="'architecture'">
           <div v-for="(item, index) in own" :key="index" class="margin">
@@ -68,6 +82,7 @@
           </div>
       </Accordeon>
     </div>
+    <BioverCreator :showDialog="bioversCreator" @closeDialog="closeBioversCreator"/> 
 </template>
 
 <style scoped>
@@ -75,7 +90,7 @@
       width: 100%;
       height: auto;
       background-color: white;
-      border-radius: var(--border-radius);
+      border-radius: 0;
   }
 
   hr {
@@ -110,5 +125,25 @@
     position: absolute;
     top: 18px;
     left: 21px;
+  }
+
+  .icon-button-margin {
+    margin: 0px;
+    padding-right: 6px;
+  }
+
+  .button {
+    --link-color: white;
+    --highlight-color: #2F80ED;
+    margin-top: 0px !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+
+  .button-text {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 1.5px;
+    font-variation-settings: "wght" 149, "ital" 0;
   }
 </style>

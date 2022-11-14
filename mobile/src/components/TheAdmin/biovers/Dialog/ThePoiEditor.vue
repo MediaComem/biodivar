@@ -679,7 +679,7 @@ export default {
           media_type_audio: '',
           audio_autoplay: false,
           audio_loop: false,
-          audio_distance: 3,
+          audio_distance: 60,
           ar_url: '',
           media_type_ar: '',
           is_visible_ar: true,
