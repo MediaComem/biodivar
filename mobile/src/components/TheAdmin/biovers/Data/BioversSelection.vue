@@ -11,9 +11,10 @@
         <button
           :class="{'button-unfocus': biovers.biover.id !== currentBioversId}"
           class="button-layout button-biovers"
+          @click="selectTab(biovers.biover.id)"
         >
-            <World :animate="biovers.biover.id === currentBioversId" @click="selectTab(biovers.biover.id)"/>
-            <p class="text-margin name-element" @click="selectTab(biovers.biover.id)">{{ biovers.title }}</p>
+            <World :animate="biovers.biover.id === currentBioversId"/>
+            <p class="text-margin name-element">{{ biovers.title }}</p>
             <p class="material-symbols-sharp" @click="closeTab(biovers.biover.id)">close</p>
         </button>
       </div>

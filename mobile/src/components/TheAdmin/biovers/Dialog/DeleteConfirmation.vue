@@ -124,7 +124,7 @@ export default {
   .button-text {
     margin-top: 0px;
     margin-bottom: 0px;
-    padding-bottom: 1.5px;
+    padding-bottom: 0.5px;
     font-variation-settings: "wght" 149, "ital" 0;
   }
 </style>

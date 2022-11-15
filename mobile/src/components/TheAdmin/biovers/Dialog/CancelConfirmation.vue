@@ -8,13 +8,13 @@
       </div>
       <base-input class="dialog-input-color">
         <base-button class="save" @click="$emit('validate')">
-          <p class="material-symbols-sharp text-formatting">save</p>Enregistrer
+          <p class="material-symbols-sharp text-formatting">save</p><p class="button-text">Enregistrer</p>
         </base-button>
         <base-button class="delete" @click="$emit('close')">
-          <p class="material-symbols-sharp text-formatting">delete</p>Ne pas enregistrer
+          <p class="material-symbols-sharp text-formatting">delete</p><p class="button-text">Ne pas enregistrer</p>
         </base-button>
         <base-button class="cancel" @click="$emit('closeDialog')">
-          <p class="material-symbols-sharp text-formatting">close</p>Annuler
+          <p class="material-symbols-sharp text-formatting">close</p><p class="button-text">Annuler</p>
         </base-button>
       </base-input>
     </div>
@@ -122,6 +122,13 @@ export default {
 
 .text-formatting {
     margin: 0px;
-    height: 29px;
+    padding-right: 6px;
+}
+
+.button-text {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 4px;
+    font-variation-settings: "wght" 149, "ital" 0;
 }
 </style>
