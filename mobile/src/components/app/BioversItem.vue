@@ -20,6 +20,8 @@
 
   import Notification from './UIElement/Notification.vue';
 
+  import Biovers from '../../types/biovers.js';
+
   import { deepClone } from '../../utils/duplicate.js';
 
   const { username, isInFavori, isInPins, favori, pins, biovers } = useStore();
@@ -94,14 +96,7 @@
     props.biover.name = modification.title;
     props.biover.description = modification.description;
     props.biover.location = modification.location;
-    const resp = await updateBiovers({
-      id: props.biover.id,
-      name: props.biover.name,
-      description: props.biover.description,
-      location: props.biover.location,
-      is_public: props.biover.is_public,
-      is_editable: props.biover.is_editable,
-    });
+    const resp = await updateBiovers(new Biovers(props.biover.id, props.biover.name, props.biover.description, props.biover.location, props.biover.is_public, props.biover.is_editable));
     if (resp?.statusCode === 200) {
       setupNotification(`Le biovers ${props.biover.name} a été mis à jour avec succès`, 'success')
     } else {
@@ -139,14 +134,7 @@
 
   async function changeVisibility(state) {
     props.biover.is_public = state;
-    const resp = await updateBiovers({
-      id: props.biover.id,
-      title: props.biover.title,
-      description: props.biover.description,
-      location: props.biover.location,
-      is_public: props.biover.is_public,
-      is_editable: props.biover.is_editable,
-    });
+    const resp = await updateBiovers(new Biovers(props.biover.id, props.biover.title, props.biover.description, props.biover.location, props.biover.is_public, props.biover.is_editable));
     if (resp?.statusCode === 200) {
       setupNotification(`Le biovers ${props.biover.name} a été mis à jour avec succès`, 'success')
     } else {
@@ -157,14 +145,7 @@
 
   async function changeEdition(state) {
     props.biover.is_editable = state;
-    const resp = await updateBiovers({
-      id: props.biover.id,
-      title: props.biover.title,
-      description: props.biover.description,
-      location: props.biover.location,
-      is_public: props.biover.is_public,
-      is_editable: props.biover.is_editable,
-    });
+    const resp = await updateBiovers(new Biovers(props.biover.id, props.biover.title, props.biover.description, props.biover.location, props.biover.is_public, props.biover.is_editable));
     if (resp?.statusCode === 200) {
       setupNotification(`Le biovers ${props.biover.name} a été mis à jour avec succès`, 'success')
     } else {
