@@ -105,7 +105,14 @@ export default {
             this.pinDialog = false;
         },
         async save() {
-            const result = await updateBiovers(this.biovers.biover);
+            const result = await updateBiovers({
+                id: this.biovers.biover.id,
+                title: this.biovers.biover.title,
+                description: this.biovers.biover.description,
+                location: this.biovers.biover.location,
+                is_public: this.biovers.biover.is_public,
+                is_editable: this.biovers.biover.is_editable,
+            });
             if (result.statusCode === 200) {
                 this.saveDone = true;
                 setTimeout(() => {
