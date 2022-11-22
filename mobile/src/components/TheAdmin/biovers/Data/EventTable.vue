@@ -57,7 +57,7 @@
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
         </tr>
-        <tr v-for="(event, index) in getSortedData" :key="index">
+        <tr v-for="(event, index) in getSortedData" :key="index" class="table-background" :class="{'table-hover': getCurrentEventTabClick.includes(event.element.id)}" @mouseover="over(event.element.id)" @mouseleave="leave" @click="openPopup(event.element.id)">
           <td class="first-column">
             <input type="checkbox" :checked="event.display" @click="selectElement(event)">
           </td>
@@ -111,9 +111,25 @@ export default {
       columnDialog: false,
       deleteDialog: false,
       eventToDelete: undefined,
+      leaveTimeout: undefined,
     }
   },
   methods: {
+    over(id) {
+      clearTimeout(this.leaveTimeout);
+      this.updateEventOver(id);
+    },
+    leave() {
+      this.leaveTimeout = setTimeout(() => {
+        this.updateEventOver(0);
+      }, 300);
+    },
+    openPopup(id) {
+      clearTimeout(this.leaveTimeout);
+      this.popupTimeout = setTimeout(() => {
+        this.addOrRemoveEventClickElement(id);
+      }, 300);
+    },
     dateFormatter(date) {
       return fullDateFormatter(date);
     },
@@ -205,6 +221,7 @@ export default {
       this.removeEvent(event.element);
       this.menuState = undefined;
     },
+    ...mapActions('global', ['updateEventOver', 'addOrRemoveEventClickElement']),
     ...mapActions('biovers', ['selectAllEvents', 'unselectAllEvents', 'updateEventToDisplay', 'removeEvent']),
   },
   computed: {
@@ -214,6 +231,7 @@ export default {
     allAreUnselected() {
       return this.getSortedData.filter((event) => event.display).length === 0;
     },
+    ...mapGetters('global', ['getCurrentEventTabClick']),
     ...mapGetters('biovers', ['getEventByBioversAndUser', 'getEventColumnsPreference', 'ownOrPublic', 'bioverIsEditable', 'getCurrentBioverId']),
   },
 };

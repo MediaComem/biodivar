@@ -1,6 +1,6 @@
 <script setup>
-import { ref, onMounted, onUnmounted, watch } from "@vue/runtime-core"; 
-
+import { ref, onMounted, onUnmounted, watch, computed } from "@vue/runtime-core"; 
+import { useStore } from 'vuex';
 import { mapStore } from '../../composables/map.js';
 
 const props = defineProps({
@@ -10,9 +10,42 @@ const props = defineProps({
 
 const { map, mapAdmin } = mapStore();
 
+const store = useStore();
+
 const currentMap = ref(null);
 const circle = ref(null);
 const popup = ref(null);
+
+const hoverPoiInTable = computed(() => store.getters['global/getcurrentEventTableOver']);
+const currentTabClick = computed(() => store.getters['global/getCurrentEventTabClick']);
+
+
+watch(() => hoverPoiInTable.value, () => {
+  if (!currentTabClick.value.includes(props.event.id)) {
+    if (hoverPoiInTable.value === props.event.id) {
+      if (!popup.value.isOpen()) popup.value.openOn(currentMap.value);
+    } else {
+      if (popup.value.isOpen()) currentMap.value.removeLayer(popup.value);
+    }
+  }
+});
+
+watch(() => currentTabClick.value, (newVal) => {
+  if (newVal.includes(props.event.id)) {
+    if (!popup.value.isOpen()) { 
+      popup.value.openOn(currentMap.value)
+    };
+    if (hoverPoiInTable.value === props.event.id) {
+      currentMap.value.panTo([props.event.coordinate.lat, props.event.coordinate.long], {animate: true, duration: 1, easeLinearity: 0})
+    }
+  } else {
+    if (hoverPoiInTable.value === props.event.id) {
+      if (!popup.value.isOpen()) popup.value.openOn(currentMap.value);
+    } else {
+      if (popup.value.isOpen()) currentMap.value.removeLayer(popup.value);
+    }
+  }
+}, { deep: true });
 
 onMounted(() => {
   props.admin ? currentMap.value = mapAdmin.value : currentMap.value = map.value;
