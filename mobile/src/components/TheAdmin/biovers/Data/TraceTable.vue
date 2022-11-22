@@ -142,7 +142,7 @@ export default {
     selectElement(selectedTrace) {
       this.updateTraceToDisplay({
         bioverId: this.bioverId,
-        event: selectedTrace,
+        trace: selectedTrace,
       });
       this.globalCheckAnalizer();
     },
