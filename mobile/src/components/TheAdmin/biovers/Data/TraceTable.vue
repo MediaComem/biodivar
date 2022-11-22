@@ -49,7 +49,7 @@
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
         </tr>
-        <tr v-for="(trace, index) in getSortedData" :key="index">
+        <tr v-for="(trace, index) in getSortedData" :key="index" class="table-background" :class="{'table-hover': getCurrentTraceTabClick.includes(trace.element.id)}" @mouseover="over(trace.element.id)" @mouseleave="leave" @click="openPopup(trace.element.id)">
           <td class="first-column">
             <input type="checkbox" :checked="trace.display" @click="selectElement(trace)">
           </td>
@@ -103,6 +103,8 @@ export default {
       columnDialog: false,
       deleteDialog: false,
       traceToDelete: undefined,
+      leaveTimeout: undefined,
+      popupTimeout: undefined,
     }
   },
   computed: {
@@ -112,9 +114,26 @@ export default {
     allAreUnselected() {
       return this.getSortedData.filter((trace) => trace.display).length === 0;
     },
+    ...mapGetters('global', ['getCurrentTraceTabClick']),
     ...mapGetters('biovers', ['getTraceByBioversAndUser', 'getTraceColumnsPreference', 'ownOrPublic', 'bioverIsEditable', 'getCurrentBioverId']),
   },
   methods: {
+    over(id) {
+      clearTimeout(this.leaveTimeout);
+      this.updateTraceOver(id);
+    },
+    leave() {
+      this.leaveTimeout = setTimeout(() => {
+        this.updateTraceOver(0);
+      }, 300);
+    },
+    openPopup(id) {
+      clearTimeout(this.leaveTimeout);
+      this.popupTimeout = setTimeout(() => {
+        this.addOrRemoveTraceClickElement(id);
+        this.updateLastTraceClick(id);
+      }, 300);
+    },
     dateFormatter(date) {
       return fullDateFormatter(date);
     },
@@ -206,6 +225,7 @@ export default {
       this.removeTrace(trace.element);
       this.menuState = undefined;
     },
+    ...mapActions('global', ['updateTraceOver', 'addOrRemoveTraceClickElement', 'updateLastTraceClick']),
     ...mapActions('biovers', ['selectAllTraces', 'unselectAllTraces', 'updateTraceToDisplay', 'removeTrace']),
   },
 };

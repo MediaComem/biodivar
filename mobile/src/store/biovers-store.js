@@ -813,6 +813,15 @@ export const bioversStore = {
         return trace.element.User.username.toLocaleLowerCase() === username.value.toLocaleLowerCase();
       });
     },
+    getTraceById: (state) => (id) => {
+      const index = state.traces.findIndex((trace) => trace.bioverId === state.currentBioversId);
+      if (index === -1) {
+        return -1;
+      }
+      return state.traces[index].traces.filter((trace) => {
+        return trace.element.id === id;
+      });
+    },
     getEventByBiovers: (state) => (id) => {
       const index = state.events.findIndex((event) => event.bioverId === id);
       if (index === -1) {

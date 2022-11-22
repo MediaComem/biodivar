@@ -112,6 +112,7 @@ export default {
       deleteDialog: false,
       eventToDelete: undefined,
       leaveTimeout: undefined,
+      popupTimeout: undefined,
     }
   },
   methods: {
