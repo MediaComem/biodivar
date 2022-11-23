@@ -139,8 +139,11 @@ export default {
       if (this.majPress) {
         const startingIndex = this.getSortedData.findIndex((event) => event.element.id === this.getcurrentLastEventClick);
         const lastIndex = this.getSortedData.findIndex((event) => event.element.id === id);
-        const newSelections = this.getSortedData.slice(startingIndex + 1, lastIndex + 1);
-        this.addOrRemoveEventsClick(newSelections);
+        if (startingIndex < lastIndex) {
+          this.addOrRemoveEventsClick(this.getSortedData.slice(startingIndex + 1, lastIndex + 1));
+        } else {
+          this.addOrRemoveEventsClick(this.getSortedData.slice(lastIndex, startingIndex));
+        }
       } else {
         this.addOrRemoveEventClickElement(id);
       }

@@ -141,8 +141,11 @@ export default {
       if (this.majPress) {
         const startingIndex = this.getSortedData.findIndex((trace) => trace.element.id === this.getcurrentLastTraceClick);
         const lastIndex = this.getSortedData.findIndex((trace) => trace.element.id === id);
-        const newSelections = this.getSortedData.slice(startingIndex + 1, lastIndex + 1);
-        this.addOrRemoveTracesClick(newSelections);
+        if (startingIndex < lastIndex) {
+          this.addOrRemoveTracesClick(this.getSortedData.slice(startingIndex + 1, lastIndex + 1));
+        } else {
+          this.addOrRemoveTracesClick(this.getSortedData.slice(lastIndex, startingIndex));
+        }
       } else {
         this.addOrRemoveTraceClickElement(id);
       }

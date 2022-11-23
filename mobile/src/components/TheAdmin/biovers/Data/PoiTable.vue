@@ -446,7 +446,11 @@ export default {
       if (this.majPress) {
         const startingIndex = this.getSortedData.findIndex((poi) => poi.element.id === this.getcurrentLastPoiClick);
         const lastIndex = this.getSortedData.findIndex((poi) => poi.element.id === id);
-        newSelections = this.getSortedData.slice(startingIndex + 1, lastIndex + 1);
+        if (startingIndex < lastIndex) {
+          newSelections = this.getSortedData.slice(startingIndex + 1, lastIndex + 1);
+        } else {
+          newSelections = this.getSortedData.slice(lastIndex, startingIndex);
+        }
       }
       this.popupTimeout = setTimeout(() => {
         if (newSelections.length > 0) {
