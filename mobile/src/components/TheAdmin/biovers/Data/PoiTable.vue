@@ -400,6 +400,7 @@ export default {
       clickOnThisView: false,
       popupTimeout: undefined,
       poiToDelete: undefined,
+      majPress: false,
     };
   },
   computed: {
@@ -417,10 +418,18 @@ export default {
       if (value && value.type === 'POI') return false;
       return true;
     },
-    ...mapGetters('global', ['getCurrentTabClick']),
+    ...mapGetters('global', ['getCurrentTabClick', 'getcurrentLastPoiClick']),
     ...mapGetters('biovers', ['getPoisByBiover', 'ownOrPublic', 'bioverIsEditable', 'getCopyElement', 'getPoiColumnsPreference', 'getCurrentBioverId']),
   },
   methods: {
+    press(event) {
+      if (event.key == 'Shift') {
+        this.majPress = true;
+      }
+    },
+    releaseKeybord() {
+      this.majPress = false;
+    },
     over(id) {
       clearTimeout(this.leaveTimeout);
       this.updateOver(id);
@@ -433,8 +442,19 @@ export default {
     openPopup(id) {
       this.clickOnThisView = true;
       clearTimeout(this.leaveTimeout);
+      let newSelections = [];
+      if (this.majPress) {
+        const startingIndex = this.getSortedData.findIndex((poi) => poi.element.id === this.getcurrentLastPoiClick);
+        const lastIndex = this.getSortedData.findIndex((poi) => poi.element.id === id);
+        newSelections = this.getSortedData.slice(startingIndex + 1, lastIndex + 1);
+      }
       this.popupTimeout = setTimeout(() => {
-        this.addOrRemoveClickElement(id);
+        if (newSelections.length > 0) {
+          this.addOrRemovePoisClick(newSelections);
+        } else {
+          this.addOrRemoveClickElement(id);
+        }
+        this.updateLastPoiClick(id);
       }, 300);
     },
     isAllowedToEdit() {
@@ -637,8 +657,16 @@ export default {
       this.columnDialog = true;
       this.menuState = undefined;
     },
-    ...mapActions('global', ['updateWait', 'updateOver', 'addOrRemoveClickElement']),
+    ...mapActions('global', ['updateWait', 'updateOver', 'addOrRemoveClickElement', 'updateLastPoiClick', 'addOrRemovePoisClick']),
     ...mapActions('biovers', ['updatePoiToDisplay', 'resetPoisModification', 'selectAllPois', 'unselectAllPois', 'copyPoi', 'addNewPoi', 'removePoi']),
+  },
+  mounted() {
+    addEventListener('keydown', this.press);
+    addEventListener('keyup', this.releaseKeybord);
+  },
+  unmounted() {
+    removeEventListener('keydown', this.press);
+    removeEventListener('keyup', this.releaseKeybord);
   },
 };
 </script>

@@ -19,7 +19,8 @@
       props.coordinate.forEach(element => {
           latlngs.push([element.lat, element.long]);
       });
-      polyline.value = L.polyline(latlngs, {color: 'red'}).addTo(currentMap.value);
+      const randomColor = Math.floor(Math.random()*16777215).toString(16);
+      polyline.value = L.polyline(latlngs, {color: `#${randomColor}`}).addTo(currentMap.value);
   })
 
   onUnmounted(() => {

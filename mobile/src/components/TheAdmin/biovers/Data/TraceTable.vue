@@ -105,6 +105,7 @@ export default {
       traceToDelete: undefined,
       leaveTimeout: undefined,
       popupTimeout: undefined,
+      majPress: false,
     }
   },
   computed: {
@@ -114,10 +115,18 @@ export default {
     allAreUnselected() {
       return this.getSortedData.filter((trace) => trace.display).length === 0;
     },
-    ...mapGetters('global', ['getCurrentTraceTabClick']),
+    ...mapGetters('global', ['getCurrentTraceTabClick', 'getcurrentLastTraceClick']),
     ...mapGetters('biovers', ['getTraceByBioversAndUser', 'getTraceColumnsPreference', 'ownOrPublic', 'bioverIsEditable', 'getCurrentBioverId']),
   },
   methods: {
+    press(event) {
+      if (event.key == 'Shift') {
+        this.majPress = true;
+      }
+    },
+    releaseKeybord() {
+      this.majPress = false;
+    },
     over(id) {
       clearTimeout(this.leaveTimeout);
       this.updateTraceOver(id);
@@ -129,10 +138,15 @@ export default {
     },
     openPopup(id) {
       clearTimeout(this.leaveTimeout);
-      this.popupTimeout = setTimeout(() => {
+      if (this.majPress) {
+        const startingIndex = this.getSortedData.findIndex((trace) => trace.element.id === this.getcurrentLastTraceClick);
+        const lastIndex = this.getSortedData.findIndex((trace) => trace.element.id === id);
+        const newSelections = this.getSortedData.slice(startingIndex + 1, lastIndex + 1);
+        this.addOrRemoveTracesClick(newSelections);
+      } else {
         this.addOrRemoveTraceClickElement(id);
-        this.updateLastTraceClick(id);
-      }, 300);
+      }
+      this.updateLastTraceClick(id);
     },
     dateFormatter(date) {
       return fullDateFormatter(date);
@@ -225,8 +239,16 @@ export default {
       this.removeTrace(trace.element);
       this.menuState = undefined;
     },
-    ...mapActions('global', ['updateTraceOver', 'addOrRemoveTraceClickElement', 'updateLastTraceClick']),
+    ...mapActions('global', ['updateTraceOver', 'addOrRemoveTraceClickElement', 'updateLastTraceClick', 'addOrRemoveTracesClick']),
     ...mapActions('biovers', ['selectAllTraces', 'unselectAllTraces', 'updateTraceToDisplay', 'removeTrace']),
+  },
+  mounted() {
+    addEventListener('keydown', this.press);
+    addEventListener('keyup', this.releaseKeybord);
+  },
+  unmounted() {
+    removeEventListener('keydown', this.press);
+    removeEventListener('keyup', this.releaseKeybord);
   },
 };
 </script>

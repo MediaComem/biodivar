@@ -113,9 +113,18 @@ export default {
       eventToDelete: undefined,
       leaveTimeout: undefined,
       popupTimeout: undefined,
+      majPress: false,
     }
   },
   methods: {
+    press(event) {
+      if (event.key == 'Shift') {
+        this.majPress = true;
+      }
+    },
+    releaseKeybord() {
+      this.majPress = false;
+    },
     over(id) {
       clearTimeout(this.leaveTimeout);
       this.updateEventOver(id);
@@ -127,9 +136,15 @@ export default {
     },
     openPopup(id) {
       clearTimeout(this.leaveTimeout);
-      this.popupTimeout = setTimeout(() => {
+      if (this.majPress) {
+        const startingIndex = this.getSortedData.findIndex((event) => event.element.id === this.getcurrentLastEventClick);
+        const lastIndex = this.getSortedData.findIndex((event) => event.element.id === id);
+        const newSelections = this.getSortedData.slice(startingIndex + 1, lastIndex + 1);
+        this.addOrRemoveEventsClick(newSelections);
+      } else {
         this.addOrRemoveEventClickElement(id);
-      }, 300);
+      }
+      this.updateLastEventClick(id);
     },
     dateFormatter(date) {
       return fullDateFormatter(date);
@@ -222,7 +237,7 @@ export default {
       this.removeEvent(event.element);
       this.menuState = undefined;
     },
-    ...mapActions('global', ['updateEventOver', 'addOrRemoveEventClickElement']),
+    ...mapActions('global', ['updateEventOver', 'addOrRemoveEventClickElement', 'addOrRemoveEventsClick', 'updateLastEventClick']),
     ...mapActions('biovers', ['selectAllEvents', 'unselectAllEvents', 'updateEventToDisplay', 'removeEvent']),
   },
   computed: {
@@ -232,8 +247,16 @@ export default {
     allAreUnselected() {
       return this.getSortedData.filter((event) => event.display).length === 0;
     },
-    ...mapGetters('global', ['getCurrentEventTabClick']),
+    ...mapGetters('global', ['getCurrentEventTabClick', 'getcurrentLastEventClick']),
     ...mapGetters('biovers', ['getEventByBioversAndUser', 'getEventColumnsPreference', 'ownOrPublic', 'bioverIsEditable', 'getCurrentBioverId']),
+  },
+  mounted() {
+    addEventListener('keydown', this.press);
+    addEventListener('keyup', this.releaseKeybord);
+  },
+  unmounted() {
+    removeEventListener('keydown', this.press);
+    removeEventListener('keyup', this.releaseKeybord);
   },
 };
 </script>
