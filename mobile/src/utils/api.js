@@ -1,4 +1,4 @@
-import {fetchJson, postJson, postJsonBinary} from './fetch.js';
+import {fetchContent, fetchJson, postJson, postJsonBinary} from './fetch.js';
 
 const API = import.meta.env.VITE_API_ROOT;
 
@@ -102,6 +102,10 @@ export function saveSymbol(symbol) {
 // Media part
 export function getMediaUrl(media) {
   return `${API}media/id?id=${media.id}`;
+}
+
+export function getContent(url) {
+  return fetchContent(url);
 }
 
 export function saveMedia(media) {

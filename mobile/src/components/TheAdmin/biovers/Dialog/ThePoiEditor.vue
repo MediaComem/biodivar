@@ -570,7 +570,7 @@ import CancelConfirmation from './CancelConfirmation.vue';
 import TheAframeEditor from '../../../TheAframe/TheAframeEditor.vue';
 import AframeMedia from '../../../TheAframe/AframeMedia.vue';
 
-import { savePoi, updatePoi, deletePoi, saveSymbol, saveMedia, getSymbolUrl, getIcon, getMediaUrl, getSymbolAudiUrl, saveEvent } from '../../../../utils/api.js';
+import { savePoi, updatePoi, deletePoi, saveSymbol, saveMedia, getSymbolUrl, getIcon, getMediaUrl, getContent, getSymbolAudiUrl, saveEvent } from '../../../../utils/api.js';
 
 
 export default {
@@ -726,7 +726,11 @@ export default {
         if (!this.form.symbol) {
           this.form.symbol = this.defaultForm.symbol;
         }
-        this.symbolFileAr.url = getSymbolUrl(this.form.symbol.id);
+        getContent(getSymbolUrl(this.form.symbol.id))
+            .then((stream) => new Response(stream))
+            .then((response) => response.blob())
+            .then((blob) => URL.createObjectURL(blob))
+            .then((url) =>  this.symbolFileAr.url = url);
         this.symbolFileAudio.url = getSymbolAudiUrl(this.form.symbol.id);
         this.symbolFile.url = getIcon(this.form.symbol);
         for (let i = 0; i < this.form.media.length; i++) {
@@ -735,8 +739,11 @@ export default {
             } else {
               this.form.media[i].metadata = JSON.parse(this.form.media[i].metadata);
             }
-            this.form.media[i].display_url = getMediaUrl(this.form.media[i]);
-            
+          getContent(getMediaUrl(this.form.media[i]))
+            .then((stream) => new Response(stream))
+            .then((response) => response.blob())
+            .then((blob) => URL.createObjectURL(blob))
+            .then((url) => this.form.media[i].display_url = url);
         }
         if (!this.form.metadata) {
           this.form.metadata = [];
