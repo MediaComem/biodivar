@@ -113,6 +113,7 @@
     if (resp?.statusCode === 200) {
       setupNotification(`Le biovers ${props.biover.name} a été dupliqué avec succès`, 'success')
       biovers.value.push(resp.data);
+      store.dispatch('biovers/addNewBiover', resp.data);
     } else {
       setupNotification(`Une erreur s'est produite durant la dupplication du biovers ${props.biover.name}`, 'error')
     }
