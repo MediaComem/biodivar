@@ -423,7 +423,7 @@
                 <p @mouseenter="tooltipElement = `add_photo_alternate_${index}`"  @mouseleave="tooltipElement = null"></p>
               </div></div>
             <div class="col4 border end-border">
-              <input type="file" name="file" class="input-margin" accept=".png, .jpg, .svg, .gltf, .glb, .mp3, m4a, .wav, .mp4, .m4v" @change="handleFileUploadMedia($event, index)" :disabled="element.text !== ''"/>
+              <input type="file" name="file" class="input-margin" accept=".png, .jpg, .svg, .gltf, .glb, .mp3, .m4a, .wav, .mp4, .m4v" @change="handleFileUploadMedia($event, index)" :disabled="element.text !== ''"/>
             </div>
             <div class="col4 border"  :class="{disabled: element.text == '' && element.media_type == '' }"><input :id="`is_visible_in_radius${index}`" type="checkbox" v-model="element.is_visible_in_radius" :disabled="element.text == '' && element.media_type == ''"><label :for="`is_visible_in_radius${index}`">visible uniquement dans le rayon</label>
             <p :ref="`is_visible_in_radius${index}`" class="material-symbols-sharp" @mouseenter="openTooltip($event,  `is_visible_in_radius${index}`)" @mouseleave="tooltipElement = null">help</p>
@@ -531,7 +531,7 @@
           </div>
       </Accordeon>
         </div>
-      
+
 
       <div class="full-button actions-button">
         <button class="full-button button-gray" @click="addMedia"><p class="material-symbols-sharp">add</p> Ajouter un média</button>
@@ -552,7 +552,7 @@
   </div>
   <DeleteConfirmation v-if="deleteDialog" :dialogVisible="deleteDialog" title="Êtes-vous sûr de vouloir supprimer ces point d'intérêts?" @closeDialog="deleteDialog = false" @validate="deletePoi()" />
   <CancelConfirmation v-if="cancelDialog" :dialogVisible="cancelDialog" title="Voulez-vous enregistrer les modifications?" @close="close()" @closeDialog="cancelDialog = false" @validate="isEdit ? updatePoi() : createPoi()" />
-  
+
 </template>
 
 <script>
@@ -944,7 +944,7 @@ export default {
                   this.form.media[i].url = path.data;
               }
             }
-        } 
+        }
       }
     },
     async createEvent(event, bioversId) {
