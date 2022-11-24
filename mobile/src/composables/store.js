@@ -91,7 +91,6 @@ const resetSelectedBiovers = () => {
 }
 
 watch(minDistance, (distance) => {
-  console.log(distance);
   storeMinDistance(distance);
 }, { deep: true } );
 

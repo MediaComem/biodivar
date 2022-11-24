@@ -17,9 +17,9 @@
   import '../aframe/event-set';
 
   import { getSymbolUrl, getSymbolAudiUrl, getMediaUrl, saveTrace, saveEvent } from '../../utils/api.js';
-  import { onMounted, onUnmounted } from '@vue/runtime-core';
+  import { onMounted, onUnmounted, watch } from '@vue/runtime-core';
 
-  const { selectedBiovers, section } = useStore();
+  const { selectedBiovers, section, minDistance } = useStore();
 
   function isImage(str) {
     return str === 'png' ||  str === 'jpg' ||  str === 'svg';
@@ -126,13 +126,12 @@
       data: 'biovers-close',
     });
   });
-
 </script>
 
 <template>
   <a-scene
     renderer="colorManagement: true"
-    gps-position="minAccuracy: 100; minDistance: 2; cam3DoF: false"
+    :gps-position="`minAccuracy: 100; minDistance: ${minDistance}; cam3DoF: false`"
     webxr="requiredFeatures: hit-test,local-floor,dom-overlay; overlayElement: [data-role='hud']; referenceSpaceType: local-floor"
     aar-hit-test="src: assets/ar-hit-test-marker.png"
     ahit-test-marker
