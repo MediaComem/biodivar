@@ -18,7 +18,7 @@
       {{ $t('TheLogin.title') }}
     </h1>
 
-    <base-radio>
+    <base-radio class="radio-layout">
       <button :class="{ 'active': page === 'connexion' }" @click="page = 'connexion'">
         {{ $t('TheLogin.button.connexion') }}
       </button>
@@ -64,5 +64,11 @@
     margin-top: 0.5rem;
     margin-left: 0.5rem;
     margin-right: 0.5rem;
+  }
+
+  .radio-layout {
+    --border-color: black;
+    --active-color: white;
+    --active-bg-color: black;
   }
 </style>

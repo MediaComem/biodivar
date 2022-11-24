@@ -4,7 +4,7 @@
   import { hubStore } from '../../composables/hubStore.js';
   import { clearHubTimeout, setHubTimeout } from './hub-utils.js';
 
-  const { section, selectedBiovers, minDistance } = useStore();
+  const { section, selectedBiovers, minDistance, arMode } = useStore();
   const { menuOpen, parameterOpen } = hubStore();
 
   function openMenu() {
@@ -33,6 +33,10 @@
     section.value = 'menu';
   }
 
+  function setArCore(mode) {
+    arMode.value = mode;
+  }
+
   onMounted(() => {
     menuOpen.value = false;
     parameterOpen.value = false;
@@ -54,11 +58,25 @@
   <div v-if="parameterOpen" class="menu-layout-parameter">
     <div class="menu-element" @click="closeParameter()" style="border-bottom: 1px solid #666666"><p class="material-symbols-sharp menu-icon">west</p><p>paramètres</p></div>
     <div class="menu-element-parameter">
+      <p class="material-symbols-sharp parameter-icon">view_in_ar</p>
+      <p class="parameter-title">ARCore mode</p>
+      <p class="parameter-description">hauteur caméra automatique ou par détection du sol</p>
+      <base-radio class="parameter-action">
+        <button :class="{ 'active': arMode === 'unbound' }" @click="setArCore('unbound')">
+          unbound
+        </button>
+        <button :class="{ 'active': arMode === 'local-floor' }" @click="setArCore('local-floor')">
+          local-floor
+        </button>
+      </base-radio>
+    </div>
+    <div class="menu-element-parameter">
       <p class="material-symbols-sharp parameter-icon">mode_of_travel</p>
       <p class="parameter-title">actualiser position</p>
-      <p class="paramter-description">actualiser votre position après cette distance parcourue</p>
+      <p class="parameter-description">actualiser votre position après cette distance parcourue</p>
       <p class="parameter-label">{{ minDistance }} m</p>
-      <input type="range" min="0.1" max="10" step="0.1" v-model="minDistance" class="parameter-slider"></div>  
+      <input type="range" min="0.1" max="10" step="0.1" v-model="minDistance" class="parameter-action">
+    </div>  
   </div>
 
 </template>
@@ -84,7 +102,7 @@ p {
 
 .menu-layout-parameter {
   width: calc(100vw - 1rem);
-  height: 220px;
+  height: 340px;
   background-color: #323232;
   border-radius: 20px;
   padding-left: 5px;
@@ -125,7 +143,7 @@ p {
   align-items: end;
 }
 
-.paramter-description {
+.parameter-description {
   grid-area: 2 / 2 / 3 / 3; 
   font-size: 14px; 
   display: flex; 
@@ -142,8 +160,12 @@ p {
   color: #BDBDBD
 }
 
-.parameter-slider {
+.parameter-action {
   grid-area: 3 / 2 / 4 / 3;
+  --border-color: white;
+  --bg-color: white;
+  --active-color: black;
+  --active-bg-color: white;
 }
 
 .icon-layout {

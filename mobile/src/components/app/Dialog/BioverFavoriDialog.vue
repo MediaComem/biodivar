@@ -38,6 +38,9 @@
     margin-left: 16px !important;
     margin-right: 16px !important;
     width: calc(100% - 32px) !important;
+    --border-color: black;
+    --active-color: white;
+    --active-bg-color: black;
   }
 
   .header-icon-layout {

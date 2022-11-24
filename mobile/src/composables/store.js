@@ -39,6 +39,8 @@ const registerValidated = ref(false);
 
 const minDistance = ref(getMinDistance());
 
+const arMode = ref('unbound');
+
 watch(favori, (val) => {
   storeFavori(favori.value);
 }, { deep: true } );
@@ -96,6 +98,6 @@ watch(minDistance, (distance) => {
 
 export function useStore() {
 
-  return { isAuth, section, biovers, username, showAggreement, forgotPassword, send, isMobileOrTablet, isIOS, selectedBiovers, pins, mapOpen, favori, hubDisplay, hubDisplayTimeout, registerValidated, minDistance, isInFavori, isInPins, getPinsBiovers, addPoiInBiovers, updatePoiInBiovers, resetSelectedBiovers };
+  return { isAuth, section, biovers, username, showAggreement, forgotPassword, send, isMobileOrTablet, isIOS, selectedBiovers, pins, mapOpen, favori, hubDisplay, hubDisplayTimeout, registerValidated, minDistance, arMode, isInFavori, isInPins, getPinsBiovers, addPoiInBiovers, updatePoiInBiovers, resetSelectedBiovers };
 
 }

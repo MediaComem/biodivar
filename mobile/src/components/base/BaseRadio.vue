@@ -14,7 +14,7 @@
     height: 40px;
     max-width: var(--max-width);
     margin-bottom: 2rem;
-    border: solid black 1px;
+    border: solid var(--border-color) 1px;
     margin: 0 auto 1rem auto;
     border-radius: 20px;
     display: flex;
@@ -42,8 +42,8 @@
     font-size: 14px;
     line-height: 14px;
     font-variation-settings: "wght" 149, "ital" 0;
-    background: black;
-    color: white;
+    background: var(--active-bg-color);
+    color: var(--active-color);
     letter-spacing: 0.02em;
   }
 </style>
