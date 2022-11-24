@@ -4,8 +4,10 @@
   import '../aframe/look-at-roll-yaw.js';
   import '../aframe/ring.js';
   import '../aframe/poi-animator.js';
+  import '../aframe/arrow-helper.js';
+  import '../aframe/camera-reset.js';
 
-  import { computed, watchEffect } from '@vue/runtime-core';
+  import { computed, onMounted, watchEffect } from '@vue/runtime-core';
 
   const props = defineProps([
     'showSymbol',
@@ -55,10 +57,6 @@
   const symbolCategory = computed(() => {
     return mapSymbolTypeToCateg.get(props.symbolType);
   });
-
-  watchEffect(() => {
-    // console.log(props.symbolType);
-  });
 </script>
 
 <template>
@@ -69,10 +67,15 @@
   >
 
     <a-assets>
-      <img v-if="symbolCategory === 'image'" id="symbol-image" :src="symbol">
+      <img v-if="symbolCategory === 'image'" id="symbol-image" :src="symbol" crossorigin="anonymous">
     </a-assets>
 
-    <a-sphere id="origin" radius="0.1" color="tomato"></a-sphere>
+    <a-entity
+      id="origin"
+      arrow-helper__x="color: #FF0000; direction: 1 0 0;"
+      arrow-helper__y="color: #00FF00; direction: 0 1 0;"
+      arrow-helper__z="color: #0000FF; direction: 0 0 1;"
+    ></a-entity>
 
     <a-plane
       wireframe="true"
@@ -167,8 +170,8 @@
       ></a-entity>
     </a-entity>
 
-    <a-entity id="camera-rig" position="0 1.6 5">
-      <a-entity id="head" camera look-controls="pointerLockEnabled: true" wasd-controls></a-entity>
+    <a-entity id="camera-rig">
+      <a-entity id="head"  position="0 1.6 5" camera look-controls="pointerLockEnabled: true" wasd-controls camera-reset></a-entity>
     </a-entity>
 
   </a-scene>

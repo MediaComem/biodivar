@@ -6,7 +6,7 @@
   import '../aframe/faces-north';
   import '../aframe/pitch-roll-look-controls';
   import '../aframe/look-at-roll-yaw';
-  import '../aframe/hit-test-marker';
+  // import '../aframe/hit-test-marker';
   import '../aframe/visible-from';
   import '../aframe/enter-ar-on-init';
   import '../aframe/poi-radius';
@@ -146,6 +146,7 @@
           v-if="isImage(poi.symbol.media_type_ar)"
           :id="`the-symbol-image-${poi.symbol.id}`"
           :src="getSymbolUrl(poi.symbol.id)"
+          crossorigin="anonymous"
         >
       </template>
     </a-assets>

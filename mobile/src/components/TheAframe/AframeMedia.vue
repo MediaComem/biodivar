@@ -36,16 +36,11 @@
   });
 
   const uid = Math.round(Math.random()*100000);
-
-  watchEffect(() => {
-    // todo: mp4, m4v
-    // console.log(props.showMedia);
-  });
 </script>
 
 <template>
   <a-assets>
-    <img v-if="mediaCategory === 'image'" :id="`the-image-${uid}`" :src="media">
+    <img v-if="mediaCategory === 'image'" :id="`the-image-${uid}`" :src="media" crossorigin="anonymous">
   </a-assets>
   <a-entity v-if="showMedia">
 
