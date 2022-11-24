@@ -48,6 +48,7 @@ import BioverPinDialog from '../../../app/Dialog/BioverPinDialog.vue';
 
 import { useStore } from '../../../../composables/store.js';
 import { updateBiovers } from '../../../../utils/api.js';
+import Biovers from '../../../../types/biovers.js';
 
 export default {
     components: { 
@@ -105,7 +106,7 @@ export default {
             this.pinDialog = false;
         },
         async save() {
-            const result = await updateBiovers(this.biovers.biover);
+            const result = await updateBiovers(new Biovers(this.biovers.biover.id, this.biovers.biover.name, this.biovers.biover.description, this.biovers.biover.location, this.biovers.biover.is_public, this.biovers.biover.is_editable));
             if (result.statusCode === 200) {
                 this.saveDone = true;
                 setTimeout(() => {

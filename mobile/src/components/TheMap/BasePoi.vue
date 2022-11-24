@@ -109,8 +109,8 @@
         {
           radius: poi.symbol.audio_distance,
           weight: 1,
-          color: `#009FE3`,
-          opacity: `0.3`,
+          color: `#0000ff`,
+          opacity: `0.5`,
           fill: false,
           dashArray: [5, 5],
       }).addTo(currentMap.value);
@@ -127,7 +127,7 @@
       marker.value = setupMarker(poi);
       circle.value = setupCircle(poi);
       scopeCircle.value = setupScopeCircle(poi);
-      audioScopeCircle.value = setupAudioScopeCircle(poi);
+      if (poi.symbol && poi.symbol.audio_distance && poi.symbol.audio_autoplay) audioScopeCircle.value = setupAudioScopeCircle(poi);
       marker.value.on('click', () => {
         addOrRemoveClickElement(props.poi.id);
         popup.value.openOn(currentMap.value);
@@ -187,7 +187,7 @@
       currentMap.value.removeLayer(marker.value);
       currentMap.value.removeLayer(circle.value);
       currentMap.value.removeLayer(scopeCircle.value);
-      currentMap.value.removeLayer(audioScopeCircle.value);
+      if (audioScopeCircle.value) currentMap.value.removeLayer(audioScopeCircle.value);
       currentMap.value.removeLayer(popup.value);
       removeClickPopup();
       setupPoi(newVal);
@@ -241,7 +241,7 @@
     currentMap.value.removeLayer(marker.value);
     currentMap.value.removeLayer(circle.value);
     currentMap.value.removeLayer(scopeCircle.value);
-    currentMap.value.removeLayer(audioScopeCircle.value);
+    if (audioScopeCircle.value) currentMap.value.removeLayer(audioScopeCircle.value);
     currentMap.value.removeLayer(popup.value);
   })
 </script>

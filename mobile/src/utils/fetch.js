@@ -1,3 +1,13 @@
+export async function fetchContent(url) {
+  let resp;
+  let data;
+  // silently return null if something wrong wit the fetch (timeout, cors, ...)
+  try {
+    resp = await fetch(url, {credentials: 'include',})
+  } catch (e) { return null }
+  return resp.body;
+}
+
 export async function fetchJson(url) {
   let resp;
   let data;

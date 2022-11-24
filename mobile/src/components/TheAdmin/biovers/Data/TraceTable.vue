@@ -49,7 +49,7 @@
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
         </tr>
-        <tr v-for="(trace, index) in getSortedData" :key="index">
+        <tr v-for="(trace, index) in getSortedData" :key="index" class="table-background" :class="{'table-hover': getCurrentTraceTabClick.includes(trace.element.id)}" @mouseover="over(trace.element.id)" @mouseleave="leave" @click="openPopup(trace.element.id)">
           <td class="first-column">
             <input type="checkbox" :checked="trace.display" @click="selectElement(trace)">
           </td>
@@ -103,6 +103,9 @@ export default {
       columnDialog: false,
       deleteDialog: false,
       traceToDelete: undefined,
+      leaveTimeout: undefined,
+      popupTimeout: undefined,
+      majPress: false,
     }
   },
   computed: {
@@ -112,9 +115,42 @@ export default {
     allAreUnselected() {
       return this.getSortedData.filter((trace) => trace.display).length === 0;
     },
+    ...mapGetters('global', ['getCurrentTraceTabClick', 'getcurrentLastTraceClick']),
     ...mapGetters('biovers', ['getTraceByBioversAndUser', 'getTraceColumnsPreference', 'ownOrPublic', 'bioverIsEditable', 'getCurrentBioverId']),
   },
   methods: {
+    press(event) {
+      if (event.key == 'Shift') {
+        this.majPress = true;
+      }
+    },
+    releaseKeybord() {
+      this.majPress = false;
+    },
+    over(id) {
+      clearTimeout(this.leaveTimeout);
+      this.updateTraceOver(id);
+    },
+    leave() {
+      this.leaveTimeout = setTimeout(() => {
+        this.updateTraceOver(0);
+      }, 300);
+    },
+    openPopup(id) {
+      clearTimeout(this.leaveTimeout);
+      if (this.majPress) {
+        const startingIndex = this.getSortedData.findIndex((trace) => trace.element.id === this.getcurrentLastTraceClick);
+        const lastIndex = this.getSortedData.findIndex((trace) => trace.element.id === id);
+        if (startingIndex < lastIndex) {
+          this.addOrRemoveTracesClick(this.getSortedData.slice(startingIndex + 1, lastIndex + 1));
+        } else {
+          this.addOrRemoveTracesClick(this.getSortedData.slice(lastIndex, startingIndex));
+        }
+      } else {
+        this.addOrRemoveTraceClickElement(id);
+      }
+      this.updateLastTraceClick(id);
+    },
     dateFormatter(date) {
       return fullDateFormatter(date);
     },
@@ -142,7 +178,7 @@ export default {
     selectElement(selectedTrace) {
       this.updateTraceToDisplay({
         bioverId: this.bioverId,
-        event: selectedTrace,
+        trace: selectedTrace,
       });
       this.globalCheckAnalizer();
     },
@@ -206,7 +242,16 @@ export default {
       this.removeTrace(trace.element);
       this.menuState = undefined;
     },
+    ...mapActions('global', ['updateTraceOver', 'addOrRemoveTraceClickElement', 'updateLastTraceClick', 'addOrRemoveTracesClick']),
     ...mapActions('biovers', ['selectAllTraces', 'unselectAllTraces', 'updateTraceToDisplay', 'removeTrace']),
+  },
+  mounted() {
+    addEventListener('keydown', this.press);
+    addEventListener('keyup', this.releaseKeybord);
+  },
+  unmounted() {
+    removeEventListener('keydown', this.press);
+    removeEventListener('keyup', this.releaseKeybord);
   },
 };
 </script>

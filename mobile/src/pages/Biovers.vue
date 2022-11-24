@@ -20,7 +20,7 @@
       <BioversItem :biover="biover" />
     </div>
     <div class="return"><a class="link" href="#home"> <p class="material-symbols-sharp icon-font icon-margin">arrow_back</p></a><p class="text font">BIOVERS</p></div>
-    <BioversLayout class="biover-layout-border" :biovers="biovers" />
+    <BioversLayout :biovers="biovers" />
   </div>
 </template>
 
@@ -67,9 +67,5 @@
   .text {
     margin: 0;
     padding-top: 5px;
-  }
-
-  .biover-layout-border {
-    --border-radius: 2rem;
   }
 </style>

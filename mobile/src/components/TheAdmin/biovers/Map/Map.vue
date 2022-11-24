@@ -30,9 +30,11 @@
   const getPaths = computed(() => store.getters['biovers/getPaths']);
   const getEvents = computed(() => store.getters['biovers/getEvents']);
   const getTraces = computed(() => store.getters['biovers/getTracesForDisplay']);
+  const getTraceById = computed(() => store.getters['biovers/getTraceById']);
   const ownOrPublic = computed(() => store.getters['biovers/ownOrPublic'])
   const bioverIsEditable = computed(() => store.getters['biovers/bioverIsEditable'])
   const getCurrentBioverId = computed(() => store.getters['biovers/getCurrentBioverId'])
+  const getcurrentLastTraceClick = computed(() => store.getters['global/getcurrentLastTraceClick'])
   const metersInPixel = ref(0);
 
   const clickPoi = ref(0);
@@ -169,6 +171,15 @@
         computeBoxingBox();
       }
     }, { deep: true });
+
+    watch(() => getcurrentLastTraceClick.value, (newVal) => {
+      if (newVal > 0) {
+        const trace = getTraceById.value(newVal);
+        if (trace != -1) {
+          mapAdmin.value.panTo([trace[0].element.coordinate.lat, trace[0].element.coordinate.long], {animate: true, duration: 1, easeLinearity: 0})
+        }
+      }
+    })
 
   onMounted(() => {
     window.addEventListener('poi-creator-control', poiCreatorController);

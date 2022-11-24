@@ -3,7 +3,7 @@ import { watch } from "@vue/runtime-core";
 
 import { storage } from './localStorage.js';
 
-const { storeFavori, getFavori, getPins, storePins } = storage();
+const { storeFavori, getFavori, getPins, storePins, getMinDistance, storeMinDistance } = storage();
 
 // global states
 const isAuth = ref(false);
@@ -37,7 +37,7 @@ const hubDisplayTimeout = ref(null);
 
 const registerValidated = ref(false);
 
-const minDistance = ref(2);
+const minDistance = ref(getMinDistance());
 
 watch(favori, (val) => {
   storeFavori(favori.value);
@@ -89,6 +89,11 @@ const updatePoiInBiovers = (newPoi) => {
 const resetSelectedBiovers = () => {
   selectedBiovers.value = null;
 }
+
+watch(minDistance, (distance) => {
+  console.log(distance);
+  storeMinDistance(distance);
+}, { deep: true } );
 
 export function useStore() {
 

@@ -57,7 +57,7 @@
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
         </tr>
-        <tr v-for="(event, index) in getSortedData" :key="index">
+        <tr v-for="(event, index) in getSortedData" :key="index" class="table-background" :class="{'table-hover': getCurrentEventTabClick.includes(event.element.id)}" @mouseover="over(event.element.id)" @mouseleave="leave" @click="openPopup(event.element.id)">
           <td class="first-column">
             <input type="checkbox" :checked="event.display" @click="selectElement(event)">
           </td>
@@ -111,9 +111,44 @@ export default {
       columnDialog: false,
       deleteDialog: false,
       eventToDelete: undefined,
+      leaveTimeout: undefined,
+      popupTimeout: undefined,
+      majPress: false,
     }
   },
   methods: {
+    press(event) {
+      if (event.key == 'Shift') {
+        this.majPress = true;
+      }
+    },
+    releaseKeybord() {
+      this.majPress = false;
+    },
+    over(id) {
+      clearTimeout(this.leaveTimeout);
+      this.updateEventOver(id);
+    },
+    leave() {
+      this.leaveTimeout = setTimeout(() => {
+        this.updateEventOver(0);
+      }, 300);
+    },
+    openPopup(id) {
+      clearTimeout(this.leaveTimeout);
+      if (this.majPress) {
+        const startingIndex = this.getSortedData.findIndex((event) => event.element.id === this.getcurrentLastEventClick);
+        const lastIndex = this.getSortedData.findIndex((event) => event.element.id === id);
+        if (startingIndex < lastIndex) {
+          this.addOrRemoveEventsClick(this.getSortedData.slice(startingIndex + 1, lastIndex + 1));
+        } else {
+          this.addOrRemoveEventsClick(this.getSortedData.slice(lastIndex, startingIndex));
+        }
+      } else {
+        this.addOrRemoveEventClickElement(id);
+      }
+      this.updateLastEventClick(id);
+    },
     dateFormatter(date) {
       return fullDateFormatter(date);
     },
@@ -205,6 +240,7 @@ export default {
       this.removeEvent(event.element);
       this.menuState = undefined;
     },
+    ...mapActions('global', ['updateEventOver', 'addOrRemoveEventClickElement', 'addOrRemoveEventsClick', 'updateLastEventClick']),
     ...mapActions('biovers', ['selectAllEvents', 'unselectAllEvents', 'updateEventToDisplay', 'removeEvent']),
   },
   computed: {
@@ -214,7 +250,16 @@ export default {
     allAreUnselected() {
       return this.getSortedData.filter((event) => event.display).length === 0;
     },
+    ...mapGetters('global', ['getCurrentEventTabClick', 'getcurrentLastEventClick']),
     ...mapGetters('biovers', ['getEventByBioversAndUser', 'getEventColumnsPreference', 'ownOrPublic', 'bioverIsEditable', 'getCurrentBioverId']),
+  },
+  mounted() {
+    addEventListener('keydown', this.press);
+    addEventListener('keyup', this.releaseKeybord);
+  },
+  unmounted() {
+    removeEventListener('keydown', this.press);
+    removeEventListener('keyup', this.releaseKeybord);
   },
 };
 </script>

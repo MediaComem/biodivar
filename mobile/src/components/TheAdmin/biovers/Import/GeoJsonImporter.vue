@@ -2,8 +2,6 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useStore } from 'vuex';
 
-import BioverCreator from '../Dialog/BioverCreator.vue';
-
 import { savePois, savePaths } from '../../../../utils/api.js';
 
 const store = useStore();
@@ -12,7 +10,6 @@ const currentBioversId = computed(() => store.state.biovers.currentBioversId);
 const uploadInProgress = computed(() => store.state.biovers.uploadInProgress);
 const uploadDone = computed(() => store.state.biovers.uploadDone);
 
-const bioversCreator = ref(false);
 const upload = ref(null);
 const couldPublish = ref(false);
 const saveDone = ref(false);
@@ -41,14 +38,6 @@ function updateImportPois(updatedPois) {
 
 function updateImportPaths(updatedPaths) {
   store.dispatch('biovers/updateImportPaths', updatedPaths);
-}
-
-function openBioversCreator() {
-  bioversCreator.value = true;
-}
-
-function closeBioversCreator() {
-  bioversCreator.value = false;
 }
 
 function createPathCoordinates(coordiantes) {
@@ -170,13 +159,9 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="action-layout">
-    <base-button class="button" @click="openBioversCreator">
-      <p class="material-symbols-sharp icon-margin icon-font">add_circle</p><p class="button-text">Créer un nouveau biovers</p>
-    </base-button>
-    <BioverCreator :showDialog="bioversCreator" @closeDialog="closeBioversCreator"/>      
-    <base-button :class="{button: couldPublish, disable: !couldPublish}" @click="save">
-      <p class="material-symbols-sharp icon-margin icon-font">publish</p><p class="button-text">Publier</p>
+  <div class="action-layout" :class="{'margin-layout': !couldPublish}">
+    <base-button v-if="couldPublish" class="button" @click="save">
+      <p class="material-symbols-sharp icon-margin icon-font">publish</p><p class="button-text">Enregistrer les modifications</p>
     </base-button>
     <template v-if="saveDone">
       <el-alert :title="$t('import.result')" type="success" />
@@ -190,19 +175,13 @@ onUnmounted(() => {
   flex-wrap: wrap;
 }
 
+.margin-layout {
+  margin-top: 1rem;
+}
+
 .button {
   --link-color: white;
   --highlight-color: #2F80ED;
-  width: auto !important;
-  margin: 1rem !important;
-  padding-left: 15px !important;
-  padding-right: 15px !important;
-}
-
-.disable {
-  --link-color: white;
-  --highlight-color: #2f81ed69;
-  width: auto !important;
   margin: 1rem !important;
   padding-left: 15px !important;
   padding-right: 15px !important;
