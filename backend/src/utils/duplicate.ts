@@ -13,12 +13,6 @@ export const preparePoisFromBioversDuplication = (biovers: Biovers, poi: PoiMode
     if (typeof poi.metadata == 'object') {
       poi.metadata = '';
     }
-    const symbol = poi.symbol;
-    if (symbol
-    && Object.keys(symbol).length === 0
-    && Object.getPrototypeOf(symbol) === Object.prototype) {
-      poi.symbol = undefined;
-    }
     const coordinate = poi.coordinate;
     if (coordinate
     && Object.keys(coordinate).length === 0
@@ -33,18 +27,6 @@ export const preparePoisFromBioversDuplication = (biovers: Biovers, poi: PoiMode
       delete poi.coordinate?.path_id;
       delete poi.coordinate?.user_trace_id; 
       delete poi.coordinate?.event_id; 
-    }
-
-    const position = poi.position;
-    if (position
-    && Object.keys(position).length === 0
-    && Object.getPrototypeOf(position) === Object.prototype) {
-      poi.position = undefined;
-    } else {
-      delete poi.position?.id;
-      delete poi.position?.media_id;
-      delete poi.position?.symbol_id;
-      delete poi.position?.poi_id;
     }
 
     return poi;

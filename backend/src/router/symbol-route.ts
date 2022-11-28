@@ -1,16 +1,10 @@
 import { ServerRoute } from '@hapi/hapi';
 
 import {
-  getSymbolAudioById,
-  getSymbolArById,
-  updateSymbol,
-  deleteSymbol,
   getSymbolById,
 } from '../controller/symbol-controller';
-import { SymbolModel } from '../types/symbol-model';
 
 import {
-  successWithoutContentResponse,
   successResponse,
   errorResponse,
 } from '../utils/response';
@@ -43,48 +37,6 @@ symbolRoutes.push({
 });
 
 symbolRoutes.push({
-  method: 'GET',
-  path: '/symbol_audio/id',
-  options: {
-    handler: async function (request, h) {
-      const symbol = await getSymbolAudioById(
-        request.server.app.prisma,
-        +request.query.id
-      );
-      if (symbol) {
-        return h.file(symbol);
-      } else {
-        return h.file(process.env.DEFAULT_AR_SYMBOL_PATH || '');
-      }
-    },
-    auth: {
-      mode: 'try',
-    },
-  },
-});
-
-symbolRoutes.push({
-  method: 'GET',
-  path: '/symbol_ar/id',
-  options: {
-    handler: async function (request, h) {
-      const symbol = await getSymbolArById(
-        request.server.app.prisma,
-        +request.query.id
-      );
-      if (symbol) {
-        return h.file(symbol);
-      } else {
-        return h.file(process.env.DEFAULT_AR_SYMBOL_PATH || '');
-      }
-    },
-    auth: {
-      mode: 'try',
-    },
-  },
-});
-
-symbolRoutes.push({
   method: 'POST',
   path: '/symbol/create',
   options: {
@@ -103,55 +55,6 @@ symbolRoutes.push({
       return successResponse(h, 'Symbol creation done successfully', path);
     } catch (error) {
       request.server.app.logger.error(error);
-      return errorResponse(h, error as string);
-    }
-  },
-});
-
-symbolRoutes.push({
-  method: 'POST',
-  path: '/symbol/update',
-  handler: async function (request, h) {
-    try {
-      const symbol = await updateSymbol(
-        request.server.app.prisma,
-        request.payload as SymbolModel,
-        request.server.app.logger
-      );
-      if (symbol) {
-        return successResponse(h, 'Symbol update done successfully', symbol);
-      } else {
-        return successWithoutContentResponse(
-          h,
-          'Symbol update done successfully'
-        );
-      }
-    } catch (error) {
-      request.server.app.logger.error(error);
-      return errorResponse(h, error as string);
-    }
-  },
-});
-
-symbolRoutes.push({
-  method: 'POST',
-  path: '/symbol/delete',
-  handler: async function (request, h) {
-    try {
-      const symbol = await deleteSymbol(
-        request.server.app.prisma,
-        request.payload as SymbolModel,
-        request.server.app.logger
-      );
-      if (symbol) {
-        return successResponse(h, 'Symbol deletion done successfully', symbol);
-      } else {
-        return successWithoutContentResponse(
-          h,
-          'Symbol deletion done successfully'
-        );
-      }
-    } catch (error) {
       return errorResponse(h, error as string);
     }
   },

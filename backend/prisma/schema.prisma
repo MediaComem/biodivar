@@ -49,9 +49,7 @@ model Biovers {
 model Poi {
   id                      Int         @id @default(autoincrement())
   title                   String?
-  title_is_visible        Boolean?    @default(false)
   subtitle                String?
-  subtitle_is_visible     Boolean?    @default(false)
   author                  Int
   creation_date           DateTime
   update_date             DateTime?
@@ -70,11 +68,12 @@ model Poi {
   fill_color              String      @default("#FFFFFF")
   fill_opacity            Int         @default(100)
   amplitude               Float       @default(0)
+  elevation               Float       @default(0)
   wireframe               Boolean     @default(false)
+  map_media_type          String?
+  map_url                 String?
   metadata                String?
-  position                Position?
   coordinate              Coordinate?
-  symbol                  Symbol?
   media                   Media[]
   biovers_fk              Biovers     @relation(fields: [biovers], references: [id])
   User                    User        @relation(name: "poi_author", fields: [author], references: [id])
@@ -121,33 +120,6 @@ model Coordinate {
   event                   Event?       @relation(fields: [event_id], references: [id])
 }
 
-model Symbol {
-  id                      Int          @id @default(autoincrement())
-  media_type              String
-  url                     String
-  media_type_ar           String?
-  ar_url                  String?
-  media_type_audio        String?
-  audio_url               String?
-  is_facing_user          Boolean     @default(true)
-  is_visible              Boolean     @default(true)  
-  is_visible_ar           Boolean     @default(true)
-  audio_autoplay          Boolean     @default(false)
-  audio_loop              Boolean     @default(false)
-  audio_distance          Float       @default(0)
-  autoplay                Boolean     @default(true)
-  loop                    Boolean     @default(true)
-  scale                   Float       @default(1)
-  wireframe               Boolean     @default(false)
-  amplitude               Float       @default(0)
-  creation_date           DateTime
-  update_date             DateTime?
-  deleted_date            DateTime?
-  poi_id                  Int?         @unique
-  poi                     Poi?         @relation(fields: [poi_id], references: [id])
-  position                Position?
-}
-
 model UserTrace {
   id                      Int          @id @default(autoincrement())
   creation_date           DateTime
@@ -163,22 +135,27 @@ model UserTrace {
 
 model Media {
   id                      Int          @id @default(autoincrement())
+  name                    String?      
   text                    String?
   url                     String?
   media_type              String?
   is_facing               Boolean     @default(true)
   is_visible_in_radius    Boolean     @default(true)
+  is_visible_out_radius   Boolean     @default(true)
   autoplay                Boolean     @default(true)
   loop                    Boolean     @default(false)
   scale                   Float       @default(1)
   amplitude               Float       @default(0)
+  distance                Float       @default(0)
+  rotation                Float       @default(0)
+  elevation               Float       @default(0)
+  orientation             Float       @default(0)
   metadata                String?
   creation_date           DateTime
   update_date             DateTime?
   deleted_date            DateTime?
   poi_id                  Int?
   poi                     Poi?         @relation(fields: [poi_id], references: [id])
-  position                Position?
 }
 
 model Event {
@@ -192,17 +169,4 @@ model Event {
   data                    String
   biovers_fk              Biovers     @relation(fields: [biovers], references: [id])
   User                    User        @relation(name: "event_author", fields: [author], references: [id])
-}
-
-model Position {
-  id                      Int         @id @default(autoincrement())  
-  distance                Float       @default(0)
-  rotation                Float       @default(0)
-  elevation               Float       @default(0)
-  media_id                Int?        @unique
-  media                   Media?      @relation(fields: [media_id], references: [id])  
-  symbol_id               Int?        @unique
-  symbol                  Symbol?     @relation(fields: [symbol_id], references: [id])
-  poi_id                  Int?        @unique
-  poi                     Poi?        @relation(fields: [poi_id], references: [id])
 }

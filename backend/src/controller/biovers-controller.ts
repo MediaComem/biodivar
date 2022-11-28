@@ -25,19 +25,10 @@ export const getBioversByUser = async (
           deleted_date: null,
         },
         include: {
-          position: true,
           coordinate: true,
-          symbol: {
-            include: {
-              position: true,
-            }
-          },
           media: {
             where: {
               deleted_date: null,
-            },
-            include: {
-              position: true,
             },
           },
           User: {
@@ -135,19 +126,10 @@ export const getBioversById = async (
             deleted_date: null,
           },
           include: {
-            position: true,
             coordinate: true,
-            symbol: {
-              include: {
-                position: true,
-              }
-            },
             media: {
               where: {
                 deleted_date: null,
-              },
-              include: {
-                position: true,
               },
             },
             User: {
@@ -242,19 +224,10 @@ export const getPublicBiovers = async (
             deleted_date: null,
           },
           include: {
-            position: true,
             coordinate: true,
-            symbol: {
-              include: {
-                position: true,
-              }
-            },
             media: {
               where: {
                 deleted_date: null,
-              },
-              include: {
-                position: true,
               },
             },
             User: {
@@ -351,19 +324,10 @@ export const createBiovers = async (
             deleted_date: null,
           },
           include: {
-            position: true,
             coordinate: true,
-            symbol: {
-              include: {
-                position: true,
-              }
-            },
             media: {
               where: {
                 deleted_date: null,
-              },
-              include: {
-                position: true,
               },
             },
             User: {
