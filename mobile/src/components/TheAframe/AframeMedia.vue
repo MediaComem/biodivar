@@ -3,7 +3,6 @@
   import '../aframe/look-at-roll-yaw.js';
 
   const props = defineProps([
-    'showMedia',
     'media',
     'mediaType',
     'mediaLoop',
@@ -42,7 +41,7 @@
   <a-assets>
     <img v-if="mediaCategory === 'image'" :id="`the-image-${uid}`" :src="media" crossorigin="anonymous">
   </a-assets>
-  <a-entity v-if="showMedia">
+  <a-entity>
 
     <!-- GLTF -->
     <a-entity

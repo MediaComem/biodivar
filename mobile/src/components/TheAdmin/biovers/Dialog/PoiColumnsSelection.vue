@@ -12,23 +12,9 @@
       <div class="line-div"><el-checkbox v-model="form.contributor" label="DERNIER CONTRIBUTEUR-TRICE" size="large" /></div>
       <div class="line-div"><el-checkbox v-model="form.scope" label="PORTEE" size="large" /></div>
       <div class="line-div"><el-checkbox v-model="form.trigger" label="DECLENCHEUR" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.ar_file_name" label="AR FILE NAME" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.ar_visibility" label="VISIBILITE AR" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.ar_is_facing" label="FACE A LA CAMERA" size="large" /></div>
       <div class="line-div"><el-checkbox v-model="form.symbol_wireframe" label="WIREFRAME DU SYMBOLE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.autoplay" label="LECTURE AUTOMATIQUE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.loop" label="LECTURE EN BOUCLER" size="large" /></div>
       <div class="line-div"><el-checkbox v-model="form.scale" label="ECHELLE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.symbol_position" label="POSITION DU SYMBOL" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.symbol_animation" label="ANIMATION" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.audio_file" label="AUDIO FILE NAME" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.audio_autoplay" label="AUDIO LECTURE AUTOMATIQUE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.audio_loop" label="AUDIO LECTURE EN BOUCLER" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.audio_scope" label="PORTEE DE L'AUDIO" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.icon_file" label="ICON FILE NAME" size="large" /></div>
       <div class="line-div"><el-checkbox v-model="form.is_visible" label="IS VISIBLE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.symbol_created_date" label="SYMBOL CREATION DATE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.symbol_updated_date" label="SYMBOL MODITION DATE" size="large" /></div>
       <div class="line-div"><el-checkbox v-model="form.style_type" label="TYPE DE FORME" size="large" /></div>
       <div class="line-div"><el-checkbox v-model="form.extrusion" label="EXTRUSION" size="large" /></div>
       <div class="line-div"><el-checkbox v-model="form.radius" label="RAYON" size="large" /></div>

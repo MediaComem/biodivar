@@ -64,19 +64,19 @@
         <p class="material-symbols-sharp icon-button-margin icon-font">add_circle</p><p class="button-text">Créer un nouveau biovers</p>
       </base-button>
       <hr>
-      <Accordeon class="own" :header="`mes biovers (${own.length})`" :length="own.length" :should-be-open="ownOpen" :image="'architecture'">
+      <Accordeon class="own margin-accordeon" :header="`mes biovers (${own.length})`" :could-update-header="false" :length="own.length" :should-be-open="ownOpen" :image="'architecture'">
           <div v-for="(item, index) in own" :key="index" class="margin">
               <BioversItem :biover="item"/>
           </div>
       </Accordeon>
       <hr>
-      <Accordeon class="favori" :header="`favoris (${favoriBiovers.length})`" :length="favoriBiovers.length" :should-be-open="favoriOpen" :image="'star'">
+      <Accordeon class="favori margin-accordeon" :header="`favoris (${favoriBiovers.length})`" :could-update-header="false" :length="favoriBiovers.length" :should-be-open="favoriOpen" :image="'star'">
           <div v-for="(item, index) in favoriBiovers" :key="index" class="margin">
               <BioversItem :biover="item"/>
           </div>
       </Accordeon>
       <hr>
-      <Accordeon class="public" :header="`publiques (${publicBiovers.length})`" :length="publicBiovers.length" :should-be-open="publicOpen" :image="'remove_red_eye'">
+      <Accordeon class="public margin-accordeon" :header="`publiques (${publicBiovers.length})`" :could-update-header="false" :length="publicBiovers.length" :should-be-open="publicOpen" :image="'remove_red_eye'">
           <div v-for="(item, index) in publicBiovers" :key="index" class="margin">
               <BioversItem :biover="item"/>
           </div>
@@ -145,5 +145,9 @@
     margin-bottom: 0px;
     padding-bottom: 1.5px;
     font-variation-settings: "wght" 149, "ital" 0;
+  }
+
+  .margin-accordeon {
+    --left-margin: 1rem;
   }
 </style>

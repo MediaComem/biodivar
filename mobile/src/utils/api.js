@@ -88,9 +88,9 @@ export function getSymbolAudiUrl(id) {
   return API + 'symbol_audio/id?id=' + id;
 }
 
-export function getIcon(symbol) {
-  if (symbol && symbol.id) {
-    return `${API}symbol/id?id=${symbol.id}`;
+export function getIcon(id) {
+  if (id) {
+    return `${API}symbol/id?id=${id}`;
   }
   return `${API}symbol/id?id=0`;
 }

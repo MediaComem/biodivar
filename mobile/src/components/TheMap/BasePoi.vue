@@ -51,19 +51,15 @@
     return poi.style_stroke_width / props.meter 
   };
 
-  function getOffsetPosition(poi) {
-    return [-((Math.cos(toRadians(poi.position.rotation)) * poi.position.distance) / props.meter), ((Math.sin(toRadians(poi.position.rotation)) * poi.position.distance) / props.meter)];
-  }
-
   function toRadians (angle) {
     return angle * (Math.PI / 180);
   }
 
   function setupIcon(poi) {
     return L.icon({
-      iconUrl: getIcon(poi.symbol),
+      iconUrl: getIcon(poi.id),
       iconSize: [50,50],
-      iconAnchor: [25 + ((Math.cos(toRadians(poi.position.rotation)) * poi.position.distance) / props.meter), 25 - ((Math.sin(toRadians(poi.position.rotation)) * poi.position.distance) / props.meter)],
+      iconAnchor: [25,25],
     });
   }
 
@@ -102,20 +98,6 @@
       }).addTo(currentMap.value);
   }
 
-  function setupAudioScopeCircle(poi) {
-    return L.circle([
-        props.poi.coordinate.lat,
-        props.poi.coordinate.long], 
-        {
-          radius: poi.symbol.audio_distance,
-          weight: 1,
-          color: `#0000ff`,
-          opacity: `0.5`,
-          fill: false,
-          dashArray: [5, 5],
-      }).addTo(currentMap.value);
-  }
-
   function setPopupEdition(button) {
     if (props.editable) {
       L.DomEvent.addListener(button, 'click', openEdition, this);
@@ -127,7 +109,6 @@
       marker.value = setupMarker(poi);
       circle.value = setupCircle(poi);
       scopeCircle.value = setupScopeCircle(poi);
-      if (poi.symbol && poi.symbol.audio_distance && poi.symbol.audio_autoplay) audioScopeCircle.value = setupAudioScopeCircle(poi);
       marker.value.on('click', () => {
         addOrRemoveClickElement(props.poi.id);
         popup.value.openOn(currentMap.value);
@@ -178,7 +159,7 @@
         }, 200)
       }, this);
 
-      popup.value = L.popup({closeButton: false, autoClose: false, autoPan: false, offset: getOffsetPosition(props.poi)});
+      popup.value = L.popup({closeButton: false, autoClose: false, autoPan: false});
       popup.value.setLatLng([props.poi.coordinate.lat,props.poi.coordinate.long]);
       popup.value.setContent(content);
   }
@@ -196,7 +177,6 @@
   watch(() => props.meter, () => {
     circle.value.setStyle({weight: getWeight(props.poi)});
     marker.value.setIcon(setupIcon(props.poi));
-    popup.value.options.offset = getOffsetPosition(props.poi);
     popup.value.update();
   });
 

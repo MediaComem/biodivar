@@ -6,7 +6,6 @@ export function deepClone(data){
     } else if(type === 'object'){
         obj = {};
     } else {
-        //No more next level
         return data;
     }
     if(type === 'array'){

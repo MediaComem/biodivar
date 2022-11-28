@@ -140,17 +140,6 @@
     enter-ar-on-init
   >
 
-    <a-assets>
-      <template v-for="poi of selectedBiovers.Poi">
-        <img
-          v-if="isImage(poi.symbol.media_type_ar)"
-          :id="`the-symbol-image-${poi.symbol.id}`"
-          :src="getSymbolUrl(poi.symbol.id)"
-          crossorigin="anonymous"
-        >
-      </template>
-    </a-assets>
-
     <a-entity faces-north>
       <template v-for="poi of selectedBiovers.Poi" :key="`poi-${poi.id}`">
         <a-entity
@@ -163,74 +152,8 @@
           event-set__gpsoff="event: gps-pos-off; attribute: gps-position.enable; value: false"
         >
 
-          <!-- POI Symbol -->
-          <a-entity
-            v-if="poi.symbol.media_type_ar"
-            :rotation="`0 ${poi.symbol.position.rotation} 0`"
-            :poi-animator="`amplitude: ${poi.symbol.amplitude}`"
-            :listen-to__enter="`target: #poi-radius-${poi.id}; event: radius-enter; emit: radius-enter`"
-            :listen-to__exit="`target: #poi-radius-${poi.id}; event: radius-exit; emit: radius-exit`"
-            event-set__enter="event: radius-enter; attribute: visible; value: false"
-            event-set__exit="event: radius-exit; attribute: visible; value: true"
-          >
-            <!-- gltf or glb symbol -->
-            <a-entity
-              v-if="isGltf(poi.symbol.media_type_ar)"
-              animation-mixer
-              :gltf-model="`url(${getSymbolUrl(poi.symbol.id)})`"
-              :scale="`${poi.symbol.scale} ${poi.symbol.scale} ${poi.symbol.scale}`"
-              :position="`${poi.symbol.position.distance} ${poi.symbol.position.elevation} 0`"
-              :look-at-roll-yaw="`enabled: ${poi.symbol.is_facing_user ? 'true' : 'false'}`"
-            ></a-entity>
-            <!-- image symbol -->
-            <a-image
-              v-if="isImage(poi.symbol.media_type_ar)"
-              :src="`#the-symbol-image-${poi.symbol.id}`"
-              :scale="`${poi.symbol.scale} ${poi.symbol.scale} ${poi.symbol.scale}`"
-              :position="`${poi.symbol.position.distance} ${poi.symbol.position.elevation} 0`"
-              :look-at-roll-yaw="`enabled: ${poi.symbol.is_facing_user ? 'true' : 'false'}`"
-              material="transparent:true; opacity: 1; alphaTest: .1;"
-            ></a-image>
-          </a-entity>
-
-          <!-- POI audio -->
-          <a-entity
-            v-if="isAudio(poi.symbol.media_type_audio)"
-            :rotation="`0 ${poi.symbol.position.rotation} 0`"
-          >
-            <a-entity
-              v-if="poi.symbol.audio_autoplay"
-              :position="`${poi.symbol.position.distance} ${poi.symbol.position.elevation} 0`"
-              :sound="`
-                src: url(${getSymbolAudiUrl(poi.symbol.id)});
-                loop: ${poi.symbol.audio_loop ? 'true' : 'false'};
-                distanceModel: linear;
-                maxDistance: ${poi.symbol.audio_distance};
-              `"
-              sound-play-stop="eventPlay: play-sound; eventStop: stop-sound;"
-              :emit-when-near="`
-                distance: ${poi.symbol.audio_distance};
-                event: play-sound;
-                eventFar: stop-sound;
-              `"
-            ></a-entity>
-            <a-entity
-              v-else
-              :position="`${poi.symbol.position.distance} ${poi.symbol.position.elevation} 0`"
-              :sound="`
-                src: url(${getSymbolAudiUrl(poi.symbol.id)});
-                loop: ${poi.symbol.audio_loop ? 'true' : 'false'};
-                positional: false;
-              `"
-              sound-play-stop="eventPlay: play-sound; eventStop: stop-sound;"
-              :listen-to__enter="`target: #poi-radius-${poi.id}; event: radius-enter; emit: play-sound`"
-              :listen-to__exit="`target: #poi-radius-${poi.id}; event: radius-exit; emit: stop-sound`"
-            ></a-entity>
-
-          </a-entity>
-
           <!-- POI Radius -->
-          <a-entity :rotation="`0 ${poi.position.rotation} 0`">
+          <a-entity :rotation="`0 0 0`">
             <a-entity
               :id="`poi-radius-${poi.id}`"
               :emit-when-near="`
@@ -255,7 +178,7 @@
                 scale: true;
                 scaleAll: ${poi.style_type == 'circle' ? 'false' : 'true'};
               `"
-              :position="`${poi.position.distance} ${poi.position.elevation} 0`"
+              :position="`0 ${poi.position.elevation} 0`"
             ></a-entity>
           </a-entity>
 
@@ -271,13 +194,13 @@
               <!-- Gltf media -->
               <a-entity
                 v-if="isGltf(m.media_type)"
-                :rotation="`0 ${m.position.rotation} 0`"
+                :rotation="`0 ${m.rotation} 0`"
               >
                 <a-entity
                   :gltf-model="`url(${getMediaUrl(m)})`"
                   animation-mixer
                   :scale="`${m.scale} ${m.scale} ${m.scale}`"
-                  :position="`${m.position.distance} ${m.position.elevation} 0`"
+                  :position="`${m.distance} ${m.elevation} 0`"
                   :look-at-roll-yaw="`enabled: ${m.is_facing ? 'true' : 'false'}`"
                 ></a-entity>
               </a-entity>
@@ -285,12 +208,12 @@
               <!-- Image media -->
               <a-entity
                 v-if="isImage(m.media_type)"
-                :rotation="`0 ${m.position.rotation} 0`"
+                :rotation="`0 ${m.rotation} 0`"
               >
                 <a-image
                   :src="`url(${getMediaUrl(m)})`"
                   :scale="`${m.scale} ${m.scale} ${m.scale}`"
-                  :position="`${m.position.distance} ${m.position.elevation} 0`"
+                  :position="`${m.distance} ${m.elevation} 0`"
                   :look-at-roll-yaw="`enabled: ${m.is_facing ? 'true' : 'false'}`"
                   material="transparent:true; opacity: 1; alphaTest: .1;"
                 ></a-image>
@@ -299,11 +222,11 @@
               <!-- Text media -->
               <a-entity
                 v-if="m.text"
-                :rotation="`0 ${m.position.rotation} 0`"
+                :rotation="`0 ${m.rotation} 0`"
               >
                 <a-text
                   :scale="`${m.scale} ${m.scale} ${m.scale}`"
-                  :position="`${m.position.distance} ${m.position.elevation} 0`"
+                  :position="`${m.distance} ${m.elevation} 0`"
                   :look-at-roll-yaw="`enabled: ${m.is_facing ? 'true' : 'false'}`"
                   align="center"
                   :value="m.text"
@@ -318,23 +241,23 @@
               <!-- Audio media -->
               <a-entity
                 v-if="isAudio(m.media_type)"
-                :rotation="`0 ${m.position.rotation} 0`"
+                :rotation="`0 ${m.rotation} 0`"
               >
                 <a-entity
-                  :position="`${m.position.distance} ${m.position.elevation} 0`"
+                  :position="`${m.distance} ${m.elevation} 0`"
                   :sound="`
                     src: url(${getMediaUrl(m)});
                     loop: ${m.loop ? 'true' : 'false'};
                     volume: ${m.scale};
                     ${m.autoplay ? 'distanceModel: linear;' : 'positional: false;'}
                     ${m.autoplay && m.is_visible_in_radius ? 'maxDistance: ' +  poi.radius : ''}
-                    ${m.autoplay && !m.is_visible_in_radius ? 'maxDistance: ' +  poi.symbol.audio_distance : ''}
+                    ${m.autoplay && !m.is_visible_in_radius ? 'maxDistance: ' +  poi.scope : ''}
                   `"
                   sound-play-stop="eventPlay: play-sound; eventStop: stop-sound;"
                   :listen-to__enter="m.is_visible_in_radius ? `target: #poi-radius-${poi.id}; event: radius-enter; emit: play-sound` : null"
                   :listen-to__exit="m.is_visible_in_radius ? `target: #poi-radius-${poi.id}; event: radius-exit; emit: stop-sound` : null"
                   :emit-when-near="m.is_visible_in_radius ? null : `
-                    distance: ${poi.symbol.audio_distance};
+                    distance: ${poi.scope};
                     event: play-sound;
                     eventFar: stop-sound;
                   `"

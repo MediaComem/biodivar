@@ -93,8 +93,8 @@
             <p>{{ username }}</p>
           </div>
           <ul v-if="menu">
-            <li class="menu-item-divider font"><p class="material-symbols-sharp icon-margin icon-font fill-font">edit</p>{{ $t('Header.Modify') }}</li>
-            <li @click="disconnect()" class="font"><p class="material-symbols-sharp icon-margin icon-font">logout</p>{{ $t('Header.Logout') }}</li>
+            <li class="menu-item-divider font up-radius"><p class="material-symbols-sharp icon-margin icon-font fill-font">edit</p>{{ $t('Header.Modify') }}</li>
+            <li @click="disconnect()" class="font down-radius"><p class="material-symbols-sharp icon-margin icon-font">logout</p>{{ $t('Header.Logout') }}</li>
           </ul>
           <div v-if="menu" class="dialog-overlay" @click="closeDialog()"/>
         </div>
@@ -137,6 +137,16 @@
     width: 232px;
     border-radius: 0.5rem;
     z-index: 1000;
+  }
+
+  .up-radius {
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+  }
+
+  .down-radius {
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
   }
 
   li {

@@ -75,121 +75,6 @@
               <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'trigger_mode' && !orderElement}" @click="setSort('trigger_mode')">arrow_drop_down</p>
             </div>
           </th>
-          <th v-if="getPoiColumnsPreference.ar_file_name" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">location_on</p>
-              <p class="no-margin">AR FILE NAME</p>
-            </div>
-          </th>
-           <th v-if="getPoiColumnsPreference.ar_visibility" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">visibility</p>
-              <p class="no-margin">VISIBILITE AR</p>
-              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'is_visible_ar' && !orderElement}" @click="setSort('is_visible_ar', true)">arrow_drop_down</p>
-            </div>
-          </th>
-          <th v-if="getPoiColumnsPreference.ar_is_facing" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">camera_front</p>
-              <p class="no-margin">FACE A LA CAMERA</p>
-              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'is_facing_user' && !orderElement}" @click="setSort('is_facing_user', true)">arrow_drop_down</p>
-            </div>
-          </th>
-          <th v-if="getPoiColumnsPreference.symbol_wireframe" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">grid_4x4</p>
-              <p class="no-margin">WIREFRAME DU SYMBOLE</p>
-              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'wireframe' && !orderElement}" @click="setSort('wireframe', true)">arrow_drop_down</p>
-            </div>
-          </th>
-          <th v-if="getPoiColumnsPreference.autoplay" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">replay</p>
-              <p class="no-margin">LECTURE AUTOMATIQUE</p>
-              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'autoplay' && !orderElement}" @click="setSort('autoplay', true)">arrow_drop_down</p>
-            </div>
-          </th>
-          <th v-if="getPoiColumnsPreference.loop" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">replay</p>
-              <p class="no-margin">LECTURE EN BOUCLER</p>
-              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'loop' && !orderElement}" @click="setSort('loop', true)">arrow_drop_down</p>
-            </div>
-          </th>
-          <th v-if="getPoiColumnsPreference.scale" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">photo_size_select_small</p>
-              <p class="no-margin">ECHELLE</p>
-              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'scale' && !orderElement}" @click="setSort('scale', true)">arrow_drop_down</p>
-            </div>
-          </th>
-          <th v-if="getPoiColumnsPreference.symbol_position" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">merge</p>
-              <p class="no-margin">POSITION DU SYMBOL</p>
-            </div>
-          </th>
-          <th v-if="getPoiColumnsPreference.symbol_animation" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">animation</p>
-              <p class="no-margin">ANIMATION</p>
-              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'amplitude' && !orderElement}" @click="setSort('amplitude', true)">arrow_drop_down</p>
-            </div>
-          </th>
-          <th v-if="getPoiColumnsPreference.audio_file" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">music_note</p>
-              <p class="no-margin">AUDIO FILE NAME</p>
-            </div>
-          </th>
-          <th v-if="getPoiColumnsPreference.audio_autoplay" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">replay</p>
-              <p class="no-margin">AUDIO LECTURE AUTOMATIQUE</p>
-              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'audio_autoplay' && !orderElement}" @click="setSort('audio_autoplay', true)">arrow_drop_down</p>
-            </div>
-          </th>
-          <th v-if="getPoiColumnsPreference.audio_loop" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">replay</p>
-              <p class="no-margin">AUDIO LECTURE EN BOUCLER</p>
-              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'audio_loop' && !orderElement}" @click="setSort('audio_loop', true)">arrow_drop_down</p>
-            </div>
-          </th>
-          <th v-if="getPoiColumnsPreference.audio_scope" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">visibility</p>
-              <p class="no-margin">PORTEE DE L'AUDIO</p>
-              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'audio_distance' && !orderElement}" @click="setSort('audio_distance', true)">arrow_drop_down</p>
-            </div>
-          </th>
-          <th v-if="getPoiColumnsPreference.icon_file" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">map</p>
-              <p class="no-margin">ICON FILE NAME</p>
-            </div>
-          </th>
-          <th v-if="getPoiColumnsPreference.is_visible" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">visibility</p>
-              <p class="no-margin">IS VISIBLE</p>
-              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'is_visible' && !orderElement}" @click="setSort('is_visible', true)">arrow_drop_down</p>
-            </div>
-          </th>
-          <th v-if="getPoiColumnsPreference.symbol_created_date" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">date_range</p>
-              <p class="no-margin">SYMBOL CREATION DATE</p>
-              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'creation_date' && !orderElement}" @click="setSort('creation_date', true)">arrow_drop_down</p>
-            </div>
-          </th>
-          <th v-if="getPoiColumnsPreference.symbol_updated_date" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">edit</p>
-              <p class="no-margin">SYMBOL MODITION DATE</p>
-              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'update_date' && !orderElement}" @click="setSort('update_date', true)">arrow_drop_down</p>
-            </div>
-          </th>
           <th v-if="getPoiColumnsPreference.style_type" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">circle</p>
@@ -299,23 +184,6 @@
           <td v-if="getPoiColumnsPreference.contributor" class="column">{{ userFormatter(poi.element.last_contributor_fk) }}</td>
           <td v-if="getPoiColumnsPreference.scope" class="column end-align">{{ poi.element.scope }} M</td>
           <td v-if="getPoiColumnsPreference.trigger" class="column">{{ poi.element.trigger_mode }}</td>
-          <td v-if="getPoiColumnsPreference.ar_file_name" class="column">{{ getARFileName(poi.element.symbol) }}</td>
-          <td v-if="getPoiColumnsPreference.ar_visibility" class="column">{{ poi.element.symbol ? poi.element.symbol.is_visible_ar : undefined }}</td>
-          <td v-if="getPoiColumnsPreference.ar_is_facing" class="column">{{ poi.element.symbol ? poi.element.symbol.is_facing_user : undefined }}</td>
-          <td v-if="getPoiColumnsPreference.symbol_wireframe" class="column">{{ poi.element.symbol ? poi.element.symbol.wireframe : undefined }}</td>
-          <td v-if="getPoiColumnsPreference.autoplay" class="column">{{ poi.element.symbol ? poi.element.symbol.autoplay : undefined }}</td>
-          <td v-if="getPoiColumnsPreference.loop" class="column">{{ poi.element.symbol ? poi.element.symbol.loop : undefined }}</td>
-          <td v-if="getPoiColumnsPreference.scale" class="column">{{ poi.element.symbol ? poi.element.symbol.scale : undefined }}</td>
-          <td v-if="getPoiColumnsPreference.symbol_position" class="column">{{ positionFormatter(poi.element.symbol) }}</td>
-          <td v-if="getPoiColumnsPreference.symbol_animation" class="column">{{ poi.element.symbol? poi.element.symbol.amplitude : undefined }}</td>
-          <td v-if="getPoiColumnsPreference.audio_file" class="column">{{ getAudioFileName(poi.element.symbol)  }}</td>
-          <td v-if="getPoiColumnsPreference.audio_autoplay" class="column">{{ poi.element.symbol ? poi.element.symbol.audio_autoplay  : undefined}}</td>
-          <td v-if="getPoiColumnsPreference.audio_loop" class="column">{{ poi.element.symbol ? poi.element.symbol.audio_loop : undefined }}</td>
-          <td v-if="getPoiColumnsPreference.audio_scope" class="column">{{ poi.element.symbol ? poi.element.symbol.audio_distance :undefined }}</td>
-          <td v-if="getPoiColumnsPreference.icon_file" class="column">{{ getIconFileName(poi.element.symbol) }}</td>
-          <td v-if="getPoiColumnsPreference.is_visible" class="column">{{ poi.element.symbol ? poi.element.symbol.is_visible : undefined }}</td>
-          <td v-if="getPoiColumnsPreference.symbol_created_date" class="column">{{ poi.element.symbol ? dateFormatter(poi.element.symbol.creation_date) : ''}}</td>
-          <td v-if="getPoiColumnsPreference.symbol_updated_date" class="column">{{ poi.element.symbol && poi.element.symbol.update_date ? dateFormatter(poi.element.symbol.update_date) : ''}}</td>
           <td v-if="getPoiColumnsPreference.style_type" class="column">{{ poi.element.style_type }}</td>
           <td v-if="getPoiColumnsPreference.extrusion" class="column">{{ poi.element.extrusion }}</td>
           <td v-if="getPoiColumnsPreference.radius" class="column end-align">{{ poi.element.radius }}M</td>
@@ -473,8 +341,8 @@ export default {
     userFormatter(user) {
       return user && user.username ? user.username : '';
     },
-    positionFormatter(symbol) {
-      return symbol && symbol.position ? `{ distance: ${symbol.position.distance}, rotation: ${symbol.position.rotation}, elevation: ${symbol.position.elevation}}` : '';
+    positionFormatter(position) {
+      return position && position.position ? `{ distance: ${position.position.distance}, rotation: ${position.position.rotation}, elevation: ${position.position.elevation}}` : '';
     },
     globalCheckAnalizer() {
       if (this.allAreUnselected) {
@@ -482,24 +350,6 @@ export default {
       } else {
         this.globalChecked = true;
       }
-    },
-    getARFileName(symbol) {
-      if (symbol && symbol.ar_url) {
-        return symbol.ar_url.replace(/^.*[\\\/]/, '');
-      }
-      return 'symbole-ar-defaut.glb';
-    },
-    getIconFileName(symbol) {
-      if (symbol && symbol.url) {
-        return symbol.url.replace(/^.*[\\\/]/, '');
-      }
-      return 'symbole-carte-defaut.png';
-    },
-    getAudioFileName(symbol) {
-      if (symbol && symbol.audio_url) {
-        return symbol.audio_url.replace(/^.*[\\\/]/, '');
-      }
-      return 'symbole-audio-defaut.mp3';
     },
     setSort(value, isSymbol = false) {
       this.isSymbol = isSymbol;
@@ -557,16 +407,6 @@ export default {
       if (poi.coordinate) {
         delete poi.coordinate.id;
         delete poi.coordinate.poi_id;
-      }
-      if (poi.symbol) {
-        delete poi.symbol.id;
-        delete poi.symbol.poi_id;
-        if (poi.symbol.position == null) {
-          poi.symbol.position = undefined;
-        } else {
-          delete poi.symbol.position.id;
-          delete poi.symbol.position.poi_id;
-        }
       }
       if (poi.media && poi.media.length > 0) {
         for (let i = 0; i < poi.media.length; i++) {

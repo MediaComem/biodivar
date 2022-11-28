@@ -53,9 +53,7 @@ function createPathCoordinates(coordiantes) {
 function createPoi(poi) {
   return {
     title: poi.properties.title,
-    title_is_visible: true,
     subtitle: '',
-    subtitle_is_visible: false,
     coordinate: {
       long: poi.geometry.coordinates[0],
       lat: poi.geometry.coordinates[1],
@@ -81,6 +79,8 @@ function createPoi(poi) {
     wireframe: false,
     scope: 50,
     trigger_mode: 'location',
+    map_url: '',
+    map_media_type: '',
   };
 }
 

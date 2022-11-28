@@ -284,7 +284,7 @@ export const bioversStore = {
           state.pois[index].pois[i].element.User = pois[saveIndex].User;
           state.pois[index].pois[i].element.last_contributor_fk = pois[saveIndex]
             .last_contributor_fk;
-          state.pois[index].pois[i].element.symbol = pois[saveIndex].symbol;
+  
           state.pois[index].pois[i].element.media = pois[saveIndex].media;
           saveIndex += 1;
         }
@@ -303,7 +303,6 @@ export const bioversStore = {
           state.paths[index].paths[i].element.User = paths[saveIndex].User;
           state.paths[index].paths[i].element.last_contributor_fk = paths[saveIndex]
             .last_contributor_fk;
-          state.paths[index].paths[i].element.symbol = paths[saveIndex].symbol;
           state.paths[index].paths[i].element.media = paths[saveIndex].media;
           saveIndex += 1;
         }
