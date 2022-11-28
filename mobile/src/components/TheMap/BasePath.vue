@@ -1,5 +1,5 @@
 <script setup>
-  import { onMounted } from "@vue/runtime-core";
+  import { onMounted, ref, onBeforeUnmount } from "@vue/runtime-core";
 
   import { mapStore } from '../../composables/map.js';
 

@@ -178,7 +178,7 @@
                 scale: true;
                 scaleAll: ${poi.style_type == 'circle' ? 'false' : 'true'};
               `"
-              :position="`0 ${poi.position.elevation} 0`"
+              :position="`0 ${poi.elevation} 0`"
             ></a-entity>
           </a-entity>
 
