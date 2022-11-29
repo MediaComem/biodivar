@@ -43,12 +43,24 @@
     background-color: #666666;;
 }
 
+.leaflet-control-right {
+    display: block !important;
+}
+
 .leaflet-control-input {
     width: 20px;
     height: 20px;
     margin:0;
     display: flex;
     justify-content: center;
+    margin-top: 1.5px;
+}
+
+.leaflet-control-input-right {
+    width: 20px;
+    height: 20px;
+    margin-left: 1.5px;
+    display: flex;
     margin-top: 1.5px;
 }
 
@@ -64,6 +76,17 @@
 
 .leaflet-top {
     top: 12px;
+}
+
+.leaflet-popup-radio-layout {
+    display: block;
+    width: 150px;
+    position: relative;
+    top: -19px;
+    left: -121px;
+    background-color: white;
+    text-align: left;
+    border: 1px solid black;
 }
 
 .leaflet-custom-tooltip-button {
@@ -87,4 +110,18 @@
 .leaflet-custom-tooltip-button-text {
     margin: 0 !important;
     padding-top: 5px;
+}
+
+.leaflet-radio-div {
+    display: flex;
+    height: 25px;
+}
+
+.leaflet-radio-input {
+    margin-top: 0px;
+}
+
+.leaflet-radio-label {
+    align-items: center;
+    display: flex;
 }

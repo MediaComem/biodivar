@@ -40,6 +40,9 @@
   const clickPoi = ref(0);
   const couldCreate = ref(false);
 
+  const tiles = ref(null);
+  const currentAttributions = ref('');
+
   function closeEditor() {
     showCreationDialog.value = false;
     showEditionDialog.value = false;
@@ -113,6 +116,13 @@
       couldCreate.value = event.detail;
     }
 
+    function changeTiles(event) {
+      tiles.value.setUrl(event.detail.url);
+      mapAdmin.value.attributionControl.removeAttribution(currentAttributions.value);
+      currentAttributions.value = event.detail.attribution;
+      mapAdmin.value.attributionControl.addAttribution(currentAttributions.value);
+    }
+
     function download(file) {
       const anchor = document.createElement('a');
       anchor.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(file);
@@ -184,17 +194,14 @@
   onMounted(() => {
     window.addEventListener('poi-creator-control', poiCreatorController);
     window.addEventListener('custom-download-control', downloadAvailablePois);
+    window.addEventListener('custom-tiles-control', changeTiles);
 
     mapAdmin.value = L.map('map', {zoomAnimation: true, zoomControl: false}).setView([0, 0], 7);
-    /*const base = L.tileLayer(`https://api.maptiler.com/maps/50a99959-5522-4b4a-8489-28de9d3af0ed/{z}/{x}/{y}.png?key=${KEY}`, {
+    currentAttributions.value = "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e \u003ca href=\"https://www.swisstopo.admin.ch/en/home.html\" target=\"_blank\"\u003e\u0026copy; swisstopo\u003c/a\u003e";
+    tiles.value = L.tileLayer(`https://api.maptiler.com/maps/ch-swisstopo-lbm-dark/{z}/{x}/{y}.png?key=${KEY}`, {
         minZoom: 3,
         maxZoom: 22,
-        attribution: 'BiodivAR'
-    }).addTo(mapAdmin.value);*/
-    const dark = L.tileLayer(`https://api.maptiler.com/maps/ch-swisstopo-lbm-dark/{z}/{x}/{y}.png?key=${KEY}`, {
-        minZoom: 3,
-        maxZoom: 22,
-        attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e \u003ca href=\"https://www.swisstopo.admin.ch/en/home.html\" target=\"_blank\"\u003e\u0026copy; swisstopo\u003c/a\u003e"
+        attribution: currentAttributions.value
     }).addTo(mapAdmin.value);
     
     L.zoomIn().addTo(mapAdmin.value);
@@ -202,11 +209,8 @@
     L.poiCreator().addTo(mapAdmin.value);
     L.uploadControl().addTo(mapAdmin.value);
     L.downloadControl().addTo(mapAdmin.value);
-    /*var baseLayers = {
-      "Dark": dark,
-      "Base": base
-    };
-    L.control.layers(baseLayers).addTo(mapAdmin.value);*/
+    L.customTilesController().addTo(mapAdmin.value);
+
     mapAdmin.value.on('click', getPosition);
     mapAdmin.value.on('zoomend', updateMetersInPixel);
     mapAdmin.value.whenReady(() => {
@@ -224,6 +228,7 @@
     observer.value.disconnect();
     window.removeEventListener('poi-creator-control', poiCreatorController);
     window.removeEventListener('custom-download-control', downloadAvailablePois);
+    window.removeEventListener('custom-tiles-control', changeTiles);
     mapAdmin.value = null;
   })
 
