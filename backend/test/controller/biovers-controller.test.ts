@@ -60,6 +60,7 @@ describe('Test biovers controller', () => {
   it('Get all public biovers', async () => {
     const biovers = await getPublicBiovers(
       server.app.prisma,
+      1,
       server.app.logger
     );
     expect(biovers.length).toEqual(2);

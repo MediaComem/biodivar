@@ -36,7 +36,7 @@ describe('Test biovers controller', () => {
 
   it('Error with getPubliBiovers', async () => {
     try {
-        await getPublicBiovers(server.app.prisma, server.app.logger);
+        await getPublicBiovers(server.app.prisma, 6, server.app.logger);
         fail();
     } catch(error) {
         return;

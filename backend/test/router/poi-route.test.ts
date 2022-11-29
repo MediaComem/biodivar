@@ -10,10 +10,9 @@ import {
   test_poi,
   coordinate_test,
 } from '../data/model/poi';
-import { symbol_test } from '../data/model/symbol';
 import { PoiModel, PoiModels } from '../../src/types/poi-model';
 import { getPoiByTitle } from '../../src/controller/poi-controller';
-import { Coordinate, Symbol } from '@prisma/client';
+import { Coordinate } from '@prisma/client';
 import { responseModel } from '../../src/types/response';
 
 describe('Test Poi Routes', () => {

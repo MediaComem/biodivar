@@ -17,12 +17,8 @@ import {
   dropPoi,
   test_poi,
   coordinate_test,
-  position_test,
-  setupPoiForMediaMultiple,
   setupPoiForDeletion,
-  setupPoiForCreateAndDelete,
 } from '../data/model/poi';
-import { symbol_test, dropSymbol } from '../data/model/symbol';
 import { media_test, dropMedia  } from '../data/model/media';
 import { setupUsers, dropUsers } from '../data/model/users';
 
@@ -48,7 +44,6 @@ describe('Test poi controller', () => {
     await dropPoi(server.app.prisma);
     await dropBiovers(server.app.prisma);
     await dropUsers(server.app.prisma);
-    await dropSymbol(server.app.prisma);
     await server.stop();
   });
  
@@ -75,21 +70,6 @@ describe('Test poi controller', () => {
     expect(new_poi).toBeDefined();
     expect(new_poi?.title).toEqual('POI 1');
     expect(new_poi?.last_contributor).toEqual(1);
-  });
-
-  it('Create poi with symbol', async () => {
-    const poi = test_poi;
-    poi.symbol = symbol_test;
-    const new_poi = await createPoi(
-      server.app.prisma,
-      test_poi,
-      server.app.logger
-    );
-    expect(new_poi).toBeDefined();
-    expect(new_poi?.title).toEqual('POI 1');
-    expect(new_poi?.last_contributor).toEqual(1);
-    expect(new_poi?.symbol?.url).toEqual(`${process.env.SYMBOL_PATH}/default/symbol.txt`);
-    expect(new_poi?.symbol?.creation_date).toBeDefined();
   });
 
   it('Update poi', async () => {
@@ -135,28 +115,6 @@ describe('Test poi controller', () => {
     }
   });
 
-  it('Update poi and create symbol', async () => {
-    const poi = (await getPoiByTitle(server.app.prisma, 'POI 1')) as PoiModel;
-    if (poi) {
-      expect(poi.symbol).toBeNull();
-      poi.style_stroke_width = 155.5;
-      poi.symbol = symbol_test;
-      const update_poi = await updatePoi(
-        server.app.prisma,
-        poi,
-        server.app.logger
-      );
-      expect(update_poi).toBeDefined();
-      expect(update_poi?.id).toEqual(poi.id);
-      expect(update_poi?.style_stroke_width).toEqual(155.5);
-      expect(update_poi?.update_date).toBeDefined();
-      expect(update_poi?.symbol?.url).toEqual(`${process.env.SYMBOL_PATH}/default/symbol.txt`);
-      expect(update_poi?.symbol?.creation_date).toBeDefined();
-    } else {
-      throw new Error('Cannot find POI to update');
-    }
-  });
-
   it('Update poi and update coordinate', async () => {
     const poi = (await getPoiByTitle(server.app.prisma, 'POI 1')) as PoiModel;
     if (poi) {
@@ -177,32 +135,6 @@ describe('Test poi controller', () => {
       expect(update_poi?.style_stroke_width).toEqual(1.5);
       expect(update_poi?.update_date).toBeDefined();
       expect(update_poi?.coordinate?.alt).toEqual(55.5);
-    } else {
-      throw new Error('Cannot find POI to update');
-    }
-  });
-
-  it('Update poi and update symbol', async () => {
-    const poi = (await getPoiByTitle(server.app.prisma, 'POI 1')) as PoiModel;
-    if (poi) {
-      expect(poi.symbol).toBeDefined();
-      poi.style_stroke_width = 1555.5;
-      if (poi.symbol) {
-        poi.symbol.is_visible = !symbol_test.is_visible;
-        const update_poi = await updatePoi(
-          server.app.prisma,
-          poi,
-          server.app.logger
-        );
-        expect(update_poi).toBeDefined();
-        expect(update_poi?.id).toEqual(poi.id);
-        expect(update_poi?.style_stroke_width).toEqual(1555.5);
-        expect(update_poi?.update_date).toBeDefined();
-        expect(update_poi?.symbol?.is_visible).toEqual(!symbol_test.is_visible);
-      }
-      else {
-        throw new Error("Cannot find symbol to update");
-      }
     } else {
       throw new Error('Cannot find POI to update');
     }

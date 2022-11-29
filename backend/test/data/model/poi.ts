@@ -1,17 +1,13 @@
-import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { CoordinateModel } from "../../../src/types/coordinate-model";
 
 import { media_test } from "./media";
 
 import { PoiModel } from "../../../src/types/poi-model";
-import { PositionModel } from "../../../src/types/position-model";
 
 export const setupPoi = async (prisma: PrismaClient) => {
   if (test_poi.coordinate) {
     test_poi.coordinate = undefined;
-  }
-  if (test_poi.symbol) {
-    test_poi.symbol = undefined;
   }
   if (test_poi.media) {
     test_poi.media = undefined;
@@ -32,9 +28,6 @@ export const setupPoiForMedia = async (prisma: PrismaClient) => {
   if (test_poi.coordinate) {
     test_poi.coordinate = undefined;
   }
-  if (test_poi.symbol) {
-    test_poi.symbol = undefined;
-  }
   if (test_poi.media) {
     test_poi.media = undefined;
   }
@@ -50,10 +43,16 @@ export const setupPoiForMedia = async (prisma: PrismaClient) => {
       media_type: media_test.media_type,
       url: media_test.url,
       is_facing: media_test.is_facing,
+      is_visible_in_radius: media_test.is_visible_in_radius,
+      is_visible_out_radius: media_test.is_visible_out_radius,
       autoplay: media_test.autoplay,
       loop: media_test.loop,
       scale: media_test.scale,
       amplitude: media_test.amplitude,
+      distance: media_test.distance,
+      rotation: media_test.rotation,
+      elevation: media_test.elevation,
+      orientation: media_test.orientation,
       creation_date: new Date(),
       poi_id: element.id,
     },
@@ -64,9 +63,6 @@ export const setupPoiForMedia = async (prisma: PrismaClient) => {
 export const setupPoiForMediaMultiple = async (prisma: PrismaClient) => {
   if (test_poi.coordinate) {
     test_poi.coordinate = undefined;
-  }
-  if (test_poi.symbol) {
-    test_poi.symbol = undefined;
   }
   if (test_poi.media) {
     test_poi.media = undefined;
@@ -83,10 +79,16 @@ export const setupPoiForMediaMultiple = async (prisma: PrismaClient) => {
       media_type: media_test.media_type,
       url: media_test.url,
       is_facing: media_test.is_facing,
+      is_visible_in_radius: media_test.is_visible_in_radius,
+      is_visible_out_radius: media_test.is_visible_out_radius,
       autoplay: media_test.autoplay,
       loop: media_test.loop,
       scale: media_test.scale,
       amplitude: media_test.amplitude,
+      distance: media_test.distance,
+      rotation: media_test.rotation,
+      elevation: media_test.elevation,
+      orientation: media_test.orientation,
       creation_date: new Date(),
       poi_id: element.id,
     },
@@ -97,9 +99,6 @@ export const setupPoiForMediaMultiple = async (prisma: PrismaClient) => {
 export const setupPoiForCreateAndDelete = async (prisma: PrismaClient) => {
   if (test_poi.coordinate) {
     test_poi.coordinate = undefined;
-  }
-  if (test_poi.symbol) {
-    test_poi.symbol = undefined;
   }
   if (test_poi.media) {
     test_poi.media = undefined;
@@ -116,10 +115,16 @@ export const setupPoiForCreateAndDelete = async (prisma: PrismaClient) => {
       media_type: media_test.media_type,
       url: media_test.url,
       is_facing: media_test.is_facing,
+      is_visible_in_radius: media_test.is_visible_in_radius,
+      is_visible_out_radius: media_test.is_visible_out_radius,
       autoplay: media_test.autoplay,
       loop: media_test.loop,
       scale: media_test.scale,
       amplitude: media_test.amplitude,
+      distance: media_test.distance,
+      rotation: media_test.rotation,
+      elevation: media_test.elevation,
+      orientation: media_test.orientation,
       creation_date: new Date(),
       poi_id: element.id,
     },
@@ -130,9 +135,6 @@ export const setupPoiForCreateAndDelete = async (prisma: PrismaClient) => {
 export const setupPoiForDeletion = async (prisma: PrismaClient) => {
   if (test_poi.coordinate) {
     test_poi.coordinate = undefined;
-  }
-  if (test_poi.symbol) {
-    test_poi.symbol = undefined;
   }
   if (test_poi.media) {
     test_poi.media = undefined;
@@ -149,10 +151,16 @@ export const setupPoiForDeletion = async (prisma: PrismaClient) => {
       media_type: media_test.media_type,
       url: media_test.url,
       is_facing: media_test.is_facing,
+      is_visible_in_radius: media_test.is_visible_in_radius,
+      is_visible_out_radius: media_test.is_visible_out_radius,
       autoplay: media_test.autoplay,
       loop: media_test.loop,
       scale: media_test.scale,
       amplitude: media_test.amplitude,
+      distance: media_test.distance,
+      rotation: media_test.rotation,
+      elevation: media_test.elevation,
+      orientation: media_test.orientation,
       creation_date: new Date(),
       poi_id: element.id,
     },
@@ -164,12 +172,6 @@ export const dropPoi = async (prisma: PrismaClient) => {
   await prisma.poi.deleteMany({});
 };
 
-export const position_test: PositionModel = {
-  distance: 2.5,
-  rotation: 5.6,
-  elevation: 22.5,
-}
-
 export const coordinate_test: CoordinateModel = {
   long: 12.2,
   lat: 13.3,
@@ -179,7 +181,6 @@ export const coordinate_test: CoordinateModel = {
 
 export const test_poi: PoiModel = {
   title: "POI 1",
-  title_is_visible: true,
   author: 1,
   creation_date: new Date(),
   biovers: 1,
@@ -196,5 +197,6 @@ export const test_poi: PoiModel = {
   scope: 455.5,
   wireframe: false,
   trigger_mode: "location",
+  elevation: 0,
   media: undefined,
 };

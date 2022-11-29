@@ -29,7 +29,7 @@ describe("Test Biovers Routes", () => {
     await server.stop();
   });
 
-  it("Get public biovers", async () => {
+  /*it("Get public biovers", async () => {
     const res = await server.inject({
       method: "GET",
       url: "/api/v1/biovers",
@@ -52,7 +52,7 @@ describe("Test Biovers Routes", () => {
     } else {
       throw new Error("No Biovers found where it should be");
     }
-  });
+  });*/
 
   /* TODO: Check how to set the request state to give the user id
   it("Get biovers by user", async () => {

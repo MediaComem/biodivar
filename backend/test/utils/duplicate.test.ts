@@ -16,9 +16,7 @@ const biovers: BioversModel = {
 
 const test_poi = {
     title: "POI 1",
-    title_is_visible: true,
     subtitle: '',
-    subtitle_is_visible: false,
     author: 1,
     creation_date: new Date(),
     biovers: 1,
@@ -34,10 +32,16 @@ const test_poi = {
     amplitude: 22.3,
     scope: 455.5,
     wireframe: false,
+    elevation: 0,
     trigger_mode: "location",
     media: undefined,
-    metadata: {},
-    coordinate: {},
+    metadata: '',
+    coordinate: {
+        long: 0,
+        lat: 0,
+        alt: 0,
+        creation_date: new Date(),
+    },
     symbol: {}
 };
 
@@ -79,8 +83,9 @@ describe('Test duplication utils functions', () => {
         expect(result.last_contributor).toBe(undefined);
         expect(result.subtitle).toBe('');
         expect(result.metadata).toBe('');
-        expect(result.symbol).toBe(undefined);
-        expect(result.coordinate).toBe(undefined);
+        expect(result.coordinate?.alt).toBe(0);
+        expect(result.coordinate?.long).toBe(0);
+        expect(result.coordinate?.lat).toBe(0);
     });
 
     it('POI with full elements', async () => {
@@ -109,7 +114,6 @@ describe('Test duplication utils functions', () => {
         expect(result.last_contributor).toBe(undefined);
         expect(result.subtitle).toEqual('Test 2');
         expect(result.metadata).toEqual('abc');
-        expect(result.symbol?.media_type).toEqual('Video');
         expect(result.coordinate?.alt).toBe(14.4);
     });
 
