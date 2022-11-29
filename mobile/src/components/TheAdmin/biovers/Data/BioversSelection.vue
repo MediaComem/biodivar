@@ -21,7 +21,7 @@
     </div>
     <div class="border-element">
       <div v-show="currentBioversId <= 0">
-        <BioversLayout v-if="allBiovers && allBiovers.length > 0" :biovers="allBiovers"/>
+        <BioversLayout v-if="allBiovers" :biovers="allBiovers"/>
       </div>
       <div v-for="biovers in bioversToDisplay" :key="biovers.name" class="data-layout">
         <DataTab
