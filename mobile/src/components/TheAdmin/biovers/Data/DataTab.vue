@@ -115,6 +115,7 @@ button {
   height: 30px;
   display: flex;
   align-items: center;
+  border-bottom: 1px solid #666666;
 }
 
 .button-focus {

@@ -5,7 +5,7 @@
   import BioversItem from '../components/app/BioversItem.vue';
   import { useStore } from '../composables/store.js';
 
-  const { isIOS, biovers, getPinsBiovers } = useStore();
+  const { isIOS, getPinsBiovers } = useStore();
 
   const pins = computed(() => {
     return getPinsBiovers();
