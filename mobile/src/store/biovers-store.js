@@ -104,7 +104,7 @@ export const bioversStore = {
       } else {
         const publicBioversIndex = state.publicBiovers.findIndex((b) => b.id === bioverId);
         if (publicBioversIndex !== -1) {
-          state.ownBiovers.splice(publicBioversIndex, 1);
+          state.publicBiovers.splice(publicBioversIndex, 1);
         }
       }
     },
@@ -179,16 +179,16 @@ export const bioversStore = {
       state.pois[index].pois.splice(poiIndex, 1);
     },
     ADD_INTO_PATH(state, path) {
-      let index = state.paths.findIndex((e) => e.bioverId === state.currentBioversId);
+      let index = state.paths.findIndex((e) => e.bioverId === path.biovers);
       if (index === -1) {
         state.paths.push({
           bioverId: path.biovers,
           paths: [],
         })
-        index = state.pois.findIndex((e) => e.bioverId === state.currentBioversId);
+        index = state.paths.findIndex((e) => e.bioverId === path.biovers);
       }
       const bioverToDisplayIndex = state.bioversToDisplay
-        .findIndex((biover) => biover.biover.id === state.currentBioversId);
+        .findIndex((biover) => biover.biover.id === path.biovers);
       const pathElementToAdd = {
         name: state.bioversToDisplay[bioverToDisplayIndex].title,
         element: path,
@@ -253,7 +253,7 @@ export const bioversStore = {
           bioverId: paths[0].biovers,
           paths: [],
         })
-        index = state.pois.findIndex((e) => e.bioverId === state.currentBioversId);
+        index = state.paths.findIndex((e) => e.bioverId === state.currentBioversId);
       }
       const bioverToDisplayIndex = state.bioversToDisplay
         .findIndex((biover) => biover.biover.id === state.currentBioversId);
@@ -346,11 +346,11 @@ export const bioversStore = {
     },
     ADD_PATH_INTO_BIOVER(state, path) {
       const bioverToDisplayIndex = state.bioversToDisplay
-        .findIndex((biover) => biover.biover.id === state.currentBioversId);
+        .findIndex((biover) => biover.biover.id === path.biovers);
       state.bioversToDisplay[bioverToDisplayIndex].biover.Path.push(path);
-      let index = state.ownBiovers.findIndex((biovers) => biovers.id === state.currentBioversId);
+      let index = state.ownBiovers.findIndex((biovers) => biovers.id === path.biovers);
       if (index === -1) {
-        index = state.publicBiovers.findIndex((biovers) => biovers.id === state.currentBioversId);
+        index = state.publicBiovers.findIndex((biovers) => biovers.id === path.biovers);
         state.publicBiovers[index].Path.push(path);
       } else {
         state.ownBiovers[index].Path.push(path);
@@ -462,6 +462,7 @@ export const bioversStore = {
       state.currentBioversId = -1;
       state.pois = [];
       state.poisModification = {};
+      state.pathsModification = {};
       state.paths = [];
       state.traces = [];
       state.uploadInProgress = false;
@@ -744,9 +745,6 @@ export const bioversStore = {
     },
     unselectAllTraces({ commit }) {
       commit('UNSELECT_ALL_TRACES');
-    },
-    resetStore({ commit }) {
-      commit('RESET_STORE');
     },
     filter({ commit }, filter) {
       commit('FILTER', filter);

@@ -33,7 +33,7 @@ export const globalStore = {
             entries.forEach((poi) => {
                 const index = state.currentTabClick.findIndex((e) => e === poi.element.id);
                 index === -1 ? state.currentTabClick.push(poi.element.id) : state.currentTabClick.splice(index, 1);
-            })  
+            })
         },
         REMOVE_CLICK(state, id) {
             const index = state.currentTabClick.findIndex((e) => e === id);
@@ -96,8 +96,8 @@ export const globalStore = {
         addOrRemoveClickElement({ commit }, id) {
             commit('ADD_OR_REMOVE_CLICK', id);
         },
-        addOrRemovePoisClick({ commit }, id) {
-            commit('ADD_OR_REMOVE_POIS_CLICK', id);
+        addOrRemovePoisClick({ commit }, pois) {
+            commit('ADD_OR_REMOVE_POIS_CLICK', pois);
         },
         removeClickElement({ commit }, id) {
             commit('REMOVE_CLICK', id);
@@ -114,8 +114,8 @@ export const globalStore = {
         removeEventClickElement({ commit }, id) {
             commit('REMOVE_EVENT_CLICK', id);
         },
-        addOrRemoveEventsClick({ commit }, id) {
-            commit('ADD_OR_REMOVE_EVENTS_CLICK', id);
+        addOrRemoveEventsClick({ commit }, events) {
+            commit('ADD_OR_REMOVE_EVENTS_CLICK', events);
         },
         updateTraceOver({ commit }, id) {
             commit('UPDATE_TRACE_OVER', id);
@@ -126,8 +126,8 @@ export const globalStore = {
         addOrRemoveTraceClickElement({ commit }, id) {
             commit('ADD_OR_REMOVE_TRACE_CLICK', id);
         },
-        addOrRemoveTracesClick({ commit }, entries) {
-            commit('ADD_OR_REMOVE_TRACES_CLICK', entries);
+        addOrRemoveTracesClick({ commit }, traces) {
+            commit('ADD_OR_REMOVE_TRACES_CLICK', traces);
         },
         removeTraceClickElement({ commit }, id) {
             commit('REMOVE_TRACE_CLICK', id);
