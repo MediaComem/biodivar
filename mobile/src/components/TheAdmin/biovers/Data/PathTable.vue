@@ -100,7 +100,7 @@
           <td v-if="getPathColumnsPreference.author" class="column column-max-width">{{ userFormatter(path.element.User) }}</td>
           <td v-if="getPathColumnsPreference.updated_date" class="column column-max-width">{{ dateFormatter(path.element.update_date) }}</td>
           <td v-if="getPathColumnsPreference.contributor" class="column column-max-width">{{ userFormatter(path.element.last_contributor_fk) }}</td>
-          <td v-if="getPathColumnsPreference.elevation" class="column column-max-width end-align">{{ path.element.style_elevation }}</td>
+          <td v-if="getPathColumnsPreference.elevation" class="column column-max-width end-align">{{ path.element.elevation }}</td>
           <td v-if="getPathColumnsPreference.animation" class="column column-max-width end-align">{{ path.element.amplitude }}</td>
           <td v-if="getPathColumnsPreference.stroke_width" class="column column-max-width end-align">{{ path.element.style_stroke_width }}</td>
           <td v-if="getPathColumnsPreference.style_type" class="column column-max-width">{{ path.element.style_type }}</td>
@@ -110,7 +110,8 @@
              <div v-if="menuState && menuState.id === path.element.id && menuState.state" class="menu">
                 <p class="menu-element" @click="downloadPath(path)">Exporter le PATH</p>
                 <p class="menu-element" @click="copy(path)">Copier le PATH</p>
-                <p class="menu-element" @click="openDeletionDialog(path)">Supprimer le PATH</p>
+                <p class="menu-element" :class="{'disable': isAllowedToEdit() }" @click="openEdition(path)">Editer le Path</p>
+                <p class="menu-element" :class="{'disable': isAllowedToEdit() }"  @click="openDeletionDialog(path)">Supprimer le PATH</p>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </td>
@@ -120,6 +121,7 @@
   </div>
   <DeleteConfirmation v-if="deleteDialog" :dialogVisible="deleteDialog" title="Êtes-vous sûr de vouloir supprimer ces chemins?" @closeDialog="deleteDialog = false" @validate="confirmDeletion()" />
   <PathColumnsSelector v-if="columnDialog" :showDialog="columnDialog" @close-dialog="columnDialog = false" />
+  <ThePathEditor :path="pathToUpdate" :showDialog="showEditionDialog" @close-dialog="showEditionDialog = false" @close-after-save="showEditionDialog = false"/>
 </div>
   
 </template>
@@ -129,15 +131,16 @@ import { mapGetters, mapActions } from 'vuex';
 
 import PathColumnsSelector from '../Dialog/PathColumnsSelector.vue';
 import DeleteConfirmation from '../Dialog/DeleteConfirmation.vue';
+import ThePathEditor from '../Dialog/ThePathEditor.vue';
 
-import { dateFormatter, coordinateFormatter } from '../../../../utils/formatter.js';
+import { fullDateFormatter, coordinateFormatter } from '../../../../utils/formatter.js';
 import { computeGeoJSONFromPATH, computeGeoJSONFromPATHs } from '../../../../utils/geojson.js';
 import sort from '../../../../utils/sort';
 
 import { savePath, deletePath } from '../../../../utils/api.js';
 
 export default {
-  components: { PathColumnsSelector, DeleteConfirmation },
+  components: { PathColumnsSelector, DeleteConfirmation, ThePathEditor },
   props: {
     bioverId: Number,
   },
@@ -150,6 +153,8 @@ export default {
       columnDialog: false,
       deleteDialog: false,
       pathToDelete: undefined,
+      pathToUpdate: {},
+      showEditionDialog: false,
     }
   },
   computed: {
@@ -167,11 +172,11 @@ export default {
       if (value && value.type === 'PATH') return false;
       return true;
     },
-    ...mapGetters('biovers', ['getPathsByBiover', 'ownOrPublic', 'bioverIsEditable', 'getPathColumnsPreference', 'getCopyElement']),
+    ...mapGetters('biovers', ['getPathsByBiover', 'ownOrPublic', 'bioverIsEditable', 'getPathColumnsPreference', 'getCopyElement', 'getCurrentBioverId']),
   },
   methods: {
     dateFormatter(date) {
-      return dateFormatter(date);
+      return fullDateFormatter(date);
     },
     getCoordinate(coordinates) {
       return coordinateFormatter(coordinates);
@@ -186,6 +191,9 @@ export default {
         this.orderElement = false;
       }
       this.sortElement = value;
+    },
+    isAllowedToEdit() {
+      return (this.ownOrPublic(this.getCurrentBioverId) === 'public' && !this.bioverIsEditable(this.getCurrentBioverId));
     },
     globalCheckAnalizer() {
       if (this.allAreUnselected) {
@@ -211,6 +219,15 @@ export default {
     },
     openMenu(rowId) {
       this.menuState = {id: rowId, state: true};
+    },
+    openEdition(path) {
+      if (this.isAllowedToEdit()) {
+          return;
+      }
+      this.updateWait(true);
+      this.pathToUpdate = { path: path.element };
+      this.showEditionDialog = true;
+      this.menuState = undefined;
     },
     openColumnSelector() {
       this.columnDialog = true;
@@ -270,6 +287,9 @@ export default {
       this.globalCheckAnalizer();
     },
     openDeletionDialog(path) {
+      if (this.isAllowedToEdit()) {
+          return;
+      }
       this.pathToDelete = path;
       this.deleteDialog = true;
       this.menuState = undefined;
@@ -293,6 +313,7 @@ export default {
       this.deleteDialog = false;
       this.globalCheckAnalizer();
     },
+    ...mapActions('global', ['updateWait']),
     ...mapActions('biovers', ['updatePathToDisplay', 'selectAllPaths', 'unselectAllPaths', 'resetPathsModification', 'copyPath', 'addNewPath', 'removePath']),
   },
 };

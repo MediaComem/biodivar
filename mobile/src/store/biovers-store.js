@@ -126,6 +126,12 @@ export const bioversStore = {
     SAVE_PATH_TO_DISPLAY(state, payload) {
       state.paths.push({ bioverId: payload.id, paths: payload.paths });
     },
+    UPDATE_PATH(state, path) {
+      const pathsIndex = state.paths.findIndex((e) => e.bioverId === path.biovers);
+      const pathIndex = state.paths[pathsIndex].paths
+        .findIndex((e) => e.element.id === path.id);
+      state.paths[pathsIndex].paths[pathIndex].element = path;
+    },
     UPDATE_PATH_TO_DISPLAY(state, payload) {
       const pathsIndex = state.paths.findIndex((e) => e.bioverId === payload.bioverId);
       const pathIndex = state.paths[pathsIndex].paths
@@ -679,9 +685,9 @@ export const bioversStore = {
       commit('REMOVE_INTO_POI', poi);
       commit('REMOVE_POI_INTO_BIOVER', poi);
     },
-    addNewPath({ commit }, poi) {
-      commit('ADD_INTO_PATH', poi);
-      commit('ADD_PATH_INTO_BIOVER', poi);
+    addNewPath({ commit }, path) {
+      commit('ADD_INTO_PATH', path);
+      commit('ADD_PATH_INTO_BIOVER', path);
     },
     removePath({ commit }, path) {
       commit('REMOVE_INTO_PATH', path);
@@ -703,6 +709,9 @@ export const bioversStore = {
     },
     importPaths({ commit }, paths) {
       commit('IMPORT_PATH', paths);
+    },
+    updatePathStore({ commit }, path) {
+      commit('UPDATE_PATH', path);
     },
     updateImportPois({ commit }, pois) {
       commit('UPDATE_IMPORT_POIS', pois);

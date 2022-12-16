@@ -88,6 +88,17 @@ const updatePoiInBiovers = (newPoi) => {
   }
 }
 
+const updatePathInBiovers = (newPath) => {
+  const bioversIndex = biovers.value.findIndex((b) => b.id === newPath.biovers);
+  const pathIndex = biovers.value[bioversIndex].Path.findIndex((p) => p.id === newPath.id)
+  biovers.value[bioversIndex].Path[pathIndex] = newPath;
+
+  if (selectedBiovers.value) {
+    const selectedPathIndex = selectedBiovers.value.Path.findIndex((p) => p.id === newPath.id)
+    selectedBiovers.value.Path[selectedPathIndex] = newPath;
+  }
+}
+
 const resetSelectedBiovers = () => {
   selectedBiovers.value = null;
 }
@@ -98,6 +109,6 @@ watch(minDistance, (distance) => {
 
 export function useStore() {
 
-  return { isAuth, section, biovers, username, showAggreement, forgotPassword, send, isMobileOrTablet, isIOS, selectedBiovers, pins, mapOpen, favori, hubDisplay, hubDisplayTimeout, registerValidated, minDistance, arMode, isInFavori, isInPins, getPinsBiovers, addPoiInBiovers, updatePoiInBiovers, resetSelectedBiovers };
+  return { isAuth, section, biovers, username, showAggreement, forgotPassword, send, isMobileOrTablet, isIOS, selectedBiovers, pins, mapOpen, favori, hubDisplay, hubDisplayTimeout, registerValidated, minDistance, arMode, isInFavori, isInPins, getPinsBiovers, addPoiInBiovers, updatePoiInBiovers, updatePathInBiovers, resetSelectedBiovers };
 
 }

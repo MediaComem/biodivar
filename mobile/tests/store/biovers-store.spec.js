@@ -1596,6 +1596,58 @@ describe('Global Store test suite', () => {
       ]);
   });
 
+  it('test update path action', async () => {
+    expect(store.state.biovers.paths).toHaveLength(0).toEqual([]);
+    store.state.biovers.paths = [
+      {
+        bioverId: 3,
+        paths: [
+          {
+            name: 'Biovers3',
+            element: { biovers: 3, id: 5, value: 5 },
+            display: true,
+            import: false,
+          },
+        ],
+      },
+    ];
+    expect(store.state.biovers.paths)
+      .toHaveLength(1)
+      .toEqual([
+        {
+          bioverId: 3,
+          paths: [
+            {
+              name: 'Biovers3',
+              element: { biovers: 3, id: 5, value: 5 },
+              display: true,
+              import: false,
+            },
+          ],
+        },
+      ]);
+    store.dispatch('biovers/updatePathStore', {
+      biovers: 3,
+      id: 5,
+      value: 55,
+    });
+    expect(store.state.biovers.paths)
+      .toHaveLength(1)
+      .toEqual([
+        {
+          bioverId: 3,
+          paths: [
+            {
+              name: 'Biovers3',
+              element: { biovers: 3, id: 5, value: 55 },
+              display: true,
+              import: false,
+            },
+          ],
+        },
+      ]);
+  });
+
   it('test import paths action without paths', async () => {
     expect(store.state.biovers.uploadInProgress).toBe(false);
     expect(store.state.biovers.paths).toHaveLength(0).toEqual([]);

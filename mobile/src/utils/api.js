@@ -75,6 +75,10 @@ export function savePaths(paths) {
   return postJson(API + 'path/creates', paths);
 }
 
+export function updatePath(path) {
+  return postJson(API + 'path/update', path);
+}
+
 export function deletePath(path) {
   return postJson(API + 'path/delete', path);
 }

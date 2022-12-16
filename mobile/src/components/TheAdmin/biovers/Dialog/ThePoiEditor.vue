@@ -1,7 +1,7 @@
 <template>
   <div v-if="dialogVisible" class="overlay" @click="cancelDialog = true"></div>
   <div v-if="dialogVisible" class="modal-edition">
-    <DialogHeader :title="isEdit ? 'éditer point dintérêt' : 'nouveau point dintérêt'" :logo="'add_location_alt'" @close="cancelDialog = true" />
+    <DialogHeader :title="'éditer point dintérêt'" :logo="'add_location_alt'" @close="cancelDialog = true" />
     <div class="embedded">
       <the-aframe-editor
         :visibilityScope="form.scope"
@@ -337,21 +337,18 @@
       <div class="full-button actions-button">
         <button class="full-button button-gray" @click="savePreferences"><p class="material-symbols-sharp">bookmark</p> Définir comme paramètres par défaut</button>
       </div>
-      <div v-if="isEdit" class="full-button actions-button">
+      <div class="full-button actions-button">
         <button class="full-button button-red" @click="deleteDialog = true"><p class="material-symbols-sharp">wrong_location</p> Supprimer le point d'intérêt</button>
       </div>
-      <div v-else class="full-button actions-button">
-        <button class="full-button button-dark-gray" @click="cancelDialog = true"><p class="material-symbols-sharp">undo</p>Annuler</button>
-      </div>
       <div class="full-button actions-button">
-        <button class="full-button button-blue" @click="isEdit ? updatePoi() : createPoi()" ><p class="material-symbols-sharp">where_to_vote</p> Enregistrer les modifications</button>
+        <button class="full-button button-blue" @click="updatePoi()" ><p class="material-symbols-sharp">where_to_vote</p> Enregistrer les modifications</button>
       </div>
     </div>
   </div>
   <Notification v-if="shouldDisplayNotification" :data-type="'success'">Vos préférences ont été enregistrer</Notification>
   </div>
   <DeleteConfirmation v-if="deleteDialog" :dialogVisible="deleteDialog" title="Êtes-vous sûr de vouloir supprimer ces point d'intérêts?" @closeDialog="deleteDialog = false" @validate="deletePoi()" />
-  <CancelConfirmation v-if="cancelDialog" :dialogVisible="cancelDialog" title="Voulez-vous enregistrer les modifications?" @close="close()" @closeDialog="cancelDialog = false" @validate="isEdit ? updatePoi() : createPoi()" />
+  <CancelConfirmation v-if="cancelDialog" :dialogVisible="cancelDialog" title="Voulez-vous enregistrer les modifications?" @close="close()" @closeDialog="cancelDialog = false" @validate="updatePoi()" />
 
 </template>
 
@@ -370,7 +367,7 @@ import CancelConfirmation from './CancelConfirmation.vue';
 import TheAframeEditor from '../../../TheAframe/TheAframeEditor.vue';
 import AframeMedia from '../../../TheAframe/AframeMedia.vue';
 
-import { savePoi, updatePoi, deletePoi, saveSymbol, saveMedia, getSymbolUrl, getIcon, getMediaUrl, getContent, getSymbolAudiUrl, saveEvent } from '../../../../utils/api.js';
+import { updatePoi, deletePoi, saveSymbol, saveMedia, getSymbolUrl, getIcon, getMediaUrl, getContent, getSymbolAudiUrl, saveEvent } from '../../../../utils/api.js';
 
 
 export default {
@@ -380,7 +377,6 @@ export default {
     poi: Object,
     coordinate: Object,
     showDialog: Boolean,
-    isEdit: Boolean,
     bioversId: Number,
   },
   emits: ['closeDialog', 'closeAfterSave'],
@@ -388,9 +384,7 @@ export default {
     showDialog(newVal) {
       this.dialogVisible = newVal;
       if (this.dialogVisible) {
-        if (this.isEdit) {
             this.setupEdition();
-        }
       } else {
         this.resetEditor();
       }
@@ -701,19 +695,6 @@ export default {
         data: event,
       });
     },
-    async createPoi() {
-      this.updateWait(true);
-      this.cancelDialog = false;
-      await this.saveSymbolAndMedias();
-      this.form.biovers = this.bioversId;
-      const newPoi = await savePoi(this.form);
-      this.addNewPoi(newPoi.data);
-      useStore().addPoiInBiovers(newPoi.data);
-      await this.createEvent('create-poi-' + newPoi.data.id, this.bioversId);
-      this.showCreationDialog = false;
-      this.updateWait(false);
-      this.$emit('closeAfterSave');
-    },
     async updatePoi() {
       this.updateWait(true);
       this.cancelDialog = false;
@@ -731,6 +712,7 @@ export default {
       this.deleteDialog = false;
       this.removePoi(this.form);
       await deletePoi(this.form);
+      await this.createEvent('delete-poi-' + this.form.id, this.form.biovers);
       this.showCreationDialog = false;
       this.updateWait(false);
       this.$emit('closeAfterSave');
@@ -760,7 +742,7 @@ export default {
       setTimeout(() => this.shouldDisplayNotification = false, 3000);
     },
     ...mapActions('global', ['updateWait', 'savePoiPreferences']),
-    ...mapActions('biovers', ['addNewPoi', 'updatePoiStore', 'removePoi']),
+    ...mapActions('biovers', ['updatePoiStore', 'removePoi']),
   },
   computed: {
     mediaARCheck() {

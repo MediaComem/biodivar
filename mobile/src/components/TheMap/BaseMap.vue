@@ -10,6 +10,7 @@
   import BasePath from './BasePath.vue';
 
   import ThePoiEditor from '../TheAdmin/biovers/Dialog/ThePoiEditor.vue';
+  import ThePathEditor from '../TheAdmin/biovers/Dialog/ThePathEditor.vue';
 
   const KEY = import.meta.env.VITE_APP_MAP_KEY;
 
@@ -21,7 +22,9 @@
   const latlng = ref(undefined);
   const couldCreate = ref(false);
   const showEditionDialog = ref(false);
+  const showPathEditionDialog = ref(false);
   const poiToUpdate = ref({});
+  const pathToUpdate = ref({});
   const mapContainer = ref(null);
   const observer = ref(null);
   const clickPoi = ref(0);
@@ -29,6 +32,10 @@
   const ownOrPublic = computed(() => store.getters['biovers/ownOrPublic'])
   const bioverIsEditable = computed(() => store.getters['biovers/bioverIsEditable'])
   const getMetersInPixel = computed(() => 40075016.686 * Math.abs(Math.cos(map.value.getCenter().lat * Math.PI/180)) / Math.pow(2, map.value.getZoom()+8));
+
+  function updateWait(state) {
+    store.dispatch('global/updateWait', state);
+  }
 
   function poiCreatorController(event) {
     couldCreate.value = event.detail;
@@ -58,6 +65,15 @@
     poiToUpdate.value = { poi: event };
     showEditionDialog.value = true;
   }
+
+  function openPathEdition(event) {
+      if (isAllowedToEdit(event.biovers)) {
+        return;
+      }
+      updateWait(true);
+      pathToUpdate.value = { path: event };
+      showPathEditionDialog.value = true;
+    }
 
   function closeCreationDialog() {
     showCreationDialog.value = false
@@ -104,15 +120,14 @@
         </div>
         <div v-if="map">
             <div v-for="(path, index) of selectedBiovers.Path" :key="index">
-                <BasePath :admin="false" :coordinate="path.coordinate"/>
+                <BasePath :admin="false" :coordinate="path.coordinate" :path="path" :editable="!isAllowedToEdit(selectedBiovers.id)" @update-path="openPathEdition"/>
             </div>
         </div>
     </div>
   </div>
-  <ThePoiEditor :showDialog="showCreationDialog" :isEdit="false" :coordinate="latlng" :bioversId="selectedBiovers.id"
-    @close-dialog="closeCreationDialog" @close-after-save="closeCreationDialog"/>
-  <ThePoiEditor :isEdit="true" :poi="poiToUpdate" :showDialog="showEditionDialog"
+  <ThePoiEditor :poi="poiToUpdate" :showDialog="showEditionDialog"
     @close-dialog="showEditionDialog = false" @close-after-save="showEditionDialog = false"/>
+  <ThePathEditor :path="pathToUpdate" :showDialog="showPathEditionDialog" @close-dialog="showPathEditionDialog = false" @close-after-save="showPathEditionDialog = false"/>
 </template>
 
 <style scoped>

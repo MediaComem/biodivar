@@ -212,7 +212,7 @@
   </div>
   <DeleteConfirmation v-if="deleteDialog" :dialogVisible="deleteDialog" title="Êtes-vous sûr de vouloir supprimer ces point d'intérêts?" @closeDialog="deleteDialog = false" @validate="confirmDeletion()" />
   <PoiColumnsSelection v-if="columnDialog" :showDialog="columnDialog" @close-dialog="columnDialog = false"/>
-  <ThePoiEditor :isEdit="true" :poi="poiToUpdate" :showDialog="showEditionDialog" @close-dialog="showEditionDialog = false" @close-after-save="showEditionDialog = false"/>
+  <ThePoiEditor :poi="poiToUpdate" :showDialog="showEditionDialog" @close-dialog="showEditionDialog = false" @close-after-save="showEditionDialog = false"/>
 </div>
   
 </template>
