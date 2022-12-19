@@ -90,11 +90,11 @@ model Path {
   coordinate              Coordinate[]
   biovers                 Int
   style_type              String
-  style_stroke            Boolean     @default(true)
   style_stroke_width      Float       @default(1)
-  style_elevation         Float       @default(0)
-  amplitude               Float       @default(0)  
-  style_is_visible        Boolean     @default(true)
+  stroke_color            String      @default("#FFFFFF")
+  stroke_opacity          Int         @default(100)
+  amplitude               Float       @default(0)
+  elevation               Float       @default(0)
   scope                   Float       @default(50)
   metadata                String?
   biovers_fk              Biovers     @relation(fields: [biovers], references: [id])

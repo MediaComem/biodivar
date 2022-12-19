@@ -9,9 +9,10 @@ export interface PathModel {
   last_contributor?: number;
   biovers: number;
   style_type: string;
-  style_stroke: boolean;
   style_stroke_width: number;
-  style_elevation: number;
+  stroke_color: string;
+  stroke_opacity: number;
+  elevation: number;
   amplitude: number;
   style_is_visible: boolean;
   scope: number;
