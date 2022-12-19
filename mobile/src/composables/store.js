@@ -77,6 +77,15 @@ const addPoiInBiovers = (newPoi) => {
   }
 }
 
+const addPathInBiovers = (newPath) => {
+  const bioversIndex = biovers.value.findIndex((b) => b.id === newPath.biovers);
+  biovers.value[bioversIndex].Path.push(newPath);
+
+  if (selectedBiovers.value) {
+    selectedBiovers.value.Path.push(newPath);
+  }
+}
+
 const updatePoiInBiovers = (newPoi) => {
   const bioversIndex = biovers.value.findIndex((b) => b.id === newPoi.biovers);
   const poiIndex = biovers.value[bioversIndex].Poi.findIndex((p) => p.id === newPoi.id)
@@ -99,6 +108,28 @@ const updatePathInBiovers = (newPath) => {
   }
 }
 
+const deletePoiInBiovers = (newPoi) => {
+  const bioversIndex = biovers.value.findIndex((b) => b.id === newPoi.biovers);
+  const poiIndex = biovers.value[bioversIndex].Poi.findIndex((p) => p.id === newPoi.id)
+  biovers.value[bioversIndex].Poi.splice(poiIndex, 1)
+
+  if (selectedBiovers.value) {
+    const selectedPoiIndex = selectedBiovers.value.Poi.findIndex((p) => p.id === newPoi.id)
+    selectedBiovers.value.Poi.splice(selectedPoiIndex, 1)
+  }
+}
+
+const deletePathInBiovers = (newPath) => {
+  const bioversIndex = biovers.value.findIndex((b) => b.id === newPath.biovers);
+  const pathIndex = biovers.value[bioversIndex].Path.findIndex((p) => p.id === newPath.id)
+  biovers.value[bioversIndex].Path.splice(pathIndex, 1)
+
+  if (selectedBiovers.value) {
+    const selectedPathIndex = selectedBiovers.value.Path.findIndex((p) => p.id === newPath.id)
+    selectedBiovers.value.Path.splice(selectedPathIndex, 1)
+  }
+}
+
 const resetSelectedBiovers = () => {
   selectedBiovers.value = null;
 }
@@ -109,6 +140,6 @@ watch(minDistance, (distance) => {
 
 export function useStore() {
 
-  return { isAuth, section, biovers, username, showAggreement, forgotPassword, send, isMobileOrTablet, isIOS, selectedBiovers, pins, mapOpen, favori, hubDisplay, hubDisplayTimeout, registerValidated, minDistance, arMode, isInFavori, isInPins, getPinsBiovers, addPoiInBiovers, updatePoiInBiovers, updatePathInBiovers, resetSelectedBiovers };
+  return { isAuth, section, biovers, username, showAggreement, forgotPassword, send, isMobileOrTablet, isIOS, selectedBiovers, pins, mapOpen, favori, hubDisplay, hubDisplayTimeout, registerValidated, minDistance, arMode, isInFavori, isInPins, getPinsBiovers, addPoiInBiovers, addPathInBiovers, updatePoiInBiovers, updatePathInBiovers, resetSelectedBiovers, deletePoiInBiovers, deletePathInBiovers };
 
 }

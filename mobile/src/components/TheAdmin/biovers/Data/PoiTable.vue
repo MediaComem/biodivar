@@ -228,6 +228,8 @@ import { fullDateFormatter } from '../../../../utils/formatter.js';
 import sort from '../../../../utils/sort';
 import { computeGeoJSONFromPOI, computeGeoJSONFromPOIs } from '../../../../utils/geojson.js';
 
+import { useStore } from '../../../../composables/store.js';
+
 import { savePoi, deletePoi } from '../../../../utils/api.js';
 
 export default {
@@ -436,6 +438,7 @@ export default {
       delete poi.id;
       const newPoi = await savePoi(poi);
       this.addNewPoi(newPoi.data);
+      useStore().addPoiInBiovers(newPoi.data);
     },
     copy(poi) {
       this.copyPoi(poi);

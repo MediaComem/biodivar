@@ -121,6 +121,7 @@ async function deletePath() {
     deleteDialog.value = false;
     await apiDeletaPath(form.value);
     store.dispatch('biovers/removePath', form.value);
+    composableStore().deletePathInBiovers(form.value);
     await createEvent('delete-path-' + form.value.id, form.value.biovers);
     updateWait(false);
     emit('closeAfterSave');

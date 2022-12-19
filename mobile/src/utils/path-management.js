@@ -1,6 +1,7 @@
 import { savePath as save, saveEvent } from './api.js';
 import { store } from '../store/store.js';
 import { mapStore } from '../../src/composables/map.js';
+import { useStore } from '../../src/composables/store.js';
 
 export async function savePath(coordinates, bioversId) {
   if (coordinates && coordinates.length > 0) {
@@ -18,6 +19,7 @@ export async function savePath(coordinates, bioversId) {
     };
     const newPath = await save(defaultForm);
     store.dispatch('biovers/addNewPath', newPath.data);
+    useStore().addPathInBiovers(newPath.data);
 
     const { accuracy, position } = mapStore();
     await saveEvent({

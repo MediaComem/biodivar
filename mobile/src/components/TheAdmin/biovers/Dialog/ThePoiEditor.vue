@@ -712,6 +712,7 @@ export default {
       this.deleteDialog = false;
       this.removePoi(this.form);
       await deletePoi(this.form);
+      useStore().deletePoiInBiovers(this.form);
       await this.createEvent('delete-poi-' + this.form.id, this.form.biovers);
       this.showCreationDialog = false;
       this.updateWait(false);

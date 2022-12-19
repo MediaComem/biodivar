@@ -137,6 +137,8 @@ import { fullDateFormatter, coordinateFormatter } from '../../../../utils/format
 import { computeGeoJSONFromPATH, computeGeoJSONFromPATHs } from '../../../../utils/geojson.js';
 import sort from '../../../../utils/sort';
 
+import { useStore } from '../../../../composables/store.js';
+
 import { savePath, deletePath } from '../../../../utils/api.js';
 
 export default {
@@ -244,6 +246,7 @@ export default {
       delete path.id;
       const newPath = await savePath(path);
       this.addNewPath(newPath.data);
+      useStore().addPathInBiovers(newPath.data);
     },
     download(file) {
       const anchor = document.createElement('a');
