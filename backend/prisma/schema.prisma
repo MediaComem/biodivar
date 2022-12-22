@@ -93,6 +93,7 @@ model Path {
   style_stroke_width      Float       @default(1)
   stroke_color            String      @default("#FFFFFF")
   stroke_opacity          Int         @default(100)
+  extrusion               Float       @default(0)
   amplitude               Float       @default(0)
   elevation               Float       @default(0)
   scope                   Float       @default(50)

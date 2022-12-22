@@ -13,6 +13,7 @@ export interface PathModel {
   stroke_color: string;
   stroke_opacity: number;
   elevation: number;
+  extrusion: number;
   amplitude: number;
   style_is_visible: boolean;
   scope: number;
