@@ -361,6 +361,74 @@ onMounted(() => {
           </div>
           <div style="display: flex">
             <div class="col-main border">
+              <p class="material-symbols-sharp">expand</p>
+              <p>extrusion</p>
+              <p
+                ref="anim"
+                class="material-symbols-sharp"
+                @mouseenter="openTooltip($event, 'extrusion')"
+                @mouseleave="tooltipElement = null"
+              >
+                help
+              </p>
+              <div data-role="tooltip" v-show="tooltipElement === 'extrusion'">
+                <p
+                  @mouseenter="tooltipElement = 'extrusion'"
+                  @mouseleave="tooltipElement = null"
+                >
+                  
+                </p>
+              </div>
+            </div>
+            <div class="col2 border end-border">
+              <input
+                type="number"
+                class="input-margin remove-input-border remove-stepper input-number-right-align"
+                v-model="form.extrusion"
+                style="width: 40px; margin-right: 20px"
+              />
+              <el-slider class="slider-width" v-model="form.extrusion" :max="100" :step="0.1"/>
+            </div>
+          </div>
+          <div style="display: flex">
+            <div class="col-main border">
+              <p class="material-symbols-sharp">north</p>
+              <p>elevation</p>
+              <p
+                ref="anim"
+                class="material-symbols-sharp"
+                @mouseenter="openTooltip($event, 'elev')"
+                @mouseleave="tooltipElement = null"
+              >
+                help
+              </p>
+              <div data-role="tooltip" v-show="tooltipElement === 'elev'">
+                <p
+                  @mouseenter="tooltipElement = 'elev'"
+                  @mouseleave="tooltipElement = null"
+                >
+                  
+                </p>
+              </div>
+            </div>
+            <div class="col2 border end-border">
+              <input
+                type="number"
+                class="input-margin remove-input-border remove-stepper input-number-right-align"
+                v-model="form.elevation"
+                style="width: 40px; margin-right: 20px"
+              />
+              <el-slider
+                class="slider-width"
+                v-model="form.elevation"
+                :min="-10"
+                :max="10"
+                :step="0.01"
+              />
+            </div>
+          </div>
+          <div style="display: flex">
+            <div class="col-main border">
               <p class="material-symbols-sharp">animation</p>
               <p>animation</p>
               <p
