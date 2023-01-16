@@ -6,9 +6,10 @@ AFRAME.registerComponent('camera-reset', {
 
   init: function () {
     setTimeout(() => {
-      this.el.sceneEl.camera.position.set(this.data.position.x, this.data.position.y, this.data.position.z);
-      this.el.sceneEl.camera.lookAt(0, 1.7, 0);
-      this.el.sceneEl.camera.updateProjectionMatrix();
+      // this.el.sceneEl.camera.position.set(this.data.position.x, this.data.position.y, this.data.position.z);
+      // this.el.sceneEl.camera.lookAt(0, 1.7, 0);
+      // this.el.sceneEl.camera.updateProjectionMatrix();
+      document.querySelector('a-scene').flushToDOM(true);
     }, this.data.delay);
   },
 
