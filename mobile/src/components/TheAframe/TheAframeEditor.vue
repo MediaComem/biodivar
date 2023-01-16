@@ -43,7 +43,7 @@
 
     <a-plane
       wireframe="true"
-      rotation="90 0 0"
+      :rotation="`90 0 0`"
       height="150"
       width="150"
       segments-height="150"
@@ -83,7 +83,7 @@
     </a-entity>
 
     <a-entity id="camera-rig">
-      <a-entity id="head"  position="0 1.6 5" camera look-controls="pointerLockEnabled: true" wasd-controls camera-reset></a-entity>
+      <a-entity id="head"  position="0 1.7 5" camera look-controls="pointerLockEnabled: true" wasd-controls camera-reset></a-entity>
     </a-entity>
 
   </a-scene>

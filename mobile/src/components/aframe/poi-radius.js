@@ -19,13 +19,11 @@ AFRAME.registerComponent('poi-radius', {
 
   init: function () {
     if (!allowedShape.includes(this.data.shape)) this.data.shape = allowedShape[0];
-    // this.targetWorldPos = new THREE.Vector3();
-    // this.myWorldPos = new THREE.Vector3();
     this.genMesh();
   },
 
   update: function () {
-    this.el.removeObject3D('poi-radius', this.mesh);
+    this.el.removeObject3D('poi-radius');
     this.genMesh();
   },
 
@@ -59,6 +57,7 @@ AFRAME.registerComponent('poi-radius', {
       color: this.color,
       transparent: true,
       opacity: this.data.opacity / 100,
+      depthWrite: false,
       side: THREE.DoubleSide,
       wireframe: this.data.wireframe,
     });
@@ -73,6 +72,7 @@ AFRAME.registerComponent('poi-radius', {
       color: this.color,
       transparent: true,
       opacity: this.data.opacity / 100,
+      depthWrite: false,
       side: THREE.DoubleSide,
       wireframe: this.data.wireframe,
     });
@@ -90,6 +90,7 @@ AFRAME.registerComponent('poi-radius', {
       color: this.color,
       transparent: true,
       opacity: this.data.opacity / 100,
+      depthWrite: false,
       side: THREE.DoubleSide,
       wireframe: this.data.wireframe,
     });
@@ -111,6 +112,7 @@ AFRAME.registerComponent('poi-radius', {
       color: this.strokeColor,
       transparent: true,
       opacity: this.data.strokeOpacity / 100,
+      depthWrite: false,
       side: THREE.DoubleSide,
       wireframe: this.data.wireframe,
     });

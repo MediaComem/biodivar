@@ -15,6 +15,7 @@
   import '../aframe/sound-play-stop';
   import '../aframe/listen-to';
   import '../aframe/event-set';
+  import '../aframe/path-walls';
 
   import { getSymbolUrl, getSymbolAudiUrl, getMediaUrl, saveTrace, saveEvent } from '../../utils/api.js';
   import { onMounted, onUnmounted, watch } from '@vue/runtime-core';
@@ -39,7 +40,7 @@
     section.value = 'menu';
   });
 
-  useEventListener('[webxr]', 'exit-vr', () => {
+  useEventListener('a-scene', 'exit-vr', () => {
     section.value = 'menu';
   });
 
@@ -126,6 +127,22 @@
       data: 'biovers-close',
     });
   });
+
+  // selectedBiovers.value.Path.push({
+  //   style_stroke_width: 0.1,
+  //   stroke_color: '#004e92',
+  //   stroke_opacity: 100,
+  //   extrusion: .1,
+  //   elevation: 0,
+  //   scope: 5,
+  //   coordinate: [
+  //     {lat: 46.7809153620791, long: 6.64862875164098, alt: 0 },
+  //     {lat: 46.7809113557174, long: 6.64863376635327, alt: -1 },
+  //     {lat: 46.7809113557174, long: 6.64863376635327, alt: 1 },
+  //     {lat: 46.7809113557174, long: 6.64863376635327, alt: 2 },
+  //     {lat: 46.7809113557174, long: 6.64863376635327, alt: -2 },
+  //   ]
+  // });
 </script>
 
 <template>
@@ -141,6 +158,25 @@
   >
 
     <a-entity faces-north>
+      <template v-for="path of selectedBiovers.Path" :key="`path-${path.id}`">
+        <a-entity :path-walls="`
+          width: ${path.style_stroke_width};
+          extrude: ${path.extrusion};
+          elevation: ${path.elevation};
+          color: ${path.stroke_color};
+          opacity: ${path.stroke_opacity};
+        `">
+          <template v-for="(coordinate, index) of path.coordinate" :key="`path-${path.id}-coord-${index}`">
+            <a-entity
+              position="0 0 10000"
+              :vposition="`${-3 + index * 2} 0 ${-5 + coordinate.alt}`"
+              :gps-position="`latitude: ${coordinate.lat}; longitude: ${coordinate.long}`"
+              :visible-from="`distance: ${path.scope}`"
+            ></a-entity>
+          </template>
+        </a-entity>
+      </template>
+
       <template v-for="poi of selectedBiovers.Poi" :key="`poi-${poi.id}`">
         <a-entity
           position="0 0 10000"
