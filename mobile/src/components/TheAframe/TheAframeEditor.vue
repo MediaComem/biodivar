@@ -43,7 +43,7 @@
 
     <a-plane
       wireframe="true"
-      :rotation="`90 0 0`"
+      rotation="90 0 0"
       height="150"
       width="150"
       segments-height="150"

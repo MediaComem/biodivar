@@ -14,7 +14,6 @@ AFRAME.registerComponent('poi-radius', {
     strokeOpacity: {type: 'number', default: 100},
     wireframe: {type: 'boolean', default: false},
     extrude: {type: 'number', default: 0},
-    // throttle: {type: 'number', default: 500},
   },
 
   init: function () {
@@ -23,8 +22,18 @@ AFRAME.registerComponent('poi-radius', {
   },
 
   update: function () {
-    this.el.removeObject3D('poi-radius');
+    this.disposeAll();
     this.genMesh();
+  },
+
+  disposeAll() {
+    if (this.el.getObject3D('poi-radius')) {
+      this.group.traverse(obj => {
+        if (obj.geometry) obj.geometry.dispose();
+        if (obj.material) obj.material.dispose();
+      });
+      this.el.removeObject3D('poi-radius');
+    }
   },
 
   genMesh: function () {
@@ -135,6 +144,10 @@ AFRAME.registerComponent('poi-radius', {
     outterShape.holes.push(holeShape);
 
     return  new THREE.ExtrudeGeometry(outterShape, extrudeSettings);
+  },
+
+  remove: function () {
+    this.disposeAll();
   },
 
 });

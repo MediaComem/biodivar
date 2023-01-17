@@ -128,21 +128,22 @@
     });
   });
 
-  // selectedBiovers.value.Path.push({
-  //   style_stroke_width: 0.1,
-  //   stroke_color: '#004e92',
-  //   stroke_opacity: 100,
-  //   extrusion: .1,
-  //   elevation: 0,
-  //   scope: 5,
-  //   coordinate: [
-  //     {lat: 46.7809153620791, long: 6.64862875164098, alt: 0 },
-  //     {lat: 46.7809113557174, long: 6.64863376635327, alt: -1 },
-  //     {lat: 46.7809113557174, long: 6.64863376635327, alt: 1 },
-  //     {lat: 46.7809113557174, long: 6.64863376635327, alt: 2 },
-  //     {lat: 46.7809113557174, long: 6.64863376635327, alt: -2 },
-  //   ]
-  // });
+  selectedBiovers.value.Path.push({
+    id: 1,
+    style_stroke_width: 1,
+    stroke_color: '#004e92',
+    stroke_opacity: 50,
+    extrusion: 0.1,
+    elevation: 0,
+    scope: 5,
+    coordinate: [
+      {lat: 46.7809153620791, long: 6.64862875164098, alt: 0 }, // utilisation de l'altitude pour jouer sur l'elevation relative du "joint"
+      {lat: 46.7809113557174, long: 6.64863376635327, alt: -1 },
+      {lat: 46.7809113557174, long: 6.64863376635327, alt: 1 },
+      {lat: 46.7809113557174, long: 6.64863376635327, alt: 2 },
+      {lat: 46.7809113557174, long: 6.64863376635327, alt: -2 },
+    ]
+  });
 </script>
 
 <template>
@@ -165,11 +166,12 @@
           elevation: ${path.elevation};
           color: ${path.stroke_color};
           opacity: ${path.stroke_opacity};
+          pathId: ${path.id};
         `">
           <template v-for="(coordinate, index) of path.coordinate" :key="`path-${path.id}-coord-${index}`">
             <a-entity
               position="0 0 10000"
-              :vposition="`${-3 + index * 2} 0 ${-5 + coordinate.alt}`"
+              :tposition="`${-3 + index * 2} 0 ${-5 + coordinate.alt}`"
               :gps-position="`latitude: ${coordinate.lat}; longitude: ${coordinate.long}`"
               :visible-from="`distance: ${path.scope}`"
             ></a-entity>

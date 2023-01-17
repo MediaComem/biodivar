@@ -6,6 +6,9 @@ AFRAME.registerComponent('path-walls', {
     width: {type: 'number', default: 0.1},
     extrude: {type: 'number', default: 0.1},
     throttle: {type: 'number', default: 500},
+    pathId: {type: 'string', default: ''},
+    event: {type: 'string', default: 'path-enter'},
+    eventFar: {type: 'string', default: 'path-exit'},
   },
 
   init: function () {
@@ -18,19 +21,20 @@ AFRAME.registerComponent('path-walls', {
       side: THREE.DoubleSide,
       depthWrite: false,
     });
+    this.isWallsVisibles = false;
     this.tick = AFRAME.utils.throttleTick(this.updateWalls, this.data.throttle, this);
   },
 
   getAllPositions: function () {
     const positions = [];
     for (const node of this.allNodes) {
-      const position = node.getAttribute('position');
-      positions.push(position);
+      positions.push(node.getAttribute('position'));
     }
     return positions;
   },
 
-  isAllNodeInvisible: function () {
+  isInvisible: function () {
+    // If all childs are invisible, the walls ar invisible too
     for (const node of this.allNodes) {
       if (node.getAttribute('visible')) return false;
     }
@@ -40,17 +44,24 @@ AFRAME.registerComponent('path-walls', {
   updateWalls: function () {
     if (!this.allNodes) {
       this.allNodes = this.el.querySelectorAll('a-entity');
-    } else if (this.el.getObject3D('path-walls')) {
-      this.group.traverse(obj => {
-        if (obj.geometry) obj.geometry.dispose();
-      });
-      this.el.removeObject3D('path-walls');
     }
 
+    // Recreate the walls
+    this.disposeWalls();
     this.group = new THREE.Group();
 
-    // If all childs are invisible, do not construct the walls
-    if (this.isAllNodeInvisible()) return;
+    // Emit a event when the walls change from invisible to visible and vice versa (cf: emit-when-near.js)
+    if (this.isInvisible()) {
+      if (this.isWallsVisibles) {
+        this.isWallsVisibles = false;
+        window.dispatchEvent(new CustomEvent(this.data.eventFar, {detail: {pathId: this.data.pathId}}));
+      }
+      return;
+    }
+    if (!this.isWallsVisibles) {
+      this.isWallsVisibles = true;
+      window.dispatchEvent(new CustomEvent(this.data.event, {detail: {pathId: this.data.pathId}}));
+    }
 
     const positions = this.getAllPositions();
     if (positions.length < 2) throw new Exception('Path must have at least 2 GPS coordinates');
@@ -69,6 +80,20 @@ AFRAME.registerComponent('path-walls', {
     }
 
     this.el.setObject3D('path-walls', this.group);
+  },
+
+  disposeWalls() {
+    if (this.el.getObject3D('path-walls')) {
+      this.group.traverse(obj => {
+        if (obj.geometry) obj.geometry.dispose();
+      });
+      this.el.removeObject3D('path-walls');
+    }
+  },
+
+  remove: function () {
+    this.disposeWalls();
+    this.material.dispose();
   },
 
 });
