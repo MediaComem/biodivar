@@ -11,8 +11,8 @@
 <style scoped>
   .dialog-input-color {
     --color: black;
-    --bg-color: none;
-    --border-color: #000000;
+    --bg-color: #F2F2F2;
+    --border-color: white;
   }
 
   [data-role="input"] {
@@ -25,14 +25,14 @@
     font-size: 14px;
     line-height: 14px;
     font-variation-settings: "wght" 110, "ital" 0;
-    width: calc(100% - 2rem);
+    width: 100%;
     max-width: var(--max-width);
     padding: 1rem 1rem;
     box-sizing: border-box;
     border: 1px solid var(--border-color);
     background-color: var(--bg-color);
     padding-left: 2.3rem;
-    margin: 0 1rem 1rem 1rem;
+    margin: 0 0rem 1rem 0rem;
     color: var(--color);
     letter-spacing: 0.02em;
     padding-top: 6px;

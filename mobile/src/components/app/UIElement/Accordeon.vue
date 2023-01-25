@@ -56,7 +56,7 @@
       height: 32px;
       display: flex;
       padding-left: 0;
-      margin: 1rem 1rem 0rem var(--left-margin);
+      margin: 1rem 0.8rem 0rem 0.8rem;
       padding-bottom: 0.9rem;
       cursor: pointer;
   }
@@ -68,7 +68,7 @@
   .icon-margin {
     margin: 0px;
     padding-right: 0px;
-    margin-top: -4px;
+    margin-top: -3px;
   }
 
   .fill-font {
@@ -84,13 +84,13 @@
   }
 
   .text {
-    font-size: 14px;
-    line-height: 14px;
+    font-size: 16px;
+    line-height: 16px;
     margin: 0;
     padding-left: 0.5rem;
     display: flex;
     align-items: center;
-    margin-top: -4px;
+    margin-top: -2px;
     letter-spacing: 0.02em;
   }
 

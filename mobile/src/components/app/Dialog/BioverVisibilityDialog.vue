@@ -9,8 +9,9 @@
 
 <template>
   <base-dialog class="edit-element"  @close="emit('close')">
-    <p class="material-symbols-sharp icon-margin icon-font fill-font header-icon-layout">remove_red_eye</p>
-    <header>{{ $t('TheMenu.Dialog.VisibilityHeader') }} {{ props.biover.name }}</header>
+    <div style="display: flex; justify-content: center;">
+      <header><p class="material-symbols-sharp icon-margin-header icon-font fill-font header-icon-layout">remove_red_eye</p> {{ $t('TheMenu.Dialog.VisibilityHeader') }} {{ props.biover.name }}</header>
+    </div>
     <p class="description">{{ $t('TheMenu.Dialog.VisibilityDescription') }}</p>
     <base-radio class="layout-radio">
       <button :class="{ 'active': currentVisibility }" @click="currentVisibility = !currentVisibility">
@@ -29,15 +30,21 @@
 </template>
 
 <style scoped>
+  header {
+    margin: 0;
+  }
+
   .visibility {
     --link-color: white;
     --highlight-color: #009FE3;
+    width: 100% !important;
+    margin: 0 !important;
   }
 
   .layout-radio {
-    margin-left: 16px !important;
-    margin-right: 16px !important;
-    width: calc(100% - 32px) !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    width: 100% !important;
     --border-color: black;
     --active-color: white;
     --active-bg-color: black;
@@ -48,15 +55,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: -4px;
   }
 
   .icon-font {
-    font-size: 20px;
+    font-size: 16px;
+    display: inline-block;
+    height: auto;
+  }
+
+  .icon-margin-header {
+    margin: 0px;
+    transform: translate(0px, 2px);
   }
 
   .icon-margin {
     margin: 0px;
-    padding-right: 6px;
+    padding-right: 4px;
   }
 
   .fill-font {
@@ -76,6 +91,6 @@
   }
 
   .description {
-    margin-bottom: 2rem;
+    margin-bottom: 1.4rem;
   }
 </style>

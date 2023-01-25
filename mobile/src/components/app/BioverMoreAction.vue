@@ -40,17 +40,17 @@
         </div>
       </div>
       <ul>
-        <li @click="section = 'ar'"><p class="material-symbols-sharp icon-margin icon-font">view_in_ar</p> {{ $t('TheMenu.More.AR') }}</li>
         <li @click="openInMap"><p class="material-symbols-sharp icon-margin icon-font">map</p> {{ $t('TheMenu.More.Desktop') }}</li>
+        <li @click="section = 'ar'"><p class="material-symbols-sharp icon-margin icon-font">view_in_ar</p> {{ $t('TheMenu.More.AR') }}</li>
+        <li v-if="isInPins(props.biover.id)" @click="emit('pin')"><p class="material-symbols-sharp icon-margin icon-font fill-font">push_pin</p> {{ $t('TheMenu.More.ToPin') }}</li>
+        <li v-if="!isInPins(props.biover.id)" @click="emit('pin')"><p class="material-symbols-sharp icon-margin icon-font">push_pin</p> {{ $t('TheMenu.More.FromUnPin') }}</li>
+        <li v-if="isInFavori(props.biover.id)" @click="emit('favori')"><p class="material-symbols-sharp icon-margin icon-font fill-font">star</p> {{ $t('TheMenu.More.ToFavorite') }}</li>
+        <li v-if="!isInFavori(props.biover.id)" @click="emit('favori')"><p class="material-symbols-sharp icon-margin icon-font">star</p> {{ $t('TheMenu.Dialog.FavoriAdd') }}</li>
         <li v-if="props.biover.is_public" :class="{'not-allowed': !isOwner}" @click="isOwner ? emit('visibility') : ''"><p class="material-symbols-sharp icon-margin icon-font fill-font">remove_red_eye</p> {{ $t('TheMenu.More.Private') }}</li>
         <li v-if="!props.biover.is_public" :class="{'not-allowed': !isOwner}" @click="isOwner ? emit('visibility') : ''"><p class="material-symbols-sharp icon-margin icon-font fill-font">visibility_off</p> {{ $t('TheMenu.More.Publique') }}</li>
         <li v-if="props.biover.is_editable" :class="{'not-allowed': !isOwner}" @click="isOwner ?emit('editable') : ''"><p class="material-symbols-sharp icon-margin icon-font fill-font">edit</p> {{ $t('TheMenu.More.ToUnEdit') }}</li>
         <li v-if="!props.biover.is_editable" :class="{'not-allowed': !isOwner}" @click="isOwner ?emit('editable') : ''"><p class="material-symbols-sharp icon-margin icon-font fill-font">edit_off</p> {{ $t('TheMenu.More.ToEdit') }}</li>
-        <li v-if="isInFavori(props.biover.id)" @click="emit('favori')"><p class="material-symbols-sharp icon-margin icon-font fill-font">star</p> {{ $t('TheMenu.More.ToFavorite') }}</li>
-        <li v-if="!isInFavori(props.biover.id)" @click="emit('favori')"><p class="material-symbols-sharp icon-margin icon-font">star</p> {{ $t('TheMenu.Dialog.FavoriAdd') }}</li>
-        <li v-if="isInPins(props.biover.id)" @click="emit('pin')"><p class="material-symbols-sharp icon-margin icon-font fill-font">push_pin</p> {{ $t('TheMenu.More.ToPin') }}</li>
-        <li v-if="!isInPins(props.biover.id)" @click="emit('pin')"><p class="material-symbols-sharp icon-margin icon-font">push_pin</p> {{ $t('TheMenu.More.FromUnPin') }}</li>
-        <li :class="{'not-allowed': !editableRight}" @click="editableRight ? emit('edit') : ''"><p class="material-symbols-sharp icon-margin icon-font fill-font">edit</p> {{ $t('TheMenu.More.Title') }}</li>
+        <li :class="{'not-allowed': !editableRight}" @click="editableRight ? emit('edit') : ''"><p class="material-symbols-sharp icon-margin icon-font fill-font">tune</p> {{ $t('TheMenu.More.Title') }}</li>
         <li @click="emit('duplicate')"><p class="material-symbols-sharp icon-margin icon-font">file_copy</p> {{ $t('TheMenu.More.Duplicate') }}</li>
         <li :class="{'not-allowed': !editableRight}" @click="editableRight ? emit('delete') : ''"><p class="material-symbols-sharp icon-margin icon-font">delete</p> {{ $t('TheMenu.More.Delete') }}</li>
       </ul>

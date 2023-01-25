@@ -121,6 +121,7 @@ export default {
   background-color: black;
   border-style: solid;
   border-color: white;
+  padding-left: 0px;
 }
 
 .name-element {

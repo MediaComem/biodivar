@@ -58,11 +58,8 @@
     <div data-role="layout">
       <base-input class="search">
         <p class="material-symbols-sharp icon-margin icon-font fill-font">search</p>
-        <input type="text" v-model="search">
+        <input type="text" v-model="search" style="margin-left: 0px; margin-right: 0px; width: 100%">
       </base-input>
-      <base-button class="button" @click="openBioversCreator">
-        <p class="material-symbols-sharp icon-button-margin icon-font">add_circle</p><p class="button-text">Créer un nouveau biovers</p>
-      </base-button>
       <hr>
       <Accordeon class="own margin-accordeon" :header="`mes biovers (${own.length})`" :could-update-header="false" :length="own.length" :should-be-open="ownOpen" :image="'architecture'">
           <div v-for="(item, index) in own" :key="index" class="margin">
@@ -76,11 +73,18 @@
           </div>
       </Accordeon>
       <hr>
-      <Accordeon class="public margin-accordeon" :header="`publiques (${publicBiovers.length})`" :could-update-header="false" :length="publicBiovers.length" :should-be-open="publicOpen" :image="'remove_red_eye'">
+      <Accordeon class="public margin-accordeon" :header="`publics (${publicBiovers.length})`" :could-update-header="false" :length="publicBiovers.length" :should-be-open="publicOpen" :image="'remove_red_eye'">
           <div v-for="(item, index) in publicBiovers" :key="index" class="margin">
               <BioversItem :biover="item"/>
           </div>
       </Accordeon>
+      <hr>
+      <div class="button-margin">
+        <base-button class="button" @click="openBioversCreator">
+          <p class="material-symbols-sharp icon-button-margin icon-font">add_circle</p><p class="button-text">Créer un nouveau biovers</p>
+        </base-button>
+      </div>
+      
     </div>
     <BioverCreator :showDialog="bioversCreator" @closeDialog="closeBioversCreator"/> 
 </template>
@@ -96,7 +100,7 @@
   hr {
     border: none;
     border-top: 1px solid #BDBDBD;
-    margin: 0 1rem 0 1rem;
+    margin: 0 0.8rem 0 0.8rem;
   }
 
   .margin {
@@ -106,6 +110,11 @@
 
   .search {
       padding-top: 0.8rem;
+      padding-left: 0.8rem;
+      padding-right: 0.8rem;
+      width: 100%;
+      margin-left: 0px !important;
+      margin-right: 0px !important;
       --bg-color: #E0E0E0;
       --border-color: #000000;
       margin-bottom: -2px;
@@ -127,6 +136,11 @@
     left: 21px;
   }
 
+  .button-margin {
+    margin-top: 0.8rem;
+    padding-bottom: 0.9rem;
+  }
+
   .icon-button-margin {
     margin: 0px;
     padding-right: 6px;
@@ -136,14 +150,18 @@
     --link-color: white;
     --highlight-color: #2F80ED;
     margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    margin-left: 0.8rem !important;
+    margin-right: 0.8rem !important;
     padding-left: 15px !important;
     padding-right: 15px !important;
+    width: calc(100% - 1.6rem) !important;
   }
 
   .button-text {
     margin-top: 0px;
     margin-bottom: 0px;
-    padding-bottom: 1.5px;
+    padding-bottom: 0.5px;
     font-variation-settings: "wght" 149, "ital" 0;
   }
 

@@ -1,6 +1,6 @@
 {
     "TheLogin": {
-        "title": "Outil de création d’expériences de réalité augmentée géolocalisée",
+        "title": "Création d’expériences de réalité augmentée géolocalisée",
         "inscription": "Inscrivez-vous",
         "forgot-password": "Mot de passe oublié?",
         "reset-password": "Réinitialiser le mot de passe",
@@ -81,8 +81,8 @@
             "Update": "Update",
             "TitleHeader": "Modifier les paramètres du biovers",
             "TitleDescription": "Vous pouvez modifier le nom, la description et l’emplacement de votre biovers.",
-            "TitlePlaceholder": "nom du biovers",
-            "DescriptionPlaceholder": "Description du biovers",
+            "TitlePlaceholder": "Nom",
+            "DescriptionPlaceholder": "Description",
             "Save": "Sauvegarder",
             "VisibilityHeader": "Changer la visibilité de ",
             "VisibilityDescription": "Lorsqu’un biovers est public, tout le monde peut le visualiser et le visiter en RA. Lorsqu’il est privé, vous seul·e y avez accès.",
@@ -125,7 +125,7 @@
             "FromUnPin": "ajouter une épingle"
         },
         "Information": {
-            "POI": "points d’intérêt·s",
+            "POI": "point·s d’intérêt",
             "Traces": "trace·s",
             "Enter": "ENTRER",
             "NoUpdate": "pas d’édition effectuée sur ce biovers",

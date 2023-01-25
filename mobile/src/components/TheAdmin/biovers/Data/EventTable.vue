@@ -9,41 +9,41 @@
           </th>
           <th class="column second-column">
             <div class="header-value">
-              <p class="no-margin">#</p>
+              <p class="no-margin column-title-font">#</p>
               <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'id' && !orderElement}" @click="setSort('id')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getEventColumnsPreference.created_date" class="column">
             <div class="header-value">
-              <p class="material-symbols-sharp text-margin">date_range</p>
-              <p class="no-margin">CREER LE</p>
+              <p class="material-symbols-sharp text-margin">event</p>
+              <p class="no-margin column-title-font">Date</p>
               <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'creation_date' && !orderElement}" @click="setSort('creation_date')">arrow_drop_down</p>
             </div>
           </th>
            <th v-if="getEventColumnsPreference.author" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">architecture</p>
-              <p class="no-margin">AUTHEUR</p>
+              <p class="no-margin column-title-font">Auteur</p>
               <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'username' && !orderElement}" @click="setSort('username')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getEventColumnsPreference.gps_accuracy" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">crisis_alert</p>
-              <p class="no-margin">PRECISION DU GPS</p>
+              <p class="no-margin column-title-font">Précision</p>
               <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'gps_accuracy' && !orderElement}" @click="setSort('gps_accuracy')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getEventColumnsPreference.coordinate" class="column">
             <div class="header-value">
-              <p class="material-symbols-sharp text-margin">location_searching</p>
-              <p class="no-margin">COORDONNEES</p>
+              <p class="material-symbols-sharp text-margin">my_location</p>
+              <p class="no-margin column-title-font">Coordonnées</p>
             </div>
           </th>
           <th v-if="getEventColumnsPreference.data" class="column">
             <div class="header-value">
-              <p class="material-symbols-sharp text-margin">database</p>
-              <p class="no-margin">EVENT</p>
+              <p class="material-symbols-sharp text-margin">touch_app</p>
+              <p class="no-margin column-title-font">Action</p>
               <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'data' && !orderElement}" @click="setSort('data')">arrow_drop_down</p>
             </div>
           </th>
@@ -57,17 +57,17 @@
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
         </tr>
-        <tr v-for="(event, index) in getSortedData" :key="index" class="table-background" :class="{'table-hover': getCurrentEventTabClick.includes(event.element.id)}" @mouseover="over(event.element.id)" @mouseleave="leave" @click="openPopup(event.element.id)">
+        <tr v-for="(event, index) in getSortedData" :key="index" style="border-bottom: 1px solid white;" class="table-background" :class="{'table-hover': getCurrentEventTabClick.includes(event.element.id)}" @mouseover="over(event.element.id)" @mouseleave="leave" @click="openPopup(event.element.id)">
           <td class="first-column">
             <input type="checkbox" :checked="event.display" @click="selectElement(event)">
           </td>
-          <td class="column">{{ event.element.id }}</td>
-          <td v-if="getEventColumnsPreference.created_date" class="column">{{ dateFormatter(event.element.creation_date) }}</td>
-          <td v-if="getEventColumnsPreference.author" class="column">{{ userFormatter(event.element.User) }}</td>
-          <td v-if="getEventColumnsPreference.gps_accuracy" class="column">{{ event.element.gps_accuracy }}</td>    
-          <td v-if="getEventColumnsPreference.coordinate" class="column">({{ getCoordinate(event) }})</td>
-          <td v-if="getEventColumnsPreference.data" class="column">({{ event.element.data }})</td>
-          <td class="last-column">
+          <td style="border-left: 1px solid white;" class="column text-font end-align">{{ event.element.id }}</td>
+          <td v-if="getEventColumnsPreference.created_date" class="column text-font end-align">{{ dateFormatter(event.element.creation_date) }}</td>
+          <td v-if="getEventColumnsPreference.author" class="column text-font end-align">{{ userFormatter(event.element.User) }}</td>
+          <td v-if="getEventColumnsPreference.gps_accuracy" class="column text-font end-align">{{ event.element.gps_accuracy }}</td>    
+          <td v-if="getEventColumnsPreference.coordinate" class="column text-font end-align">({{ getCoordinate(event) }})</td>
+          <td v-if="getEventColumnsPreference.data" class="column text-font end-align">({{ event.element.data }})</td>
+          <td class="last-column text-font ">
              <p class="material-symbols-sharp no-margin clickable dot-margin" @click="openMenu(event.element.id)">more_vert</p>
              <div v-if="menuState && menuState.id === event.element.id && menuState.state" class="menu">
                 <p class="menu-element" @click="downloadEvent(event)">Exporter l'Event</p>
@@ -266,4 +266,18 @@ export default {
 
 <style scoped>
 @import './table.css';
+
+.column-title-font {
+  font-family: "BiodivAR Roman";
+  font-variation-settings: "wght" 110, "ital" 0;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.text-font {
+  font-family: "BiodivAR Roman";
+  font-variation-settings: "wght" 85, "ital" 0;
+  font-size: 12px;
+  line-height: 14px;
+}
 </style>

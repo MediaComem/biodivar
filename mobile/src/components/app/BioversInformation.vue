@@ -34,7 +34,7 @@
 </script>
 
 <template>
-  <div>
+  <div class="layout-item">
     <div class="item">
         <BioverActions :biover="props.biover" @visibility="emit('visibility')" @editable="emit('editable')" @favori="emit('favori')" @pin="emit('pin')" />
     </div>
@@ -81,12 +81,16 @@
             <p class="information-text">15.3 MB</p>
         </div-->
     </div>
+    <div class="button-margin-top">
       <base-button class="enter-map" @click="openInMap()">
         <p class="material-symbols-sharp icon-margin">map</p><p class="button-text">Ouvrir sur la carte</p>
       </base-button>
+    </div>
+    <div class="button-margin-bottom">
       <base-button class="enter-admin" @click="enterAR()">
         <p class="material-symbols-sharp icon-margin">view_in_ar</p><p class="button-text">Ouvrir en RA</p>
       </base-button>
+    </div>
   </div>
 </template>
 
@@ -95,15 +99,20 @@
     color: white;
   }
 
+  .layout-item {
+    margin-right: 0.8rem;
+    margin-left: 0.8rem;
+  }
+
   .item {
+    width: 100%;
     display: flex;
-    margin-bottom: 1rem;
   }
 
   .element {
     display: flex;
     text-align: start;
-    margin: 0 0 0.3rem 1rem;
+    margin: 0 0 0.3rem 0rem;
   }
 
   .information-text {
@@ -112,8 +121,8 @@
     margin-left: 10px;
     user-select: none;
     font-size: 12px;
-    line-height: 12px;
-    margin-top: 3px;
+    line-height: 14px;
+    margin-top: 2px;
     font-variation-settings: "wght" 85, "ital" 0;
   }
 
@@ -154,12 +163,26 @@
     --link-color: white;
     --highlight-color: #2F80ED;
     --height: 38px;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    margin-left: 0rem !important;
+    margin-right: 0rem !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    width: 100% !important;
   }
 
   .enter-map {
     --link-color: white;
     --highlight-color: #699A3F;
     --height: 38px;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    margin-left: 0rem !important;
+    margin-right: 0rem !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    width: 100% !important;
   }
 
   .icon-margin {
@@ -171,5 +194,14 @@
     margin: 0;
     color: #BDBDBD;
     font-size: 18px;
+  }
+
+  .button-margin-top {
+    margin-top: 0.8rem;
+  }
+
+  .button-margin-bottom {
+    margin-top: 0.8rem;
+    padding-bottom: 0.8rem;
   }
 </style>

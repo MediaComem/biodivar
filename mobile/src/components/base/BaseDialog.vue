@@ -18,7 +18,7 @@
     border-radius: 1rem;
     border: 0;
     overflow-y: auto;
-    width: calc(100% - 1rem);
+    width: calc(100% - 20px);
     max-width: 640px;
     position: fixed;
   }
@@ -39,7 +39,7 @@
     color: var(--color);
     font-size: 16px;
     line-height: 16px;
-    margin: 1rem 0 1rem 0;
+    margin: 0.8rem 0.8rem 0.8rem 0.8rem;
   }
 
   dialog :slotted(p) {
@@ -65,21 +65,20 @@
 
   .edit-element{
     top: 25%;
-    background-color: #F2F2F2;
+    background-color: white;
     text-align: center;
     z-index: 10000;
+    padding: 0.8rem;
   }
 
   .input {
     top: 25%;
-    height: 50%;
-    background-color: #F2F2F2;
+    background-color: white;
     text-align: center;
   }
 
   .result {
     top: 25%;
-    height: 50%;
     background: rgb(147,191,112);
     text-align: center;
   }

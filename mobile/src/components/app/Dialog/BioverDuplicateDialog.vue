@@ -12,12 +12,13 @@
 
 <template>
   <base-dialog class="edit-element" @close="emit('close')">
-    <p class="material-symbols-sharp icon-margin icon-font header-icon-layout" >file_copy</p>
-    <header>{{ $t('TheMenu.Dialog.DuplicateHeader') }} {{ props.biover.name }}</header>
+  <div style="display: flex; justify-content: center;">
+    <header><p class="material-symbols-sharp icon-margin-header icon-font header-icon-layout" >file_copy</p> {{ $t('TheMenu.Dialog.DuplicateHeader') }} {{ props.biover.name }}</header>
+  </div>
     <p class="description">{{ $t('TheMenu.Dialog.DuplicationDescription') }} </p>
     <base-input class="dialog-input-color">
       <div style="display: flex">
-        <p class="material-symbols-sharp icon-margin icon-font fill-font input" style="top: 5px; left: 25px;">short_text</p>
+        <p class="material-symbols-sharp icon-margin icon-font fill-font input" style="top: 6px; left: 8px;">short_text</p>
         <input type="text" v-model="duplicateBioverName" :placeholder="$t('TheMenu.Dialog.DuplicatePlaceholder')">
       </div>
       <base-button class="duplicate" @click="emit('duplicate', duplicateBioverName)">
@@ -28,9 +29,15 @@
 </template>
 
 <style scoped>
+  header {
+    margin: 0;
+  }
+
   .duplicate {
     --link-color: white;
     --highlight-color: #009FE3;
+    width: 100% !important;
+    margin: 0 !important;
   }
 
   .input {
@@ -42,15 +49,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: -4px;
   }
 
   .icon-font {
-    font-size: 20px;
+    font-size: 16px;
+    display: inline-block;
+    height: auto;
+  }
+
+  .icon-margin-header {
+    margin: 0px;
+    transform: translate(0px, 2px);
   }
 
   .icon-margin {
     margin: 0px;
-    padding-right: 6px;
+    padding-right: 4px;
   }
 
   .fill-font {
@@ -70,6 +85,6 @@
   }
 
   .description {
-    margin-bottom: 2rem;
+    margin-bottom: 1.4rem;
   }
 </style>

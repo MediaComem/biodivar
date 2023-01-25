@@ -275,7 +275,7 @@
     background-color: #323232;
     border: solid 1px #323232;
     display: inline-flex;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
   }
 
   .menu-open {

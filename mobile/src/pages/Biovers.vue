@@ -15,7 +15,10 @@
 
 <template>
   <div>
-    <p v-if="pins.length > 0" class="font-pin" style="text-align: start">biovers épinglé·s&thinsp;:</p>
+    <div style="display: flex">
+      <p class="material-symbols-sharp font-symbol">push_pin</p>
+      <p v-if="pins.length > 0" class="font-pin" style="text-align: start">biovers épinglé·s&thinsp;:</p>
+    </div>
     <div v-for="(biover, index) in pins" :key="index">
       <BioversItem :biover="biover" />
     </div>
@@ -30,12 +33,22 @@
     text-decoration: none;
   }
 
+  .font-symbol {
+    font-variation-settings: "FILL" 1;
+    font-size: 16px;
+    line-height: 12px;
+    letter-spacing: 0.04em;
+    padding-right: 4px;
+  } 
+
   .font-pin {
     font-family: 'BiodivAR Roman';
     font-variation-settings: "wght" 85, "ital" 0;
     font-size: 12px;
     line-height: 12px;
     letter-spacing: 0.04em;
+    align-items: center;
+    display: flex;
   }
 
   .font {
@@ -62,6 +75,7 @@
   .return {
     display: flex;
     height: 36px;
+    margin-top: 0.2rem;
   }
 
   .text {

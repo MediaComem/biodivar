@@ -94,15 +94,15 @@
       <p>Déjà inscrit·e&thinsp;?&nbsp;<a @click="emit('connection')">{{ $t('TheLogin.connect') }}</a></p>
       <base-input class="user">
       <p class="material-symbols-sharp icon-margin icon-position" style="top: 3px">perm_identity</p>
-        <input type="text" v-model="username" :placeholder="$t('TheLogin.placeholder.register.username')">
+        <input class="input-layout" type="text" v-model="username" :placeholder="$t('TheLogin.placeholder.register.username')">
       </base-input>
       <base-input class="email">
         <p class="material-symbols-sharp icon-margin icon-position" style="top: 3px">email</p>
-        <input type="text" v-model="email" :placeholder="$t('TheLogin.placeholder.register.email')">
+        <input class="input-layout" type="text" v-model="email" :placeholder="$t('TheLogin.placeholder.register.email')">
       </base-input>
       <base-input class="password">
         <p class="material-symbols-sharp icon-margin icon-position" style="top: 3px">lock_outline</p>
-        <input :type="showPassword ? 'text' : 'password'" v-model="password" :placeholder="$t('TheLogin.placeholder.register.password')">
+        <input class="input-layout" :type="showPassword ? 'text' : 'password'" v-model="password" :placeholder="$t('TheLogin.placeholder.register.password')">
         <span @click="showPassword = !showPassword">
           <p v-if="showPassword" class="material-symbols-sharp icon-margin">visibility_off</p>
           <p v-else class="material-symbols-sharp icon-margin">remove_red_eye</p>
@@ -110,7 +110,7 @@
       </base-input>
       <base-input class="password">
         <p class="material-symbols-sharp icon-margin icon-position" style="top: 3px">lock_outline</p>
-        <input :type="showConfirmPassword ? 'text' : 'password'" v-model="confirmPassword" :placeholder="$t('TheLogin.placeholder.register.confirm')">
+        <input class="input-layout" :type="showConfirmPassword ? 'text' : 'password'" v-model="confirmPassword" :placeholder="$t('TheLogin.placeholder.register.confirm')">
         <span @click="showConfirmPassword = !showConfirmPassword">
           <p v-if="showConfirmPassword" class="material-symbols-sharp icon-margin">visibility_off</p>
           <p v-else class="material-symbols-sharp icon-margin">remove_red_eye</p>
@@ -164,5 +164,11 @@
   .icon-position {
     position: absolute;
     left: 21px;
+  }
+
+  .input-layout {
+    margin-left: 1rem !important;
+    margin-right: 1rem !important;
+    width: calc(100% - 2rem) !important;
   }
 </style>
