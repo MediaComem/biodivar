@@ -1,0 +1,14 @@
+node_modules
+# Keep environment variables out of version control
+.env
+.env.test
+prisma/bad.db
+prisma/dev.db
+prisma/dev.db-journal
+prisma/test.db
+prisma/test.db-journal
+prisma/biodivar.db
+prisma/biodivar.db-journal
+build
+coverage
+images

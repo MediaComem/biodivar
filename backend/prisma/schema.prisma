@@ -1,0 +1,173 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                      Int         @id @default(autoincrement())
+  email                   String      @unique
+  username                String      @unique
+  password                String
+  creation_date           DateTime
+  update_date             DateTime?
+  deleted_date            DateTime?
+  biovers                 Biovers[]
+  author_poi              Poi[]       @relation(name: "poi_author")
+  last_contrubutor_poi    Poi[]       @relation(name: "poi_last_contributor")
+  author_path             Path[]      @relation(name: "path_author")
+  last_contrubutor_path   Path[]      @relation(name: "path_last_contributor")
+  author_trace            UserTrace[] @relation(name: "trace_author")
+  author_event            Event[]     @relation(name: "event_author")
+  token                   String?
+}
+
+model Biovers {
+  id                      Int         @id @default(autoincrement())
+  name                    String
+  description             String?
+  location                String?
+  owner                   Int
+  creation_date           DateTime
+  update_date             DateTime?
+  deleted_date            DateTime?
+  is_public               Boolean     @default(true)
+  is_editable             Boolean     @default(false)
+  User                    User?       @relation(fields: [owner], references: [id])
+  Poi                     Poi[]
+  Path                    Path[]
+  UserTrace               UserTrace[]
+  Event                   Event[]
+}
+
+model Poi {
+  id                      Int         @id @default(autoincrement())
+  title                   String?
+  subtitle                String?
+  author                  Int
+  creation_date           DateTime
+  update_date             DateTime?
+  deleted_date            DateTime?
+  last_contributor        Int?
+  biovers                 Int
+  scope                   Float       @default(50)
+  trigger_mode            String
+  style_type              String
+  extrusion               Float       @default(0)
+  radius                  Float       @default(0)
+  style_stroke_width      Float       @default(1)
+  stroke_color            String      @default("#FFFFFF")
+  stroke_opacity          Int         @default(100)
+  fill_type               Boolean     @default(false)
+  fill_color              String      @default("#FFFFFF")
+  fill_opacity            Int         @default(100)
+  amplitude               Float       @default(0)
+  elevation               Float       @default(0)
+  wireframe               Boolean     @default(false)
+  map_media_type          String?
+  map_url                 String?
+  metadata                String?
+  coordinate              Coordinate?
+  media                   Media[]
+  biovers_fk              Biovers     @relation(fields: [biovers], references: [id])
+  User                    User        @relation(name: "poi_author", fields: [author], references: [id])
+  last_contributor_fk     User?       @relation(name: "poi_last_contributor", fields: [last_contributor], references: [id])
+}
+
+model Path {
+  id                      Int         @id @default(autoincrement())
+  author                  Int
+  creation_date           DateTime
+  update_date             DateTime?
+  deleted_date            DateTime?
+  last_contributor        Int? 
+  coordinate              Coordinate[]
+  biovers                 Int
+  style_type              String
+  style_stroke_width      Float       @default(1)
+  stroke_color            String      @default("#FFFFFF")
+  stroke_opacity          Int         @default(100)
+  extrusion               Float       @default(0)
+  amplitude               Float       @default(0)
+  elevation               Float       @default(0)
+  scope                   Float       @default(50)
+  metadata                String?
+  biovers_fk              Biovers     @relation(fields: [biovers], references: [id])
+  User                    User        @relation(name: "path_author", fields: [author], references: [id])
+  last_contributor_fk     User?       @relation(name: "path_last_contributor", fields: [last_contributor], references: [id])
+}
+
+model Coordinate {
+  id                      Int         @id @default(autoincrement())
+  long                    Float
+  lat                     Float
+  alt                     Float
+  creation_date           DateTime
+  update_date             DateTime?
+  deleted_date            DateTime?
+  poi_id                  Int?         @unique
+  poi                     Poi?         @relation(fields: [poi_id], references: [id])
+  path_id                 Int?
+  path                    Path?        @relation(fields: [path_id], references: [id])
+  user_trace_id           Int?         @unique
+  user_trace              UserTrace?   @relation(fields: [user_trace_id], references: [id])
+  event_id                Int?         @unique
+  event                   Event?       @relation(fields: [event_id], references: [id])
+}
+
+model UserTrace {
+  id                      Int          @id @default(autoincrement())
+  creation_date           DateTime
+  deleted_date            DateTime?
+  author                  Int
+  is_public               Boolean      @default(true)
+  gps_accuracy            Float
+  coordinate              Coordinate?
+  biovers                 Int
+  biovers_fk              Biovers     @relation(fields: [biovers], references: [id])
+  User                    User        @relation(name: "trace_author", fields: [author], references: [id])
+}
+
+model Media {
+  id                      Int          @id @default(autoincrement())
+  name                    String?      
+  text                    String?
+  url                     String?
+  media_type              String?
+  is_facing               Boolean     @default(true)
+  is_visible_in_radius    Boolean     @default(true)
+  is_visible_out_radius   Boolean     @default(true)
+  autoplay                Boolean     @default(true)
+  loop                    Boolean     @default(false)
+  scale                   Float       @default(1)
+  amplitude               Float       @default(0)
+  distance                Float       @default(0)
+  rotation                Float       @default(0)
+  elevation               Float       @default(0)
+  orientation             Float       @default(0)
+  metadata                String?
+  creation_date           DateTime
+  update_date             DateTime?
+  deleted_date            DateTime?
+  poi_id                  Int?
+  poi                     Poi?         @relation(fields: [poi_id], references: [id])
+}
+
+model Event {
+  id                      Int          @id @default(autoincrement())
+  creation_date           DateTime
+  deleted_date            DateTime?
+  author                  Int
+  biovers                 Int
+  gps_accuracy            Float
+  coordinate              Coordinate?
+  data                    String
+  biovers_fk              Biovers     @relation(fields: [biovers], references: [id])
+  User                    User        @relation(name: "event_author", fields: [author], references: [id])
+}
