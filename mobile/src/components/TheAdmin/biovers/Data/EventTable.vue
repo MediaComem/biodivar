@@ -1,6 +1,7 @@
 <template>
 <div>
 <div class="table-layout">
+  <SearchBar @update="updateSearch" />
     <div class="scrolling-table">
       <table>
         <tr class="tr-header">
@@ -9,41 +10,41 @@
           </th>
           <th class="column second-column">
             <div class="header-value">
-              <p class="no-margin column-title-font">#</p>
+              <p class="material-symbols-sharp text-margin" style="padding-right: 0px">tag</p>
               <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'id' && !orderElement}" @click="setSort('id')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getEventColumnsPreference.created_date" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">event</p>
-              <p class="no-margin column-title-font">Date</p>
+              <p class="no-margin column-title-font">{{ $t('Event.Column.date') }}</p>
               <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'creation_date' && !orderElement}" @click="setSort('creation_date')">arrow_drop_down</p>
             </div>
           </th>
            <th v-if="getEventColumnsPreference.author" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">architecture</p>
-              <p class="no-margin column-title-font">Auteur</p>
+              <p class="no-margin column-title-font">{{ $t('Event.Column.author') }}</p>
               <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'username' && !orderElement}" @click="setSort('username')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getEventColumnsPreference.gps_accuracy" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">crisis_alert</p>
-              <p class="no-margin column-title-font">Précision</p>
+              <p class="no-margin column-title-font">{{ $t('Event.Column.accuracy') }}</p>
               <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'gps_accuracy' && !orderElement}" @click="setSort('gps_accuracy')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getEventColumnsPreference.coordinate" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">my_location</p>
-              <p class="no-margin column-title-font">Coordonnées</p>
+              <p class="no-margin column-title-font">{{ $t('Event.Column.coordinate') }}</p>
             </div>
           </th>
           <th v-if="getEventColumnsPreference.data" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">touch_app</p>
-              <p class="no-margin column-title-font">Action</p>
+              <p class="no-margin column-title-font">{{ $t('Event.Column.action') }}</p>
               <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'data' && !orderElement}" @click="setSort('data')">arrow_drop_down</p>
             </div>
           </th>
@@ -57,16 +58,16 @@
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
         </tr>
-        <tr v-for="(event, index) in getSortedData" :key="index" style="border-bottom: 1px solid white;" class="table-background" :class="{'table-hover': getCurrentEventTabClick.includes(event.element.id)}" @mouseover="over(event.element.id)" @mouseleave="leave" @click="openPopup(event.element.id)">
+        <tr v-for="(event, index) in getSortedData" :key="index" class="table-border table-background" :class="{'table-hover': getCurrentEventTabClick.includes(event.element.id)}" @mouseover="over(event.element.id)" @mouseleave="leave" @click="openPopup(event.element.id)">
           <td class="first-column">
             <input type="checkbox" :checked="event.display" @click="selectElement(event)">
           </td>
-          <td style="border-left: 1px solid white;" class="column text-font end-align">{{ event.element.id }}</td>
-          <td v-if="getEventColumnsPreference.created_date" class="column text-font end-align">{{ dateFormatter(event.element.creation_date) }}</td>
-          <td v-if="getEventColumnsPreference.author" class="column text-font end-align">{{ userFormatter(event.element.User) }}</td>
-          <td v-if="getEventColumnsPreference.gps_accuracy" class="column text-font end-align">{{ event.element.gps_accuracy }}</td>    
-          <td v-if="getEventColumnsPreference.coordinate" class="column text-font end-align">({{ getCoordinate(event) }})</td>
-          <td v-if="getEventColumnsPreference.data" class="column text-font end-align">({{ event.element.data }})</td>
+          <td class="column second-column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ event.element.id }}</td>
+          <td v-if="getEventColumnsPreference.created_date" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ dateFormatter(event.element.creation_date) }}</td>
+          <td v-if="getEventColumnsPreference.author" class="column text-font end-align row-height">{{ userFormatter(event.element.User) }}</td>
+          <td v-if="getEventColumnsPreference.gps_accuracy" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ event.element.gps_accuracy }}</td>    
+          <td v-if="getEventColumnsPreference.coordinate" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">({{ getCoordinate(event) }})</td>
+          <td v-if="getEventColumnsPreference.data" class="column text-font end-align row-height">({{ event.element.data }})</td>
           <td class="last-column text-font ">
              <p class="material-symbols-sharp no-margin clickable dot-margin" @click="openMenu(event.element.id)">more_vert</p>
              <div v-if="menuState && menuState.id === event.element.id && menuState.state" class="menu">
@@ -90,6 +91,7 @@ import { mapGetters, mapActions } from 'vuex';
 
 import EventColumnsSelector from '../Dialog/EventColumnsSelector.vue';
 import DeleteConfirmation from '../Dialog/DeleteConfirmation.vue';
+import SearchBar from '../../../app/UIElement/SearchBar.vue';
 
 import { fullDateFormatter } from '../../../../utils/formatter.js';
 import sort from '../../../../utils/sort';
@@ -98,7 +100,7 @@ import { computeGeoJSONFromEvent, computeGeoJSONFromEvents } from '../../../../u
 import { deleteEvent } from '../../../../utils/api.js';
 
 export default {
-  components: { EventColumnsSelector, DeleteConfirmation },
+  components: { EventColumnsSelector, DeleteConfirmation, SearchBar },
   props: {
     bioverId: Number,
   },
@@ -114,6 +116,7 @@ export default {
       leaveTimeout: undefined,
       popupTimeout: undefined,
       majPress: false,
+      searchFilter: '',
     }
   },
   methods: {
@@ -214,11 +217,11 @@ export default {
     isAllowedToEdit() {
       return (this.ownOrPublic(this.getCurrentBioverId) === 'public' && !this.bioverIsEditable(this.getCurrentBioverId));
     },
-    openDeletionDialog(trace) {
-      if (this.isAllowedToEdit()) {
+    openDeletionDialog(event) {
+      if ((this.isAllowedToEdit() && event) || (!this.globalChecked && event === undefined)) {
           return;
       }
-      this.eventToDelete = trace;
+      this.eventToDelete = event;
       this.deleteDialog = true;
       this.menuState = undefined;
     },
@@ -240,12 +243,15 @@ export default {
       this.removeEvent(event.element);
       this.menuState = undefined;
     },
+    updateSearch(event) {
+      this.searchFilter = event;
+    }, 
     ...mapActions('global', ['updateEventOver', 'addOrRemoveEventClickElement', 'addOrRemoveEventsClick', 'updateLastEventClick']),
     ...mapActions('biovers', ['selectAllEvents', 'unselectAllEvents', 'updateEventToDisplay', 'removeEvent']),
   },
   computed: {
     getSortedData() {
-      return sort.sort(this.getEventByBioversAndUser(this.bioverId), this.sortElement, this.orderElement);
+      return sort.sort(this.getEventByBioversAndUser(this.bioverId, this.searchFilter), this.sortElement, this.orderElement);
     },
     allAreUnselected() {
       return this.getSortedData.filter((event) => event.display).length === 0;
@@ -266,18 +272,4 @@ export default {
 
 <style scoped>
 @import './table.css';
-
-.column-title-font {
-  font-family: "BiodivAR Roman";
-  font-variation-settings: "wght" 110, "ital" 0;
-  font-size: 12px;
-  line-height: 14px;
-}
-
-.text-font {
-  font-family: "BiodivAR Roman";
-  font-variation-settings: "wght" 85, "ital" 0;
-  font-size: 12px;
-  line-height: 14px;
-}
 </style>

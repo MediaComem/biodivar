@@ -49,6 +49,7 @@
       width: 100%;
       overflow: hidden;
       display: block;
+      background-color: var(--accordeon-background);
   }
 
   .title {
@@ -56,7 +57,7 @@
       height: 32px;
       display: flex;
       padding-left: 0;
-      margin: 1rem 0.8rem 0rem 0.8rem;
+      margin: 1rem 0.8rem 0rem var(--left-margin);
       padding-bottom: 0.9rem;
       cursor: pointer;
   }
@@ -72,7 +73,7 @@
   }
 
   .fill-font {
-    font-variation-settings: "FILL" 1;
+    font-variation-settings: "FILL" 0;
   }
 
   .rotate {
@@ -92,6 +93,7 @@
     align-items: center;
     margin-top: -2px;
     letter-spacing: 0.02em;
+    font-variation-settings: "wght" 149, "ital" 0;
   }
 
   .delete-font {
@@ -108,7 +110,7 @@
     padding-bottom: 2px;
     padding-left: 0.5rem;
     font-family: "BiodivAR Roman";
-    font-variation-settings: "wght" 110, "ital" 0;
+    font-variation-settings: "wght" 149, "ital" 0;
     letter-spacing: 0.02em;
   }
 </style>

@@ -84,4 +84,21 @@
     font-family: "BiodivAR Roman";
     font-variation-settings: "wght" 110, "ital" 0;
   }
+
+  .a-enter-vr-button {
+    background-color: #2F80ED;
+    height: 38px;
+    width: 38px;
+    border-radius: 19px;
+    min-width: 38px
+  }
+
+  .a-enter-vr-button:hover {
+    opacity: 0.8;
+    background-color: #2F80ED;
+  }
+
+  .a-enter-vr-button::before {
+    content: '';
+  }
 </style>

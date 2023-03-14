@@ -1,29 +1,31 @@
 <template>
  <div>
-    <div style="display: flex; flex-wrap: wrap; border-bottom: 1px solid white">
-      <div class="button-border-layout">
-        <button class="button-layout button-selection" @click="selectTab(0)">
-          <p class="material-symbols-sharp text-margin">apps</p>
-          <p class="text-margin name-element">Biovers</p>
-        </button>
-      </div>
-      <div v-for="biovers in bioversToDisplay" :key="biovers.name" class="button-border-layout" :class="{'remove-border': biovers.biover.id === currentBioversId}">
-        <button
-          :class="{'button-unfocus': biovers.biover.id !== currentBioversId}"
-          class="button-layout button-biovers"
-          @click="selectTab(biovers.biover.id)"
-        >
-            <World :animate="biovers.biover.id === currentBioversId"/>
-            <p class="text-margin name-element">{{ biovers.title }}</p>
-            <p class="material-symbols-sharp" @click="closeTab(biovers.biover.id)">close</p>
-        </button>
+    <div class="table-row-layout">
+      <div class="layout-border">
+        <div class="button-border-layout">
+          <button class="button-layout button-selection" @click="selectTab(0)">
+            <p class="material-symbols-sharp text-margin">apps</p>
+            <p class="text-margin name-element">Biovers</p>
+          </button>
+        </div>
+        <div v-for="biovers in bioversToDisplay" :key="biovers.name" class="button-border-layout" :class="{'remove-border': biovers.biover.id === currentBioversId}">
+          <button
+            :class="{'button-unfocus': biovers.biover.id !== currentBioversId}"
+            class="button-layout button-biovers"
+            @click="selectTab(biovers.biover.id)"
+          >
+              <World :animate="biovers.biover.id === currentBioversId"/>
+              <p class="text-margin name-element">{{ biovers.title }}</p>
+              <p class="material-symbols-sharp" @click="closeTab(biovers.biover.id)">close</p>
+          </button>
+        </div>
       </div>
     </div>
     <div class="border-element">
       <div v-show="currentBioversId <= 0">
         <BioversLayout v-if="allBiovers" :biovers="allBiovers"/>
       </div>
-      <div v-for="biovers in bioversToDisplay" :key="biovers.name" class="data-layout">
+      <div v-for="biovers in bioversToDisplay" :key="biovers.name" class="background-black">
         <DataTab
           v-show="currentBioversId === biovers.biover.id"
           :bioverId="biovers.biover.id" />
@@ -84,31 +86,11 @@ export default {
 </script>
 
 <style scoped>
-.remove-border {
-  border-bottom: 1px solid black !important;
-  margin-bottom: -1px;
-}
+@import './table-header.css';
 
 .button-unfocus {
   background-color: #666666 !important;
   color: white;
-}
-
-.button-border-layout {
-  border-width: 1px 1px 0px 1px;
-  border-style: solid;
-  border-color: #FFFFFF;
-  border-radius: 2px 2px 0px 0px;
-  margin-right: 5px;
-}
-
-.button-layout {
-  width: auto;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  border: 0;
 }
 
 .button-selection {
@@ -124,16 +106,9 @@ export default {
   padding-left: 0px;
 }
 
-.name-element {
-      margin-top: 17px;
-}
-
 .text-margin {
   margin-right: 8px;
-}
-
-.data-layout {
-  background-color: black;
+  white-space: nowrap;
 }
 
 .border-element {

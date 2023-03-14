@@ -38,75 +38,30 @@
         <p class="material-symbols-sharp icon-margin icon-font input" style="top: 104px; left: 8px;">my_location</p>
         <input type="text" v-model="bioversLocation" placeholder="Emplacement">
       </div>
-      <base-button class="edit" @click="emit('save', { title: bioverName, description: bioverDescription, location: bioversLocation })">
-       <p class="material-symbols-sharp icon-margin">done</p><p class="button-text">enregistrer</p>
+      <base-button class="layout-button" @click="emit('save', { title: bioverName, description: bioverDescription, location: bioversLocation })">
+       <p class="material-symbols-sharp icon-margin">done</p><p class="button-text">{{ $t('Button.save') }}</p>
       </base-button>
     </base-input>
   </base-dialog>
 </template>
 
 <style scoped>
-  header {
-    margin: 0;
-  }
+@import './dialog.css';
 
-  input {
-    padding-top: 8px !important;
-  }
+input {
+  padding-top: 8px !important;
+}
 
-  .edit {
-    --link-color: white;
-    --highlight-color: #009FE3;
-    width: 100% !important;
-    margin: 0 !important;
-  }
+.input {
+  position: absolute;
+}
 
-  .input {
-    position: absolute;
-  }
+.description-transform {
+  transform: scaleY(-1);
+}
 
-  .header-icon-layout {
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: -4px;
-  }
-
-  .icon-font {
-    font-size: 16px;
-    display: inline-block;
-    height: auto;
-  }
-
-  .icon-margin-header {
-    margin: 0px;
-    transform: translate(0px, 2px);
-  }
-
-  .icon-margin {
-    margin: 0px;
-    padding-right: 4px;
-  }
-
-  .description-transform {
-    transform: scaleY(-1);
-  }
-
-  .button-text {
-    margin-top: 0px;
-    margin-bottom: 0px;
-    padding-bottom: 3px;
-    font-variation-settings: "wght" 149, "ital" 0;
-    text-transform: uppercase;
-  }
-
-  .description {
-    margin-bottom: 1.4rem;
-  }
-
-  .dialog-input-color {
-    --border-color: white !important;
-    margin-left: 0px !important;
-  }
+.dialog-input-color {
+  --border-color: white !important;
+  margin-left: 0px !important;
+}
 </style>

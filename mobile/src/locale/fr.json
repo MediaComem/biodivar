@@ -274,6 +274,71 @@
         "elevation": "Elevation du radius",
         "is_visible": "Visibilité du radius",
         "edit": "Edition"
+    },
+    "Button": {
+        "save": "enregistrer"
+    },
+    "Event": {
+        "Column": {
+            "id": "#",
+            "date": "Date",
+            "author": "Auteur",
+            "accuracy": "Précision",
+            "coordinate": "Coordonnées",
+            "action": "Action"
+        }
+    },
+    "Trace": {
+        "Column": {
+            "id": "#",
+            "date": "Date",
+            "author": "Auteur",
+            "accuracy": "Précision",
+            "coordinate": "Coordonnées"
+        }
+    },
+    "Path": {
+        "Column": {
+            "id": "#",
+            "date": "Date",
+            "author": "Auteur",
+            "coordinate": "Coordonnées",
+            "visibility": "Visibilité",
+            "update_date": "Modifié le",
+            "last_contributor": "Modifié par",
+            "style_color": "Couleur contour",
+            "style_elevation": "Élévation",
+            "animation": "Animation",
+            "style_stroke_width": "Épaisseur contour",
+            "style_stroke_opacity": "Opacité",
+            "extrusion": "Extrusion",
+            "metadata": "Attributs"
+        }
+    },
+    "Poi": {
+        "Column": {
+            "id": "#",
+            "date": "Date",
+            "author": "Auteur",
+            "coordinate": "Coordonnées",
+            "title": "Titre",
+            "subtitle": "Description",
+            "style_color": "Couleur contour",
+            "style_elevation": "Élévation",
+            "animation": "Animation",
+            "style_stroke_width": "Épaisseur contour",
+            "style_stroke_opacity": "Opacité contour",
+            "extrusion": "Extrusion",
+            "metadata": "Attributs",
+            "visibility": "Visibilité",
+            "style_type": "Forme",
+            "update_date": "Modifié le",
+            "last_contributor": "Modifié par",
+            "wireframe": "Wireframe remplissage",
+            "fill_color": "Couleur remplissage",
+            "fill_opacity": "Opacité remplissage",
+            "radius": "Rayon",
+            "symbol_map_name": "Symbole"
+        }
     }
-    
 }

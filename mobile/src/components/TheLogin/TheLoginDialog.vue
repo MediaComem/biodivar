@@ -41,7 +41,7 @@
               <p class="material-symbols-sharp icon-margin icon-position" style="top: 3px">email</p>
               <input class="email" type="text" v-model="email" placeholder="email utilisateur">
             </base-input>
-            <base-button class="reset" @click="passwordReset()">
+            <base-button class="layout-button" @click="passwordReset()">
               <p class="material-symbols-sharp icon-margin-button">refresh</p><p class="button-text">{{ $t('TheLogin.reset-password') }}</p>
             </base-button>
         </base-dialog>
@@ -58,66 +58,27 @@
 </template>
 
 <style scoped>
-  header {
-    margin: 0;
-  }
+@import '../app/Dialog/dialog.css';
 
-  .email {
-    --bg-color: #F2F2F2;
-    --color: black;
-  }
+.email {
+  --bg-color: #F2F2F2;
+  --color: black;
+}
 
-  .reset {
-    --link-color: white;
-    --highlight-color: #009FE3;
-    width: 100% !important;
-    margin: 0 !important;
-  }
+.home {
+  --link-color: white;
+  --highlight-color: #323232;
+  width: 100% !important;
+  margin: 0 !important;
+}
 
-  .home {
-    --link-color: white;
-    --highlight-color: #323232;
-    width: 100% !important;
-    margin: 0 !important;
-  }
+.icon-position {
+  position: absolute;
+  left: 8px;
+}
 
-  .header-icon-layout {
-    font-size: 32px;
-    height: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .icon-font {
-    font-size: 18px;
-    display: inline-block;
-    height: auto;
-  }
-
-  .icon-position {
-    position: absolute;
-    left: 8px;
-  }
-
-  .icon-margin {
-    margin: 0px;
-  }
-
-  .icon-margin-header {
-    margin: 0px;
-    transform: translate(0px, 4px);
-  }
-
-  .icon-margin-button {
-    margin: 0px;
-    padding-right: 6px;
-  }
-
-  .button-text {
-    margin-top: 0px;
-    margin-bottom: 0px;
-    padding-bottom: 1.5px;
-    font-variation-settings: "wght" 149, "ital" 0;
-  }
+.icon-margin-button {
+  margin: 0px;
+  padding-right: 6px;
+}
 </style>

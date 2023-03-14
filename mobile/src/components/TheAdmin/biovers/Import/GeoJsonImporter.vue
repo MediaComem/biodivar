@@ -191,26 +191,19 @@ onUnmounted(() => {
   margin: 0px;
 }
 
-.header-icon-layout {
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.icon-font {
+  font-size: 20px;
+}
 
-  .icon-font {
-    font-size: 20px;
-  }
+.icon-margin {
+  margin: 0px;
+  padding-right: 6px;
+}
 
-  .icon-margin {
-    margin: 0px;
-    padding-right: 6px;
-  }
-
-  .button-text {
-    margin-top: 0px;
-    margin-bottom: 0px;
-    padding-bottom: 1.5px;
-    font-variation-settings: "wght" 149, "ital" 0;
-  }
+.button-text {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-bottom: 1.5px;
+  font-variation-settings: "wght" 149, "ital" 0;
+}
 </style>

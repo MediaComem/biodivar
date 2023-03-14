@@ -33,7 +33,8 @@
         </base-button>
     </div>
     <div v-else>
-        <h1 class="error-layout">Vous n'êtes pas autorisé à modifier ce biovers</h1>
+        <h1 class="error-layout"><div class="error-align"><p class="material-symbols-sharp icon-margin icon-error">warning
+        </p><p class="error-text">Vous n’êtes pas autorisé·e à modifier ce biovers</p></div></h1>
     </div>
 </template>
 
@@ -186,8 +187,33 @@ export default {
     height: 29px;
 }
 
+.error-align {
+    display: flex;
+}
+
+.error-align > p {
+    display: flex;
+    align-items: center;
+    margin: 0px;
+}
+
+.error-text {
+    align-items: end !important;
+}
+
 .error-layout {
+    display: flex;
     color: white;
+    font-family: "BiodivAR Roman";
+    font-variation-settings: "wght" 110, "ital" 0;
+    font-size: 12px;
+    line-height: 14px;
+    padding: 10px 8px 8px 8px;
+    margin: 0px 8px 0px 8px;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    border-bottom: 1px solid white;
+    text-align: left;
 }
 
 .parameter-name {
@@ -203,6 +229,10 @@ export default {
 
 .icon-font {
     font-size: 20px;
+}
+
+.icon-error {
+    font-size: 18px;
 }
 
 .icon-margin {

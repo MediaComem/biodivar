@@ -1,6 +1,7 @@
 <template>
 <div>
 <div class="table-layout">
+  <SearchBar @update="updateSearch" />
     <div class="scrolling-table">
       <table>
         <tr class="tr-header">
@@ -9,73 +10,98 @@
           </th>
           <th class="column second-column">
             <div class="header-value">
-              <p class="no-margin">#</p>
+              <p class="material-symbols-sharp text-margin" style="padding-right: 0px">tag</p>
               <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'id' && !orderElement}" @click="setSort('id')">arrow_drop_down</p>
-            </div>
-          </th>
-          <th v-if="getPathColumnsPreference.scope" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">visibility</p>
-              <p class="no-margin">VISIBILITE</p>
-              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'visible_from' && !orderElement}" @click="setSort('visible_from')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPathColumnsPreference.created_date" class="column">
             <div class="header-value">
-              <p class="material-symbols-sharp text-margin">date_range</p>
-              <p class="no-margin">CREER LE</p>
+              <p class="material-symbols-sharp text-margin">event</p>
+              <p class="no-margin column-title-font">{{ $t('Path.Column.date') }}</p>
               <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'creation_date' && !orderElement}" @click="setSort('creation_date')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPathColumnsPreference.author" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">architecture</p>
-              <p class="no-margin">AUTEUR-E</p>
+              <p class="no-margin column-title-font">{{ $t('Path.Column.author') }}</p>
               <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'username' && !orderElement}" @click="setSort('username')">arrow_drop_down</p>
+            </div>
+          </th>
+          <th v-if="getPathColumnsPreference.coordinate" class="column">
+            <div class="header-value">
+              <p class="material-symbols-sharp text-margin">my_location</p>
+              <p class="no-margin column-title-font">{{ $t('Path.Column.coordinate') }}</p>
+            </div>
+          </th>
+          <th v-if="getPathColumnsPreference.scope" class="column">
+            <div class="header-value">
+              <p class="material-symbols-sharp text-margin">visibility</p>
+              <p class="no-margin column-title-font">{{ $t('Path.Column.visibility') }}</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'visible_from' && !orderElement}" @click="setSort('visible_from')">arrow_drop_down</p>
+            </div>
+          </th>
+          <th v-if="getPathColumnsPreference.stroke_width" class="column">
+            <div class="header-value">
+              <p class="material-symbols-sharp text-margin">line_weight</p>
+              <p class="no-margin column-title-font">{{ $t('Path.Column.style_stroke_width') }}</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'style_stroke_width' && !orderElement}" @click="setSort('style_stroke_width')">arrow_drop_down</p>
+            </div>
+          </th>
+          <th v-if="getPathColumnsPreference.stroke_color" class="column">
+            <div class="header-value">
+              <p class="material-symbols-sharp text-margin">colorize</p>
+              <p class="no-margin column-title-font">{{ $t('Path.Column.style_color') }}</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'stroke_color' && !orderElement}" @click="setSort('stroke_color')">arrow_drop_down</p>
+            </div>
+          </th>
+          <th v-if="getPathColumnsPreference.stroke_opacity" class="column">
+            <div class="header-value">
+              <p class="material-symbols-sharp text-margin">opacity</p>
+              <p class="no-margin column-title-font">{{ $t('Path.Column.style_stroke_opacity') }}</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'stroke_opacity' && !orderElement}" @click="setSort('stroke_opacity')">arrow_drop_down</p>
+            </div>
+          </th>
+          <th v-if="getPathColumnsPreference.extrusion" class="column">
+            <div class="header-value">
+              <p class="material-symbols-sharp text-margin">expand</p>
+              <p class="no-margin column-title-font">{{ $t('Path.Column.extrusion') }}</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'extrusion' && !orderElement}" @click="setSort('extrusion')">arrow_drop_down</p>
+            </div>
+          </th>
+          <th v-if="getPathColumnsPreference.elevation" class="column">
+            <div class="header-value">
+              <p class="material-symbols-sharp text-margin">north</p>
+              <p class="no-margin column-title-font">{{ $t('Path.Column.style_elevation') }}</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'elevation' && !orderElement}" @click="setSort('elevation')">arrow_drop_down</p>
+            </div>
+          </th>
+          <th v-if="getPathColumnsPreference.animation" class="column">
+            <div class="header-value">
+              <p class="material-symbols-sharp text-margin">animation</p>
+              <p class="no-margin column-title-font">{{ $t('Path.Column.animation') }}</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'amplitude' && !orderElement}" @click="setSort('amplitude')">arrow_drop_down</p>
+            </div>
+          </th>
+          <th v-if="getPathColumnsPreference.metadata" class="column">
+            <div class="header-value">
+              <p class="material-symbols-sharp text-margin">database</p>
+              <p class="no-margin column-title-font">{{ $t('Path.Column.metadata') }}</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'metadata' && !orderElement}" @click="setSort('metadata')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPathColumnsPreference.updated_date" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">edit</p>
-              <p class="no-margin">MODIFIER LE</p>
+              <p class="no-margin column-title-font">{{ $t('Path.Column.update_date') }}</p>
               <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'update_date' && !orderElement}" @click="setSort('update_date')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getPathColumnsPreference.contributor" class="column">
             <div class="header-value">
                <p class="material-symbols-sharp text-margin">architecture</p>
-              <p class="no-margin">DERNIER CONTRIBUTEUR-TRICE</p>
+              <p class="no-margin column-title-font">{{ $t('Path.Column.last_contributor') }}</p>
               <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'contributor' && !orderElement}" @click="setSort('contributor')">arrow_drop_down</p>
-            </div>
-          </th>
-          <th v-if="getPathColumnsPreference.elevation" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">north</p>
-              <p class="no-margin">STYLE ELEVATION</p>
-            </div>
-          </th>
-          <th v-if="getPathColumnsPreference.animation" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">animation</p>
-              <p class="no-margin">ANIMATION</p>
-            </div>
-          </th>
-          <th v-if="getPathColumnsPreference.stroke_width" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">line_weight</p>
-              <p class="no-margin">STYLE STOKE WIDTH</p>
-            </div>
-          </th>
-          <th v-if="getPathColumnsPreference.style_type" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">circle</p>
-              <p class="no-margin">STYLE TYPE</p>
-            </div>
-          </th>
-          <th v-if="getPathColumnsPreference.coordinate" class="column before-last-column">
-            <div class="header-value">
-              <p class="material-symbols-sharp">location_searching</p>
-              <p class="no-margin">COORDONNEES</p>
             </div>
           </th>
           <th class="last-column last-column-header">
@@ -90,21 +116,24 @@
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
         </tr>
-        <tr v-for="(path, index) in getSortedData" :key="index" class="table-background">
+        <tr v-for="(path, index) in getSortedData" :key="index" class="table-border table-background">
           <td class="first-column">
             <input type="checkbox" :checked="path.display" @click="selectElement(path)">
           </td>
-          <td class="column column-max-width second-column">{{ path.element.id }}</td>
-          <td v-if="getPathColumnsPreference.scope" class="column column-max-width end-align">{{ path.element.scope }} M</td>
-          <td v-if="getPathColumnsPreference.created_date" class="column column-max-width">{{ dateFormatter(path.element.creation_date) }}</td>
-          <td v-if="getPathColumnsPreference.author" class="column column-max-width">{{ userFormatter(path.element.User) }}</td>
-          <td v-if="getPathColumnsPreference.updated_date" class="column column-max-width">{{ dateFormatter(path.element.update_date) }}</td>
-          <td v-if="getPathColumnsPreference.contributor" class="column column-max-width">{{ userFormatter(path.element.last_contributor_fk) }}</td>
-          <td v-if="getPathColumnsPreference.elevation" class="column column-max-width end-align">{{ path.element.elevation }}</td>
-          <td v-if="getPathColumnsPreference.animation" class="column column-max-width end-align">{{ path.element.amplitude }}</td>
-          <td v-if="getPathColumnsPreference.stroke_width" class="column column-max-width end-align">{{ path.element.style_stroke_width }}</td>
-          <td v-if="getPathColumnsPreference.style_type" class="column column-max-width">{{ path.element.style_type }}</td>
-          <td v-if="getPathColumnsPreference.coordinate" class="column column-max-width before-last-column">{{ getCoordinate(path.element.coordinate) }}</td>
+          <td class="column second-column column-max-width text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ path.element.id }}</td>
+          <td v-if="getPathColumnsPreference.created_date" class="column column-max-width text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ dateFormatter(path.element.creation_date) }}</td>
+          <td v-if="getPathColumnsPreference.author" class="column column-max-width text-font end-align row-height">{{ userFormatter(path.element.User) }}</td>
+          <td v-if="getPathColumnsPreference.coordinate" class="column column-max-width before-last-column  text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ getCoordinate(path.element.coordinate) }}</td>
+          <td v-if="getPathColumnsPreference.scope" class="column column-max-width text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ path.element.scope }}&thinsp;m</td>
+          <td v-if="getPathColumnsPreference.stroke_width" class="column column-max-width text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ path.element.style_stroke_width }}&thinsp;m</td>
+          <td v-if="getPathColumnsPreference.stroke_color" class="column column-max-width text-font end-align row-height" style="text-transform: uppercase;">{{ path.element.stroke_color }}</td>
+          <td v-if="getPathColumnsPreference.stroke_opacity" class="column column-max-width text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ path.element.stroke_opacity }}&thinsp;%</td>
+          <td v-if="getPathColumnsPreference.extrusion" class="column column-max-width text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ path.element.extrusion }}&thinsp;m</td>
+          <td v-if="getPathColumnsPreference.elevation" class="column column-max-width text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ path.element.elevation }}&thinsp;m</td>
+          <td v-if="getPathColumnsPreference.animation" class="column column-max-width text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ path.element.amplitude }}</td>
+          <td v-if="getPathColumnsPreference.metadata" class="column column-max-width text-font end-align row-height">{{ path.element.metadata }}</td>
+          <td v-if="getPathColumnsPreference.updated_date" class="column column-max-width text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ dateFormatter(path.element.update_date) }}</td>
+          <td v-if="getPathColumnsPreference.contributor" class="column column-max-width text-font end-align row-height">{{ userFormatter(path.element.last_contributor_fk) }}</td>
           <td class="last-column">
              <p class="material-symbols-sharp no-margin clickable" @click="openMenu(path.element.id)">more_vert</p>
              <div v-if="menuState && menuState.id === path.element.id && menuState.state" class="menu">
@@ -132,6 +161,7 @@ import { mapGetters, mapActions } from 'vuex';
 import PathColumnsSelector from '../Dialog/PathColumnsSelector.vue';
 import DeleteConfirmation from '../Dialog/DeleteConfirmation.vue';
 import ThePathEditor from '../Dialog/ThePathEditor.vue';
+import SearchBar from '../../../app/UIElement/SearchBar.vue';
 
 import { fullDateFormatter, coordinateFormatter } from '../../../../utils/formatter.js';
 import { computeGeoJSONFromPATH, computeGeoJSONFromPATHs } from '../../../../utils/geojson.js';
@@ -142,7 +172,7 @@ import { useStore } from '../../../../composables/store.js';
 import { savePath, deletePath } from '../../../../utils/api.js';
 
 export default {
-  components: { PathColumnsSelector, DeleteConfirmation, ThePathEditor },
+  components: { PathColumnsSelector, DeleteConfirmation, ThePathEditor, SearchBar },
   props: {
     bioverId: Number,
   },
@@ -157,11 +187,12 @@ export default {
       pathToDelete: undefined,
       pathToUpdate: {},
       showEditionDialog: false,
+      searchFilter: '',
     }
   },
   computed: {
     getData() {
-      return this.getPathsByBiover(this.bioverId);
+      return this.getPathsByBiover(this.bioverId, this.searchFilter);
     },
     getSortedData() {
       return sort.sort(this.getData, this.sortElement, this.orderElement);
@@ -290,7 +321,7 @@ export default {
       this.globalCheckAnalizer();
     },
     openDeletionDialog(path) {
-      if (this.isAllowedToEdit()) {
+      if ((this.isAllowedToEdit() && path) || (!this.globalChecked && path === undefined)) {
           return;
       }
       this.pathToDelete = path;
@@ -316,6 +347,9 @@ export default {
       this.deleteDialog = false;
       this.globalCheckAnalizer();
     },
+    updateSearch(event) {
+      this.searchFilter = event;
+    },  
     ...mapActions('global', ['updateWait']),
     ...mapActions('biovers', ['updatePathToDisplay', 'selectAllPaths', 'unselectAllPaths', 'resetPathsModification', 'copyPath', 'addNewPath', 'removePath']),
   },
@@ -326,7 +360,7 @@ export default {
 @import './table.css';
 
 .column-max-width {
-  max-width: 500px;
+  max-width: 250px;
   overflow-x: auto;
 }
 </style>

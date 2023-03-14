@@ -3,16 +3,19 @@
   <div v-if="showDialog" class="modal-edition">
     <DialogHeader :title="'Séléction des colonnes'" :logo="'add_location_alt'" @close="close" />
     <div class="container-layout">
-      <div class="line-div"><el-checkbox v-model="form.scope" label="PORTEE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.created_date" label="CREER LE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.author" label="AUTEUR-E" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.updated_date" label="MODIFIER LE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.contributor" label="DERNIER CONTRIBUTEUR-TRICE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.elevation" label="STYLE ELEVATION" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.animation" label="ANIMATION" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.stroke_width" label="EPAISSEUR DU CONTOUR" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.style_type" label="TYPE DE FORME" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.coordinate" label="COORDONNEES" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.created_date" :label="$t('Path.Column.date')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.author" :label="$t('Path.Column.author')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.coordinate" :label="$t('Path.Column.coordinate')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.scope" :label="$t('Path.Column.visibility')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.stroke_width" :label="$t('Path.Column.style_stroke_width')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.stroke_color" :label="$t('Path.Column.style_color')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.stroke_opacity" :label="$t('Path.Column.style_stroke_opacity')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.extrusion" :label="$t('Path.Column.extrusion')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.elevation" :label="$t('Path.Column.style_elevation')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.animation" :label="$t('Path.Column.animation')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.metadata" :label="$t('Path.Column.metadata')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.updated_date" :label="$t('Path.Column.update_date')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.contributor" :label="$t('Path.Column.last_contributor')" size="large" /></div>
     </div>
     <div class="full-button actions-button">
       <button class="full-button button-dark-gray" @click="close"><p class="material-symbols-sharp">undo</p>{{ $t('biover.configurator.cancel') }}</button>

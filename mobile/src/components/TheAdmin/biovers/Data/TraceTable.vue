@@ -1,6 +1,7 @@
 <template>
 <div>
 <div class="table-layout">
+  <SearchBar @update="updateSearch" />
     <div class="scrolling-table">
       <table>
         <tr class="tr-header">
@@ -9,34 +10,35 @@
           </th>
           <th class="column second-column">
             <div class="header-value">
-              <p class="no-margin">#</p>
+              <p class="material-symbols-sharp text-margin" style="padding-right: 0px">tag</p>
               <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'id' && !orderElement}" @click="setSort('id')">arrow_drop_down</p>
-            </div>
-          </th>
-          <th v-if="getTraceColumnsPreference.author" class="column">
-            <div class="header-value">
-              <p class="material-symbols-sharp text-margin">architecture</p>
-              <p class="no-margin">AUTHEUR</p>
-              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'username' && !orderElement}" @click="setSort('username')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getTraceColumnsPreference.created_date" class="column">
             <div class="header-value">
               <p class="material-symbols-sharp text-margin">date_range</p>
-              <p class="no-margin">CREER LE</p>
+              <p class="no-margin column-title-font">{{ $t('Trace.Column.date') }}</p>
               <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'creation_date' && !orderElement}" @click="setSort('creation_date')">arrow_drop_down</p>
+            </div>
+          </th>
+          <th v-if="getTraceColumnsPreference.author" class="column">
+            <div class="header-value">
+              <p class="material-symbols-sharp text-margin">architecture</p>
+              <p class="no-margin column-title-font">{{ $t('Trace.Column.author') }}</p>
+              <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'username' && !orderElement}" @click="setSort('username')">arrow_drop_down</p>
             </div>
           </th>
            <th v-if="getTraceColumnsPreference.gps_accuracy" class="column">
             <div class="header-value">
-              <p class="no-margin">Précision du GPS</p>
+              <p class="material-symbols-sharp text-margin">crisis_alert</p>
+              <p class="no-margin column-title-font">{{ $t('Trace.Column.accuracy') }}</p>
               <p class="material-symbols-sharp icon-margin icon-font transition" :class="{'change-icon': sortElement === 'gps_accuracy' && !orderElement}" @click="setSort('gps_accuracy')">arrow_drop_down</p>
             </div>
           </th>
           <th v-if="getTraceColumnsPreference.coordinate" class="column">
             <div class="header-value">
-              <p class="material-symbols-sharp">location_searching</p>
-              <p class="no-margin">COORDONNEES</p>
+              <p class="material-symbols-sharp text-margin">my_location</p>
+              <p class="no-margin column-title-font">{{ $t('Trace.Column.coordinate') }}</p>
             </div>
           </th>
           <th class="last-column last-column-header">
@@ -49,15 +51,15 @@
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
         </tr>
-        <tr v-for="(trace, index) in getSortedData" :key="index" class="table-background" :class="{'table-hover': getCurrentTraceTabClick.includes(trace.element.id)}" @mouseover="over(trace.element.id)" @mouseleave="leave" @click="openPopup(trace.element.id)">
+        <tr v-for="(trace, index) in getSortedData" :key="index" class="table-border table-background" :class="{'table-hover': getCurrentTraceTabClick.includes(trace.element.id)}" @mouseover="over(trace.element.id)" @mouseleave="leave" @click="openPopup(trace.element.id)">
           <td class="first-column">
             <input type="checkbox" :checked="trace.display" @click="selectElement(trace)">
           </td>
-          <td class="column">{{ trace.element.id }}</td>
-          <td v-if="getTraceColumnsPreference.author" class="column">{{ userFormatter(trace.element.User) }}</td>
-          <td v-if="getTraceColumnsPreference.created_date" class="column">{{ dateFormatter(trace.element.creation_date) }}</td>
-          <td v-if="getTraceColumnsPreference.gps_accuracy" class="column">{{ trace.element.gps_accuracy }}</td>
-          <td v-if="getTraceColumnsPreference.coordinate" class="column">({{ getCoordinate(trace) }})</td>
+          <td class="column second-column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ trace.element.id }}</td>
+          <td v-if="getTraceColumnsPreference.created_date" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ dateFormatter(trace.element.creation_date) }}</td>
+          <td v-if="getTraceColumnsPreference.author" class="column text-font end-align row-height">{{ userFormatter(trace.element.User) }}</td>
+          <td v-if="getTraceColumnsPreference.gps_accuracy" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ trace.element.gps_accuracy }}</td>
+          <td v-if="getTraceColumnsPreference.coordinate" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">({{ getCoordinate(trace) }})</td>
           <td class="last-column">
              <p class="material-symbols-sharp no-margin clickable" @click="openMenu(trace.element.id)">more_vert</p>
              <div v-if="menuState && menuState.id === trace.element.id && menuState.state" class="menu">
@@ -81,6 +83,7 @@ import { mapGetters, mapActions } from 'vuex';
 
 import TraceColumnsSelector from '../Dialog/TraceColumnsSelector.vue';
 import DeleteConfirmation from '../Dialog/DeleteConfirmation.vue';
+import SearchBar from '../../../app/UIElement/SearchBar.vue';
 
 import { fullDateFormatter } from '../../../../utils/formatter.js';
 import sort from '../../../../utils/sort';
@@ -90,7 +93,7 @@ import { computeGeoJSONFromTrace, computeGeoJSONFromTraces } from '../../../../u
 import { deleteTrace } from '../../../../utils/api.js';
 
 export default {
-  components: { TraceColumnsSelector, DeleteConfirmation },
+  components: { TraceColumnsSelector, DeleteConfirmation, SearchBar },
   props: {
     bioverId: Number,
   },
@@ -106,11 +109,12 @@ export default {
       leaveTimeout: undefined,
       popupTimeout: undefined,
       majPress: false,
+      searchFilter: '',
     }
   },
   computed: {
     getSortedData() {
-      return sort.sort(this.getTraceByBioversAndUser(this.bioverId), this.sortElement, this.orderElement);
+      return sort.sort(this.getTraceByBioversAndUser(this.bioverId, this.searchFilter), this.sortElement, this.orderElement);
     },
     allAreUnselected() {
       return this.getSortedData.filter((trace) => trace.display).length === 0;
@@ -217,7 +221,7 @@ export default {
       return (this.ownOrPublic(this.getCurrentBioverId) === 'public' && !this.bioverIsEditable(this.getCurrentBioverId));
     },
     openDeletionDialog(trace) {
-      if (this.isAllowedToEdit()) {
+      if ((this.isAllowedToEdit() && trace) || (!this.globalChecked && trace === undefined)) {
           return;
       }
       this.traceToDelete = trace;
@@ -242,6 +246,9 @@ export default {
       this.removeTrace(trace.element);
       this.menuState = undefined;
     },
+    updateSearch(event) {
+      this.searchFilter = event;
+    },  
     ...mapActions('global', ['updateTraceOver', 'addOrRemoveTraceClickElement', 'updateLastTraceClick', 'addOrRemoveTracesClick']),
     ...mapActions('biovers', ['selectAllTraces', 'unselectAllTraces', 'updateTraceToDisplay', 'removeTrace']),
   },

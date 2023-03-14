@@ -4,6 +4,7 @@
     placeholder="Filter"
     @input="filtering"
     clearable
+    style="margin-bottom: 1rem"
   />
 </template>
 

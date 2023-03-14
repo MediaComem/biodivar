@@ -3,10 +3,10 @@
   <div v-if="showDialog" class="modal-edition">
     <DialogHeader :title="'Séléction des colonnes'" :logo="'add_location_alt'" @close="close" />
     <div class="container-layout">
-      <div class="line-div"><el-checkbox v-model="form.author" label="AUTEUR-E" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.created_date" label="CREER LE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.gps_accuracy" label="Précision du GPS" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.coordinate" label="COORDONNEES" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.author" :label="$t('Trace.Column.author')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.created_date" :label="$t('Trace.Column.date')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.gps_accuracy" :label="$t('Trace.Column.accuracy')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.coordinate" :label="$t('Trace.Column.coordinate')" size="large" /></div>
     </div>
     <div class="full-button actions-button">
       <button class="full-button button-dark-gray" @click="close"><p class="material-symbols-sharp">undo</p>{{ $t('biover.configurator.cancel') }}</button>

@@ -3,30 +3,27 @@
   <div v-if="showDialog" class="modal-edition">
     <DialogHeader :title="'Séléction des colonnes'" :logo="'add_location_alt'" @close="close" />
     <div class="container-layout">
-      <div class="line-div"><el-checkbox v-model="form.coordinate" label="COORDONNEES" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.title" label="TITRE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.subtitle" label="SOUS-TITRE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.created_date" label="CREER LE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.author" label="AUTEUR-E" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.updated_date" label="MODIFIER LE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.contributor" label="DERNIER CONTRIBUTEUR-TRICE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.scope" label="PORTEE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.trigger" label="DECLENCHEUR" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.symbol_wireframe" label="WIREFRAME DU SYMBOLE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.scale" label="ECHELLE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.is_visible" label="IS VISIBLE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.style_type" label="TYPE DE FORME" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.extrusion" label="EXTRUSION" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.radius" label="RAYON" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.position" label="POSITION" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.stroke_width" label="EPAISSEUR DU CONTOUR" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.stroke_color" label="COULEUR DU CONTOUR" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.stroke_opacity" label="OPACITE DU CONTOUR" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.wireframe" label="WIREFRAME DU REMPLISSAGE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.fill_color" label="COULEUR DU REMPLISSAGE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.fill_opacity" label="OPACITE DU REMPLISSAGE" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.animation" label="ANIMATION" size="large" /></div>
-      <div class="line-div"><el-checkbox v-model="form.metadata" label="METADATA" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.created_date" :label="$t('Poi.Column.date')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.author" :label="$t('Poi.Column.author')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.coordinate" :label="$t('Poi.Column.coordinate')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.scope" :label="$t('Poi.Column.visibility')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.stroke_width" :label="$t('Poi.Column.style_stroke_width')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.stroke_color" :label="$t('Poi.Column.style_color')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.stroke_opacity" :label="$t('Poi.Column.style_stroke_opacity')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.extrusion" :label="$t('Poi.Column.extrusion')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.animation" :label="$t('Poi.Column.animation')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.metadata" :label="$t('Poi.Column.metadata')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.updated_date" :label="$t('Poi.Column.update_date')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.contributor" :label="$t('Poi.Column.last_contributor')" size="large"/></div>
+      <div class="line-div"><el-checkbox v-model="form.wireframe" :label="$t('Poi.Column.wireframe')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.fill_color" :label="$t('Poi.Column.fill_color')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.fill_opacity" :label="$t('Poi.Column.fill_opacity')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.radius" :label="$t('Poi.Column.radius')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.elevation" :label="$t('Poi.Column.style_elevation')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.symbol_map_name" :label="$t('Poi.Column.symbol_map_name')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.style_type" :label="$t('Poi.Column.style_type')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.title" :label="$t('Poi.Column.title')" size="large" /></div>
+      <div class="line-div"><el-checkbox v-model="form.subtitle" :label="$t('Poi.Column.subtitle')" size="large" /></div>
     </div>
     <div class="full-button actions-button">
       <button class="full-button button-dark-gray" @click="close"><p class="material-symbols-sharp">undo</p>{{ $t('biover.configurator.cancel') }}</button>

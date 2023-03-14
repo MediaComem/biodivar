@@ -3,6 +3,7 @@
 
   import Accordeon from '../app/UIElement/Accordeon.vue';
   import BioversItem from '../app/BioversItem.vue';
+  import SearchBar from '../app/UIElement/SearchBar.vue';
 
   import BioverCreator from '../TheAdmin/biovers/Dialog/BioverCreator.vue';
 
@@ -51,29 +52,29 @@
   function closeBioversCreator() {
     bioversCreator.value = false;
   }
+  function updateSearch(event) {
+    search.value = event;
+  }
 </script>
 
 
 <template>
     <div data-role="layout">
-      <base-input class="search">
-        <p class="material-symbols-sharp icon-margin icon-font fill-font">search</p>
-        <input type="text" v-model="search" style="margin-left: 0px; margin-right: 0px; width: 100%">
-      </base-input>
+      <SearchBar @update="updateSearch" />
       <hr>
-      <Accordeon class="own margin-accordeon" :header="`mes biovers (${own.length})`" :could-update-header="false" :length="own.length" :should-be-open="ownOpen" :image="'architecture'">
+      <Accordeon class="own margin-accordeon" :header="`Mes biovers (${own.length})`" :could-update-header="false" :length="own.length" :should-be-open="ownOpen" :image="'architecture'">
           <div v-for="(item, index) in own" :key="index" class="margin">
               <BioversItem :biover="item"/>
           </div>
       </Accordeon>
       <hr>
-      <Accordeon class="favori margin-accordeon" :header="`favoris (${favoriBiovers.length})`" :could-update-header="false" :length="favoriBiovers.length" :should-be-open="favoriOpen" :image="'star'">
+      <Accordeon class="favori margin-accordeon" :header="`Favoris (${favoriBiovers.length})`" :could-update-header="false" :length="favoriBiovers.length" :should-be-open="favoriOpen" :image="'star'">
           <div v-for="(item, index) in favoriBiovers" :key="index" class="margin">
               <BioversItem :biover="item"/>
           </div>
       </Accordeon>
       <hr>
-      <Accordeon class="public margin-accordeon" :header="`publics (${publicBiovers.length})`" :could-update-header="false" :length="publicBiovers.length" :should-be-open="publicOpen" :image="'remove_red_eye'">
+      <Accordeon class="public margin-accordeon" :header="`Publics (${publicBiovers.length})`" :could-update-header="false" :length="publicBiovers.length" :should-be-open="publicOpen" :image="'remove_red_eye'">
           <div v-for="(item, index) in publicBiovers" :key="index" class="margin">
               <BioversItem :biover="item"/>
           </div>
@@ -108,32 +109,8 @@
     margin-right: 1rem;
   }
 
-  .search {
-      padding-top: 0.8rem;
-      padding-left: 0.8rem;
-      padding-right: 0.8rem;
-      width: 100%;
-      margin-left: 0px !important;
-      margin-right: 0px !important;
-      --bg-color: #E0E0E0;
-      --border-color: #000000;
-      margin-bottom: -2px;
-  }
-
-  .search input {
-    border-color: #E0E0E0 !important;
-  }
-
   .icon-font {
     font-size: 20px;
-  }
-
-  .icon-margin {
-    margin: 0px;
-    padding-right: 6px;
-    position: absolute;
-    top: 18px;
-    left: 21px;
   }
 
   .button-margin {

@@ -779,11 +779,18 @@ export const bioversStore = {
       const index = state.bioversToDisplay.findIndex((biover) => biover.biover.id === id);
       return state.bioversToDisplay[index]
     },
-    getPoisByBiover: (state) => (id) => {
+    getPoisByBiover: (state) => (id, updateFilter = '') => {
       const index = state.pois.findIndex((poi) => poi.bioverId === id);
       if (index === -1) {
         return [];
       }
+      
+      if (updateFilter.length > 0) {
+        return state.pois[index].pois.filter((poi) => (
+          filterUtils.poiFilter(poi, updateFilter)
+        ));
+      }
+
       if (state.filter.length === 0) {
         return state.pois[index].pois;
       }
@@ -791,11 +798,18 @@ export const bioversStore = {
         filterUtils.poiFilter(poi, state.filter)
       ));
     },
-    getPathsByBiover: (state) => (id) => {
+    getPathsByBiover: (state) => (id, updateFilter = '') => {
       const index = state.paths.findIndex((path) => path.bioverId === id);
       if (index === -1) {
         return [];
       }
+
+      if (updateFilter.length > 0) {
+        return state.paths[index].paths.filter((path) => (
+          filterUtils.pathFilter(path, updateFilter)
+        ));
+      }
+
       if (state.filter.length === 0) {
         return state.paths[index].paths;
       }
@@ -810,11 +824,21 @@ export const bioversStore = {
       }
       return state.traces[index].traces;
     },
-    getTraceByBioversAndUser: (state) => (id) => {
+    getTraceByBioversAndUser: (state) => (id, updateFilter = '') => {
       const index = state.traces.findIndex((trace) => trace.bioverId === id);
       if (index === -1) {
         return [];
       }
+
+      if (updateFilter.length > 0) {
+        const traces = state.traces[index].traces.filter((trace) => {
+          return trace.element.User.username.toLocaleLowerCase() === username.value.toLocaleLowerCase();
+        });
+        return traces.filter((trace) => (
+          filterUtils.traceFilter(trace, updateFilter)
+        ));
+      }
+      
       return state.traces[index].traces.filter((trace) => {
         return trace.element.User.username.toLocaleLowerCase() === username.value.toLocaleLowerCase();
       });
@@ -835,11 +859,21 @@ export const bioversStore = {
       }
       return state.events[index].events;
     },
-    getEventByBioversAndUser: (state) => (id) => {
+    getEventByBioversAndUser: (state) => (id, updateFilter = '') => {
       const index = state.events.findIndex((event) => event.bioverId === id);
       if (index === -1) {
         return [];
       }
+
+      if (updateFilter.length > 0) {
+        const events = state.events[index].events.filter((event) => {
+          return event.element.User.username.toLocaleLowerCase() === username.value.toLocaleLowerCase();
+        });
+        return events.filter((event) => (
+          filterUtils.eventFilter(event, updateFilter)
+        ));
+      }
+
       return state.events[index].events.filter((event) => {
         return event.element.User.username.toLocaleLowerCase() === username.value.toLocaleLowerCase();
       });

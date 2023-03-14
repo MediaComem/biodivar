@@ -169,6 +169,6 @@
   }
 
   .fill-font {
-    font-variation-settings: "FILL" 1;
+    font-variation-settings: "FILL" 0;
   }
 </style>
