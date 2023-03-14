@@ -167,7 +167,6 @@ onMounted(() => {
               <p class="material-symbols-sharp">location_searching</p>
               <p class="col-main-text">coordonnées</p>
               <p
-                ref="coordinate"
                 class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'coordinate')"
                 @mouseleave="tooltipElement = null"
@@ -243,7 +242,6 @@ onMounted(() => {
               <p class="material-symbols-sharp">visibility</p>
               <p class="col-main-text">porté</p>
               <p
-                ref="visibility"
                 class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'visibility')"
                 @mouseleave="tooltipElement = null"
@@ -285,7 +283,6 @@ onMounted(() => {
               <p class="material-symbols-sharp">border_color</p>
               <p class="col-main-text">contour</p>
               <p
-                ref="contour"
                 class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'contour')"
                 @mouseleave="tooltipElement = null"
@@ -364,7 +361,6 @@ onMounted(() => {
               <p class="material-symbols-sharp">expand</p>
               <p class="col-main-text">extrusion</p>
               <p
-                ref="anim"
                 class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'extrusion')"
                 @mouseleave="tooltipElement = null"
@@ -395,7 +391,6 @@ onMounted(() => {
               <p class="material-symbols-sharp">north</p>
               <p class="col-main-text">elevation</p>
               <p
-                ref="anim"
                 class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'elev')"
                 @mouseleave="tooltipElement = null"
@@ -432,7 +427,6 @@ onMounted(() => {
               <p class="material-symbols-sharp">animation</p>
               <p class="col-main-text">animation</p>
               <p
-                ref="anim"
                 class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'anim')"
                 @mouseleave="tooltipElement = null"
@@ -479,7 +473,6 @@ onMounted(() => {
                 placeholder="Entrer nom du métadata"
               />
               <p
-                :ref="`${meta.key}-${index}`"
                 class="material-symbols-sharp"
                 @mouseenter="openTooltip($event, `${meta.key}-${index}`)"
                 @mouseleave="tooltipElement = null"
@@ -523,7 +516,6 @@ onMounted(() => {
               <p class="material-symbols-sharp link">add</p>
               <p class="link col-main-text" @click="addMetadata()">créer un attribut</p>
               <p
-                ref="add"
                 class="material-symbols-sharp"
                 @mouseenter="openTooltip($event, 'add')"
                 @mouseleave="tooltipElement = null"
