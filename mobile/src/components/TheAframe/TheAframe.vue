@@ -17,7 +17,7 @@
   import '../aframe/event-set';
   import '../aframe/path-walls';
 
-  import { getSymbolUrl, getSymbolAudiUrl, getMediaUrl, saveTrace, saveEvent } from '../../utils/api.js';
+  import { getMediaUrl, saveTrace, saveEvent } from '../../utils/api.js';
   import { onMounted, onUnmounted, watch } from '@vue/runtime-core';
 
   const { selectedBiovers, section, minDistance } = useStore();
@@ -128,22 +128,23 @@
     });
   });
 
-  selectedBiovers.value.Path.push({
-    id: 1,
-    style_stroke_width: 1,
-    stroke_color: '#004e92',
-    stroke_opacity: 50,
-    extrusion: 0.1,
-    elevation: 0,
-    scope: 5,
-    coordinate: [
-      {lat: 46.7809153620791, long: 6.64862875164098, alt: 0 }, // utilisation de l'altitude pour jouer sur l'elevation relative du "joint"
-      {lat: 46.7809113557174, long: 6.64863376635327, alt: -1 },
-      {lat: 46.7809113557174, long: 6.64863376635327, alt: 1 },
-      {lat: 46.7809113557174, long: 6.64863376635327, alt: 2 },
-      {lat: 46.7809113557174, long: 6.64863376635327, alt: -2 },
-    ]
-  });
+  // console.log('selectedBiovers.value', selectedBiovers.value);
+  // selectedBiovers.value.Path.push({
+  //   id: 1,
+  //   style_stroke_width: 1,
+  //   stroke_color: '#004e92',
+  //   stroke_opacity: 50,
+  //   extrusion: 0.1,
+  //   elevation: 0,
+  //   scope: 5,
+  //   coordinate: [
+  //     {lat: 46.7809153620791, long: 6.64862875164098, alt: 0 }, // utilisation de l'altitude pour jouer sur l'elevation relative du "joint"
+  //     {lat: 46.7809113557174, long: 6.64863376635327, alt: -1 },
+  //     {lat: 46.7809113557174, long: 6.64863376635327, alt: 1 },
+  //     {lat: 46.7809113557174, long: 6.64863376635327, alt: 2 },
+  //     {lat: 46.7809113557174, long: 6.64863376635327, alt: -2 },
+  //   ]
+  // });
 </script>
 
 <template>
@@ -171,7 +172,6 @@
           <template v-for="(coordinate, index) of path.coordinate" :key="`path-${path.id}-coord-${index}`">
             <a-entity
               position="0 0 10000"
-              :tposition="`${-3 + index * 2} 0 ${-5 + coordinate.alt}`"
               :gps-position="`latitude: ${coordinate.lat}; longitude: ${coordinate.long}`"
               :visible-from="`distance: ${path.scope}`"
             ></a-entity>
@@ -223,11 +223,11 @@
           <!-- POI Medias -->
           <template v-for="m of poi.media" :key="`media-${m.id}`">
             <a-entity
-              :visible="m.is_visible_in_radius ? 'false' : null"
-              :listen-to__enter="`target: #poi-radius-${poi.id}; event: radius-enter; emit: media-show`"
-              :listen-to__exit="`target: #poi-radius-${poi.id}; event: radius-exit; emit: media-hide`"
-              event-set__show="event: media-show; attribute: visible; value: true"
-              :event-set__hide="m.is_visible_in_radius ? `event: media-hide; attribute: visible; value: false` : null"
+              :visible="m.is_visible_out_radius ? 'true' : 'false'"
+              :listen-to__enter="`target: #poi-radius-${poi.id}; event: radius-enter; emit: media-in-radius`"
+              :listen-to__exit="`target: #poi-radius-${poi.id}; event: radius-exit; emit: media-out-radius`"
+              :event-set__in="`event: media-in-radius; attribute: visible; value: ${m.is_visible_in_radius ? 'true' : 'false'}`"
+              :event-set__out="`event: media-out-radius; attribute: visible; value: ${m.is_visible_out_radius ? 'true' : 'false'}`"
             >
               <!-- Gltf media -->
               <a-entity
@@ -288,17 +288,17 @@
                     loop: ${m.loop ? 'true' : 'false'};
                     volume: ${m.scale};
                     ${m.autoplay ? 'distanceModel: linear;' : 'positional: false;'}
-                    ${m.autoplay && m.is_visible_in_radius ? 'maxDistance: ' +  poi.radius : ''}
-                    ${m.autoplay && !m.is_visible_in_radius ? 'maxDistance: ' +  poi.scope : ''}
+                    ${m.autoplay && m.is_visible_in_radius ? 'TODOmaxDistance: ' +  poi.radius : ''}
+                    ${m.autoplay && !m.is_visible_in_radius ? 'TODOmaxDistance: ' +  poi.scope : ''}
                   `"
                   sound-play-stop="eventPlay: play-sound; eventStop: stop-sound;"
-                  :listen-to__enter="m.is_visible_in_radius ? `target: #poi-radius-${poi.id}; event: radius-enter; emit: play-sound` : null"
-                  :listen-to__exit="m.is_visible_in_radius ? `target: #poi-radius-${poi.id}; event: radius-exit; emit: stop-sound` : null"
-                  :emit-when-near="m.is_visible_in_radius ? null : `
+                  :listen-to__enter="`target: #poi-radius-${poi.id}; event: radius-enter; emit: ${m.is_visible_in_radius ? 'play-sound' : 'stop-sound'}`"
+                  :listen-to__exit="`target: #poi-radius-${poi.id}; event: radius-exit; emit: ${m.is_visible_out_radius ? 'play-sound' : 'stop-sound'}`"
+                  :emit-when-near="m.is_visible_out_radius ? `
                     distance: ${poi.scope};
                     event: play-sound;
                     eventFar: stop-sound;
-                  `"
+                  ` : null"
                 ></a-entity>
 
               </a-entity>
