@@ -92,7 +92,7 @@
     background-color: #8DC26F;
     border: solid 1px #8DC26F;
     border-radius: 2rem;
-    margin: 0rem 0rem 5px 1rem;
+    margin: 0rem 0.8rem 0.8rem 0rem;
     padding: 0.5rem 1rem 0.5rem 1rem;
     height: 36px;
     cursor: pointer;
@@ -102,7 +102,7 @@
     background-color: #BDBDBD;
     border: solid 1px #BDBDBD;
     border-radius: 2rem;
-    margin: 0rem 0rem 5px 1rem;
+    margin: 0rem 0.8rem 0.8rem 0rem;
     padding: 0.5rem 1rem 0.5rem 1rem;
     height: 36px;
     cursor: pointer;
@@ -169,6 +169,6 @@
   }
 
   .fill-font {
-    font-variation-settings: "FILL" 1;
+    font-variation-settings: "FILL" 0;
   }
 </style>

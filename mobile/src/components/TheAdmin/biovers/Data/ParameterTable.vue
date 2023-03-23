@@ -6,24 +6,24 @@
         <template v-if="error">
             <el-alert class="alert-layout" title="Une erreur s'est produite durant la mise à jour du biovers" type="error" />
         </template>
-        <p class="parameter-name">titre du biovers</p>
-        <base-input class="title">
-            <p class="material-symbols-sharp icon-position" style="top: -9px" >short_text</p>
-            <input type="text" v-model="biovers.biover.name" placeholder="nom du biovers">
-        </base-input>
-        <p class="parameter-name">sous-titre du biovers</p>
-        <base-input class="subtitle">
-            <p class="material-symbols-sharp icon-position description-transform" style="top: -9px" >short_text</p>
-            <input type="text" v-model="biovers.biover.description" placeholder="sous-titre du biovers">
-        </base-input>
-        <p class="parameter-name">emplacement du biovers</p>
-        <base-input class="location">
-            <p class="material-symbols-sharp icon-position" style="top: -8px" >my_location</p>
-            <input type="text" v-model="biovers.biover.location" placeholder="emplacement du biovers">
-        </base-input>
         <div class="item">
             <BioverActions :biover="biovers.biover" @visibility="visibilityDialog = true" @editable="editableDialog = true" @favori="favoriDialog = true" @pin="pinDialog = true" />
         </div>
+        <p class="parameter-name">Nom</p>
+        <base-input class="title">
+            <p class="material-symbols-sharp icon-position" style="top: -9px" >short_text</p>
+            <input style="padding-top: 6px;" type="text" v-model="biovers.biover.name" placeholder="nom du biovers">
+        </base-input>
+        <p class="parameter-name">Description</p>
+        <base-input class="subtitle">
+            <p class="material-symbols-sharp icon-position description-transform" style="top: -9px" >short_text</p>
+            <input style="padding-top: 6px;" type="text" v-model="biovers.biover.description" placeholder="sous-titre du biovers">
+        </base-input>
+        <p class="parameter-name">Emplacement</p>
+        <base-input class="location">
+            <p class="material-symbols-sharp icon-position" style="top: -8px" >my_location</p>
+            <input style="padding-top: 6px;" type="text" v-model="biovers.biover.location" placeholder="emplacement du biovers">
+        </base-input>
         <BioverVisibilityDialog v-if="visibilityDialog" :biover="biovers.biover" :current-visibility="biovers.biover.is_public" @close="visibilityDialog = false" @visibility="changeVisibility"/>
         <BioverEditableDialog v-if="editableDialog" :biover="biovers.biover" :current-editable="biovers.biover.is_editable" @close="editableDialog = false" @editable="changeEdition"/>
         <BioverFavoriDialog v-if="favoriDialog" :biover="biovers.biover" :favori-state="isInFavori(biovers.biover.id)" @close="favoriDialog = false" @favori-action="favoriEdition" />
@@ -33,7 +33,8 @@
         </base-button>
     </div>
     <div v-else>
-        <h1 class="error-layout">Vous n'êtes pas autorisé à modifier ce biovers</h1>
+        <h1 class="error-layout"><div class="error-align"><p class="material-symbols-sharp icon-margin icon-error">warning
+        </p><p class="error-text">Vous n’êtes pas autorisé·e à modifier ce biovers</p></div></h1>
     </div>
 </template>
 
@@ -139,27 +140,41 @@ export default {
     --bg-color: none;
     --color: white;
     --border-color: #FFFFFF;
+        margin-left: 0.8rem;
+    margin-right: 0.8rem;
 }
 
 .subtitle {
     --bg-color: none;
     --color: white;
     --border-color: #FFFFFF;
+        margin-left: 0.8rem;
+    margin-right: 0.8rem;
 }
 
 .location {
     --bg-color: none;
     --color: white;
-    --border-color: #FFFFFF;
+    --border-color: #FFFFFF;    
+    margin-left: 0.8rem;
+    margin-right: 0.8rem;
 }
 
 .item {
     display: flex;
+    margin-left: 0.8rem;
+    margin-right: 0.8rem;
+    margin-bottom: 4px;
+    margin-top: 4px;
 }
 
 .save {
     --link-color: white;
     --highlight-color: #009FE3;
+    margin-left: 0.8rem !important;
+    margin-bottom: 0.8rem !important;
+    width: calc(100% - 1.6rem) !important;
+    margin-top: 0rem !important;
 }
 
 .alert-layout {
@@ -172,8 +187,33 @@ export default {
     height: 29px;
 }
 
+.error-align {
+    display: flex;
+}
+
+.error-align > p {
+    display: flex;
+    align-items: center;
+    margin: 0px;
+}
+
+.error-text {
+    align-items: end !important;
+}
+
 .error-layout {
+    display: flex;
     color: white;
+    font-family: "BiodivAR Roman";
+    font-variation-settings: "wght" 110, "ital" 0;
+    font-size: 12px;
+    line-height: 14px;
+    padding: 10px 8px 8px 8px;
+    margin: 0px 8px 0px 8px;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    border-bottom: 1px solid white;
+    text-align: left;
 }
 
 .parameter-name {
@@ -181,11 +221,18 @@ export default {
     margin: 0px;
     text-align: left;
     padding-left: 16px;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
+    font-variation-settings: "wght" 85, "ital" 0;
+    font-size: 12px;
+    line-height: 14px;
 }
 
 .icon-font {
     font-size: 20px;
+}
+
+.icon-error {
+    font-size: 18px;
 }
 
 .icon-margin {
@@ -203,7 +250,7 @@ export default {
 .icon-position {
     color: white;
     position: absolute;
-    left: 21px;
+    left: 8px;
 }
 
 .description-transform {

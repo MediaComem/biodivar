@@ -160,15 +160,14 @@ onMounted(() => {
           :could-update-header="false"
           :length="6 + form.metadata.length"
           :should-be-open="true"
-          :image="'arrow_right'"
+          :image="'settings'"
         >
           <div style="display: flex">
             <div class="col-main border coordinate-title">
               <p class="material-symbols-sharp">location_searching</p>
-              <p>coordonnées</p>
+              <p class="col-main-text">coordonnées</p>
               <p
-                ref="coordinate"
-                class="material-symbols-sharp"
+                class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'coordinate')"
                 @mouseleave="tooltipElement = null"
               >
@@ -241,10 +240,9 @@ onMounted(() => {
           <div style="display: flex">
             <div class="col-main border">
               <p class="material-symbols-sharp">visibility</p>
-              <p>porté</p>
+              <p class="col-main-text">porté</p>
               <p
-                ref="visibility"
-                class="material-symbols-sharp"
+                class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'visibility')"
                 @mouseleave="tooltipElement = null"
               >
@@ -283,10 +281,9 @@ onMounted(() => {
           <div style="display: flex">
             <div class="col-main border">
               <p class="material-symbols-sharp">border_color</p>
-              <p>contour</p>
+              <p class="col-main-text">contour</p>
               <p
-                ref="contour"
-                class="material-symbols-sharp"
+                class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'contour')"
                 @mouseleave="tooltipElement = null"
               >
@@ -362,10 +359,9 @@ onMounted(() => {
           <div style="display: flex">
             <div class="col-main border">
               <p class="material-symbols-sharp">expand</p>
-              <p>extrusion</p>
+              <p class="col-main-text">extrusion</p>
               <p
-                ref="anim"
-                class="material-symbols-sharp"
+                class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'extrusion')"
                 @mouseleave="tooltipElement = null"
               >
@@ -393,10 +389,9 @@ onMounted(() => {
           <div style="display: flex">
             <div class="col-main border">
               <p class="material-symbols-sharp">north</p>
-              <p>elevation</p>
+              <p class="col-main-text">elevation</p>
               <p
-                ref="anim"
-                class="material-symbols-sharp"
+                class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'elev')"
                 @mouseleave="tooltipElement = null"
               >
@@ -430,10 +425,9 @@ onMounted(() => {
           <div style="display: flex">
             <div class="col-main border">
               <p class="material-symbols-sharp">animation</p>
-              <p>animation</p>
+              <p class="col-main-text">animation</p>
               <p
-                ref="anim"
-                class="material-symbols-sharp"
+                class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'anim')"
                 @mouseleave="tooltipElement = null"
               >
@@ -479,7 +473,6 @@ onMounted(() => {
                 placeholder="Entrer nom du métadata"
               />
               <p
-                :ref="`${meta.key}-${index}`"
                 class="material-symbols-sharp"
                 @mouseenter="openTooltip($event, `${meta.key}-${index}`)"
                 @mouseleave="tooltipElement = null"
@@ -518,12 +511,11 @@ onMounted(() => {
               </p>
             </div>
           </div>
-          <div style="display: flex">
+          <div style="display: flex; border-bottom: 1px solid black;">
             <div class="col-main border">
               <p class="material-symbols-sharp link">add</p>
-              <p class="link" @click="addMetadata()">créer un attribut</p>
+              <p class="link col-main-text" @click="addMetadata()">créer un attribut</p>
               <p
-                ref="add"
                 class="material-symbols-sharp"
                 @mouseenter="openTooltip($event, 'add')"
                 @mouseleave="tooltipElement = null"
@@ -557,7 +549,13 @@ onMounted(() => {
 p {
   margin-top: 6px;
   margin-bottom: 6px;
+  letter-spacing: 0.02em;
+  font-size: 14px;
 }
+
+.col-main-text {
+  margin-bottom: 3px;
+} 
 
 .coordinate-title {
     height: auto !important;
@@ -618,10 +616,15 @@ p {
 }
 
 label {
-  font-weight: bold;
+  font-family: "BiodivAR Roman";
+  font-variation-settings: "wght" 110, "ital" 0;
+  font-size: 14px;
+  letter-spacing: 0.02em;
   padding-right: 6px;
   padding-bottom: 1px;
+  margin-top: 4px;
 }
+
 
 button {
   width: 49%;
@@ -734,40 +737,40 @@ textarea {
   display: flex;
   align-items: center;
   padding-left: 6px;
-  height: 34px;
+  height: 30px;
 }
 
 .col2 {
   width: 75%;
   display: flex;
   align-items: center;
+  height: 30px;
 }
 
 .col3 {
   width: calc((100% - 25%) / 2);
   display: flex;
   align-items: center;
-  height: 34px;
+  height: 30px;
 }
 
 .col4 {
   width: 25%;
   display: flex;
   align-items: center;
-  height: 34px;
+  height: 30px;
 }
 
 .col5 {
   width: calc((100% - 25%) / 4);
   display: flex;
   align-items: center;
-  height: 34px;
+  height: 30px;
 }
 
 .border {
   border-top: 1px solid black;
   border-left: 1px solid black;
-  border-bottom: 1px solid black;
 }
 
 .end-border {
@@ -810,8 +813,8 @@ textarea {
 }
 
 .material-symbols-sharp {
-  font-size: 20px;
-  padding-right: 5px;
+  font-size: 18px;
+  padding-right: 8px;
 }
 
 .edition-layout {
@@ -878,6 +881,13 @@ textarea {
   margin-right: 3px;
 }
 
+.tooltip-font {
+  color: #999999;
+  margin-bottom: 6px;
+  font-size: 16px;
+ padding-left: 8px;
+}
+
 .clickable {
   cursor: pointer;
 }
@@ -901,7 +911,8 @@ textarea {
 }
 
 .margin-accordeon {
-  --left-margin: 0;
+  --left-margin: 7px;
+  --accordeon-background: #EEEEEE;
 }
 
 .margin-left-constraint {

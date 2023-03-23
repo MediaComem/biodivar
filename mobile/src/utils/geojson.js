@@ -114,10 +114,13 @@ export function computeGeoJSONFromPATHs(paths) {
               "updated_at": "${path.element.update_date}",
               "contributor": "${path.element.last_contributor_fk ? path.element.last_contributor_fk.username : ''}",
               "scope": "${path.element.scope}",
-              "style_type": "${path.element.style_type}",
               "style_stoke": "${path.element.style_stroke_width}",
+              "stroke_color": "${path.element.stroke_color}",
+              "stroke_opacity": "${path.element.stroke_opacity}",
               "amplitude": "${path.element.amplitude}",
+              "extrusion": "${path.element.extrusion}",
               "elevation": "${path.element.style_elevation}"
+              "metadata": "${path.element.metadata}",
             }
           },`
       }
@@ -144,15 +147,18 @@ export function computeGeoJSONFromPATH(path) {
         },
         "properties": {
           "id_path": "${path.element.id}",
-          "created_at": "${path.element.creation_date}",
-          "owner": "${path.element.User ? path.element.User.username : ''}",
-          "updated_at": "${path.element.update_date}",
-          "contributor": "${path.element.last_contributor_fk ? path.element.last_contributor_fk.username : ''}",
-          "scope": "${path.element.scope}",
-          "style_type": "${path.element.style_type}",
-          "style_stoke": "${path.element.style_stroke_width}",
-          "amplitude": "${path.element.amplitude}",
-          "elevation": "${path.element.style_elevation}"
+            "created_at": "${path.element.creation_date}",
+            "owner": "${path.element.User ? path.element.User.username : ''}",
+            "updated_at": "${path.element.update_date}",
+            "contributor": "${path.element.last_contributor_fk ? path.element.last_contributor_fk.username : ''}",
+            "scope": "${path.element.scope}",
+            "style_stoke": "${path.element.style_stroke_width}",
+            "stroke_color": "${path.element.stroke_color}",
+            "stroke_opacity": "${path.element.stroke_opacity}",
+            "amplitude": "${path.element.amplitude}",
+            "extrusion": "${path.element.extrusion}",
+            "elevation": "${path.element.style_elevation}"
+            "metadata": "${path.element.metadata}",
         }
       }
     ]

@@ -275,7 +275,7 @@
     background-color: #323232;
     border: solid 1px #323232;
     display: inline-flex;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
   }
 
   .menu-open {
@@ -316,7 +316,7 @@
   }
 
   .fill-font {
-    font-variation-settings: "FILL" 1;
+    font-variation-settings: "FILL" 0;
   }
   
   .animation {

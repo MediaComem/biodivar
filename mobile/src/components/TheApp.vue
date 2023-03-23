@@ -119,7 +119,6 @@
 <style scoped>
   header {
     border-bottom: solid black 1px;
-    margin-bottom: 1rem;
     display: flex;
     padding: 10px 10px 10px 10px;
     background-color: #699A3F;
@@ -255,6 +254,6 @@
   }
 
   .fill-font {
-    font-variation-settings: "FILL" 1;
+    font-variation-settings: "FILL" 0;
   }
 </style>

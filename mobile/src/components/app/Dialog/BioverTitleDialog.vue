@@ -21,72 +21,47 @@
 
 <template>
   <base-dialog class="edit-element"  @close="emit('close')">
-    <p class="material-symbols-sharp icon-margin icon-font fill-font header-icon-layout">edit</p>
-    <header>{{ $t('TheMenu.Dialog.TitleHeader') }}</header>
+    <div style="display:flex; justify-content: center;">
+      <header><p class="material-symbols-sharp icon-margin icon-font fill-font header-icon-layout">tune</p> {{ $t('TheMenu.Dialog.TitleHeader') }}</header>
+    </div>
     <p class="description">{{ $t('TheMenu.Dialog.TitleDescription') }}</p>
     <base-input class="dialog-input-color">
       <div style="display: flex">
-        <p class="material-symbols-sharp icon-margin icon-font fill-font input" style="top: 4px; left: 25px;">short_text</p>
+        <p class="material-symbols-sharp icon-margin icon-font fill-font input" style="top: 8px; left: 8px;">short_text</p>
         <input type="text" v-model="bioverName" :placeholder="$t('TheMenu.Dialog.TitlePlaceholder')">
       </div>
       <div style="display: flex">
-        <p class="material-symbols-sharp icon-margin icon-font fill-font input description-transform" style="top: 51px; left: 25px;">short_text</p>
+        <p class="material-symbols-sharp icon-margin icon-font fill-font input description-transform" style="top: 55px; left: 8px;">short_text</p>
         <input type="text" v-model="bioverDescription" :placeholder="$t('TheMenu.Dialog.DescriptionPlaceholder')">
       </div>
       <div style="display: flex">
-        <p class="material-symbols-sharp icon-margin icon-font fill-font input" style="top: 97px; left: 25px;">my_location</p>
-        <input type="text" v-model="bioversLocation" placeholder="emplacement du biovers">
+        <p class="material-symbols-sharp icon-margin icon-font input" style="top: 104px; left: 8px;">my_location</p>
+        <input type="text" v-model="bioversLocation" placeholder="Emplacement">
       </div>
-      <base-button class="edit" @click="emit('save', { title: bioverName, description: bioverDescription, location: bioversLocation })">
-       <p class="material-symbols-sharp icon-margin">done</p><p class="button-text">enregistrer</p>
+      <base-button class="layout-button" @click="emit('save', { title: bioverName, description: bioverDescription, location: bioversLocation })">
+       <p class="material-symbols-sharp icon-margin">done</p><p class="button-text">{{ $t('Button.save') }}</p>
       </base-button>
     </base-input>
   </base-dialog>
 </template>
 
 <style scoped>
-  .edit {
-    --link-color: white;
-    --highlight-color: #009FE3;
-  }
+@import './dialog.css';
 
-  .input {
-    position: absolute;
-  }
+input {
+  padding-top: 8px !important;
+}
 
-  .header-icon-layout {
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.input {
+  position: absolute;
+}
 
-  .icon-font {
-    font-size: 20px;
-  }
+.description-transform {
+  transform: scaleY(-1);
+}
 
-  .icon-margin {
-    margin: 0px;
-    padding-right: 6px;
-  }
-
-  .fill-font {
-    font-variation-settings: "FILL" 1;
-  }
-
-  .description-transform {
-    transform: scaleY(-1);
-  }
-
-  .button-text {
-    margin-top: 0px;
-    margin-bottom: 0px;
-    padding-bottom: 3px;
-    font-variation-settings: "wght" 149, "ital" 0;
-    text-transform: uppercase;
-  }
-
-  .description {
-    margin-bottom: 2rem;
-  }
+.dialog-input-color {
+  --border-color: white !important;
+  margin-left: 0px !important;
+}
 </style>

@@ -1,49 +1,66 @@
 <template>
   <div>
-    <div class="layout">
-      <button
-        @click="selectTab(1)"
-        :class="{'button-focus': currentTab === 1}"
-      >
-        <p class="material-symbols-sharp text-margin">pin_drop</p>
-        <p class="name-element">points d'intérêt [{{ getPoisByBiover(bioverId).length }}]</p>
-      </button>
-      <button
-        @click="selectTab(2)"
-        :class="{'button-focus': currentTab === 2}"
-      >
-        <p class="material-symbols-sharp text-margin">gesture</p>
-        <p class="name-element">traces [{{ getPathsByBiover(bioverId).length }}]</p>
-      </button>
-      <button
-        @click="selectTab(3)"
-        :class="{'button-focus': currentTab === 3}"
-      >
-        <p class="material-symbols-sharp text-margin">gesture</p>
-        <p class="name-element">paramètres</p>
-      </button>
-      <button
-        @click="selectTab(4)"
-        :class="{'button-focus': currentTab === 4}"
-      >
-        <p class="material-symbols-sharp text-margin">bar_chart</p>
-        <p class="name-element">Trace [{{ getTraceByBioversAndUser(bioverId).length }}]</p>
-      </button>
-      <button
-        @click="selectTab(5)"
-        :class="{'button-focus': currentTab === 5}"
-      >
-        <p class="material-symbols-sharp text-margin">bar_chart</p>
-        <p class="name-element">Event [{{ getEventByBioversAndUser(bioverId).length }}]</p>
-      </button>
+    <div class="layout table-row-layout">
+      <div class="layout-border">
+        <div class="button-border-layout" :class="{'remove-border': currentTab === 1}">
+        <button
+          class="button-layout"
+          @click="selectTab(1)"
+          :class="{'background-black': currentTab === 1}"
+        >
+          <p class="material-symbols-sharp text-margin">pin_drop</p>
+          <p class="name-element">Points [{{ getPoisByBiover(bioverId).length }}]</p>
+        </button>
+        </div>
+        <div class="button-border-layout" :class="{'remove-border': currentTab === 2}">
+        <button
+          class="button-layout"
+          @click="selectTab(2)"
+          :class="{'background-black': currentTab === 2}"
+        >
+          <p class="material-symbols-sharp text-margin">timeline</p>
+          <p class="name-element">Lignes [{{ getPathsByBiover(bioverId).length }}]</p>
+        </button>
+        </div>    
+        <div class="button-border-layout" :class="{'remove-border': currentTab === 3}">
+        <button
+          class="button-layout"
+          @click="selectTab(3)"
+          :class="{'background-black': currentTab === 3}"
+        >
+          <p class="material-symbols-sharp text-margin">footprint</p>
+          <p class="name-element">Traces [{{ getTraceByBioversAndUser(bioverId).length }}]</p>
+        </button>
+        </div>
+        <div class="button-border-layout" :class="{'remove-border': currentTab === 4}">
+        <button
+          class="button-layout"
+          @click="selectTab(4)"
+          :class="{'background-black': currentTab === 4}"
+        >
+          <p class="material-symbols-sharp text-margin">touch_app</p>
+          <p class="name-element">Actions [{{ getEventByBioversAndUser(bioverId).length }}]</p>
+        </button>
+        </div>
+        <div class="button-border-layout" :class="{'remove-border': currentTab === 5}">
+        <button
+          class="button-layout"
+          @click="selectTab(5)"
+          :class="{'background-black': currentTab === 5}"
+        >
+          <p class="material-symbols-sharp text-margin">tune</p>
+          <p class="name-element">Paramètres</p>
+        </button>
+        </div>
+      </div>
     </div>
 
     <div class="data-table-layout">
       <PoiTable v-show="currentTab === 1" :bioverId="bioverId" />
       <PathTable v-show="currentTab === 2" :bioverId="bioverId" />
-      <ParameterTable v-show="currentTab === 3" :bioverId="bioverId" />
-      <TraceTable v-show="currentTab === 4" :bioverId="bioverId" />
-      <EventTable v-show="currentTab === 5" :bioverId="bioverId" />
+      <TraceTable v-show="currentTab === 3" :bioverId="bioverId" />
+      <EventTable v-show="currentTab === 4" :bioverId="bioverId" />
+      <ParameterTable v-show="currentTab === 5" :bioverId="bioverId" />
     </div>
   </div>
 </template>
@@ -85,17 +102,12 @@ export default {
 </script>
 
 <style scoped>
+@import './table-header.css';
+
 .layout {
-  display: flex;
-  flex-wrap: wrap;
   padding-top: 8px;
   margin-left: 8px;
   margin-right: 8px;
-  border-bottom: 1px solid white;
-}
-
-.name-element {
-      margin-top: 17px;
 }
 
 .data-table-layout {
@@ -105,26 +117,15 @@ export default {
 button {
   color: white;
   background-color: #666666;
-  border-width: 1px 1px 1px 1px;
-  border-style: solid;
-  border-color: white;
-  border-radius: 2px 2px 0px 0px;
-  margin-right: 8px;
-  cursor: pointer;
-  width: auto;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid #666666;
-}
-
-.button-focus {
-  background-color: black;
-  border-bottom: 1px solid black;
+  padding: 0px !important;
 }
 
 p {
   padding-right: 8px;
+}
+
+.text-margin {
+  padding-left: 6px;
 }
 </style>
 

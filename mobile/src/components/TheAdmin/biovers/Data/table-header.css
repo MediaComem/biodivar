@@ -1,0 +1,45 @@
+.table-row-layout {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.remove-border {
+  border-bottom: 1px solid black !important;
+  margin-bottom: -1px;
+}
+
+.layout-border {
+  border-bottom: 1px solid white;
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+.button-border-layout {
+  border-width: 1px 1px 0px 1px;
+  border-style: solid;
+  border-color: #ffffff;
+  border-radius: 2px 2px 0px 0px;
+  margin-right: 5px;
+}
+
+.name-element {
+  margin-top: 17px;
+  white-space: nowrap;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+}
+
+.background-black {
+  background-color: black;
+}
+
+.button-layout {
+  width: auto;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border: 0;
+}

@@ -1,16 +1,19 @@
 <template>
   <div>
-    <p v-if="pins.length > 0" class="font-pin" style="text-align: start">{{ $t('TheMenu.Pin') }}</p>
+    <BioverPin />
     <div v-for="(biover, index) in pins" :key="index">
       <BioversItem :biover="biover"/>
     </div>
-    <div class="return"><a class="link" href="#menu"><p class="material-symbols-sharp icon-font icon-margin">arrow_back</p></a><p class="text font">CARTE</p></div>
+    <Return link="#menu" text="CARTE"/>
     <div>
       <Map />
     </div>
     <div class="upload-layout">
       <GeoJsonImporter />
     </div>
+    <!--div class="upload-layout">
+      <Filter />
+    </div-->
     <div>
       <BioversSelection />
     </div>
@@ -22,6 +25,8 @@ import { mapActions, mapState, mapGetters } from 'vuex';
 import { useStore } from '../composables/store.js';
 
 import Map from '../components/TheAdmin/biovers/Map/Map.vue';
+import BioverPin from '../components/app/UIElement/BioversPin.vue';
+import Return from '../components/app/UIElement/Return.vue';
 import BioversSelection from '../components/TheAdmin/biovers/Data/BioversSelection.vue';
 import BioversItem from '../components/app/BioversItem.vue';
 import GeoJsonImporter from '../components/TheAdmin/biovers/Import/GeoJsonImporter.vue';
@@ -30,6 +35,8 @@ import Filter from '../components/TheAdmin/biovers/Data/Filter.vue';
 export default {
   components: {
     Map,
+    BioverPin,
+    Return,
     BioversSelection,
     GeoJsonImporter,
     Filter,
@@ -66,49 +73,5 @@ export default {
 <style scoped>
 .upload-layout {
   width: 100%;
-}
-
-.font-pin {
-    font-family: 'BiodivAR Roman';
-    font-variation-settings: "wght" 85, "ital" 0;
-    font-size: 12px;
-    line-height: 12px;
-    letter-spacing: 0.04em;
-  }
-
-.font {
-    font-family: 'BiodivAR Roman';
-    font-variation-settings: "wght" 110, "ital" 0;
-    font-size: 18px;
-    line-height: 14px;
-    letter-spacing: 0.02em;
-  }
-
-.icon-font {
-    font-size: 20px;
-  }
-
-  .icon-margin {
-    margin: 0px;
-    padding-right: 6px;
-  }
-
-.link {
-  padding-bottom: 1rem;
-}
-
-.return {
-  display: flex;
-      height: 36px;
-}
-
-.text {
-  margin: 0;
-  padding-top: 5px;
-}
-
-a {
-  color: black;
-  text-decoration: none;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div v-if="dialogVisible" class="overlay" @click="cancelDialog = true"></div>
   <div v-if="dialogVisible" class="modal-edition">
-    <DialogHeader :title="'éditer point dintérêt'" :logo="'add_location_alt'" @close="cancelDialog = true" />
+    <DialogHeader :title="'Modifier point'" :logo="'edit_location_alt'" @close="cancelDialog = true" />
     <div class="embedded">
       <the-aframe-editor
         :visibilityScope="form.scope"
@@ -34,22 +34,22 @@
     </div>
     <div class="edition-layout collapse">
       <div class="container-layout">
-        <Accordeon class="margin-accordeon" :header="'Général'" :could-update-header="false" :length="6 + form.metadata.length" :should-be-open="true" :image="'arrow_right'">
+        <Accordeon class="margin-accordeon" :header="'Général'" :could-update-header="false" :length="6 + form.metadata.length" :should-be-open="true" :image="'settings'">
           <div style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">location_searching</p><p>coordonnées</p>
-              <p ref="coordinate" class="material-symbols-sharp" @mouseenter="openTooltip($event, 'coordinate')" @mouseleave="tooltipElement = null">help</p>
+            <div class="col-main border"><p class="material-symbols-sharp">my_location</p><p class="col-main-text">Coordonnées</p>
+              <p ref="coordinate" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'coordinate')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'coordinate'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'coordinate'"  @mouseleave="tooltipElement = null">Les coordonnées WGS84 ou se situe le centre du point d’intérêt.</p>
               </div>
             </div>
-            <div class="col4 border"><label for="long" class="margin-left-constraint">longitude</label><input id="long" class="input-full-size-element remove-input-border remove-stepper" type="number" v-model="form.coordinate.long" min="-180" max="180" @change="longitudeValidation()"></div>
-            <div class="col4 border"><label for="lat" class="margin-left-constraint">latitude</label><input id="lat" class="input-full-size-element remove-input-border remove-stepper" type="number" v-model="form.coordinate.lat" min="-90" max="90" @change="latitudeValidation()"></div>
-            <div class="col4 border end-border"><label for="alt" class="margin-left-constraint">altitude</label><input id="alt" class="input-full-size-element remove-input-border remove-stepper" type="number" v-model="form.coordinate.alt"></div>
+            <div class="col4 border"><label for="long" class="margin-left-constraint">Longitude</label><input id="long" class="input-full-size-element remove-input-border remove-stepper" type="number" v-model="form.coordinate.long" min="-180" max="180" @change="longitudeValidation()"></div>
+            <div class="col4 border"><label for="lat" class="margin-left-constraint">Latitude</label><input id="lat" class="input-full-size-element remove-input-border remove-stepper" type="number" v-model="form.coordinate.lat" min="-90" max="90" @change="latitudeValidation()"></div>
+            <div class="col4 border end-border"><label for="alt" class="margin-left-constraint">Altitude</label><input id="alt" class="input-full-size-element remove-input-border remove-stepper" type="number" v-model="form.coordinate.alt"></div>
           </div>
           <div style="display: flex">
             <div class="col-main border">
-              <p class="material-symbols-sharp">short_text</p><p>titre</p>
-              <p ref="title" class="material-symbols-sharp" @mouseenter="openTooltip($event, 'title')" @mouseleave="tooltipElement = null">help</p>
+              <p class="material-symbols-sharp">short_text</p><p class="col-main-text">Titre</p>
+              <p ref="title" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'title')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'title'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'title'"  @mouseleave="tooltipElement = null"> le titre du point d’intérêt et ses paramètres d’affichage. </p>
               </div>
@@ -57,8 +57,8 @@
             <div class="col2 border end-border"><input id="title" type="text" class="input-margin remove-input-border" v-model="form.title" placeholder="Entrer votre title"></div>
           </div>
           <div style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp description-transform">short_text</p><p>description</p>
-              <p ref="description" class="material-symbols-sharp" @mouseenter="openTooltip($event, 'description')" @mouseleave="tooltipElement = null">help</p>
+            <div class="col-main border"><p class="material-symbols-sharp description-transform">short_text</p><p class="col-main-text">description</p>
+              <p ref="description" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'description')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'description'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'description'"  @mouseleave="tooltipElement = null">sous-titre ou description du point d’intérêt.</p>
               </div>
@@ -66,8 +66,8 @@
             <div class="col2 border end-border"><input id="description" type="text" class="input-margin remove-input-border" v-model="form.subtitle" placeholder="Entrer votre description"></div>
           </div>
           <div style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">map</p><p>symbole carte</p>
-            <p ref="map" class="material-symbols-sharp" @mouseenter="openTooltip($event, 'map')" @mouseleave="tooltipElement = null">help</p>
+            <div class="col-main border"><p class="material-symbols-sharp">map</p><p class="col-main-text">symbole carte</p>
+            <p ref="map" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'map')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'map'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'map'"  @mouseleave="tooltipElement = null"> ce fichier sera affiché sur la carte 2D mobile et desktop</p>
               </div></div>
@@ -80,8 +80,8 @@
             </div>
           </div>
           <div style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">visibility</p><p>porté</p>
-              <p ref="visibility" class="material-symbols-sharp" @mouseenter="openTooltip($event, 'visibility')" @mouseleave="tooltipElement = null">help</p>
+            <div class="col-main border"><p class="material-symbols-sharp">visibility</p><p class="col-main-text">porté</p>
+              <p ref="visibility" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'visibility')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'visibility'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'visibility'"  @mouseleave="tooltipElement = null"> Lorsque la distance entre la position de l’utilisateur et celle d’un point/trace est inférieur à cette valeur, celui-ci est affiché dans la scene A-Frame. La lecture de certains médias (son, vidéo, gltf animés) peuvent également</p>
               </div>
@@ -93,8 +93,8 @@
             </div>
           </div>
            <div style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">circle</p><p>type</p>
-             <p ref="forme" class="material-symbols-sharp" @mouseenter="openTooltip($event, 'forme')" @mouseleave="tooltipElement = null">help</p>
+            <div class="col-main border"><p class="material-symbols-sharp">circle</p><p class="col-main-text">type</p>
+             <p ref="forme" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'forme')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'forme'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'forme'"  @mouseleave="tooltipElement = null">Ce paramètre définit la forme du radius: anneau, cercle, demi-sphère, sphère</p>
               </div></div>
@@ -117,7 +117,7 @@
             <div class="col4 border end-border" :class="{disabled: form.style_type == 'sphere' || form.style_type == 'hemisphere'}">
               <p class="material-symbols-sharp">expand</p>
               <label for="extrusion">extrusion</label>
-               <p ref="style_type" class="material-symbols-sharp" @mouseenter="openTooltip($event, 'style_type')" @mouseleave="tooltipElement = null">help</p>
+               <p ref="style_type" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'style_type')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'style_type'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'style_type'"  @mouseleave="tooltipElement = null">Si le type de forme est 'cercle', ce paramètre définit la hauteur de l’extrusion pour la transformation en cylindre.</p>
               </div>
@@ -127,8 +127,8 @@
             </div>
           </div>
           <div style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">share_location</p><p>rayon</p>
-            <p ref="share_location" class="material-symbols-sharp" @mouseenter="openTooltip($event, 'share_location')" @mouseleave="tooltipElement = null">help</p>
+            <div class="col-main border"><p class="material-symbols-sharp">share_location</p><p class="col-main-text">rayon</p>
+            <p ref="share_location" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'share_location')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'share_location'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'share_location'"  @mouseleave="tooltipElement = null"></p>
               </div></div>
@@ -139,8 +139,8 @@
             </div>
           </div>
           <div :class="{disabled: form.style_type == 'sphere' || form.style_type == 'hemisphere'}" style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">border_color</p><p>contour</p>
-            <p ref="contour" class="material-symbols-sharp" @mouseenter="openTooltip($event, 'contour')" @mouseleave="tooltipElement = null">help</p>
+            <div class="col-main border"><p class="material-symbols-sharp">border_color</p><p class="col-main-text">contour</p>
+            <p ref="contour" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'contour')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'contour'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'contour'"  @mouseleave="tooltipElement = null"></p>
               </div></div>
@@ -149,13 +149,13 @@
             <div class="col4 border end-border"><p class="material-symbols-sharp">opacity</p><input id="stroke_opacity" class="input-margin remove-input-border remove-stepper input-number-right-align" type="number" v-model="form.stroke_opacity" :disabled="form.style_type === 'sphere' || form.style_type === 'hemisphere'" style="width:32px"><label for="stroke_opacity">%</label><el-slider class="slider-width-opacity" v-model="form.stroke_opacity" :max="100" :disabled="form.style_type === 'sphere' || form.style_type === 'hemisphere'"/></div>
           </div>
           <div style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">format_color_fill</p> <p>reamplissage</p>
-            <p ref="remplissage" class="material-symbols-sharp" @mouseenter="openTooltip($event, 'remplissage')" @mouseleave="tooltipElement = null">help</p>
+            <div class="col-main border"><p class="material-symbols-sharp">format_color_fill</p> <p class="col-main-text">reamplissage</p>
+            <p ref="remplissage" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'remplissage')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'remplissage'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'remplissage'"  @mouseleave="tooltipElement = null"></p>
               </div></div>
             <div class="col4 border"><input id="wireframe" type="checkbox" v-model="form.wireframe"><p class="material-symbols-sharp" style="margin-left: 2px;">grid_4x4</p> <label for="wireframe">wireframe</label>
-            <p ref="fill_wireframe" class="material-symbols-sharp" @mouseenter="openTooltip($event, 'fill_wireframe')" @mouseleave="tooltipElement = null">help</p>
+            <p ref="fill_wireframe" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'fill_wireframe')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'fill_wireframe'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'fill_wireframe'"  @mouseleave="tooltipElement = null"></p>
               </div>
@@ -164,8 +164,8 @@
             <div class="col4 border end-border"><p class="material-symbols-sharp">opacity</p><input id="fill_opacity" class="input-margin remove-input-border remove-stepper input-number-right-align" type="number" v-model="form.fill_opacity" style="width: 32px;"><label for="fill_opacity">%</label><el-slider class="slider-width-opacity" v-model="form.fill_opacity" :max="100"/></div>
           </div>
           <div style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">animation</p> <p>animation</p>
-            <p ref="anim" class="material-symbols-sharp" @mouseenter="openTooltip($event, 'anim')" @mouseleave="tooltipElement = null">help</p>
+            <div class="col-main border"><p class="material-symbols-sharp">animation</p> <p class="col-main-text">animation</p>
+            <p ref="anim" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'anim')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'anim'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'anim'"  @mouseleave="tooltipElement = null">cette valeur est un facteur d’amplitude pour créer une animation sinusoïdale du rayon. Si la valeur est à 0, il n’y a pas d’animation.</p>
               </div></div>
@@ -176,7 +176,7 @@
           </div>
           <div style="display: flex" v-for="(element, index) in form.metadata" :key="index">
             <div class="col-main border"><p class="material-symbols-sharp">database</p><input v-model="element.key" type="text" class="metadata-title remove-input-border" placeholder="Entrer nom du métadata">
-              <p :ref="`${element.key}`" class="material-symbols-sharp" @mouseenter="openTooltip($event, `${element.key}`)" @mouseleave="tooltipElement = null">help</p>
+              <p :ref="`${element.key}`" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, `${element.key}`)" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === `${element.key}`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `${element.key}`"  @mouseleave="tooltipElement = null"> {{ element.description }} </p>
               </div>
@@ -184,9 +184,9 @@
             <div class="col3 border"><input v-model="element.value" type="text" class="input-margin input-full-size-element remove-input-border" placeholder="Entrer valeur du métadata"></div>
             <div class="col3 border end-border"><input v-model="element.description" type="text" class="input-margin input-full-size-element remove-input-border" placeholder="Entrer description du métadata"><p class="material-symbols-sharp" @click="deleteGeneralAttribute(index)">delete_forever</p></div>
           </div>
-          <div style="display: flex">
+          <div style="display: flex; border-bottom: 1px solid black;">
             <div class="col-main border"><p class="material-symbols-sharp link">add</p><p class="link" @click="createGeneralAttribute()">créer un attribut</p>
-              <p ref="attribut" class="material-symbols-sharp" @mouseenter="openTooltip($event, 'attribut')" @mouseleave="tooltipElement = null">help</p>
+              <p ref="attribut" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'attribut')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'attribut'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'attribut'"  @mouseleave="tooltipElement = null">Cette option permet de créer des champs personnalisés et de les remplir avec une valeur (de type texte). Les attributs ainsi créés seront visibles sur la table de données du biovers.</p>
               </div>
@@ -195,10 +195,10 @@
           </div>
         </Accordeon>
         <div v-for="(element, index) in form.media" :key="index" :title="`Media ${index + 1}`" :name="index">
-        <Accordeon class="margin-accordeon" :header="element.name" :could-update-header="true" :length="5 + element.metadata.length" :should-be-open="true" :could-delete="true" @update="updateMediaName($event, index)" @delete="removeMedia(index)" :image="'arrow_right'">
+        <Accordeon class="margin-accordeon" :header="element.name" :could-update-header="true" :length="5 + element.metadata.length" :should-be-open="true" :could-delete="true" @update="updateMediaName($event, index)" @delete="removeMedia(index)" :image="'image'">
           <div :class="{disabled: element.media_type !== '' }" style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">short_text</p><p>text</p>
-            <p :ref="`short_text${index}`" class="material-symbols-sharp" @mouseenter="openTooltip($event,  `short_text${index}`)" @mouseleave="tooltipElement = null">help</p>
+            <div class="col-main border"><p class="material-symbols-sharp">text_fields</p><p class="col-main-text">text</p>
+            <p :ref="`short_text${index}`" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event,  `short_text${index}`)" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === `short_text${index}`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `short_text${index}`"  @mouseleave="tooltipElement = null"></p>
               </div>
@@ -206,8 +206,8 @@
             <div class="col2 border end-border"><textarea id="text" type="textarea" class="input-margin remove-input-border" v-model="element.text" :disabled="element.media_type !== ''"/></div>
           </div>
           <div style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">add_photo_alternate</p><p>média</p>
-            <p :ref="`add_photo_alternate_${index}`" class="material-symbols-sharp" @mouseenter="openTooltip($event,  `add_photo_alternate_${index}`)" @mouseleave="tooltipElement = null">help</p>
+            <div class="col-main border"><p class="material-symbols-sharp">add_photo_alternate</p><p class="col-main-text">média</p>
+            <p :ref="`add_photo_alternate_${index}`" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event,  `add_photo_alternate_${index}`)" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === `add_photo_alternate_${index}`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `add_photo_alternate_${index}`"  @mouseleave="tooltipElement = null"></p>
               </div></div>
@@ -220,52 +220,52 @@
              
             </div>
             <div class="col3 border end-border" :class="{disabled: element.text == '' && element.media_type == '' }"><input :id="`is_facing${index}`" type="checkbox" v-model="element.is_facing" :disabled="element.text == '' && element.media_type == ''"><label for="is_facing">face à la caméra</label>
-              <p :ref="`is_facing${index}`" class="material-symbols-sharp" @mouseenter="openTooltip($event,  `is_facing${index}`)" @mouseleave="tooltipElement = null">help</p>
+              <p :ref="`is_facing${index}`" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event,  `is_facing${index}`)" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === `is_facing${index}`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `is_facing${index}`"  @mouseleave="tooltipElement = null"></p>
               </div>
             </div>
           </div>
           <div :class="{disabled: element.media_type === '' }" style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">replay</p><p>lecture</p>
-            <p :ref="`replay${index}`" class="material-symbols-sharp" @mouseenter="openTooltip($event,  `replay${index}`)" @mouseleave="tooltipElement = null">help</p>
+            <div class="col-main border"><p class="material-symbols-sharp">replay</p><p class="col-main-text">lecture</p>
+            <p :ref="`replay${index}`" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event,  `replay${index}`)" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === `replay${index}`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `replay${index}`"  @mouseleave="tooltipElement = null"></p>
               </div></div>
             <div class="col3 border"><input id="media_autoplay" type="checkbox" v-model="element.autoplay" :disabled="element.media_type === ''"><label for="media_autoplay">autoplay</label>
-              <p :ref="`media_autoplay${index}`" class="material-symbols-sharp" @mouseenter="openTooltip($event,  `media_autoplay${index}`)" @mouseleave="tooltipElement = null">help</p>
+              <p :ref="`media_autoplay${index}`" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event,  `media_autoplay${index}`)" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === `media_autoplay${index}`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `media_autoplay${index}`"  @mouseleave="tooltipElement = null"></p>
               </div>
             </div>
             <div class="col3 border end-border"><input id="media_loop" type="checkbox" v-model="element.loop" :disabled="element.media_type === ''"><label for="media_loop">loop</label>
-            <p :ref="`media_loop${index}`" class="material-symbols-sharp" @mouseenter="openTooltip($event,  `media_loop${index}`)" @mouseleave="tooltipElement = null">help</p>
+            <p :ref="`media_loop${index}`" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event,  `media_loop${index}`)" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === `media_loop${index}`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `media_loop${index}`"  @mouseleave="tooltipElement = null"></p>
               </div></div>
           </div>
           <div :class="{disabled: element.text === '' && element.media_type === ''}" style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">visibility</p><p>visible</p>
-            <p :ref="`add_photo_alternate_${index}`" class="material-symbols-sharp" @mouseenter="openTooltip($event,  `add_photo_alternate_${index}`)" @mouseleave="tooltipElement = null">help</p>
+            <div class="col-main border"><p class="material-symbols-sharp">visibility</p><p class="col-main-text">visible</p>
+            <p :ref="`add_photo_alternate_${index}`" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event,  `add_photo_alternate_${index}`)" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === `add_photo_alternate_${index}`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `add_photo_alternate_${index}`"  @mouseleave="tooltipElement = null"></p>
               </div></div>
             <div class="col3 border"><input :id="`is_visible_out_radius${index}`" type="checkbox" v-model="element.is_visible_out_radius" :disabled="element.text === '' && element.media_type === ''"><label :for="`is_visible_out_radius${index}`">hors du rayon</label>
-            <p :ref="`is_visible_out_radius${index}`" class="material-symbols-sharp" @mouseenter="openTooltip($event,  `is_visible_out_radius${index}`)" @mouseleave="tooltipElement = null">help</p>
+            <p :ref="`is_visible_out_radius${index}`" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event,  `is_visible_out_radius${index}`)" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === `is_visible_out_radius${index}`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `is_visible_out_radius${index}`"  @mouseleave="tooltipElement = null">Si coché le média ne sera visible que dans le rayon d'interaction, sinon il sera visible dés que la distance de visibilité du point d'interêt est atteinte</p>
               </div>
             </div>
             <div class="col3 border"><input :id="`is_visible_in_radius${index}`" type="checkbox" v-model="element.is_visible_in_radius" :disabled="element.text === '' && element.media_type === ''"><label :for="`is_visible_in_radius${index}`">dans le rayon</label>
-            <p :ref="`is_visible_in_radius${index}`" class="material-symbols-sharp" @mouseenter="openTooltip($event,  `is_visible_in_radius${index}`)" @mouseleave="tooltipElement = null">help</p>
+            <p :ref="`is_visible_in_radius${index}`" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event,  `is_visible_in_radius${index}`)" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === `is_visible_in_radius${index}`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `is_visible_in_radius${index}`"  @mouseleave="tooltipElement = null">Si coché le média ne sera visible que dans le rayon d'interaction, sinon il sera visible dés que la distance de visibilité du point d'interêt est atteinte</p>
               </div>
             </div>
           </div>
           <div :class="{disabled: element.text === '' && element.media_type === ''}" style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">photo_size_select_small</p><p>échelle</p>
-            <p :ref="`photo_size_select${index}`" class="material-symbols-sharp" @mouseenter="openTooltip($event,  `photo_size_select${index}`)" @mouseleave="tooltipElement = null">help</p>
+            <div class="col-main border"><p class="material-symbols-sharp">photo_size_select_small</p><p class="col-main-text">échelle</p>
+            <p :ref="`photo_size_select${index}`" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event,  `photo_size_select${index}`)" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === `photo_size_select${index}`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `photo_size_select${index}`"  @mouseleave="tooltipElement = null"></p>
               </div></div>
@@ -275,8 +275,8 @@
             </div>
           </div>
           <div :class="{disabled: element.text === '' && element.media_type === ''}" style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">merge</p><p>position</p>
-            <p :ref="`merge${index}`" class="material-symbols-sharp" @mouseenter="openTooltip($event,  `merge${index}`)" @mouseleave="tooltipElement = null">help</p>
+            <div class="col-main border"><p class="material-symbols-sharp">merge</p><p class="col-main-text">position</p>
+            <p :ref="`merge${index}`" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event,  `merge${index}`)" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === `merge${index}`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `merge${index}`"  @mouseleave="tooltipElement = null"></p>
               </div></div>
@@ -302,8 +302,8 @@
             </div>
           </div>
           <div :class="{disabled: element.text === '' && element.media_type === ''}" style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">animation</p> <p>animation</p>
-            <p ref="anim" class="material-symbols-sharp" @mouseenter="openTooltip($event, 'anim')" @mouseleave="tooltipElement = null">help</p>
+            <div class="col-main border"><p class="material-symbols-sharp">animation</p> <p class="col-main-text">animation</p>
+            <p ref="anim" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'anim')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'anim'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'anim'"  @mouseleave="tooltipElement = null">cette valeur est un facteur d’amplitude pour créer une animation sinusoïdale du rayon. Si la valeur est à 0, il n’y a pas d’animation.</p>
               </div></div>
@@ -314,16 +314,16 @@
           </div>
           <div style="display: flex" :class="{disabled: element.text === '' && element.media_type === ''}" v-for="(meta, indexMeta) in element.metadata" :key="indexMeta">
             <div class="col-main border"><p class="material-symbols-sharp">database</p><input v-model="meta.key" type="text" class="metadata-title remove-input-border" placeholder="Entrer nom du métadata" :disabled="element.text === '' && element.media_type === ''">
-            <p :ref="`${meta.key}-${index}`" class="material-symbols-sharp" @mouseenter="openTooltip($event,  `${meta.key}-${index}`)" @mouseleave="tooltipElement = null">help</p>
+            <p :ref="`${meta.key}-${index}`" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event,  `${meta.key}-${index}`)" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === `${meta.key}-${index}`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `${meta.key}-${index}`"  @mouseleave="tooltipElement = null">{{ meta.description }}</p>
               </div></div>
             <div class="col3 border"><input v-model="meta.value" type="text" class="input-margin input-full-size-element remove-input-border" placeholder="Entrer valeur du métadata" :disabled="element.text === '' && element.media_type === ''"></div>
             <div class="col3 border end-border"><input v-model="meta.description" type="text" class="input-margin input-full-size-element remove-input-border" placeholder="Entrer description du métadata" :disabled="element.text === '' && element.media_type === ''"><p class="material-symbols-sharp" @click="deleteMetadata(index)">delete_forever</p></div>
           </div>
-          <div style="display: flex" :class="{disabled: element.text === '' && element.media_type === ''}">
+          <div style="display: flex; border-bottom: 1px solid black;" :class="{disabled: element.text === '' && element.media_type === ''}">
             <div class="col-main border"><p class="material-symbols-sharp link">add</p><p class="link" @click="element.text === '' && element.media_type === '' ? '' : addMetadata(index, indexMeta)">créer un attribut</p>
-            <p ref="add" class="material-symbols-sharp" @mouseenter="openTooltip($event,  'add')" @mouseleave="tooltipElement = null">help</p>
+            <p ref="add" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event,  'add')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === `add`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `add`"  @mouseleave="tooltipElement = null"></p>
               </div></div>
@@ -510,7 +510,7 @@ export default {
         }
         for (let i = 0; i < this.form.media.length; i++) {
           if (!this.form.media[i].name) {
-            this.form.media[i].name = 'media ' + (i + 1);
+            this.form.media[i].name = 'Media ' + (i + 1);
           }
           if (!this.form.media[i].metadata) {
             this.form.media[i].metadata = [];
@@ -596,7 +596,7 @@ export default {
     addMedia() {
       this.form.media.push(JSON.parse(JSON.stringify(this.default_media)));
       const lastIndex = this.form.media.length;
-      this.form.media[lastIndex - 1].name = 'media ' + lastIndex;
+      this.form.media[lastIndex - 1].name = 'Media ' + lastIndex;
     },
     updateMediaName(event, index) {
       console.log(event)
@@ -773,7 +773,13 @@ export default {
 p {
   margin-top: 6px;
   margin-bottom: 6px;
+  letter-spacing: 0.02em;
+  font-size: 14px;
 }
+
+.col-main-text {
+  margin-bottom: 3px;
+} 
 
 .overlay {
   background-color: rgba(0, 0, 0, 0.5);
@@ -818,10 +824,21 @@ p {
   margin-right: 5px;
 }
 
+input {
+  font-family: "BiodivAR Roman";
+  font-variation-settings: "wght" 85, "ital" 0;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
 label {
-  font-weight: bold;
+  font-family: "BiodivAR Roman";
+  font-variation-settings: "wght" 110, "ital" 0;
+  font-size: 14px;
+  letter-spacing: 0.02em;
   padding-right: 6px;
   padding-bottom: 1px;
+  margin-top: 4px;
 }
 
 button {
@@ -935,40 +952,40 @@ textarea {
   display: flex;
   align-items: center;
   padding-left: 6px;
-  height: 34px;
+  height: 30px;
 }
 
 .col2 {
   width: 75%;
   display: flex;
   align-items: center;
+  height: 30px;
 }
 
 .col3 {
   width: calc((100% - 25%) / 2);
   display: flex;
   align-items: center;
-  height: 34px;
+  height: 30px;
 }
 
 .col4 {
   width: 25%;
   display: flex;
   align-items: center;
-  height: 34px;
+  height: 30px;
 }
 
 .col5 {
   width: calc((100% - 25%) / 4);
   display: flex;
   align-items: center;
-  height: 34px;
+  height: 30px;
 }
 
 .border {
   border-top: 1px solid black;
   border-left: 1px solid black;
-  border-bottom: 1px solid black;
 }
 
 .end-border {
@@ -1011,8 +1028,8 @@ textarea {
 }
 
 .material-symbols-sharp {
-  font-size: 20px;
-  padding-right: 5px;
+  font-size: 18px;
+  padding-right: 8px;
 }
 
 .edition-layout {
@@ -1068,6 +1085,13 @@ textarea {
     min-height: 40px;
 }
 
+.tooltip-font {
+  color: #999999;
+  margin-bottom: 6px;
+  font-size: 16px;
+ padding-left: 8px;
+} 
+
 .input-button {
   background-color: #2F80ED;
   color: white;
@@ -1102,7 +1126,8 @@ textarea {
 }
 
 .margin-accordeon {
-  --left-margin: 0;
+  --left-margin: 7px;
+  --accordeon-background: #EEEEEE;
 }
 
 .margin-left-constraint {

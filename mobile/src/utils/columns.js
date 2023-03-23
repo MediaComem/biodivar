@@ -8,11 +8,11 @@ export function getPoiColumns() {
       'updated_date': true,
       'contributor': true,
       'scope': true,
-      'trigger': true,
+      'symbol_map_name': true,
       'style_type': true,
       'extrusion': true,
       'radius': true,
-      'position': true,
+      'elevation': true,
       'stroke_width': true,
       'stroke_color': true,
       'stroke_opacity': true,
@@ -34,8 +34,12 @@ export function getPathColumns() {
     'elevation': true,
     'animation': true,
     'stroke_width': true,
+    'stroke_color': true,
+    'stroke_opacity': true,
+    'extrusion': true,
     'style_type': true,
     'coordinate': true,
+    'metadata': true,
   }
 }
 

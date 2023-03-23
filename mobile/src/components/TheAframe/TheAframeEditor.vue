@@ -26,6 +26,15 @@
     'shapeExtrusion',
     'shapeAmplitude',
   ]);
+
+  onMounted(() => {
+    const icon = document.createElement("p");
+    icon.className = 'material-symbols-sharp';
+    icon.innerHTML = 'fullscreen';
+    const button = document.getElementsByClassName('a-enter-vr-button');
+    if (button.length > 0) 
+      button[0].appendChild(icon)
+  })
 </script>
 
 <template>

@@ -54,11 +54,11 @@
       <p>Pas encore de compte&thinsp;?&nbsp;<a @click="emit('register')">{{ $t('TheLogin.inscription') }}</a></p>
       <base-input class="user">
         <p class="material-symbols-sharp icon-margin icon-position" style="top: 3px">perm_identity</p>
-        <input type="text" v-model="username" :placeholder="$t('TheLogin.placeholder.login.user')">
+        <input class="input-layout" type="text" v-model="username" :placeholder="$t('TheLogin.placeholder.login.user')">
       </base-input>
       <base-input class="password">
         <p class="material-symbols-sharp icon-margin icon-position" style="top: 3px">lock_outline</p>
-        <input :type="showPassword ? 'text' : 'password'" v-model="password" :placeholder="$t('TheLogin.placeholder.login.password')">
+        <input class="input-layout" :type="showPassword ? 'text' : 'password'" v-model="password" :placeholder="$t('TheLogin.placeholder.login.password')">
         <span @click="showPassword = !showPassword">
           <p v-if="showPassword" class="material-symbols-sharp icon-margin">visibility_off</p>
           <p v-else class="material-symbols-sharp icon-margin">remove_red_eye</p>
@@ -109,5 +109,11 @@
   .icon-position {
     position: absolute;
     left: 21px;
+  }
+
+  .input-layout {
+    margin-left: 1rem !important;
+    margin-right: 1rem !important;
+    width: calc(100% - 2rem) !important;
   }
 </style>

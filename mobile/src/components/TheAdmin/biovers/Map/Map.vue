@@ -254,11 +254,12 @@
     window.addEventListener('custom-tiles-control', changeTiles);
 
     mapAdmin.value = L.map('map', {zoomAnimation: true, zoomControl: false}).setView([0, 0], 7);
-    currentAttributions.value = "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e \u003ca href=\"https://www.swisstopo.admin.ch/en/home.html\" target=\"_blank\"\u003e\u0026copy; swisstopo\u003c/a\u003e";
+    currentAttributions.value = "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OSM contributors\u003c/a\u003e \u003ca href=\"https://www.swisstopo.admin.ch/en/home.html\" target=\"_blank\"\u003e\u0026copy; swisstopo\u003c/a\u003e";
     tiles.value = L.tileLayer(`https://api.maptiler.com/maps/ch-swisstopo-lbm-dark/{z}/{x}/{y}.png?key=${KEY}`, {
         minZoom: 3,
         maxZoom: 22,
-        attribution: currentAttributions.value
+        attribution: currentAttributions.value,
+        class: 'leafleat-control-attribution-text',
     }).addTo(mapAdmin.value);
     
     L.zoomIn().addTo(mapAdmin.value);
@@ -329,7 +330,7 @@
   <ThePathEditor :path="pathToUpdate" :showDialog="showPathEditionDialog" @close-dialog="showPathEditionDialog = false" @close-after-save="showPathEditionDialog = false"/>
 </template>
 
-<style scoped>
+<style>
   .content {
     height: 50vh;
     width: 100%;
@@ -342,4 +343,10 @@
     height: 100%;
     width: 100%;
   }
+
+  .leaflet-control-attribution   {
+    font-family: 'BiodivAR Roman';
+    font-variation-settings: "wght" 85, "ital" 0;
+    font-size: 8px;
+  } 
 </style>
