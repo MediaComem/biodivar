@@ -1,0 +1,181 @@
+table {
+  border-collapse: collapse;
+  color: white;
+}
+
+.tr-header {
+  border-bottom: 1px solid white;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+.column {
+  border-right: 1px solid white;
+  padding-left: 8px;
+  padding-right: 8px;
+  white-space: nowrap;
+}
+
+.end-align {
+  text-align: right;
+}
+
+.table-layout {
+  margin-left: 8px;
+  margin-right: 8px;
+  padding-top: 0.8rem;
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
+  border-color: white;
+}
+
+.scrolling-table {
+  margin-left: 35px;
+  width: calc(100% - 60px);
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.first-column-header {
+  padding-bottom: 1px;
+}
+
+.first-column {
+  position: absolute;
+  width: 22px;
+  left: 27px;
+  top: auto;
+  padding-right: 5px;
+}
+
+.second-column {
+  border-left: 1px solid white;
+}
+
+.last-column-header {
+  padding-bottom: 1px;
+}
+
+.last-column {
+  position: absolute;
+  width: 40px;
+  right: 14px;
+  top: auto;
+  height: 22px;
+}
+
+.header-value {
+  display: flex;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+}
+
+.transition {
+  transition: all 0.3s;
+}
+
+.change-icon {
+  transform: rotate(-180deg);
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.menu {
+  position: relative;
+  width: 200px;
+  background-color: white;
+  color: black;
+  z-index: 10;
+  left: -180px;
+  top: -35px;
+  border-radius: 3px;
+}
+
+.menu-element {
+  margin: 0;
+  padding: 5px 0 5px 0;
+  border-bottom: 1px solid black;
+  cursor: pointer;
+}
+
+.menu-element:hover {
+  background-color: #bdbdbd;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.disable {
+  background-color: gray;
+  color: lightgray;
+}
+
+.table-background:hover {
+  background-color: #666666;
+}
+
+.table-hover {
+  background-color: #666666;
+}
+
+.material-symbols-sharp {
+  font-size: 15px;
+}
+
+.no-margin {
+  margin: 0px;
+}
+
+.text-margin {
+  padding-right: 6px;
+  margin: 0px;
+  margin-top: -3px;
+}
+
+.icon-font {
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.icon-margin {
+  margin: 0px;
+  margin-top: -3px;
+}
+
+.dot-margin {
+  margin-top: 2px;
+}
+
+.column-title-font {
+  font-family: 'BiodivAR Roman';
+  font-variation-settings: 'wght' 110, 'ital' 0;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.03em;
+}
+
+.text-font {
+  font-family: 'BiodivAR Roman';
+  font-variation-settings: 'wght' 85, 'ital' 0;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.02em;
+}
+
+.row-height {
+  height: 25px;
+  padding-top: 2px;
+}
+
+.table-border {
+  border-bottom: 1px solid white;
+}

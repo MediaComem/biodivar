@@ -1,0 +1,23 @@
+.circle-div {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #F2F2F2;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.icon-layout {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+}
+
+.icon-font {
+    font-size: 20px;
+}
+  
+.icon-margin {
+    margin: 0px;
+}

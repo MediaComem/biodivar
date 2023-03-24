@@ -1,0 +1,344 @@
+{
+    "TheLogin": {
+        "title": "Création d’expériences de réalité augmentée géolocalisée",
+        "inscription": "Inscrivez-vous",
+        "forgot-password": "Mot de passe oublié?",
+        "reset-password": "Réinitialiser le mot de passe",
+        "already-register": "Déjà inscrit·e",
+        "connect": "Connectez-vous",
+        "aggree": "J’accepte les",
+        "creation": "Créer un compte",
+        "email-send": "Vous recevrez un email contenant un lien pour réinitialiser votre mot de passe dans quelques minutes",
+        "placeholder": {
+            "login": {
+                "user": "mail ou nom d’utilisateur",
+                "password": "mot de passe"
+            },
+            "register": {
+                "username": "nom d’utilisateur",
+                "email": "mail",
+                "password": "mot de passe",
+                "confirm": "confirmer mot de passe"
+            }
+        },
+        "license": {
+            "link": "conditions d’utilisation",
+            "general": "Conditions d’utilisation"
+        },
+        "reset": {
+            "title": "Mot de passe oublié?",
+            "description": "Entrez l’adresse mail associée à votre compte. Vous recevrez un lien qui vous permettra de réinitialiser votre mot de passe"
+        },
+        "button": {
+            "connexion": "connexion",
+            "inscription": "inscription",
+            "home": "Retour à la page d’accueil"
+        },
+        "error": {
+            "no-user": "Veuillez entrer un nom d’utilisateur",
+            "login": "Erreur dans le nom d’utilisateur ou le mot de passe",
+            "login-failure": "Erreur durant l’enregistrement de l’utilisateur",
+            "password-length": "Le mot de passe doit contenir au moins 4 caractères",
+            "password-confirm": "Les mots de passes ne correspondent pas",
+            "no-mail": "Veuillez entrer une adresse mail",
+            "valid-email": "Veuillez entrer une adresse mail valide",
+            "license": "Veuillez lire et accepter les conditions d’utilisation",
+            "mail-not-found": "L’adresse ne correspond à aucun compte"
+        }
+    },
+    "TheMenu": {
+        "Pin": "biovers épinglé·s:",
+        "Unsuported": "Cet appareil ne supporte pas webXR, vous ne pouvez pas utiliser l’application",
+        "Item": {
+            "BioverTitle": "Biovers",
+            "BioverDescription": "accéder à vos environnements virtuels partagés",
+            "VisualizationTitle": "VISUALISATION [desktop]",
+            "VisualizationDescription": "gestion des données géographiques [application desktop]",
+            "NewTitle": "Nouveau Biovers",
+            "NewDescription": "créer un nouvel environnement virtuel partagé",
+            "ProfilTitle": "Profile",
+            "ProfilDescription": "gestion du nom d'utilisateur, courriel et mot de passe",
+            "SettingTitle": "Réglages",
+            "SettingDescription": "affichage, localisation, utilisation des données...",
+            "HelpTitle": "Aide / A propos",
+            "HelpDescription": "à propos du projet BiodivAR"     
+        },
+        "Shared": {
+            "Public": "public",
+            "Private": "privé"
+        },
+        "Dialog": {
+            "DeleteHeader": "Suppression de ",
+            "DeleteText": "Êtes-vous sûr·e de vouloir supprimer ce biovers\u2009?",
+            "DeleteButton": "Supprimer",
+            "DuplicateHeader": "Dupliquer ",
+            "DuplicationDescription": "Vous pouvez dupliquer tout biovers public.",
+            "DuplicatePlaceholder": "nom du nouveau biovers",
+            "DuplicateButton": "dupliquer",
+            "EditableDescription": "Lorsqu’un biovers est modifiable, tout le monde peut y apporter des modifications. S’il est non-modifiable, vous seul pouvez le faire.",
+            "Editable": "modifiable",
+            "NotEditable": "non-modifiable",
+            "Update": "Update",
+            "TitleHeader": "Modifier les paramètres du biovers",
+            "TitleDescription": "Vous pouvez modifier le nom, la description et l’emplacement de votre biovers.",
+            "TitlePlaceholder": "Nom",
+            "DescriptionPlaceholder": "Description",
+            "Save": "Sauvegarder",
+            "VisibilityHeader": "Changer la visibilité de ",
+            "VisibilityDescription": "Lorsqu’un biovers est public, tout le monde peut le visualiser et le visiter en RA. Lorsqu’il est privé, vous seul·e y avez accès.",
+            "Public": "public",
+            "Private": "privé",
+            "FavoriHeader_1": "Ajouter ",
+            "FavoriHeader_2": "aux favoris",
+            "FavoriDescription": "Vos biovers favoris apparaissent dans la section correspondante.",
+            "FavoriAdd": "ajouter aux favoris",
+            "FavoriRemove": "retirer des favoris",
+            "PinHeader": "Ajouter ou retirer une épingle à ",
+            "PinDescription": "Lorsqu’un biovers est épinglé, il apparaît en permanence au sommet de la fenêtre de l’application.",
+            "PinAdd": "ajouter une épingle",
+            "PinRemove": "retirer l’épingle"
+        },
+        "Action": {
+            "Pin": "Epingler",
+            "Unpin": "Détacher",
+            "Star": "Favori",
+            "UnStar": "Retirer des favoris",
+            "ToPublic": "Rendre publique",
+            "ToPrivate": "Rendre privé",
+            "Edit": "Editable",
+            "Unedit": "Non-éditable",
+            "ToEdit": "rendre éditable",
+            "ToUnedit": "rendre non-éditable"
+        },
+        "More": {
+            "AR": "ouvrir en RA",
+            "Desktop": "ouvrir sur la carte",
+            "Title": "modifier paramètres",
+            "Duplicate": "dupliquer le biovers",
+            "Delete": "supprimer le biovers",
+            "Private": "rendre privé",
+            "Publique": "rendre public",
+            "ToEdit": "rendre modifiable",
+            "ToUnEdit": "rendre non-modifiable",
+            "ToFavorite": "retirer des favoris",
+            "ToPin": "retirer l’épingle",
+            "FromUnPin": "ajouter une épingle"
+        },
+        "Information": {
+            "POI": "point·s d’intérêt",
+            "Traces": "trace·s",
+            "Enter": "ENTRER",
+            "NoUpdate": "pas d’édition effectuée sur ce biovers",
+            "Create": "créé le",
+            "LastConnection": "dernière connexion le",
+            "LastEdition": "dernière édition le",
+            "By": "par"
+        }
+    },
+    "Header": {
+        "Modify": "modifier profile",
+        "Logout": "déconnexion"
+    },
+    "Footer": {
+        "Homepage": "Accueil",
+        "Biover": "biovers",
+        "New": "nouveau",
+        "Visualize": "visualisation",
+        "Settings": "réglages",
+        "Logout": "déconnexion"
+    },
+    "title": "BiodivAR",
+    "header": {
+        "login": "Authentifier",
+        "register": "S'inscrire",
+        "logout": "Déconnexion"
+    },
+    "authentication": {
+        "username": "Nom d'utilisateur",
+        "password": "Mot de passe",
+        "forgot": "Mot de passe oublié?",
+        "submit": "Soumettre"
+    },
+    "register": {
+        "username": "Nom d'utilisateur",
+        "email": "Adresse mail",
+        "password": "Mot de passe",
+        "confirm": "Confirmer mot de passe",
+        "submit": "Soumettre"
+    },
+    "changePassword": {
+        "password": "Mot de passe",
+        "confirm": "Confirmer mot de passe"
+    },
+    "forgotPassword": {
+        "email": "Adresse mail",
+        "sent": "Un mail a été envoyé, veuillez vérifier votre boite de réception"
+    },
+    "validation": {
+        "username": "S'il vous plaît, entrer un nom d'utilisateur",
+        "password": "S'il vous plaît, entrer un mot de passe",
+        "email": "S'il vous plaît, entrer une adresse email",
+        "validEmail": "Entrer une adresse mail valide",
+        "confirm": "S'il vous plaît, confirmer le mot de passe",
+        "match": "Les mots de passes ne correspondent pas!"
+    },
+    "import": {
+        "select": "Sélectionner un fichier",
+        "upload": "Importer dans la vue",
+        "save": "Sauvegarder sur le serveur",
+        "result": "Les données ont été sauvegardées avec succès"
+    },
+    "biover": {
+        "create": "Créer un biover",
+        "configurator": {
+            "title": "Création d'un Biover",
+            "name": "Nom",
+            "public": "Est-il public?",
+            "editable": "Est-il éditable",
+            "yes": "Oui",
+            "no": "Non",
+            "cancel": "Annuler",
+            "confirm": "Confirmer"
+        }
+    },
+    "table": {
+        "poi": "POI",
+        "path": "PATH",
+        "trace": "Trace utilisateur"
+    },
+    "poi": {
+        "biover": "Biover Name",
+        "id": "POI ID",
+        "visible_from": "Distance",
+        "trigger": "Déclencheur",
+        "author": "Auteur",
+        "created_date": "Date de création",
+        "contributor": "Edité par",
+        "update_date": "Date d'édition",
+        "is_public": "Confidentiel",
+        "is_editable": "Modifiable",
+        "lat": "Latitude",
+        "long": "Longitude",
+        "alt": "Altitude",
+        "radius": "Radius",
+        "radius_type": "Type de radius",
+        "stroke": "Radius stroke",
+        "elevation": "Elevation du radius",
+        "is_visible": "Visibilité du radius",
+        "title": "Titre du POI",
+        "subtitle": "Sous-titre du POI",
+        "edit": "Edition",
+        "configurator": {
+            "page_creation": "Création d'un POI",
+            "page_edition": "Edition d'un POI",
+            "title": "Titre",
+            "yes": "Oui",
+            "no": "Non",
+            "subtitle": "Sous-titre",
+            "lat": "Latitude",
+            "long": "Longitude",
+            "radius": "Radius",
+            "style_type": "Type de style",
+            "style_stroke": "Stroke type",
+            "style_stroke_width": "Style Stroke Width",
+            "style_fill": "Est-il rempli",
+            "elevation": "Elevation",
+            "elevation_ground": "Elevation par rapport au sol",
+            "noise": "Bruit",
+            "style_is_visible": "Visibilité du style",
+            "visible_from": "Visible depuis en mètre",
+            "trigger": "Déclencheur",
+            "cancel": "Annuler",
+            "confirm": "Confirmer",
+            "action": {
+                "sphere": "Sphère",
+                "circle": "Cercle",
+                "location": "Emplacement",
+                "touch": "Toucher"
+            }
+        }
+    },
+    "path": {
+        "biover": "Biover Name",
+        "id": "PATH ID",
+        "visible_from": "Distance",
+        "author": "Auteur",
+        "created_date": "Date de création",
+        "contributor": "Edité par",
+        "update_date": "Date d'édition",
+        "is_public": "Confidentiel",
+        "is_editable": "Modifiable",
+        "coordinate": "Coordonnées",
+        "radius_type": "Type de radius",
+        "stroke": "Radius stroke",
+        "elevation": "Elevation du radius",
+        "is_visible": "Visibilité du radius",
+        "edit": "Edition"
+    },
+    "Button": {
+        "save": "enregistrer"
+    },
+    "Event": {
+        "Column": {
+            "id": "#",
+            "date": "Date",
+            "author": "Auteur",
+            "accuracy": "Précision",
+            "coordinate": "Coordonnées",
+            "action": "Action"
+        }
+    },
+    "Trace": {
+        "Column": {
+            "id": "#",
+            "date": "Date",
+            "author": "Auteur",
+            "accuracy": "Précision",
+            "coordinate": "Coordonnées"
+        }
+    },
+    "Path": {
+        "Column": {
+            "id": "#",
+            "date": "Date",
+            "author": "Auteur",
+            "coordinate": "Coordonnées",
+            "visibility": "Visibilité",
+            "update_date": "Modifié le",
+            "last_contributor": "Modifié par",
+            "style_color": "Couleur contour",
+            "style_elevation": "Élévation",
+            "animation": "Animation",
+            "style_stroke_width": "Épaisseur contour",
+            "style_stroke_opacity": "Opacité",
+            "extrusion": "Extrusion",
+            "metadata": "Attributs"
+        }
+    },
+    "Poi": {
+        "Column": {
+            "id": "#",
+            "date": "Date",
+            "author": "Auteur",
+            "coordinate": "Coordonnées",
+            "title": "Titre",
+            "subtitle": "Description",
+            "style_color": "Couleur contour",
+            "style_elevation": "Élévation",
+            "animation": "Animation",
+            "style_stroke_width": "Épaisseur contour",
+            "style_stroke_opacity": "Opacité contour",
+            "extrusion": "Extrusion",
+            "metadata": "Attributs",
+            "visibility": "Visibilité",
+            "style_type": "Forme",
+            "update_date": "Modifié le",
+            "last_contributor": "Modifié par",
+            "wireframe": "Wireframe remplissage",
+            "fill_color": "Couleur remplissage",
+            "fill_opacity": "Opacité remplissage",
+            "radius": "Rayon",
+            "symbol_map_name": "Symbole"
+        }
+    }
+}

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.3.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 80 80" style="enable-background:new 0 0 80 80;" xml:space="preserve">
+	
+	
+	<defs>
+		<radialGradient id="degrade" cx="20%" cy="30%" r="30%" fx="50%" fy="50%">
+		  <stop offset="0%" style="stop-color:rgb(255,255,255);
+		  stop-opacity:0" />
+		  <stop offset="100%" style="stop-color:rgb(0,0,255);stop-opacity:1" />
+		</radialGradient>
+	</defs>
+	
+	
+	
+<style type="text/css">
+	.st0{clip-path:url(#SVGID_2_);}
+	.st1{fill:url(#SVGID_3_);}
+	.st2{fill:#FFFFFF;}
+	
+	@keyframes breathe {
+		0% {
+			r: 9%;
+		}
+		25% {
+			r: 10%;
+		}
+		50% {
+			r: 8.5%;
+		}
+		75% {
+			r: 9.5%;
+		}
+
+		100% {
+			r: 9%;
+		}
+
+	}
+
+	.circle {
+		animation: bicubic;
+		animation-duration: 4s;
+		animation-iteration-count: infinite;
+		animation-name: breathe;
+	}
+	.blue{fill:#2F80ED;}
+	
+	
+</style>
+<g id="Calque_2">
+	<g>
+		<defs>
+			<path id="SVGID_1_" d="M4.6,18.8l28.3,28.3h14.1l28.3-28.3l0,0C55.8-0.7,24.2-0.7,4.6,18.8L4.6,18.8z"/>
+		</defs>
+		<clipPath id="SVGID_2_">
+			<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+		</clipPath>
+		<g class="st0">
+			<radialGradient id="SVGID_3_" cx="40" cy="40" r="50" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#2F80ED"/>
+				<stop  offset="0.65" style="stop-color:#2F80ED;stop-opacity:0"/>
+			</radialGradient>
+			<circle class="st1" cx="40" cy="40" r="50"/>
+		</g>
+	</g>
+</g>
+<g id="Calque_3">
+	<g>
+		
+			<image style="fill:url(#grad2)">
+		</image>
+		
+		<g>
+			<circle class="st2" cx="40" cy="40" r="10"/>
+		</g>
+	</g>
+</g>
+<g id="Calque_1">
+	<g>
+		<circle class="blue circle" cx="40" cy="40" r="8"/>
+	</g>
+</g>
+</svg>
