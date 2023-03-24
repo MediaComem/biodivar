@@ -312,7 +312,11 @@
             "style_stroke_width": "Épaisseur contour",
             "style_stroke_opacity": "Opacité",
             "extrusion": "Extrusion",
-            "metadata": "Attributs"
+            "metadata": "Attributs",
+            "long": "Longitude",
+            "lat": "Latitude",
+            "alt": "Altitude",
+            "style": "Contour"
         }
     },
     "Poi": {
@@ -338,7 +342,12 @@
             "fill_color": "Couleur remplissage",
             "fill_opacity": "Opacité remplissage",
             "radius": "Rayon",
-            "symbol_map_name": "Symbole"
+            "symbol_map_name": "Symbole",
+            "long": "Longitude",
+            "lat": "Latitude",
+            "alt": "Altitude",
+            "style": "Contour",
+            "fill": "Remplissage"
         }
     }
 }

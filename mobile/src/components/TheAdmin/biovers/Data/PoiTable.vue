@@ -184,7 +184,7 @@
           <td v-if="getPoiColumnsPreference.subtitle" class="column text-font end-align row-height">{{ poi.element.subtitle }}</td>
           <td v-if="getPoiColumnsPreference.symbol_map_name" class="column text-font end-align row-height">{{ poi.element.map_url.replace(/^.*[\\\/]/, '') }}</td>
           <td v-if="getPoiColumnsPreference.scope" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ poi.element.scope }}&thinsp;m</td>
-          <td v-if="getPoiColumnsPreference.style_type" class="column text-font end-align row-height">{{ poi.element.style_type }}</td>
+          <td v-if="getPoiColumnsPreference.style_type" class="column text-font end-align row-height">{{ styleFormatter(poi.element.style_type) }}</td>
           <td v-if="getPoiColumnsPreference.elevation" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ poi.element.elevation }}&thinsp;m</td>
           <td v-if="getPoiColumnsPreference.extrusion" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ poi.element.extrusion }}&thinsp;m</td>
           <td v-if="getPoiColumnsPreference.radius" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ poi.element.radius }}&thinsp;m</td>
@@ -347,6 +347,13 @@ export default {
     userFormatter(user) {
       return user && user.username ? user.username : '';
     },
+    styleFormatter(style) {
+      switch(style) {
+        case 'circle': return 'Cercle';
+        case 'sphere': return 'Sphère';
+        case 'hemisphere': return 'Demi-sphère';
+      }
+    },
     globalCheckAnalizer() {
       if (this.allAreUnselected) {
         this.globalChecked = false;
@@ -377,10 +384,11 @@ export default {
     selectAll() {
       this.globalChecked = !this.globalChecked;
       if (this.globalChecked) {
-        this.selectAllPois();
+        this.selectAllPois(this.searchFilter);
       } else {
-        this.unselectAllPois();
+        this.unselectAllPois(this.searchFilter);
       }
+      this.globalCheckAnalizer();
     },
     openMenu(rowId) {
       setTimeout(() => {
@@ -507,6 +515,7 @@ export default {
     },
     updateSearch(event) {
       this.searchFilter = event;
+      this.globalCheckAnalizer();
     },  
     ...mapActions('global', ['updateWait', 'updateOver', 'addOrRemoveClickElement', 'updateLastPoiClick', 'addOrRemovePoisClick']),
     ...mapActions('biovers', ['updatePoiToDisplay', 'resetPoisModification', 'selectAllPois', 'unselectAllPois', 'copyPoi', 'addNewPoi', 'removePoi']),

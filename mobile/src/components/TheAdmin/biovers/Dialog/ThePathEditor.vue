@@ -156,7 +156,7 @@ onMounted(() => {
       <div class="container-layout">
         <Accordeon
           class="margin-accordeon"
-          :header="'Général'"
+          :header="'Paramètres'"
           :could-update-header="false"
           :length="6 + form.metadata.length"
           :should-be-open="true"
@@ -165,7 +165,7 @@ onMounted(() => {
           <div style="display: flex">
             <div class="col-main border coordinate-title">
               <p class="material-symbols-sharp">location_searching</p>
-              <p class="col-main-text">coordonnées</p>
+              <p class="col-main-text">{{ $t('Path.Column.coordinate') }}</p>
               <p
                 class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'coordinate')"
@@ -192,7 +192,7 @@ onMounted(() => {
               >
                 <div class="col3 border">
                   <label for="long" class="margin-left-constraint"
-                    >longitude</label
+                    >{{ $t('Path.Column.long') }}</label
                   ><input
                     id="long"
                     class="input-full-size-element remove-input-border remove-stepper"
@@ -205,7 +205,7 @@ onMounted(() => {
                 </div>
                 <div class="col3 border">
                   <label for="lat" class="margin-left-constraint"
-                    >latitude</label
+                    >{{ $t('Path.Column.lat') }}</label
                   ><input
                     id="lat"
                     class="input-full-size-element remove-input-border remove-stepper"
@@ -218,7 +218,7 @@ onMounted(() => {
                 </div>
                 <div class="col3 border end-border">
                   <label for="alt" class="margin-left-constraint"
-                    >altitude</label
+                    >{{ $t('Path.Column.alt') }}</label
                   ><input
                     id="alt"
                     class="input-full-size-element remove-input-border remove-stepper"
@@ -240,7 +240,7 @@ onMounted(() => {
           <div style="display: flex">
             <div class="col-main border">
               <p class="material-symbols-sharp">visibility</p>
-              <p class="col-main-text">porté</p>
+              <p class="col-main-text">{{ $t('Path.Column.visibility') }}</p>
               <p
                 class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'visibility')"
@@ -281,7 +281,7 @@ onMounted(() => {
           <div style="display: flex">
             <div class="col-main border">
               <p class="material-symbols-sharp">border_color</p>
-              <p class="col-main-text">contour</p>
+              <p class="col-main-text">{{ $t('Path.Column.style') }}</p>
               <p
                 class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'contour')"
@@ -359,7 +359,7 @@ onMounted(() => {
           <div style="display: flex">
             <div class="col-main border">
               <p class="material-symbols-sharp">expand</p>
-              <p class="col-main-text">extrusion</p>
+              <p class="col-main-text">{{ $t('Path.Column.extrusion') }}</p>
               <p
                 class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'extrusion')"
@@ -389,7 +389,7 @@ onMounted(() => {
           <div style="display: flex">
             <div class="col-main border">
               <p class="material-symbols-sharp">north</p>
-              <p class="col-main-text">elevation</p>
+              <p class="col-main-text">{{ $t('Path.Column.style_elevation') }}</p>
               <p
                 class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'elev')"
@@ -425,7 +425,7 @@ onMounted(() => {
           <div style="display: flex">
             <div class="col-main border">
               <p class="material-symbols-sharp">animation</p>
-              <p class="col-main-text">animation</p>
+              <p class="col-main-text">{{ $t('Path.Column.animation') }}</p>
               <p
                 class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'anim')"

@@ -189,10 +189,11 @@ export default {
     selectAll() {
       this.globalChecked = !this.globalChecked;
       if (this.globalChecked) {
-        this.selectAllTraces();
+        this.selectAllTraces(this.searchFilter);
       } else {
-        this.unselectAllTraces();
+        this.unselectAllTraces(this.searchFilter);
       }
+      this.globalCheckAnalizer();
     },
     openMenu(rowId) {
       this.menuState = {id: rowId, state: true};
@@ -248,6 +249,7 @@ export default {
     },
     updateSearch(event) {
       this.searchFilter = event;
+      this.globalCheckAnalizer();
     },  
     ...mapActions('global', ['updateTraceOver', 'addOrRemoveTraceClickElement', 'updateLastTraceClick', 'addOrRemoveTracesClick']),
     ...mapActions('biovers', ['selectAllTraces', 'unselectAllTraces', 'updateTraceToDisplay', 'removeTrace']),

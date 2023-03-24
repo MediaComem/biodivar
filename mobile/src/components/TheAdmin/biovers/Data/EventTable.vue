@@ -186,10 +186,11 @@ export default {
     selectAll() {
       this.globalChecked = !this.globalChecked;
       if (this.globalChecked) {
-        this.selectAllEvents();
+        this.selectAllEvents(this.searchFilter);
       } else {
-        this.unselectAllEvents();
+        this.unselectAllEvents(this.searchFilter);
       }
+      this.globalCheckAnalizer();
     },
     openMenu(rowId) {
       this.menuState = {id: rowId, state: true};
@@ -245,6 +246,7 @@ export default {
     },
     updateSearch(event) {
       this.searchFilter = event;
+      this.globalCheckAnalizer();
     }, 
     ...mapActions('global', ['updateEventOver', 'addOrRemoveEventClickElement', 'addOrRemoveEventsClick', 'updateLastEventClick']),
     ...mapActions('biovers', ['selectAllEvents', 'unselectAllEvents', 'updateEventToDisplay', 'removeEvent']),

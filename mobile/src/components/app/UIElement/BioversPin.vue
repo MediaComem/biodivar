@@ -10,9 +10,9 @@ const pins = computed(() => {
 </script>
 
 <template>
-  <div style="display: flex">
+  <div v-if="pins.length > 0" style="display: flex">
     <p class="material-symbols-sharp font-symbol">push_pin</p>
-    <p v-if="pins.length > 0" class="font-pin">biovers épinglé·s&thinsp;:</p>
+    <p class="font-pin">biovers épinglé·s&thinsp;:</p>
   </div>
 </template>
 
@@ -29,10 +29,11 @@ const pins = computed(() => {
 }
 
 .font-symbol {
-  font-variation-settings: 'FILL' 1;
+  font-variation-settings: 'FILL' 0;
   font-size: 16px;
   line-height: 12px;
   letter-spacing: 0.04em;
   padding-right: 4px;
+
 }
 </style>

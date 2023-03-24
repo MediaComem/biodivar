@@ -7,7 +7,7 @@
   import '../aframe/arrow-helper.js';
   import '../aframe/camera-reset.js';
 
-  import { computed, onMounted, watchEffect } from '@vue/runtime-core';
+  import { onMounted, watch, ref } from '@vue/runtime-core';
 
   const props = defineProps([
     'visibilityScope',
@@ -32,8 +32,9 @@
     icon.className = 'material-symbols-sharp';
     icon.innerHTML = 'fullscreen';
     const button = document.getElementsByClassName('a-enter-vr-button');
-    if (button.length > 0) 
+    if (button.length > 0) {
       button[0].appendChild(icon)
+    }      
   })
 </script>
 
@@ -102,16 +103,27 @@
   .a-enter-ar {
     display: none;
   }
+
   .a-enter-vr {
     width: 30px;
     background: none !important;
   }
+
   .a-enter-vr-button {
-    width: 30px;
-    background: grey;
-  }
-  .a-enter-vr-button::before {
-    content: '⇱⇲';
+    background-color: #2F80ED;
+    background-image: url('assets/fullscreen.svg');
+    height: 38px;
+    width: 38px;
+    border-radius: 19px;
+    min-width: 38px
   }
 
+  .a-enter-vr-button:hover {
+    opacity: 0.8;
+    background-color: #2F80ED;
+  }
+
+  .a-enter-vr-button::before {
+    content: '';
+  }
 </style>

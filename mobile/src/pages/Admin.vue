@@ -11,9 +11,6 @@
     <div class="upload-layout">
       <GeoJsonImporter />
     </div>
-    <!--div class="upload-layout">
-      <Filter />
-    </div-->
     <div>
       <BioversSelection />
     </div>
@@ -30,7 +27,6 @@ import Return from '../components/app/UIElement/Return.vue';
 import BioversSelection from '../components/TheAdmin/biovers/Data/BioversSelection.vue';
 import BioversItem from '../components/app/BioversItem.vue';
 import GeoJsonImporter from '../components/TheAdmin/biovers/Import/GeoJsonImporter.vue';
-import Filter from '../components/TheAdmin/biovers/Data/Filter.vue';
 
 export default {
   components: {
@@ -39,7 +35,6 @@ export default {
     Return,
     BioversSelection,
     GeoJsonImporter,
-    Filter,
     BioversItem,
   },
   methods: {

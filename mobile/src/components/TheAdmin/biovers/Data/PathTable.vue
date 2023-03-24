@@ -245,10 +245,11 @@ export default {
     selectAll() {
       this.globalChecked = !this.globalChecked;
       if (this.globalChecked) {
-        this.selectAllPaths();
+        this.selectAllPaths(this.searchFilter);
       } else {
-        this.unselectAllPaths();
+        this.unselectAllPaths(this.searchFilter);
       }
+      this.globalCheckAnalizer();
     },
     openMenu(rowId) {
       this.menuState = {id: rowId, state: true};
@@ -349,6 +350,7 @@ export default {
     },
     updateSearch(event) {
       this.searchFilter = event;
+      this.globalCheckAnalizer();
     },  
     ...mapActions('global', ['updateWait']),
     ...mapActions('biovers', ['updatePathToDisplay', 'selectAllPaths', 'unselectAllPaths', 'resetPathsModification', 'copyPath', 'addNewPath', 'removePath']),

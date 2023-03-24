@@ -34,21 +34,21 @@
     </div>
     <div class="edition-layout collapse">
       <div class="container-layout">
-        <Accordeon class="margin-accordeon" :header="'Général'" :could-update-header="false" :length="6 + form.metadata.length" :should-be-open="true" :image="'settings'">
+        <Accordeon class="margin-accordeon" :header="'Paramètres'" :could-update-header="false" :length="6 + form.metadata.length" :should-be-open="true" :image="'settings'">
           <div style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">my_location</p><p class="col-main-text">Coordonnées</p>
+            <div class="col-main border"><p class="material-symbols-sharp">my_location</p><p class="col-main-text">{{ $t('Poi.Column.coordinate') }}</p>
               <p ref="coordinate" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'coordinate')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'coordinate'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'coordinate'"  @mouseleave="tooltipElement = null">Les coordonnées WGS84 ou se situe le centre du point d’intérêt.</p>
               </div>
             </div>
-            <div class="col4 border"><label for="long" class="margin-left-constraint">Longitude</label><input id="long" class="input-full-size-element remove-input-border remove-stepper" type="number" v-model="form.coordinate.long" min="-180" max="180" @change="longitudeValidation()"></div>
-            <div class="col4 border"><label for="lat" class="margin-left-constraint">Latitude</label><input id="lat" class="input-full-size-element remove-input-border remove-stepper" type="number" v-model="form.coordinate.lat" min="-90" max="90" @change="latitudeValidation()"></div>
-            <div class="col4 border end-border"><label for="alt" class="margin-left-constraint">Altitude</label><input id="alt" class="input-full-size-element remove-input-border remove-stepper" type="number" v-model="form.coordinate.alt"></div>
+            <div class="col4 border"><label for="long" class="margin-left-constraint">{{ $t('Poi.Column.long') }}</label><input id="long" class="input-full-size-element remove-input-border remove-stepper" type="number" v-model="form.coordinate.long" min="-180" max="180" @change="longitudeValidation()"></div>
+            <div class="col4 border"><label for="lat" class="margin-left-constraint">{{ $t('Poi.Column.lat') }}</label><input id="lat" class="input-full-size-element remove-input-border remove-stepper" type="number" v-model="form.coordinate.lat" min="-90" max="90" @change="latitudeValidation()"></div>
+            <div class="col4 border end-border"><label for="alt" class="margin-left-constraint">{{ $t('Poi.Column.alt') }}</label><input id="alt" class="input-full-size-element remove-input-border remove-stepper" type="number" v-model="form.coordinate.alt"></div>
           </div>
           <div style="display: flex">
             <div class="col-main border">
-              <p class="material-symbols-sharp">short_text</p><p class="col-main-text">Titre</p>
+              <p class="material-symbols-sharp">short_text</p><p class="col-main-text">{{ $t('Poi.Column.title') }}</p>
               <p ref="title" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'title')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'title'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'title'"  @mouseleave="tooltipElement = null"> le titre du point d’intérêt et ses paramètres d’affichage. </p>
@@ -57,7 +57,7 @@
             <div class="col2 border end-border"><input id="title" type="text" class="input-margin remove-input-border" v-model="form.title" placeholder="Entrer votre title"></div>
           </div>
           <div style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp description-transform">short_text</p><p class="col-main-text">description</p>
+            <div class="col-main border"><p class="material-symbols-sharp description-transform">short_text</p><p class="col-main-text">{{ $t('Poi.Column.subtitle') }}</p>
               <p ref="description" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'description')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'description'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'description'"  @mouseleave="tooltipElement = null">sous-titre ou description du point d’intérêt.</p>
@@ -66,7 +66,7 @@
             <div class="col2 border end-border"><input id="description" type="text" class="input-margin remove-input-border" v-model="form.subtitle" placeholder="Entrer votre description"></div>
           </div>
           <div style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">map</p><p class="col-main-text">symbole carte</p>
+            <div class="col-main border"><p class="material-symbols-sharp">map</p><p class="col-main-text">{{ $t('Poi.Column.symbol_map_name') }}</p>
             <p ref="map" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'map')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'map'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'map'"  @mouseleave="tooltipElement = null"> ce fichier sera affiché sur la carte 2D mobile et desktop</p>
@@ -80,7 +80,7 @@
             </div>
           </div>
           <div style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">visibility</p><p class="col-main-text">porté</p>
+            <div class="col-main border"><p class="material-symbols-sharp">visibility</p><p class="col-main-text">{{ $t('Poi.Column.visibility') }}</p>
               <p ref="visibility" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'visibility')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'visibility'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'visibility'"  @mouseleave="tooltipElement = null"> Lorsque la distance entre la position de l’utilisateur et celle d’un point/trace est inférieur à cette valeur, celui-ci est affiché dans la scene A-Frame. La lecture de certains médias (son, vidéo, gltf animés) peuvent également</p>
@@ -93,7 +93,7 @@
             </div>
           </div>
            <div style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">circle</p><p class="col-main-text">type</p>
+            <div class="col-main border"><p class="material-symbols-sharp">circle</p><p class="col-main-text">{{ $t('Poi.Column.style_type') }}</p>
              <p ref="forme" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'forme')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'forme'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'forme'"  @mouseleave="tooltipElement = null">Ce paramètre définit la forme du radius: anneau, cercle, demi-sphère, sphère</p>
@@ -127,7 +127,7 @@
             </div>
           </div>
           <div style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">share_location</p><p class="col-main-text">rayon</p>
+            <div class="col-main border"><p class="material-symbols-sharp">share_location</p><p class="col-main-text">{{ $t('Poi.Column.radius') }}</p>
             <p ref="share_location" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'share_location')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'share_location'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'share_location'"  @mouseleave="tooltipElement = null"></p>
@@ -139,7 +139,7 @@
             </div>
           </div>
           <div :class="{disabled: form.style_type == 'sphere' || form.style_type == 'hemisphere'}" style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">border_color</p><p class="col-main-text">contour</p>
+            <div class="col-main border"><p class="material-symbols-sharp">border_color</p><p class="col-main-text">{{ $t('Poi.Column.style') }}</p>
             <p ref="contour" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'contour')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'contour'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'contour'"  @mouseleave="tooltipElement = null"></p>
@@ -149,7 +149,7 @@
             <div class="col4 border end-border"><p class="material-symbols-sharp">opacity</p><input id="stroke_opacity" class="input-margin remove-input-border remove-stepper input-number-right-align" type="number" v-model="form.stroke_opacity" :disabled="form.style_type === 'sphere' || form.style_type === 'hemisphere'" style="width:32px"><label for="stroke_opacity">%</label><el-slider class="slider-width-opacity" v-model="form.stroke_opacity" :max="100" :disabled="form.style_type === 'sphere' || form.style_type === 'hemisphere'"/></div>
           </div>
           <div style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">format_color_fill</p> <p class="col-main-text">reamplissage</p>
+            <div class="col-main border"><p class="material-symbols-sharp">format_color_fill</p> <p class="col-main-text">{{ $t('Poi.Column.fill') }}</p>
             <p ref="remplissage" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'remplissage')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'remplissage'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'remplissage'"  @mouseleave="tooltipElement = null"></p>
@@ -164,7 +164,7 @@
             <div class="col4 border end-border"><p class="material-symbols-sharp">opacity</p><input id="fill_opacity" class="input-margin remove-input-border remove-stepper input-number-right-align" type="number" v-model="form.fill_opacity" style="width: 32px;"><label for="fill_opacity">%</label><el-slider class="slider-width-opacity" v-model="form.fill_opacity" :max="100"/></div>
           </div>
           <div style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">animation</p> <p class="col-main-text">animation</p>
+            <div class="col-main border"><p class="material-symbols-sharp">animation</p> <p class="col-main-text">{{ $t('Poi.Column.animation') }}</p>
             <p ref="anim" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'anim')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'anim'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'anim'"  @mouseleave="tooltipElement = null">cette valeur est un facteur d’amplitude pour créer une animation sinusoïdale du rayon. Si la valeur est à 0, il n’y a pas d’animation.</p>
@@ -731,10 +731,6 @@ export default {
       delete formToSave.creation_date;
       delete formToSave.update_date;
       delete formToSave.deleted_date;
-      delete formToSave.position.id;
-      delete formToSave.position.media_id;
-      delete formToSave.position.poi_id;
-      delete formToSave.position.symbol_id;
       delete formToSave.coordinate;
       delete formToSave.media;
       delete formToSave.metadata;
