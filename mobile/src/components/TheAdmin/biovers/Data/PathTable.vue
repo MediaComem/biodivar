@@ -123,7 +123,7 @@
           <td class="column second-column column-max-width text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ path.element.id }}</td>
           <td v-if="getPathColumnsPreference.created_date" class="column column-max-width text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ dateFormatter(path.element.creation_date) }}</td>
           <td v-if="getPathColumnsPreference.author" class="column column-max-width text-font end-align row-height">{{ userFormatter(path.element.User) }}</td>
-          <td v-if="getPathColumnsPreference.coordinate" class="column column-max-width before-last-column  text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ getCoordinate(path.element.coordinate) }}</td>
+          <td v-if="getPathColumnsPreference.coordinate" class="column column-max-width before-last-column  text-font end-align row-height column-coordinate" style="font-variant-numeric: tabular-nums;">{{ getCoordinate(path.element.coordinate) }}</td>
           <td v-if="getPathColumnsPreference.scope" class="column column-max-width text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ path.element.scope }}&thinsp;m</td>
           <td v-if="getPathColumnsPreference.stroke_width" class="column column-max-width text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ path.element.style_stroke_width }}&thinsp;m</td>
           <td v-if="getPathColumnsPreference.stroke_color" class="column column-max-width text-font end-align row-height" style="text-transform: uppercase;">{{ path.element.stroke_color }}</td>
@@ -364,5 +364,10 @@ export default {
 .column-max-width {
   max-width: 250px;
   overflow-x: auto;
+}
+
+.column-coordinate {
+  display: block;
+  padding-top: 5px;
 }
 </style>
