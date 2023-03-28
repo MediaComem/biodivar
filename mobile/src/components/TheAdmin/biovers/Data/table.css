@@ -90,19 +90,31 @@ table {
   color: black;
   z-index: 10;
   left: -180px;
-  top: -35px;
-  border-radius: 3px;
+  top: -110px;
 }
 
 .menu-element {
   margin: 0;
-  padding: 5px 0 5px 0;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #BDBDBD;
   cursor: pointer;
+  font-family: 'BiodivAR Roman';
+  font-variation-settings: "wght" 110, "ital" 0;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: left;
+  height: 40px;
+  display: flex;
+}
+
+.menu-element > p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  height: 40px;
 }
 
 .menu-element:hover {
-  background-color: #bdbdbd;
+  background-color: #8DC26F;
 }
 
 .overlay {
@@ -114,8 +126,13 @@ table {
 }
 
 .disable {
-  background-color: gray;
-  color: lightgray;
+  background-color: #BDBDBD;
+  color: black;
+}
+
+.disable:hover {
+  background-color: #BDBDBD;
+  color: black;
 }
 
 .table-background:hover {
@@ -178,4 +195,9 @@ table {
 
 .table-border {
   border-bottom: 1px solid white;
+}
+
+.font-icon {
+  font-size: 20px;
+  padding-bottom: 3px;
 }

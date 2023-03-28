@@ -6,6 +6,7 @@ import { mapStore } from '../../composables/map.js';
 const props = defineProps({
   admin: Boolean,
   coordinate: Object,
+  meter: Number,
   path: Object,
   editable: Boolean,
 });
@@ -28,6 +29,13 @@ function setPopupEdition(button) {
     L.DomEvent.addListener(button, 'click', openEdition, this);
   }
 }
+
+function getWeight(path) {
+  const val = path.style_stroke_width / props.meter 
+  if (val < 1)
+    return 1;
+  return path.style_stroke_width / props.meter 
+  };
 
 function setPopup(popupCoordinate) {
   const content = L.DomUtil.create('div', '');
@@ -107,7 +115,7 @@ function setupPath() {
   if (props.path) {
     polyline.value = L.polyline(latlngs, {
       color: props.path.stroke_color,
-      weight: props.path.style_stroke_width,
+      weight: getWeight(props.path),
       opacity: props.path.stroke_opacity / 100,
     }).addTo(currentMap.value);
     const indexOfPopupPosition = Math.floor(latlngs.length / 2);

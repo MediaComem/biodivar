@@ -163,11 +163,11 @@
           <th class="last-column last-column-header">
              <p class="material-symbols-sharp no-margin clickable dot-margin" @click="openMenu(0)">more_vert</p>
              <div v-if="menuState && menuState.id === 0 && menuState.state" class="menu">
-                <p class="menu-element" :class="{'disable': !globalChecked }" @click="downloadPois">Exporter les POIs</p>
-                <p class="menu-element" :class="{'disable': !globalChecked }" @click="copies()">Copier les POIs</p>
-                <p class="menu-element" :class="{'disable': couldPaste }" @click="paste()">Coller le POI</p>
-                <p class="menu-element" :class="{'disable': !globalChecked }" @click="openDeletionDialog()">Supprimer les POIs</p>
-                <p class="menu-element" @click="openColumnSelector()">Définir les colonnes</p>
+                <div class="menu-element" @click="openColumnSelector()"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;" >reorder</p><p>Définir colonnes</p></div>
+                <div class="menu-element" :class="{'disable': !globalChecked }" @click="copies()"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">file_copy</p><p>Copier les points</p></div>
+                <div class="menu-element" :class="{'disable': couldPaste }" @click="paste()"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">content_paste_go</p><p>Coller les points</p></div>
+                <div class="menu-element" :class="{'disable': !globalChecked }" @click="downloadPois"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">cloud_download</p><p style="margin: 0px;">Exporter les points</p></div>
+                <div class="menu-element" :class="{'disable': !globalChecked }" @click="openDeletionDialog()"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">wrong_location</p><p>Supprimer les points</p></div>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
@@ -201,10 +201,10 @@
           <td class="last-column">
              <p class="material-symbols-sharp no-margin clickable dot-margin" @click="openMenu(poi.element.id)">more_vert</p>
              <div v-if="menuState && menuState.id === poi.element.id && menuState.state" class="menu">
-                <p class="menu-element" @click="downloadPoi(poi)">Exporter le POI</p>
-                <p class="menu-element" @click="copy(poi)">Copier le POI</p>
-                <p class="menu-element" :class="{'disable': isAllowedToEdit() }" @click="openEdition(poi)">Editer le POI</p>
-                <p class="menu-element" :class="{'disable': isAllowedToEdit() }"  @click="openDeletionDialog(poi)">Supprimer le POI</p>
+                <div class="menu-element" @click="copy(poi)"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;" >file_copy</p><p>Copier le point</p></div>
+                <div class="menu-element" :class="{'disable': isAllowedToEdit() }" @click="openEdition(poi)"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">edit_location_alt</p><p>Modifier le point</p></div>
+                <div class="menu-element" @click="downloadPoi(poi)"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;" >cloud_download</p><p>Exporter le point</p></div>
+                <div class="menu-element" :class="{'disable': isAllowedToEdit() }"  @click="openDeletionDialog(poi)"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;" >wrong_location</p><p>Supprimer le point</p></div>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </td>

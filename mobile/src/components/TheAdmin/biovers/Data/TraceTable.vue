@@ -44,9 +44,9 @@
           <th class="last-column last-column-header">
              <p class="material-symbols-sharp no-margin clickable" @click="openMenu(0)">more_vert</p>
              <div v-if="menuState && menuState.id === 0 && menuState.state" class="menu">
-                <p class="menu-element" :class="{'disable': !globalChecked }" @click="downloadTraces">Exporter les Traces</p>
-                <p class="menu-element" :class="{'disable': !globalChecked }" @click="openDeletionDialog()">Supprimer les traces utilisateurs</p>
-                <p class="menu-element" @click="openColumnSelector()">Définir les colonnes</p>
+                <div class="menu-element" @click="openColumnSelector()"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">reorder</p><p>Définir colonnes</p></div>
+                <div class="menu-element" :class="{'disable': !globalChecked }" @click="downloadTraces"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">cloud_download</p><p>Exporter les traces</p></div>
+                <div class="menu-element" :class="{'disable': !globalChecked }" @click="openDeletionDialog()"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">delete_forever</p><p>Supprimer les traces</p></div>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
@@ -63,8 +63,8 @@
           <td class="last-column">
              <p class="material-symbols-sharp no-margin clickable" @click="openMenu(trace.element.id)">more_vert</p>
              <div v-if="menuState && menuState.id === trace.element.id && menuState.state" class="menu">
-                <p class="menu-element" @click="downloadTrace(trace)">Exporter l'Event</p>
-                <p class="menu-element" :class="{'disable': isAllowedToEdit() }"  @click="openDeletionDialog(trace)">Supprimer la trace</p>
+                <div class="menu-element" @click="downloadTrace(trace)"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;" >cloud_download</p><p>Exporter la trace</p></div>
+                <div class="menu-element" :class="{'disable': isAllowedToEdit() }"  @click="openDeletionDialog(trace)"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;" >delete_forever</p><p>Supprimer la trace</p></div>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </td>   

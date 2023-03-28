@@ -103,6 +103,7 @@
     align-items: center;
     font-size: 17px;
     margin-bottom: 3px;
+    color: #999;
   }
 
   .input-element {

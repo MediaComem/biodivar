@@ -107,11 +107,11 @@
           <th class="last-column last-column-header">
              <p class="material-symbols-sharp no-margin clickable" @click="openMenu(0)">more_vert</p>
              <div v-if="menuState && menuState.id === 0 && menuState.state" class="menu">
-                <p class="menu-element" :class="{'disable': !globalChecked }" @click="downloadPaths">Exporter les PATHs</p>
-                <p class="menu-element" :class="{'disable': !globalChecked }" @click="copies()">Copier les PATHs</p>
-                <p class="menu-element" :class="{'disable': couldPaste }" @click="paste()">Coller les PATHs</p>
-                <p class="menu-element" :class="{'disable': !globalChecked }" @click="openDeletionDialog()">Supprimer les PATHs</p>
-                <p class="menu-element" @click="openColumnSelector()">Définir les colonnes</p>
+                <div class="menu-element" @click="openColumnSelector()"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;" >reorder</p><p>Définir colonnes</p></div>
+                <div class="menu-element" :class="{'disable': !globalChecked }" @click="copies()"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;" >file_copy</p><p>Copier les lignes</p></div>
+                <div class="menu-element" :class="{'disable': !couldPaste }" @click="paste()"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;" >content_paste_go</p><p>Coller les lignes</p></div>
+                <div class="menu-element" :class="{'disable': !globalChecked }" @click="downloadPaths"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;" >cloud_download</p><p>Exporter les lignes</p></div>
+                <div class="menu-element" :class="{'disable': !globalChecked }" @click="openDeletionDialog()"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">delete_forever</p><p>Supprimer les lignes</p></div>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
@@ -131,16 +131,16 @@
           <td v-if="getPathColumnsPreference.extrusion" class="column column-max-width text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ path.element.extrusion }}&thinsp;m</td>
           <td v-if="getPathColumnsPreference.elevation" class="column column-max-width text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ path.element.elevation }}&thinsp;m</td>
           <td v-if="getPathColumnsPreference.animation" class="column column-max-width text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ path.element.amplitude }}</td>
-          <td v-if="getPathColumnsPreference.metadata" class="column column-max-width text-font end-align row-height">{{ path.element.metadata }}</td>
+          <td v-if="getPathColumnsPreference.metadata" class="column column-max-width text-font end-align row-height column-coordinate">{{ path.element.metadata }}</td>
           <td v-if="getPathColumnsPreference.updated_date" class="column column-max-width text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ dateFormatter(path.element.update_date) }}</td>
           <td v-if="getPathColumnsPreference.contributor" class="column column-max-width text-font end-align row-height">{{ userFormatter(path.element.last_contributor_fk) }}</td>
           <td class="last-column">
              <p class="material-symbols-sharp no-margin clickable" @click="openMenu(path.element.id)">more_vert</p>
              <div v-if="menuState && menuState.id === path.element.id && menuState.state" class="menu">
-                <p class="menu-element" @click="downloadPath(path)">Exporter le PATH</p>
-                <p class="menu-element" @click="copy(path)">Copier le PATH</p>
-                <p class="menu-element" :class="{'disable': isAllowedToEdit() }" @click="openEdition(path)">Editer le Path</p>
-                <p class="menu-element" :class="{'disable': isAllowedToEdit() }"  @click="openDeletionDialog(path)">Supprimer le PATH</p>
+                <div class="menu-element" @click="copy(path)"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;" >file_copy</p><p>Copier la ligne</p></div>
+                <div class="menu-element" :class="{'disable': isAllowedToEdit() }" @click="openEdition(path)"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">timeline</p><p>Modifier la ligne</p></div>
+                <div class="menu-element" @click="downloadPath(path)"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;" >cloud_download</p><p>Exporter la ligne</p></div>
+                <div class="menu-element" :class="{'disable': isAllowedToEdit() }"  @click="openDeletionDialog(path)"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;" >delete_forever</p><p>Supprimer la ligne</p></div>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </td>
@@ -367,7 +367,8 @@ export default {
 }
 
 .column-coordinate {
-  display: block;
+  display: inline-block;
   padding-top: 5px;
+  width: 250px;
 }
 </style>

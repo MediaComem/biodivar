@@ -86,4 +86,8 @@
     font-variation-settings: "wght" 110, "ital" 0;
     font-feature-settings: "calt" 0
   }
+
+  input[type=number] {
+    -moz-appearance:textfield;
+  }
 </style>
