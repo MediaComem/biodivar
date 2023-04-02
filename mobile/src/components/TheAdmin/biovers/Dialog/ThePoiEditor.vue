@@ -26,6 +26,7 @@
           :positionX="m.distance"
           :positionY="m.elevation"
           :positionRotation="m.rotation"
+          :positionOrientation="m.orientation"
           :isVisibleInRadius="m.is_visible_in_radius"
           :facing="m.is_facing"
           :text="m.text"
@@ -219,7 +220,7 @@
                  <input :ref="`media-input-${index}`" type="file" name="file" class="input-margin" style="display: none" accept=".png, .jpg, .svg, .gltf, .glb, .mp3, .m4a, .wav, .mp4, .m4v" @change="handleFileUploadMedia($event, index)"/>
               </button>
               <p style="padding-left: 8px">{{ element.media_name }}</p><p v-if="element.media_name && element.media_name !== ''" class="material-symbols-sharp clickable cancle-layout" @click="removeMediaUrl(index)">cancel</p>
-             
+
             </div>
             <div class="col3 border end-border" :class="{disabled: element.text == '' && element.media_type == '' }"><input :id="`is_facing${index}`" type="checkbox" v-model="element.is_facing" :disabled="element.text == '' && element.media_type == ''"><label for="is_facing">Face caméra</label>
               <p :ref="`is_facing${index}`" class="material-symbols-sharp tooltip-font tooltip-font-content" @mouseenter="openTooltip($event,  `is_facing${index}`)" @mouseleave="tooltipElement = null">help</p>
@@ -781,7 +782,7 @@ p {
 
 .col-main-text {
   margin-bottom: 3px;
-} 
+}
 
 .overlay {
   background-color: rgba(0, 0, 0, 0.5);
@@ -1105,7 +1106,7 @@ textarea {
 
 .tooltip-font-content {
  padding-left: 2px;
-} 
+}
 
 .input-button {
   background-color: #2F80ED;

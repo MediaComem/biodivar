@@ -10,6 +10,7 @@
     'positionX',
     'positionY',
     'positionRotation',
+    'positionOrientation',
     'facing',
     'isVisibleInRadius',
     'text',
@@ -35,6 +36,10 @@
   });
 
   const uid = Math.round(Math.random()*100000);
+
+  watchEffect(() => {
+    console.log(props.positionOrientation);
+  });
 </script>
 
 <template>
@@ -53,6 +58,7 @@
         animation-mixer
         :scale="`${scale} ${scale} ${scale}`"
         :position="`${positionX} ${positionY} 0`"
+        :rotation="`0 ${positionOrientation} 0`"
         :look-at-roll-yaw="`enabled: ${facing ? 'true' : 'false'}`"
       ></a-entity>
     </a-entity>
@@ -66,6 +72,7 @@
         :src="`#the-image-${uid}`"
         :scale="`${scale} ${scale} ${scale}`"
         :position="`${positionX} ${positionY} 0`"
+        :rotation="`0 ${positionOrientation} 0`"
         :look-at-roll-yaw="`enabled: ${facing ? 'true' : 'false'}`"
         material="transparent:true; opacity: 1; alphaTest: .1;"
       ></a-image>
@@ -96,6 +103,7 @@
       ></a-image>
     </a-entity>
 
+    <!-- TEXTE -->
     <a-entity
       v-if="text"
       :rotation="`0 ${positionRotation} 0`"
@@ -103,6 +111,7 @@
       <a-text
         :scale="`${scale} ${scale} ${scale}`"
         :position="`${positionX} ${positionY} 0`"
+        :rotation="`0 ${positionOrientation} 0`"
         :look-at-roll-yaw="`enabled: ${facing ? 'true' : 'false'}`"
         align="center"
         :value="text"

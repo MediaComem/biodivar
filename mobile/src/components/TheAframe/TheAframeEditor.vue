@@ -34,7 +34,7 @@
     const button = document.getElementsByClassName('a-enter-vr-button');
     if (button.length > 0) {
       button[0].appendChild(icon)
-    }      
+    }
   })
 </script>
 
@@ -111,7 +111,7 @@
 
   .a-enter-vr-button {
     background-color: #2F80ED;
-    background-image: url('assets/fullscreen.svg');
+    background-image: url('fullscreen.svg');
     height: 38px;
     width: 38px;
     border-radius: 19px;

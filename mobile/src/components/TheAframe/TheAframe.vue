@@ -239,6 +239,7 @@
                   animation-mixer
                   :scale="`${m.scale} ${m.scale} ${m.scale}`"
                   :position="`${m.distance} ${m.elevation} 0`"
+                  :rotation="`0 ${m.orientation} 0`"
                   :look-at-roll-yaw="`enabled: ${m.is_facing ? 'true' : 'false'}`"
                 ></a-entity>
               </a-entity>
@@ -252,6 +253,7 @@
                   :src="`url(${getMediaUrl(m)})`"
                   :scale="`${m.scale} ${m.scale} ${m.scale}`"
                   :position="`${m.distance} ${m.elevation} 0`"
+                  :rotation="`0 ${m.orientation} 0`"
                   :look-at-roll-yaw="`enabled: ${m.is_facing ? 'true' : 'false'}`"
                   material="transparent:true; opacity: 1; alphaTest: .1;"
                 ></a-image>
@@ -265,6 +267,7 @@
                 <a-text
                   :scale="`${m.scale} ${m.scale} ${m.scale}`"
                   :position="`${m.distance} ${m.elevation} 0`"
+                  :rotation="`0 ${m.orientation} 0`"
                   :look-at-roll-yaw="`enabled: ${m.is_facing ? 'true' : 'false'}`"
                   align="center"
                   :value="m.text"
