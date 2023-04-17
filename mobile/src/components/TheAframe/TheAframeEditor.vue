@@ -111,7 +111,7 @@
 
   .a-enter-vr-button {
     background-color: #2F80ED;
-    background-image: url('fullscreen.svg');
+    background-image: url('assets/fullscreen-white.svg');
     height: 38px;
     width: 38px;
     border-radius: 19px;

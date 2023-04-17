@@ -54,12 +54,12 @@ export default {
 
   .save {
     --link-color: white;
-    --highlight-color: rgba(4, 0, 255, 0.5);
+    --highlight-color: #2F80ED;
   }
 
   .delete {
     --link-color: white;
-    --highlight-color: rgba(255, 0, 0, 0.5);
+    --highlight-color: #FF0000;
   }
 
   .cancel {

@@ -347,7 +347,9 @@
             "lat": "Latitude",
             "alt": "Altitude",
             "style": "Contour",
-            "fill": "Remplissage"
+            "fill": "Remplissage",
+            "true": "Vrai",
+            "false": "Faux"
         }
     }
 }

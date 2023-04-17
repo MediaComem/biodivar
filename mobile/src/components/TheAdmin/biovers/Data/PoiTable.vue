@@ -191,7 +191,7 @@
           <td v-if="getPoiColumnsPreference.stroke_width" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ poi.element.style_stroke_width }}&thinsp;m</td>
           <td v-if="getPoiColumnsPreference.stroke_color" class="column text-font end-align row-height" style="text-transform: uppercase;">{{ poi.element.stroke_color }}</td>
           <td v-if="getPoiColumnsPreference.stroke_opacity" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ poi.element.stroke_opacity }}&thinsp;%</td>
-          <td v-if="getPoiColumnsPreference.wireframe" class="column text-font end-align row-height">{{ poi.element.wireframe }}</td>
+          <td v-if="getPoiColumnsPreference.wireframe" class="column text-font end-align row-height">{{ poi.element.wireframe ? $t('Poi.Column.true') : $t('Poi.Column.false') }}</td>
           <td v-if="getPoiColumnsPreference.fill_color" class="column text-font end-align row-height" style="text-transform: uppercase;">{{ poi.element.fill_color }}</td>
           <td v-if="getPoiColumnsPreference.fill_opacity" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ poi.element.fill_opacity }}&thinsp;%</td>
           <td v-if="getPoiColumnsPreference.animation" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ poi.element.amplitude }}</td>

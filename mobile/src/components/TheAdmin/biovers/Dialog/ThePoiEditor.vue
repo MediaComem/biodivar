@@ -43,9 +43,9 @@
                 <p @mouseenter="tooltipElement = 'coordinate'"  @mouseleave="tooltipElement = null">Les coordonnées WGS84 ou se situe le centre du point d’intérêt.</p>
               </div>
             </div>
-            <div class="col4 border"><label for="long" class="margin-left-constraint">{{ $t('Poi.Column.long') }}</label><input id="long" class="input-full-size-element remove-input-border remove-stepper" type="number" v-model="form.coordinate.long" min="-180" max="180" @change="longitudeValidation()"></div>
-            <div class="col4 border"><label for="lat" class="margin-left-constraint">{{ $t('Poi.Column.lat') }}</label><input id="lat" class="input-full-size-element remove-input-border remove-stepper" type="number" v-model="form.coordinate.lat" min="-90" max="90" @change="latitudeValidation()"></div>
-            <div class="col4 border end-border"><label for="alt" class="margin-left-constraint">{{ $t('Poi.Column.alt') }}</label><input id="alt" class="input-full-size-element remove-input-border remove-stepper" type="number" v-model="form.coordinate.alt"></div>
+            <div class="col4 border"><label for="long" class="padding-unit">{{ $t('Poi.Column.long') }}</label><input id="long" class="input-full-size-element remove-input-border remove-stepper" type="number" v-model="form.coordinate.long" min="-180" max="180" @change="longitudeValidation()"></div>
+            <div class="col4 border"><label for="lat" class="padding-unit">{{ $t('Poi.Column.lat') }}</label><input id="lat" class="input-full-size-element remove-input-border remove-stepper" type="number" v-model="form.coordinate.lat" min="-90" max="90" @change="latitudeValidation()"></div>
+            <div class="col4 border end-border"><label for="alt" class="padding-unit">{{ $t('Poi.Column.alt') }}</label><input id="alt" class="input-full-size-element remove-input-border remove-stepper" type="number" v-model="form.coordinate.alt"></div>
           </div>
           <div style="display: flex">
             <div class="col-main border">
@@ -77,7 +77,7 @@
                 <p class="material-symbols-sharp" style="margin-top: 3px">cloud_upload</p><p>Choisir</p>
                 <input ref="map-input" type="file" name="file" class="input-margin" accept=".png, .jpg, .svg" @change="handleFileUploadSymbol" style="display: none"/>
               </button>
-              <p style="padding-left: 8px">{{ symbolFile.name }}</p><p v-if="symbolFile.name && symbolFile.name !== ''" class="material-symbols-sharp clickable cancle-layout" @click="removeMapUrl">cancel</p>
+              <p>{{ symbolFile.name }}</p><p v-if="symbolFile.name && symbolFile.name !== ''" class="material-symbols-sharp clickable cancle-layout" @click="removeMapUrl">cancel</p>
             </div>
           </div>
           <div style="display: flex">
@@ -111,20 +111,20 @@
               </select>
             </div>
             <div class="col4 border ">
-              <p class="material-symbols-sharp">north</p>
+              <p class="material-symbols-sharp padding-unit">north</p>
               <label for="media_symbole_z">elevation</label>
-              <input id="media_symbole_z" class="input-margin remove-input-border remove-stepper input-number-right-align" type="number" v-model="form.elevation" step="0.1" style="width: 36px">
+              <input id="media_symbole_z" class="input-margin remove-input-border remove-stepper input-number-right-align margin-unit" type="number" v-model="form.elevation" step="0.1" style="width: 36px">
               <label for="media_symbole_z">m</label>
               <el-slider class="slider-width-small" v-model="form.elevation" :max="10" :step="0.1" :min="-10"/>
             </div>
             <div class="col4 border end-border" :class="{disabled: form.style_type == 'sphere' || form.style_type == 'hemisphere'}">
-              <p class="material-symbols-sharp">expand</p>
+              <p class="material-symbols-sharp padding-unit">expand</p>
               <label for="extrusion">extrusion</label>
                <p ref="style_type" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'style_type')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'style_type'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'style_type'"  @mouseleave="tooltipElement = null">Si le type de forme est 'cercle', ce paramètre définit la hauteur de l’extrusion pour la transformation en cylindre.</p>
               </div>
-              <input id="extrusion" class="input-margin remove-input-border remove-stepper input-number-right-align" type="number" v-model="form.extrusion" step="0.1" style="width: 36px" :disabled="form.style_type == 'sphere' || form.style_type == 'hemisphere'">
+              <input id="extrusion" class="input-margin remove-input-border remove-stepper input-number-right-align margin-unit" type="number" v-model="form.extrusion" step="0.1" style="width: 36px" :disabled="form.style_type == 'sphere' || form.style_type == 'hemisphere'">
               <label for="extrusion">m</label>
               <el-slider class="slider-width-small" v-model="form.extrusion" :max="100" :step="0.1" :disabled="form.style_type == 'sphere' || form.style_type == 'hemisphere'"/>
             </div>
@@ -147,9 +147,9 @@
               <div data-role="tooltip" v-show="tooltipElement === 'contour'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'contour'"  @mouseleave="tooltipElement = null"></p>
               </div></div>
-            <div class="col4 border"><p class="material-symbols-sharp">line_weight</p><input id="epaisseur" class="input-margin remove-input-border remove-stepper input-number-right-align" step="0.01" type="number" v-model="form.style_stroke_width" :disabled="form.style_type === 'sphere' || form.style_type === 'hemisphere'" style="width: 36px"><el-slider class="slider-width-position" v-model="form.style_stroke_width" :max="10"  :step="0.01" :disabled="form.style_type === 'sphere' || form.style_type === 'hemisphere'"/></div>
-            <div class="col4 border"><p class="material-symbols-sharp">colorize</p><input id="stroke_color" type="color" v-model="form.stroke_color" :disabled="form.style_type === 'sphere' || form.style_type === 'hemisphere'"><label for="stroke_color">{{ form.stroke_color }}</label></div>
-            <div class="col4 border end-border"><p class="material-symbols-sharp">opacity</p><input id="stroke_opacity" class="input-margin remove-input-border remove-stepper input-number-right-align" type="number" v-model="form.stroke_opacity" :disabled="form.style_type === 'sphere' || form.style_type === 'hemisphere'" style="width:32px"><label for="stroke_opacity">%</label><el-slider class="slider-width-opacity" v-model="form.stroke_opacity" :max="100" :disabled="form.style_type === 'sphere' || form.style_type === 'hemisphere'"/></div>
+            <div class="col4 border"><p class="material-symbols-sharp padding-unit">line_weight</p><input id="epaisseur" class="input-margin remove-input-border remove-stepper input-number-right-align margin-unit" step="0.01" type="number" v-model="form.style_stroke_width" :disabled="form.style_type === 'sphere' || form.style_type === 'hemisphere'" style="width: 36px;"><el-slider class="slider-width-position" v-model="form.style_stroke_width" :max="10"  :step="0.01" :disabled="form.style_type === 'sphere' || form.style_type === 'hemisphere'"/></div>
+            <div class="col4 border"><p class="material-symbols-sharp padding-unit">colorize</p><input id="stroke_color" type="color" v-model="form.stroke_color" :disabled="form.style_type === 'sphere' || form.style_type === 'hemisphere'"><label for="stroke_color">{{ form.stroke_color }}</label></div>
+            <div class="col4 border end-border"><p class="material-symbols-sharp padding-unit">opacity</p><input id="stroke_opacity" class="input-margin remove-input-border remove-stepper input-number-right-align margin-unit" type="number" v-model="form.stroke_opacity" :disabled="form.style_type === 'sphere' || form.style_type === 'hemisphere'" style="width:32px;"><label for="stroke_opacity">%</label><el-slider class="slider-width-opacity" v-model="form.stroke_opacity" :max="100" :disabled="form.style_type === 'sphere' || form.style_type === 'hemisphere'"/></div>
           </div>
           <div style="display: flex">
             <div class="col-main border"><p class="material-symbols-sharp">format_color_fill</p> <p class="col-main-text">{{ $t('Poi.Column.fill') }}</p>
@@ -157,14 +157,18 @@
               <div data-role="tooltip" v-show="tooltipElement === 'remplissage'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'remplissage'"  @mouseleave="tooltipElement = null"></p>
               </div></div>
-            <div class="col4 border"><input id="wireframe" type="checkbox" v-model="form.wireframe"><p class="material-symbols-sharp" style="margin-left: 2px;">grid_4x4</p> <label for="wireframe">Wireframe</label>
+            <div class="col4 border">
+              <base-checkbox>
+                <input type="checkbox" v-model="form.wireframe">
+                <p class="material-symbols-sharp" style="margin-left: 2px;">grid_4x4</p> <label for="wireframe">Wireframe</label>
+              </base-checkbox>
             <p ref="fill_wireframe" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'fill_wireframe')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'fill_wireframe'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'fill_wireframe'"  @mouseleave="tooltipElement = null"></p>
               </div>
             </div>
-            <div class="col4 border"><p class="material-symbols-sharp">colorize</p><input id="fill_color" type="color" v-model="form.fill_color"><label for="fill_color">{{ form.fill_color }}</label></div>
-            <div class="col4 border end-border"><p class="material-symbols-sharp">opacity</p><input id="fill_opacity" class="input-margin remove-input-border remove-stepper input-number-right-align" type="number" v-model="form.fill_opacity" style="width: 32px;"><label for="fill_opacity">%</label><el-slider class="slider-width-opacity" v-model="form.fill_opacity" :max="100"/></div>
+            <div class="col4 border"><p class="material-symbols-sharp padding-unit">colorize</p><input id="fill_color" type="color" v-model="form.fill_color"><label for="fill_color">{{ form.fill_color }}</label></div>
+            <div class="col4 border end-border"><p class="material-symbols-sharp padding-unit">opacity</p><input id="fill_opacity" class="input-margin remove-input-border remove-stepper input-number-right-align margin-unit" type="number" v-model="form.fill_opacity" style="width: 32px;"><label for="fill_opacity">%</label><el-slider class="slider-width-opacity" v-model="form.fill_opacity" :max="100"/></div>
           </div>
           <div style="display: flex">
             <div class="col-main border"><p class="material-symbols-sharp">animation</p> <p class="col-main-text">{{ $t('Poi.Column.animation') }}</p>
@@ -188,7 +192,7 @@
             <div class="col3 border end-border"><input v-model="element.description" type="text" class="input-margin input-full-size-element remove-input-border" placeholder="Description de l’attribut"><p class="material-symbols-sharp" style="color: #999" @click="deleteGeneralAttribute(index)">delete_forever</p></div>
           </div>
           <div style="display: flex; border-bottom: 1px solid black;">
-            <div class="col-main border"><p class="material-symbols-sharp link">add</p><p class="link" @click="createGeneralAttribute()">Ajouter un attribut</p>
+            <div class="col-main border"><p class="material-symbols-sharp link clickable">add</p><p class="link clickable" @click="createGeneralAttribute()">Ajouter un attribut</p>
               <p ref="attribut" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event, 'attribut')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === 'attribut'" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = 'attribut'"  @mouseleave="tooltipElement = null">Cette option permet de créer des champs personnalisés et de les remplir avec une valeur (de type texte). Les attributs ainsi créés seront visibles sur la table de données du biovers.</p>
@@ -200,13 +204,13 @@
         <div v-for="(element, index) in form.media" :key="index" :title="`Media ${index + 1}`" :name="index">
         <Accordeon class="margin-accordeon" :header="element.name" :could-update-header="true" :length="5 + element.metadata.length" :should-be-open="true" :could-delete="true" @update="updateMediaName($event, index)" @delete="removeMedia(index)" :image="'image'">
           <div :class="{disabled: element.media_type !== '' }" style="display: flex">
-            <div class="col-main border"><p class="material-symbols-sharp">text_fields</p><p class="col-main-text">Texte</p>
+            <div class="col-main-textarea border"><p class="material-symbols-sharp">text_fields</p><p class="col-main-text">Texte</p>
             <p :ref="`short_text${index}`" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event,  `short_text${index}`)" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === `short_text${index}`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `short_text${index}`"  @mouseleave="tooltipElement = null"></p>
               </div>
             </div>
-            <div class="col2 border end-border"><textarea id="text" type="textarea" class="input-margin remove-input-border" v-model="element.text" :disabled="element.media_type !== ''" placeholder="Entrer texte (ou ajouter média ci-dessous) "/></div>
+            <div class="col2-textarea border end-border"><textarea id="text" type="textarea" class="input-margin remove-input-border" v-model="element.text" :disabled="element.media_type !== ''" placeholder="Entrer texte (ou ajouter média ci-dessous) "/></div>
           </div>
           <div style="display: flex">
             <div class="col-main border"><p class="material-symbols-sharp">add_photo_alternate</p><p class="col-main-text">Média</p>
@@ -219,10 +223,12 @@
                 <p class="material-symbols-sharp" style="margin-top: 3px">cloud_upload</p><p>Choisir</p>
                  <input :ref="`media-input-${index}`" type="file" name="file" class="input-margin" style="display: none" accept=".png, .jpg, .svg, .gltf, .glb, .mp3, .m4a, .wav, .mp4, .m4v" @change="handleFileUploadMedia($event, index)"/>
               </button>
-              <p style="padding-left: 8px">{{ element.media_name }}</p><p v-if="element.media_name && element.media_name !== ''" class="material-symbols-sharp clickable cancle-layout" @click="removeMediaUrl(index)">cancel</p>
-
+              <p>{{ element.media_name }}</p><p v-if="element.media_name && element.media_name !== ''" class="material-symbols-sharp clickable cancle-layout" @click="removeMediaUrl(index)">cancel</p>
             </div>
-            <div class="col3 border end-border" :class="{disabled: element.text == '' && element.media_type == '' }"><input :id="`is_facing${index}`" type="checkbox" v-model="element.is_facing" :disabled="element.text == '' && element.media_type == ''"><label for="is_facing">Face caméra</label>
+            <div class="col3 border end-border" :class="{disabled: element.text == '' && element.media_type == '' }">
+              <base-checkbox>
+                <input :id="`is_facing${index}`" type="checkbox" v-model="element.is_facing" :disabled="element.text == '' && element.media_type == ''"><label for="is_facing">Face caméra</label>
+              </base-checkbox>
               <p :ref="`is_facing${index}`" class="material-symbols-sharp tooltip-font tooltip-font-content" @mouseenter="openTooltip($event,  `is_facing${index}`)" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === `is_facing${index}`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `is_facing${index}`"  @mouseleave="tooltipElement = null"></p>
@@ -235,13 +241,19 @@
               <div data-role="tooltip" v-show="tooltipElement === `replay${index}`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `replay${index}`"  @mouseleave="tooltipElement = null"></p>
               </div></div>
-            <div class="col3 border"><input id="media_autoplay" type="checkbox" v-model="element.autoplay" :disabled="element.media_type === ''"><label for="media_autoplay">Autoplay</label>
+            <div class="col3 border">
+              <base-checkbox>
+                <input type="checkbox" v-model="element.autoplay" :disabled="element.media_type === ''"><label for="media_autoplay">Autoplay</label>
+              </base-checkbox>
               <p :ref="`media_autoplay${index}`" class="material-symbols-sharp tooltip-font tooltip-font-content" @mouseenter="openTooltip($event,  `media_autoplay${index}`)" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === `media_autoplay${index}`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `media_autoplay${index}`"  @mouseleave="tooltipElement = null"></p>
               </div>
             </div>
-            <div class="col3 border end-border"><input id="media_loop" type="checkbox" v-model="element.loop" :disabled="element.media_type === ''"><label for="media_loop">Loop</label>
+            <div class="col3 border end-border">
+              <base-checkbox>
+                <input id="media_loop" type="checkbox" v-model="element.loop" :disabled="element.media_type === ''"><label for="media_loop">Loop</label>
+              </base-checkbox>
             <p :ref="`media_loop${index}`" class="material-symbols-sharp tooltip-font tooltip-font-content" @mouseenter="openTooltip($event,  `media_loop${index}`)" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === `media_loop${index}`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `media_loop${index}`"  @mouseleave="tooltipElement = null"></p>
@@ -253,13 +265,19 @@
               <div data-role="tooltip" v-show="tooltipElement === `add_photo_alternate_${index}`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `add_photo_alternate_${index}`"  @mouseleave="tooltipElement = null"></p>
               </div></div>
-            <div class="col3 border"><input :id="`is_visible_out_radius${index}`" type="checkbox" v-model="element.is_visible_out_radius" :disabled="element.text === '' && element.media_type === ''"><label :for="`is_visible_out_radius${index}`">Hors du rayon</label>
+            <div class="col3 border">
+              <base-checkbox>
+                <input :id="`is_visible_out_radius${index}`" type="checkbox" v-model="element.is_visible_out_radius" :disabled="element.text === '' && element.media_type === ''"><label :for="`is_visible_out_radius${index}`">Hors du rayon</label>
+              </base-checkbox>
             <p :ref="`is_visible_out_radius${index}`" class="material-symbols-sharp tooltip-font tooltip-font-content" @mouseenter="openTooltip($event,  `is_visible_out_radius${index}`)" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === `is_visible_out_radius${index}`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `is_visible_out_radius${index}`"  @mouseleave="tooltipElement = null">Si coché le média ne sera visible que dans le rayon d'interaction, sinon il sera visible dés que la distance de visibilité du point d'interêt est atteinte</p>
               </div>
             </div>
-            <div class="col3 border"><input :id="`is_visible_in_radius${index}`" type="checkbox" v-model="element.is_visible_in_radius" :disabled="element.text === '' && element.media_type === ''"><label :for="`is_visible_in_radius${index}`">Dans le rayon</label>
+            <div class="col3 border">
+              <base-checkbox>
+                <input :id="`is_visible_in_radius${index}`" type="checkbox" v-model="element.is_visible_in_radius" :disabled="element.text === '' && element.media_type === ''"><label :for="`is_visible_in_radius${index}`">Dans le rayon</label>
+              </base-checkbox>
             <p :ref="`is_visible_in_radius${index}`" class="material-symbols-sharp tooltip-font tooltip-font-content" @mouseenter="openTooltip($event,  `is_visible_in_radius${index}`)" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === `is_visible_in_radius${index}`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `is_visible_in_radius${index}`"  @mouseleave="tooltipElement = null">Si coché le média ne sera visible que dans le rayon d'interaction, sinon il sera visible dés que la distance de visibilité du point d'interêt est atteinte</p>
@@ -331,7 +349,7 @@
             <div class="col3 border end-border"><input v-model="meta.description" type="text" class="input-margin input-full-size-element remove-input-border" placeholder="Description de l’attribut" :disabled="element.text === '' && element.media_type === ''"><p class="material-symbols-sharp" style="color: #999" @click="deleteMetadata(index)">delete_forever</p></div>
           </div>
           <div style="display: flex; border-bottom: 1px solid black;" :class="{disabled: element.text === '' && element.media_type === ''}">
-            <div class="col-main border"><p class="material-symbols-sharp link">add</p><p class="link" @click="element.text === '' && element.media_type === '' ? '' : addMetadata(index, indexMeta)">Ajouter un attribut</p>
+            <div class="col-main border"><p class="material-symbols-sharp link clickable">add</p><p class="link clickable" @click="element.text === '' && element.media_type === '' ? '' : addMetadata(index, indexMeta)">Ajouter un attribut</p>
             <p ref="add" class="material-symbols-sharp tooltip-font" @mouseenter="openTooltip($event,  'add')" @mouseleave="tooltipElement = null">help</p>
               <div data-role="tooltip" v-show="tooltipElement === `add`" :style="tooltipPosition">
                 <p @mouseenter="tooltipElement = `add`"  @mouseleave="tooltipElement = null"></p>
@@ -341,16 +359,16 @@
         </Accordeon>
       </div>
       <div class="full-button actions-button">
-        <button class="full-button button-orange" @click="addMedia"><p class="material-symbols-sharp">add</p> Ajouter un média</button>
+        <button class="full-button button-orange" @click="addMedia"><p class="material-symbols-sharp">add</p> ajouter média</button>
       </div>
       <div class="full-button actions-button">
-        <button class="full-button button-gray" @click="savePreferences"><p class="material-symbols-sharp">bookmark</p> Définir comme paramètres par défaut</button>
+        <button class="full-button button-gray" @click="savePreferences"><p class="material-symbols-sharp">bookmark</p> définir paramètres par défaut</button>
       </div>
       <div class="full-button actions-button">
-        <button class="full-button button-red" @click="deleteDialog = true"><p class="material-symbols-sharp">wrong_location</p> Supprimer le point d'intérêt</button>
+        <button class="full-button button-red" @click="deleteDialog = true"><p class="material-symbols-sharp">wrong_location</p> supprimer le point d'intérêt</button>
       </div>
       <div class="full-button actions-button">
-        <button class="full-button button-blue" @click="updatePoi()" ><p class="material-symbols-sharp">where_to_vote</p> Enregistrer les modifications</button>
+        <button class="full-button button-blue" @click="updatePoi()" ><p class="material-symbols-sharp">where_to_vote</p> enregistrer</button>
       </div>
     </div>
   </div>
@@ -961,12 +979,24 @@ textarea {
   padding-left: 6px;
   height: 30px;
 }
+.col-main-textarea {
+  width: 25%;
+  display: flex;
+  align-items: flex-start;
+  padding-left: 6px;
+}
 
 .col2 {
   width: 75%;
   display: flex;
   align-items: center;
   height: 30px;
+}
+
+.col2-textarea {
+  width: 75%;
+  display: flex;
+  align-items: center;
 }
 
 .col3 {
@@ -1116,7 +1146,7 @@ textarea {
   border-radius: 15px;
   border: none;
   margin-left: 3px;
-  margin-right: 3px;
+  margin-right: 4px;
 }
 
 .clickable {
@@ -1162,7 +1192,7 @@ input[type="number"] {
 
 input[type="checkbox" i] {
   margin-left: 4px;
-  margin-right: 8px;
+  margin-right: 4px;
 }
 
 .cancle-layout {
