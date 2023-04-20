@@ -1,6 +1,7 @@
 <script setup>
   import { computed, watchEffect } from '@vue/runtime-core';
   import '../aframe/look-at-roll-yaw.js';
+  import '../aframe/poi-animator.js';
 
   const props = defineProps([
     'media',
@@ -14,13 +15,13 @@
     'facing',
     'isVisibleInRadius',
     'text',
+    'amplitude',
   ]);
 
   const mapMediaTypeToCateg = new Map([
     ['png', 'image'],
     ['jpg', 'image'],
     ['svg', 'image'],
-    // ['jpeg', 'image'], todo ?
     // ['gif', 'image'], todo ?
 
     ['mp3', 'audio'],
@@ -36,10 +37,6 @@
   });
 
   const uid = Math.round(Math.random()*100000);
-
-  watchEffect(() => {
-    console.log(props.positionOrientation);
-  });
 </script>
 
 <template>
@@ -60,6 +57,7 @@
         :position="`${positionX} ${positionY} 0`"
         :rotation="`0 ${positionOrientation} 0`"
         :look-at-roll-yaw="`enabled: ${facing ? 'true' : 'false'}`"
+        :poi-animator="`amplitude: ${amplitude}`"
       ></a-entity>
     </a-entity>
 
@@ -75,6 +73,7 @@
         :rotation="`0 ${positionOrientation} 0`"
         :look-at-roll-yaw="`enabled: ${facing ? 'true' : 'false'}`"
         material="transparent:true; opacity: 1; alphaTest: .1;"
+        :poi-animator="`amplitude: ${amplitude}`"
       ></a-image>
     </a-entity>
 
@@ -120,6 +119,7 @@
         negate="false"
         material="transparent:true; opacity: 1; alphaTest: 0.1;"
         side="double"
+        :poi-animator="`amplitude: ${amplitude}`"
       ></a-text>
     </a-entity>
   </a-entity>

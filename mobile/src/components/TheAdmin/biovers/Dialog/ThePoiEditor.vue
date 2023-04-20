@@ -30,6 +30,7 @@
           :isVisibleInRadius="m.is_visible_in_radius"
           :facing="m.is_facing"
           :text="m.text"
+          :amplitude="m.amplitude"
         ></aframe-media>
       </the-aframe-editor>
     </div>
