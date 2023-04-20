@@ -16,6 +16,7 @@
   import '../aframe/listen-to';
   import '../aframe/event-set';
   import '../aframe/path-walls';
+  import '../aframe/distance-to-volume';
 
   import { getMediaUrl, saveTrace, saveEvent } from '../../utils/api.js';
   import { onMounted, onUnmounted, watch } from '@vue/runtime-core';
@@ -277,10 +278,13 @@
                     src: url(${getMediaUrl(m)});
                     loop: ${m.loop ? 'true' : 'false'};
                     volume: ${m.scale};
-                    ${m.autoplay ? 'distanceModel: linear;' : 'positional: false;'}
-                    ${m.autoplay && m.is_visible_in_radius ? 'TODOmaxDistance: ' +  poi.radius : ''}
-                    ${m.autoplay && !m.is_visible_in_radius ? 'TODOmaxDistance: ' +  poi.scope : ''}
+                    ${m.autoplay ? 'positional: true;' : 'positional: false;'}
+                    ${m.autoplay ? `refDistance: ${poi.scope};` : ''}
                   `"
+                  :distance-to-volume="m.autoplay ? `
+                    volume: ${m.scale};
+                    distance: ${poi.scope};
+                  `: null"
                   sound-play-stop="eventPlay: play-sound; eventStop: stop-sound;"
                   :listen-to__enter="`target: #poi-radius-${poi.id}; event: radius-enter; emit: ${m.is_visible_in_radius ? 'play-sound' : 'stop-sound'}`"
                   :listen-to__exit="`target: #poi-radius-${poi.id}; event: radius-exit; emit: ${m.is_visible_out_radius ? 'play-sound' : 'stop-sound'}`"
