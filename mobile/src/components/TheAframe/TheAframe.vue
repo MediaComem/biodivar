@@ -146,14 +146,17 @@
 
     <a-entity faces-north>
       <template v-for="path of selectedBiovers.Path" :key="`path-${path.id}`">
-        <a-entity :path-walls="`
-          width: ${path.style_stroke_width};
-          extrude: ${path.extrusion};
-          elevation: ${path.elevation};
-          color: ${path.stroke_color};
-          opacity: ${path.stroke_opacity};
-          pathId: ${path.id};
-        `">
+        <a-entity
+          :path-walls="`
+            width: ${path.style_stroke_width};
+            extrude: ${path.extrusion};
+            elevation: ${path.elevation};
+            color: ${path.stroke_color};
+            opacity: ${path.stroke_opacity};
+            pathId: ${path.id};
+          `"
+          :poi-animator="`amplitude: ${path.amplitude}`"
+        >
           <template v-for="(coordinate, index) of path.coordinate" :key="`path-${path.id}-coord-${index}`">
             <a-entity
               position="0 0 10000"

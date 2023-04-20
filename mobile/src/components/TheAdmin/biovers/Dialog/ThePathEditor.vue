@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue';
-import { useStore } from 'vuex'; 
+import { useStore } from 'vuex';
 import { mapStore } from '../../../../composables/map.js';
 import { useStore as composableStore } from '../../../../composables/store.js';
 
@@ -8,6 +8,7 @@ import DialogHeader from './DialogHeader.vue';
 import Accordeon from '../../../app/UIElement/Accordeon.vue';
 import DeleteConfirmation from './DeleteConfirmation.vue';
 import CancelConfirmation from './CancelConfirmation.vue';
+import TheAframePathEditor from '../../../TheAframe/TheAframePathEditor.vue';
 
 import { deletePath as apiDeletaPath, saveEvent, updatePath as apiUpdatePath } from '../../../../utils/api.js';
 
@@ -152,6 +153,17 @@ onMounted(() => {
       :logo="'timeline'"
       @close="cancelDialog = true"
     />
+    <div class="embedded">
+      <the-aframe-path-editor
+        :visibilityScope="form.scope"
+        :pathWidth="form.style_stroke_width"
+        :pathColor="form.stroke_color"
+        :pathOpacity="form.stroke_opacity"
+        :pathExtrusion="form.extrusion"
+        :pathElevation="form.elevation"
+        :pathAmplitude="form.amplitude"
+      ></the-aframe-path-editor>
+    </div>
     <div class="edition-layout collapse">
       <div class="container-layout">
         <Accordeon
@@ -372,7 +384,7 @@ onMounted(() => {
                   @mouseenter="tooltipElement = 'extrusion'"
                   @mouseleave="tooltipElement = null"
                 >
-                  
+
                 </p>
               </div>
             </div>
@@ -402,7 +414,7 @@ onMounted(() => {
                   @mouseenter="tooltipElement = 'elev'"
                   @mouseleave="tooltipElement = null"
                 >
-                  
+
                 </p>
               </div>
             </div>
@@ -555,7 +567,7 @@ p {
 
 .col-main-text {
   margin-bottom: 3px;
-} 
+}
 .coordinate-display {
   display: block;
   width: 75%;
