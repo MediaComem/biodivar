@@ -835,11 +835,11 @@ textarea {
 }
 
 .edition-layout {
-  height: calc(95vh);
+  height: calc(95vh - 40vh);
 }
 
 .collapse {
-  height: calc(95vh - 70px);
+  height: calc(95vh - 40vh - 70px);
   overflow: auto;
 }
 
