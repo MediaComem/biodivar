@@ -182,7 +182,7 @@
           <td v-if="getPoiColumnsPreference.coordinate" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">({{ getCoordinate(poi) }})</td>
           <td v-if="getPoiColumnsPreference.title" class="column text-font end-align row-height">{{ poi.element.title }}</td>
           <td v-if="getPoiColumnsPreference.subtitle" class="column text-font end-align row-height">{{ poi.element.subtitle }}</td>
-          <td v-if="getPoiColumnsPreference.symbol_map_name" class="column text-font end-align row-height">{{ poi.element.map_url.replace(/^.*[\\\/]/, '') }}</td>
+          <td v-if="getPoiColumnsPreference.symbol_map_name" class="column text-font end-align row-height">{{ poi.element.map_url && poi.element.map_url !== '' ? poi.element.map_url.replace(/^.*[\\\/]/, '') : ''}}</td>
           <td v-if="getPoiColumnsPreference.scope" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ poi.element.scope }}&thinsp;m</td>
           <td v-if="getPoiColumnsPreference.style_type" class="column text-font end-align row-height">{{ styleFormatter(poi.element.style_type) }}</td>
           <td v-if="getPoiColumnsPreference.elevation" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ poi.element.elevation }}&thinsp;m</td>
