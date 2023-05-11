@@ -63,15 +63,25 @@ export const createPoi = async (
         },
       },
     });
-
     if (poi.media) {
-      for (let i = 0; i < poi.media.length; i++) {
-        delete poi.media[i].content;
-        poi.media[i].creation_date = new Date();
-        poi.media[i].poi_id = newPoi.id;
-        await createMedia(prisma, poi.media[i], logger);
-      };
+      if (Object.keys(poi.media)) {
+        for (let key in Object.keys(poi.media)) {
+          const index: number = +key;
+          delete poi.media[index].content;
+          poi.media[index].creation_date = new Date();
+          poi.media[index].poi_id = newPoi.id;
+          await createMedia(prisma, poi.media[index], logger);
+        };
+      } else if (poi.media.length) {
+        for (let i = 0; i < poi.media.length; i++) {
+          delete poi.media[i].content;
+          poi.media[i].creation_date = new Date();
+          poi.media[i].poi_id = newPoi.id;
+          await createMedia(prisma, poi.media[i], logger);
+        };
+      }
     }
+    
     return await getPoiById(prisma, newPoi.id);
 
   } catch (error) {
