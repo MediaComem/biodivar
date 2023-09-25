@@ -24,7 +24,7 @@
     font-family: 'BiodivAR Roman';
     font-size: 14px;
     line-height: 14px;
-    font-variation-settings: "wght" 110, "ital" 0;
+    font-variation-settings: "wght" 85, "ital" 0;
     width: 100%;
     max-width: var(--max-width);
     padding: 1rem 1rem;

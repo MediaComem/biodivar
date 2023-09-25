@@ -17,7 +17,8 @@
     --highlight-color: none;
   }
 
-  form :slotted(input) {
+  form :slotted(input),
+  div :slotted(input) {
     appearance: none;
     background-color: var(--bg-color);
     border-radius: 4px;
@@ -27,34 +28,41 @@
     border: 1px solid black;
   }
 
-  form :slotted(input:hover) {
+  form :slotted(input:hover),
+  div :slotted(input:hover) {
     background-color: rgba(0, 0, 0, 0.1);
     border: 1px solid black;
   }
 
-  form :slotted(input:checked) {
+  form :slotted(input:checked),
+  div :slotted(input:checked) {
     background: var(--highlight-color);
   }
 
-  form :slotted(input:checked::after) {
+  form :slotted(input:checked::after),
+  div :slotted(input:checked::after) {
       content: '×';
       color: black;
       position: relative;
       top: 0px;
       left: 3px;
+      font-family: Arial;
     }
 
   @-moz-document url-prefix() {
-    form :slotted(input:checked::after) {
+    form :slotted(input:checked::after),
+    div :slotted(input:checked::after) {
       content: '×';
       color: black;
       position: relative;
       top: -2px;
       left: 3px;
+      font-family: Arial;
     }
   }
 
-  form :slotted(label) {
+  form :slotted(label),
+  div :slotted(label) {
     color: var(--color);
     font-family: 'BiodivAR Roman';
     font-variation-settings: "wght" 110, "ital" 0;

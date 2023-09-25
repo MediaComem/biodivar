@@ -413,52 +413,64 @@ export const bioversStore = {
     RESET_PATH_MODIFICATION(state) {
       state.pathsModification = null;
     },
-    SELECT_ALL_POIS(state) {
+    UPDATE_ALL_POIS(state, payload) {
       const poisIndex = state.pois.findIndex((e) => e.bioverId === state.currentBioversId);
-      for (let i = 0; i < state.pois[poisIndex].pois.length; i += 1) {
-        state.pois[poisIndex].pois[i].display = true;
+      if (payload.filter != '') {
+        const pois = state.pois[poisIndex].pois.filter((poi) => (
+          filterUtils.poiFilter(poi, payload.filter)
+        ));
+        for (let i = 0; i < pois.length; i += 1) {
+          pois[i].display = payload.value;
+        }
+      } else {
+        for (let i = 0; i < state.pois[poisIndex].pois.length; i += 1) {
+          state.pois[poisIndex].pois[i].display = payload.value;
+        }
       }
     },
-    UNSELECT_ALL_POIS(state) {
-      const poisIndex = state.pois.findIndex((e) => e.bioverId === state.currentBioversId);
-      for (let i = 0; i < state.pois[poisIndex].pois.length; i += 1) {
-        state.pois[poisIndex].pois[i].display = false;
-      }
-    },
-    SELECT_ALL_PATHS(state) {
+    UPDATE_ALL_PATHS(state, payload) {
       const pathsIndex = state.paths.findIndex((e) => e.bioverId === state.currentBioversId);
-      for (let i = 0; i < state.paths[pathsIndex].paths.length; i += 1) {
-        state.paths[pathsIndex].paths[i].display = true;
+      if (payload.filter != '') {
+        const paths = state.paths[pathsIndex].paths.filter((path) => (
+          filterUtils.pathFilter(path, payload.filter)
+        ));
+        for (let i = 0; i < paths.length; i += 1) {
+          paths[i].display = payload.value;
+        }
+      } else {
+        for (let i = 0; i < state.paths[pathsIndex].paths.length; i += 1) {
+          state.paths[pathsIndex].paths[i].display = payload.value;
+        }
       }
     },
-    UNSELECT_ALL_PATHS(state) {
-      const pathsIndex = state.paths.findIndex((e) => e.bioverId === state.currentBioversId);
-      for (let i = 0; i < state.paths[pathsIndex].paths.length; i += 1) {
-        state.paths[pathsIndex].paths[i].display = false;
-      }
-    },
-    SELECT_ALL_EVENTS(state) {
+    UPDATE_ALL_EVENTS(state, payload) {
       const eventsIndex = state.events.findIndex((e) => e.bioverId === state.currentBioversId);
-      for (let i = 0; i < state.events[eventsIndex].events.length; i += 1) {
-        state.events[eventsIndex].events[i].display = true;
+      if (payload.filter != '') {
+        const events = state.events[eventsIndex].events.filter((event) => (
+          filterUtils.eventFilter(event, payload.filter)
+        ));
+        for (let i = 0; i < events.length; i += 1) {
+          events[i].display = payload.value;
+        }
+      } else {
+        for (let i = 0; i < state.events[eventsIndex].events.length; i += 1) {
+          state.events[eventsIndex].events[i].display = payload.value;
+        }
       }
     },
-    UNSELECT_ALL_EVENTS(state) {
-      const eventsIndex = state.events.findIndex((e) => e.bioverId === state.currentBioversId);
-      for (let i = 0; i < state.events[eventsIndex].events.length; i += 1) {
-        state.events[eventsIndex].events[i].display = false;
-      }
-    },
-    SELECT_ALL_TRACES(state) {
+    UPDATE_ALL_TRACES(state, payload) {
       const tracesIndex = state.traces.findIndex((e) => e.bioverId === state.currentBioversId);
-      for (let i = 0; i < state.traces[tracesIndex].traces.length; i += 1) {
-        state.traces[tracesIndex].traces[i].display = true;
-      }
-    },
-    UNSELECT_ALL_TRACES(state) {
-      const tracesIndex = state.traces.findIndex((e) => e.bioverId === state.currentBioversId);
-      for (let i = 0; i < state.traces[tracesIndex].traces.length; i += 1) {
-        state.traces[tracesIndex].traces[i].display = false;
+      if (payload.filter != '') {
+        const traces = state.traces[tracesIndex].traces.filter((trace) => (
+          filterUtils.traceFilter(trace, payload.filter)
+        ));
+        for (let i = 0; i < traces.length; i += 1) {
+          traces[i].display = payload.value;
+        }
+      } else {
+        for (let i = 0; i < state.traces[tracesIndex].traces.length; i += 1) {
+          state.traces[tracesIndex].traces[i].display = payload.value;
+        }
       }
     },
     RESET_STORE(state) {
@@ -731,29 +743,53 @@ export const bioversStore = {
     resetPathsModification({ commit }) {
       commit('RESET_PATH_MODIFICATION');
     },
-    selectAllPois({ commit }) {
-      commit('SELECT_ALL_POIS');
+    selectAllPois({ commit }, filter) {
+      commit('UPDATE_ALL_POIS', {
+        "filter": filter,
+        "value": true
+      });
     },
-    unselectAllPois({ commit }) {
-      commit('UNSELECT_ALL_POIS');
+    unselectAllPois({ commit }, filter) {
+      commit('UPDATE_ALL_POIS', {
+        "filter": filter,
+        "value": false
+      });
     },
-    selectAllPaths({ commit }) {
-      commit('SELECT_ALL_PATHS');
+    selectAllPaths({ commit }, filter) {
+      commit('UPDATE_ALL_PATHS', {
+        "filter": filter,
+        "value": true
+      });
     },
-    unselectAllPaths({ commit }) {
-      commit('UNSELECT_ALL_PATHS');
+    unselectAllPaths({ commit }, filter) {
+      commit('UPDATE_ALL_PATHS', {
+        "filter": filter,
+        "value": false
+      });
     },
-    selectAllEvents({ commit }) {
-      commit('SELECT_ALL_EVENTS');
+    selectAllEvents({ commit },filter) {
+      commit('UPDATE_ALL_EVENTS', {
+        "filter": filter,
+        "value": true
+      });
     },
-    unselectAllEvents({ commit }) {
-      commit('UNSELECT_ALL_EVENTS');
+    unselectAllEvents({ commit }, filter) {
+      commit('UPDATE_ALL_EVENTS', {
+        "filter": filter,
+        "value": false
+      });
     },
-    selectAllTraces({ commit }) {
-      commit('SELECT_ALL_TRACES');
+    selectAllTraces({ commit }, filter) {
+      commit('UPDATE_ALL_TRACES', {
+        "filter": filter,
+        "value": true
+      });
     },
-    unselectAllTraces({ commit }) {
-      commit('UNSELECT_ALL_TRACES');
+    unselectAllTraces({ commit }, filter) {
+      commit('UPDATE_ALL_TRACES', {
+        "filter": filter,
+        "value": false
+      });
     },
     filter({ commit }, filter) {
       commit('FILTER', filter);

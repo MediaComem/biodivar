@@ -1,30 +1,19 @@
 <script setup>
-  import '../aframe/poi-radius.js';
-  import '../aframe/animation-mixer.js';
-  import '../aframe/look-at-roll-yaw.js';
-  import '../aframe/ring.js';
+
+  import { onMounted, defineProps, watch, ref } from '@vue/runtime-core';
   import '../aframe/poi-animator.js';
   import '../aframe/arrow-helper.js';
   import '../aframe/camera-reset.js';
 
-  import { onMounted, watch, ref } from '@vue/runtime-core';
 
   const props = defineProps([
     'visibilityScope',
-
-    'shapeType',
-    'shapeRadius',
-    'shapeX',
-    'shapeY',
-    'shapeRotation',
-    'shapeColor',
-    'shapeOpacity',
-    'shapeStrokeColor',
-    'shapeStrokeWidth',
-    'shapeStrokeOpacity',
-    'shapeWireframe',
-    'shapeExtrusion',
-    'shapeAmplitude',
+    'pathWidth',
+    'pathColor',
+    'pathOpacity',
+    'pathExtrusion',
+    'pathElevation',
+    'pathAmplitude',
   ]);
 
   onMounted(() => {
@@ -61,35 +50,21 @@
       color="#444"
     ></a-plane>
 
-    <!-- media slot-->
-    <slot></slot>
-
     <a-entity
-      v-if="visibilityScope"
-      :ring="`radius: ${visibilityScope}; color: white;`"
-      position="0 0.1 0"
-    ></a-entity>
-
-    <a-entity :rotation="`0 0 0`" position="0 0.05">
-      <a-entity
-        :poi-radius="`
-          radius: ${shapeRadius};
-          shape: ${shapeType};
-          color: ${shapeColor};
-          opacity: ${shapeOpacity};
-          strokeColor: ${shapeStrokeColor};
-          strokeWidth: ${shapeStrokeWidth};
-          strokeOpacity: ${shapeStrokeOpacity};
-          wireframe: ${shapeWireframe};
-          extrude: ${shapeExtrusion};
+      :position="`0 ${pathElevation} 0`"
+      :poi-animator="`amplitude: ${pathAmplitude}`"
+    >
+      <a-box
+        position="0 0 0"
+        width="7"
+        :height="pathExtrusion"
+        :depth="pathWidth"
+        :material="`
+          color: ${pathColor};
+          transparent: true;
+          opacity: ${pathOpacity/100};
         `"
-        :poi-animator="`
-          amplitude: ${shapeAmplitude};
-          scale: true;
-          scaleAll: ${shapeType == 'circle' ? 'false' : 'true'};
-        `"
-        :position="`0 ${shapeY} 0`"
-      ></a-entity>
+      ></a-box>
     </a-entity>
 
     <a-entity id="camera-rig">

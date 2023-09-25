@@ -1,6 +1,7 @@
 <script setup>
   import { computed, watchEffect } from '@vue/runtime-core';
   import '../aframe/look-at-roll-yaw.js';
+  import '../aframe/poi-animator.js';
 
   const props = defineProps([
     'media',
@@ -10,16 +11,17 @@
     'positionX',
     'positionY',
     'positionRotation',
+    'positionOrientation',
     'facing',
     'isVisibleInRadius',
     'text',
+    'amplitude',
   ]);
 
   const mapMediaTypeToCateg = new Map([
     ['png', 'image'],
     ['jpg', 'image'],
     ['svg', 'image'],
-    // ['jpeg', 'image'], todo ?
     // ['gif', 'image'], todo ?
 
     ['mp3', 'audio'],
@@ -53,7 +55,9 @@
         animation-mixer
         :scale="`${scale} ${scale} ${scale}`"
         :position="`${positionX} ${positionY} 0`"
+        :rotation="`0 ${positionOrientation} 0`"
         :look-at-roll-yaw="`enabled: ${facing ? 'true' : 'false'}`"
+        :poi-animator="`amplitude: ${amplitude}`"
       ></a-entity>
     </a-entity>
 
@@ -66,8 +70,10 @@
         :src="`#the-image-${uid}`"
         :scale="`${scale} ${scale} ${scale}`"
         :position="`${positionX} ${positionY} 0`"
+        :rotation="`0 ${positionOrientation} 0`"
         :look-at-roll-yaw="`enabled: ${facing ? 'true' : 'false'}`"
         material="transparent:true; opacity: 1; alphaTest: .1;"
+        :poi-animator="`amplitude: ${amplitude}`"
       ></a-image>
     </a-entity>
 
@@ -96,6 +102,7 @@
       ></a-image>
     </a-entity>
 
+    <!-- TEXTE -->
     <a-entity
       v-if="text"
       :rotation="`0 ${positionRotation} 0`"
@@ -103,6 +110,7 @@
       <a-text
         :scale="`${scale} ${scale} ${scale}`"
         :position="`${positionX} ${positionY} 0`"
+        :rotation="`0 ${positionOrientation} 0`"
         :look-at-roll-yaw="`enabled: ${facing ? 'true' : 'false'}`"
         align="center"
         :value="text"
@@ -111,6 +119,7 @@
         negate="false"
         material="transparent:true; opacity: 1; alphaTest: 0.1;"
         side="double"
+        :poi-animator="`amplitude: ${amplitude}`"
       ></a-text>
     </a-entity>
   </a-entity>

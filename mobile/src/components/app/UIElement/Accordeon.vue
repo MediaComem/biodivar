@@ -29,7 +29,7 @@
 <div>
     <div class="title">
         <p class="material-symbols-sharp icon-margin icon-font fill-font transition" :class="{rotate: open}" @click="open = !open">{{ props.image }}</p>
-        <input v-if="props.couldUpdateHeader" class="input-element" type="text" v-model="header" placeholder="Entrer nom du média">
+        <input v-if="props.couldUpdateHeader" class="input-element" :style="{width: `${header.length / 2 + 2}em`}" type="text" v-model="header" placeholder="Entrer nom du média">
         <p v-else class="text" @click="open = !open">{{ props.header }}</p>
         <p v-if="props.couldDelete" class="material-symbols-sharp delete-font" @click="emit('delete')">delete</p>
     </div>
@@ -103,6 +103,7 @@
     align-items: center;
     font-size: 17px;
     margin-bottom: 3px;
+    color: #999;
   }
 
   .input-element {

@@ -51,9 +51,9 @@
           <th class="last-column last-column-header">
              <p class="material-symbols-sharp no-margin clickable dot-margin" @click="openMenu(0)">more_vert</p>
              <div v-if="menuState && menuState.id === 0 && menuState.state" class="menu">
-                <p class="menu-element" :class="{'disable': !globalChecked }" @click="downloadEvents">Exporter les Events</p>
-                <p class="menu-element" :class="{'disable': !globalChecked }" @click="openDeletionDialog()">Supprimer les évenements</p>
-                <p class="menu-element" @click="openColumnSelector()">Définir les colonnes</p>
+                <div class="menu-element" @click="openColumnSelector()"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">reorder</p><p>Définir colonnes</p></div>
+                <div class="menu-element" :class="{'disable': !globalChecked }" @click="downloadEvents"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">cloud_download</p><p>Exporter les actions</p></div>
+                <div class="menu-element" :class="{'disable': !globalChecked }" @click="openDeletionDialog()"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">delete_forever</p><p>Supprimer les actions</p></div>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
@@ -71,8 +71,8 @@
           <td class="last-column text-font ">
              <p class="material-symbols-sharp no-margin clickable dot-margin" @click="openMenu(event.element.id)">more_vert</p>
              <div v-if="menuState && menuState.id === event.element.id && menuState.state" class="menu">
-                <p class="menu-element" @click="downloadEvent(event)">Exporter l'Event</p>
-                <p class="menu-element" :class="{'disable': isAllowedToEdit() }"  @click="openDeletionDialog(event)">Supprimer l'évenement</p>
+                <div class="menu-element" @click="downloadEvent(event)"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">cloud_download</p><p>Exporter l’action</p></div>
+                <div class="menu-element" :class="{'disable': isAllowedToEdit() }" @click="openDeletionDialog(event)"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">delete_forever</p><p>Supprimer l’action</p></div>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </td>    
@@ -186,10 +186,11 @@ export default {
     selectAll() {
       this.globalChecked = !this.globalChecked;
       if (this.globalChecked) {
-        this.selectAllEvents();
+        this.selectAllEvents(this.searchFilter);
       } else {
-        this.unselectAllEvents();
+        this.unselectAllEvents(this.searchFilter);
       }
+      this.globalCheckAnalizer();
     },
     openMenu(rowId) {
       this.menuState = {id: rowId, state: true};
@@ -245,6 +246,7 @@ export default {
     },
     updateSearch(event) {
       this.searchFilter = event;
+      this.globalCheckAnalizer();
     }, 
     ...mapActions('global', ['updateEventOver', 'addOrRemoveEventClickElement', 'addOrRemoveEventsClick', 'updateLastEventClick']),
     ...mapActions('biovers', ['selectAllEvents', 'unselectAllEvents', 'updateEventToDisplay', 'removeEvent']),

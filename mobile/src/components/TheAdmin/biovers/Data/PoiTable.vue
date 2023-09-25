@@ -163,11 +163,11 @@
           <th class="last-column last-column-header">
              <p class="material-symbols-sharp no-margin clickable dot-margin" @click="openMenu(0)">more_vert</p>
              <div v-if="menuState && menuState.id === 0 && menuState.state" class="menu">
-                <p class="menu-element" :class="{'disable': !globalChecked }" @click="downloadPois">Exporter les POIs</p>
-                <p class="menu-element" :class="{'disable': !globalChecked }" @click="copies()">Copier les POIs</p>
-                <p class="menu-element" :class="{'disable': couldPaste }" @click="paste()">Coller le POI</p>
-                <p class="menu-element" :class="{'disable': !globalChecked }" @click="openDeletionDialog()">Supprimer les POIs</p>
-                <p class="menu-element" @click="openColumnSelector()">Définir les colonnes</p>
+                <div class="menu-element" @click="openColumnSelector()"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;" >reorder</p><p>Définir colonnes</p></div>
+                <div class="menu-element" :class="{'disable': !globalChecked }" @click="copies()"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">file_copy</p><p>Copier les points</p></div>
+                <div class="menu-element" :class="{'disable': couldPaste }" @click="paste()"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">content_paste_go</p><p>Coller les points</p></div>
+                <div class="menu-element" :class="{'disable': !globalChecked }" @click="downloadPois"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">cloud_download</p><p style="margin: 0px;">Exporter les points</p></div>
+                <div class="menu-element" :class="{'disable': !globalChecked }" @click="openDeletionDialog()"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">wrong_location</p><p>Supprimer les points</p></div>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
@@ -182,16 +182,16 @@
           <td v-if="getPoiColumnsPreference.coordinate" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">({{ getCoordinate(poi) }})</td>
           <td v-if="getPoiColumnsPreference.title" class="column text-font end-align row-height">{{ poi.element.title }}</td>
           <td v-if="getPoiColumnsPreference.subtitle" class="column text-font end-align row-height">{{ poi.element.subtitle }}</td>
-          <td v-if="getPoiColumnsPreference.symbol_map_name" class="column text-font end-align row-height">{{ poi.element.map_url.replace(/^.*[\\\/]/, '') }}</td>
+          <td v-if="getPoiColumnsPreference.symbol_map_name" class="column text-font end-align row-height">{{ poi.element.map_url && poi.element.map_url !== '' ? poi.element.map_url.replace(/^.*[\\\/]/, '') : ''}}</td>
           <td v-if="getPoiColumnsPreference.scope" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ poi.element.scope }}&thinsp;m</td>
-          <td v-if="getPoiColumnsPreference.style_type" class="column text-font end-align row-height">{{ poi.element.style_type }}</td>
+          <td v-if="getPoiColumnsPreference.style_type" class="column text-font end-align row-height">{{ styleFormatter(poi.element.style_type) }}</td>
           <td v-if="getPoiColumnsPreference.elevation" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ poi.element.elevation }}&thinsp;m</td>
           <td v-if="getPoiColumnsPreference.extrusion" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ poi.element.extrusion }}&thinsp;m</td>
           <td v-if="getPoiColumnsPreference.radius" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ poi.element.radius }}&thinsp;m</td>
           <td v-if="getPoiColumnsPreference.stroke_width" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ poi.element.style_stroke_width }}&thinsp;m</td>
           <td v-if="getPoiColumnsPreference.stroke_color" class="column text-font end-align row-height" style="text-transform: uppercase;">{{ poi.element.stroke_color }}</td>
           <td v-if="getPoiColumnsPreference.stroke_opacity" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ poi.element.stroke_opacity }}&thinsp;%</td>
-          <td v-if="getPoiColumnsPreference.wireframe" class="column text-font end-align row-height">{{ poi.element.wireframe }}</td>
+          <td v-if="getPoiColumnsPreference.wireframe" class="column text-font end-align row-height">{{ poi.element.wireframe ? $t('Poi.Column.true') : $t('Poi.Column.false') }}</td>
           <td v-if="getPoiColumnsPreference.fill_color" class="column text-font end-align row-height" style="text-transform: uppercase;">{{ poi.element.fill_color }}</td>
           <td v-if="getPoiColumnsPreference.fill_opacity" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ poi.element.fill_opacity }}&thinsp;%</td>
           <td v-if="getPoiColumnsPreference.animation" class="column text-font end-align row-height" style="font-variant-numeric: tabular-nums;">{{ poi.element.amplitude }}</td>
@@ -201,10 +201,10 @@
           <td class="last-column">
              <p class="material-symbols-sharp no-margin clickable dot-margin" @click="openMenu(poi.element.id)">more_vert</p>
              <div v-if="menuState && menuState.id === poi.element.id && menuState.state" class="menu">
-                <p class="menu-element" @click="downloadPoi(poi)">Exporter le POI</p>
-                <p class="menu-element" @click="copy(poi)">Copier le POI</p>
-                <p class="menu-element" :class="{'disable': isAllowedToEdit() }" @click="openEdition(poi)">Editer le POI</p>
-                <p class="menu-element" :class="{'disable': isAllowedToEdit() }"  @click="openDeletionDialog(poi)">Supprimer le POI</p>
+                <div class="menu-element" @click="copy(poi)"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;" >file_copy</p><p>Copier le point</p></div>
+                <div class="menu-element" :class="{'disable': isAllowedToEdit() }" @click="openEdition(poi)"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">edit_location_alt</p><p>Modifier le point</p></div>
+                <div class="menu-element" @click="downloadPoi(poi)"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;" >cloud_download</p><p>Exporter le point</p></div>
+                <div class="menu-element" :class="{'disable': isAllowedToEdit() }"  @click="openDeletionDialog(poi)"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;" >wrong_location</p><p>Supprimer le point</p></div>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </td>
@@ -347,6 +347,13 @@ export default {
     userFormatter(user) {
       return user && user.username ? user.username : '';
     },
+    styleFormatter(style) {
+      switch(style) {
+        case 'circle': return 'Cercle';
+        case 'sphere': return 'Sphère';
+        case 'hemisphere': return 'Demi-sphère';
+      }
+    },
     globalCheckAnalizer() {
       if (this.allAreUnselected) {
         this.globalChecked = false;
@@ -377,10 +384,11 @@ export default {
     selectAll() {
       this.globalChecked = !this.globalChecked;
       if (this.globalChecked) {
-        this.selectAllPois();
+        this.selectAllPois(this.searchFilter);
       } else {
-        this.unselectAllPois();
+        this.unselectAllPois(this.searchFilter);
       }
+      this.globalCheckAnalizer();
     },
     openMenu(rowId) {
       setTimeout(() => {
@@ -507,6 +515,7 @@ export default {
     },
     updateSearch(event) {
       this.searchFilter = event;
+      this.globalCheckAnalizer();
     },  
     ...mapActions('global', ['updateWait', 'updateOver', 'addOrRemoveClickElement', 'updateLastPoiClick', 'addOrRemovePoisClick']),
     ...mapActions('biovers', ['updatePoiToDisplay', 'resetPoisModification', 'selectAllPois', 'unselectAllPois', 'copyPoi', 'addNewPoi', 'removePoi']),

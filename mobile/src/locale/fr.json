@@ -111,27 +111,27 @@
             "ToUnedit": "rendre non-éditable"
         },
         "More": {
-            "AR": "ouvrir en RA",
-            "Desktop": "ouvrir sur la carte",
-            "Title": "modifier paramètres",
-            "Duplicate": "dupliquer le biovers",
-            "Delete": "supprimer le biovers",
-            "Private": "rendre privé",
-            "Publique": "rendre public",
-            "ToEdit": "rendre modifiable",
-            "ToUnEdit": "rendre non-modifiable",
-            "ToFavorite": "retirer des favoris",
-            "ToPin": "retirer l’épingle",
-            "FromUnPin": "ajouter une épingle"
+            "AR": "Ouvrir en RA",
+            "Desktop": "Ouvrir sur la carte",
+            "Title": "Paramètres",
+            "Duplicate": "Dupliquer le biovers",
+            "Delete": "Supprimer le biovers",
+            "Private": "Rendre privé",
+            "Publique": "Rendre public",
+            "ToEdit": "Rendre modifiable",
+            "ToUnEdit": "Rendre non-modifiable",
+            "ToFavorite": "Retirer des favoris",
+            "ToPin": "Retirer l’épingle",
+            "FromUnPin": "Ajouter une épingle"
         },
         "Information": {
-            "POI": "point·s d’intérêt",
-            "Traces": "trace·s",
+            "POI": "point·s",
+            "Traces": "ligne·s",
             "Enter": "ENTRER",
-            "NoUpdate": "pas d’édition effectuée sur ce biovers",
+            "NoUpdate": "pas de modification effectuée sur ce biovers",
             "Create": "créé le",
             "LastConnection": "dernière connexion le",
-            "LastEdition": "dernière édition le",
+            "LastEdition": "dernière modification le",
             "By": "par"
         }
     },
@@ -312,7 +312,11 @@
             "style_stroke_width": "Épaisseur contour",
             "style_stroke_opacity": "Opacité",
             "extrusion": "Extrusion",
-            "metadata": "Attributs"
+            "metadata": "Attributs",
+            "long": "Longitude",
+            "lat": "Latitude",
+            "alt": "Altitude",
+            "style": "Contour"
         }
     },
     "Poi": {
@@ -338,7 +342,14 @@
             "fill_color": "Couleur remplissage",
             "fill_opacity": "Opacité remplissage",
             "radius": "Rayon",
-            "symbol_map_name": "Symbole"
+            "symbol_map_name": "Symbole",
+            "long": "Longitude",
+            "lat": "Latitude",
+            "alt": "Altitude",
+            "style": "Contour",
+            "fill": "Remplissage",
+            "true": "Vrai",
+            "false": "Faux"
         }
     }
 }

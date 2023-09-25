@@ -11,7 +11,7 @@ export async function savePath(coordinates, bioversId) {
       style_type: 'circle',
       elevation: 0,
       extrusion: 0.1,
-      style_stroke_width: 0.1,
+      style_stroke_width: 1,
       stroke_color: '#FFFFFF',
       stroke_opacity: 40,
       amplitude: 0,

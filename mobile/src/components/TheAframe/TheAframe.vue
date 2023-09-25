@@ -16,6 +16,7 @@
   import '../aframe/listen-to';
   import '../aframe/event-set';
   import '../aframe/path-walls';
+  import '../aframe/distance-to-volume';
 
   import { getMediaUrl, saveTrace, saveEvent } from '../../utils/api.js';
   import { onMounted, onUnmounted, watch } from '@vue/runtime-core';
@@ -129,22 +130,6 @@
   });
 
   // console.log('selectedBiovers.value', selectedBiovers.value);
-  // selectedBiovers.value.Path.push({
-  //   id: 1,
-  //   style_stroke_width: 1,
-  //   stroke_color: '#004e92',
-  //   stroke_opacity: 50,
-  //   extrusion: 0.1,
-  //   elevation: 0,
-  //   scope: 5,
-  //   coordinate: [
-  //     {lat: 46.7809153620791, long: 6.64862875164098, alt: 0 }, // utilisation de l'altitude pour jouer sur l'elevation relative du "joint"
-  //     {lat: 46.7809113557174, long: 6.64863376635327, alt: -1 },
-  //     {lat: 46.7809113557174, long: 6.64863376635327, alt: 1 },
-  //     {lat: 46.7809113557174, long: 6.64863376635327, alt: 2 },
-  //     {lat: 46.7809113557174, long: 6.64863376635327, alt: -2 },
-  //   ]
-  // });
 </script>
 
 <template>
@@ -161,14 +146,17 @@
 
     <a-entity faces-north>
       <template v-for="path of selectedBiovers.Path" :key="`path-${path.id}`">
-        <a-entity :path-walls="`
-          width: ${path.style_stroke_width};
-          extrude: ${path.extrusion};
-          elevation: ${path.elevation};
-          color: ${path.stroke_color};
-          opacity: ${path.stroke_opacity};
-          pathId: ${path.id};
-        `">
+        <a-entity
+          :path-walls="`
+            width: ${path.style_stroke_width};
+            extrude: ${path.extrusion};
+            elevation: ${path.elevation};
+            color: ${path.stroke_color};
+            opacity: ${path.stroke_opacity};
+            pathId: ${path.id};
+          `"
+          :poi-animator="`amplitude: ${path.amplitude}`"
+        >
           <template v-for="(coordinate, index) of path.coordinate" :key="`path-${path.id}-coord-${index}`">
             <a-entity
               position="0 0 10000"
@@ -239,7 +227,9 @@
                   animation-mixer
                   :scale="`${m.scale} ${m.scale} ${m.scale}`"
                   :position="`${m.distance} ${m.elevation} 0`"
+                  :rotation="`0 ${m.orientation} 0`"
                   :look-at-roll-yaw="`enabled: ${m.is_facing ? 'true' : 'false'}`"
+                  :poi-animator="`amplitude: ${m.amplitude}`"
                 ></a-entity>
               </a-entity>
 
@@ -252,8 +242,10 @@
                   :src="`url(${getMediaUrl(m)})`"
                   :scale="`${m.scale} ${m.scale} ${m.scale}`"
                   :position="`${m.distance} ${m.elevation} 0`"
+                  :rotation="`0 ${m.orientation} 0`"
                   :look-at-roll-yaw="`enabled: ${m.is_facing ? 'true' : 'false'}`"
                   material="transparent:true; opacity: 1; alphaTest: .1;"
+                  :poi-animator="`amplitude: ${m.amplitude}`"
                 ></a-image>
               </a-entity>
 
@@ -265,6 +257,7 @@
                 <a-text
                   :scale="`${m.scale} ${m.scale} ${m.scale}`"
                   :position="`${m.distance} ${m.elevation} 0`"
+                  :rotation="`0 ${m.orientation} 0`"
                   :look-at-roll-yaw="`enabled: ${m.is_facing ? 'true' : 'false'}`"
                   align="center"
                   :value="m.text"
@@ -273,6 +266,7 @@
                   negate="false"
                   material="transparent:true; opacity: 1; alphaTest: 0.1;"
                   side="double"
+                  :poi-animator="`amplitude: ${m.amplitude}`"
                 ></a-text>
               </a-entity>
 
@@ -287,10 +281,13 @@
                     src: url(${getMediaUrl(m)});
                     loop: ${m.loop ? 'true' : 'false'};
                     volume: ${m.scale};
-                    ${m.autoplay ? 'distanceModel: linear;' : 'positional: false;'}
-                    ${m.autoplay && m.is_visible_in_radius ? 'TODOmaxDistance: ' +  poi.radius : ''}
-                    ${m.autoplay && !m.is_visible_in_radius ? 'TODOmaxDistance: ' +  poi.scope : ''}
+                    ${m.autoplay ? 'positional: true;' : 'positional: false;'}
+                    ${m.autoplay ? `refDistance: ${poi.scope};` : ''}
                   `"
+                  :distance-to-volume="m.autoplay ? `
+                    volume: ${m.scale};
+                    distance: ${poi.scope};
+                  `: null"
                   sound-play-stop="eventPlay: play-sound; eventStop: stop-sound;"
                   :listen-to__enter="`target: #poi-radius-${poi.id}; event: radius-enter; emit: ${m.is_visible_in_radius ? 'play-sound' : 'stop-sound'}`"
                   :listen-to__exit="`target: #poi-radius-${poi.id}; event: radius-exit; emit: ${m.is_visible_out_radius ? 'play-sound' : 'stop-sound'}`"

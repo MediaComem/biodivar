@@ -62,7 +62,7 @@
             <p class="information-text">{{ props.biover.Poi.length }} {{ $t('TheMenu.Information.POI') }}</p>
         </div>
         <div class="element">
-            <p class="material-symbols-sharp text-margin">gesture</p>
+            <p class="material-symbols-sharp text-margin">timeline</p>
             <p class="information-text">{{ props.biover.Path.length }} {{ $t('TheMenu.Information.Traces') }}</p>
         </div>
     </div>

@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue';
-import { useStore } from 'vuex'; 
+import { useStore } from 'vuex';
 import { mapStore } from '../../../../composables/map.js';
 import { useStore as composableStore } from '../../../../composables/store.js';
 
@@ -8,6 +8,7 @@ import DialogHeader from './DialogHeader.vue';
 import Accordeon from '../../../app/UIElement/Accordeon.vue';
 import DeleteConfirmation from './DeleteConfirmation.vue';
 import CancelConfirmation from './CancelConfirmation.vue';
+import TheAframePathEditor from '../../../TheAframe/TheAframePathEditor.vue';
 
 import { deletePath as apiDeletaPath, saveEvent, updatePath as apiUpdatePath } from '../../../../utils/api.js';
 
@@ -149,23 +150,34 @@ onMounted(() => {
   <div v-if="dialogVisible" class="modal-edition">
     <DialogHeader
       :title="'éditer path'"
-      :logo="'gesture'"
+      :logo="'timeline'"
       @close="cancelDialog = true"
     />
+    <div class="embedded">
+      <the-aframe-path-editor
+        :visibilityScope="form.scope"
+        :pathWidth="form.style_stroke_width"
+        :pathColor="form.stroke_color"
+        :pathOpacity="form.stroke_opacity"
+        :pathExtrusion="form.extrusion"
+        :pathElevation="form.elevation"
+        :pathAmplitude="form.amplitude"
+      ></the-aframe-path-editor>
+    </div>
     <div class="edition-layout collapse">
       <div class="container-layout">
         <Accordeon
           class="margin-accordeon"
-          :header="'Général'"
+          :header="'Paramètres'"
           :could-update-header="false"
           :length="6 + form.metadata.length"
           :should-be-open="true"
           :image="'settings'"
         >
           <div style="display: flex">
-            <div class="col-main border coordinate-title">
-              <p class="material-symbols-sharp">location_searching</p>
-              <p class="col-main-text">coordonnées</p>
+            <div class="col-main-textarea border" style="align-items: start;">
+              <p class="material-symbols-sharp">my_location</p>
+              <p class="col-main-text" style="margin-top: 8px">{{ $t('Path.Column.coordinate') }}</p>
               <p
                 class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'coordinate')"
@@ -191,8 +203,8 @@ onMounted(() => {
                 :key="index"
               >
                 <div class="col3 border">
-                  <label for="long" class="margin-left-constraint"
-                    >longitude</label
+                  <label for="long" class="padding-unit"
+                    >{{ $t('Path.Column.long') }}</label
                   ><input
                     id="long"
                     class="input-full-size-element remove-input-border remove-stepper"
@@ -204,8 +216,8 @@ onMounted(() => {
                   />
                 </div>
                 <div class="col3 border">
-                  <label for="lat" class="margin-left-constraint"
-                    >latitude</label
+                  <label for="lat" class="padding-unit"
+                    >{{ $t('Path.Column.lat') }}</label
                   ><input
                     id="lat"
                     class="input-full-size-element remove-input-border remove-stepper"
@@ -217,8 +229,8 @@ onMounted(() => {
                   />
                 </div>
                 <div class="col3 border end-border">
-                  <label for="alt" class="margin-left-constraint"
-                    >altitude</label
+                  <label for="alt" class="padding-unit"
+                    >{{ $t('Path.Column.alt') }}</label
                   ><input
                     id="alt"
                     class="input-full-size-element remove-input-border remove-stepper"
@@ -228,7 +240,7 @@ onMounted(() => {
                 </div>
               </div>
             </div>
-            <div v-else class="col2 border end-border">
+            <div v-else class="col2-textarea border end-border">
               <textarea
                 id="text"
                 type="textarea"
@@ -240,7 +252,7 @@ onMounted(() => {
           <div style="display: flex">
             <div class="col-main border">
               <p class="material-symbols-sharp">visibility</p>
-              <p class="col-main-text">porté</p>
+              <p class="col-main-text">{{ $t('Path.Column.visibility') }}</p>
               <p
                 class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'visibility')"
@@ -266,7 +278,7 @@ onMounted(() => {
                 type="number"
                 step="0.5"
                 v-model="form.scope"
-                class="input-margin remove-input-border remove-stepper input-number-right-align"
+                class="input-margin remove-input-border remove-stepper input-number-right-align padding-unit"
                 style="width: 40px"
               />
               <label for="scope">m</label>
@@ -281,7 +293,7 @@ onMounted(() => {
           <div style="display: flex">
             <div class="col-main border">
               <p class="material-symbols-sharp">border_color</p>
-              <p class="col-main-text">contour</p>
+              <p class="col-main-text">{{ $t('Path.Column.style') }}</p>
               <p
                 class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'contour')"
@@ -297,10 +309,10 @@ onMounted(() => {
               </div>
             </div>
             <div class="col4 border">
-              <p class="material-symbols-sharp">line_weight</p>
+              <p class="material-symbols-sharp padding-unit">line_weight</p>
               <input
                 id="epaisseur"
-                class="input-margin remove-input-border remove-stepper input-number-right-align"
+                class="remove-input-border remove-stepper input-number-right-align"
                 step="0.01"
                 type="number"
                 v-model="form.style_stroke_width"
@@ -321,7 +333,7 @@ onMounted(() => {
               />
             </div>
             <div class="col4 border">
-              <p class="material-symbols-sharp">colorize</p>
+              <p class="material-symbols-sharp padding-unit">colorize</p>
               <input
                 id="stroke_color"
                 type="color"
@@ -333,10 +345,10 @@ onMounted(() => {
               /><label for="stroke_color">{{ form.stroke_color }}</label>
             </div>
             <div class="col4 border end-border">
-              <p class="material-symbols-sharp">opacity</p>
+              <p class="material-symbols-sharp padding-unit">opacity</p>
               <input
                 id="stroke_opacity"
-                class="input-margin remove-input-border remove-stepper input-number-right-align"
+                class="remove-input-border remove-stepper input-number-right-align"
                 type="number"
                 v-model="form.stroke_opacity"
                 :disabled="
@@ -359,7 +371,7 @@ onMounted(() => {
           <div style="display: flex">
             <div class="col-main border">
               <p class="material-symbols-sharp">expand</p>
-              <p class="col-main-text">extrusion</p>
+              <p class="col-main-text">{{ $t('Path.Column.extrusion') }}</p>
               <p
                 class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'extrusion')"
@@ -372,7 +384,7 @@ onMounted(() => {
                   @mouseenter="tooltipElement = 'extrusion'"
                   @mouseleave="tooltipElement = null"
                 >
-                  
+
                 </p>
               </div>
             </div>
@@ -381,7 +393,7 @@ onMounted(() => {
                 type="number"
                 class="input-margin remove-input-border remove-stepper input-number-right-align"
                 v-model="form.extrusion"
-                style="width: 40px; margin-right: 20px"
+                style="width: 40px;"
               />
               <el-slider class="slider-width" v-model="form.extrusion" :max="100" :step="0.1"/>
             </div>
@@ -389,7 +401,7 @@ onMounted(() => {
           <div style="display: flex">
             <div class="col-main border">
               <p class="material-symbols-sharp">north</p>
-              <p class="col-main-text">elevation</p>
+              <p class="col-main-text">{{ $t('Path.Column.style_elevation') }}</p>
               <p
                 class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'elev')"
@@ -402,7 +414,7 @@ onMounted(() => {
                   @mouseenter="tooltipElement = 'elev'"
                   @mouseleave="tooltipElement = null"
                 >
-                  
+
                 </p>
               </div>
             </div>
@@ -411,7 +423,7 @@ onMounted(() => {
                 type="number"
                 class="input-margin remove-input-border remove-stepper input-number-right-align"
                 v-model="form.elevation"
-                style="width: 40px; margin-right: 20px"
+                style="width: 40px;"
               />
               <el-slider
                 class="slider-width"
@@ -425,7 +437,7 @@ onMounted(() => {
           <div style="display: flex">
             <div class="col-main border">
               <p class="material-symbols-sharp">animation</p>
-              <p class="col-main-text">animation</p>
+              <p class="col-main-text">{{ $t('Path.Column.animation') }}</p>
               <p
                 class="material-symbols-sharp tooltip-font"
                 @mouseenter="openTooltip($event, 'anim')"
@@ -449,7 +461,7 @@ onMounted(() => {
                 type="number"
                 class="input-margin remove-input-border remove-stepper input-number-right-align"
                 v-model="form.amplitude"
-                style="width: 40px; margin-right: 20px"
+                style="width: 40px;"
               />
               <el-slider
                 class="slider-width"
@@ -555,13 +567,7 @@ p {
 
 .col-main-text {
   margin-bottom: 3px;
-} 
-
-.coordinate-title {
-    height: auto !important;
-    align-items: start !important;
 }
-
 .coordinate-display {
   display: block;
   width: 75%;
@@ -737,7 +743,13 @@ textarea {
   display: flex;
   align-items: center;
   padding-left: 6px;
-  height: 30px;
+}
+
+.col-main-textarea {
+  width: 25%;
+  display: flex;
+  align-items: flex-start;
+  padding-left: 6px;
 }
 
 .col2 {
@@ -745,6 +757,11 @@ textarea {
   display: flex;
   align-items: center;
   height: 30px;
+}
+.col2-textarea {
+  width: 75%;
+  display: flex;
+  align-items: center;
 }
 
 .col3 {
@@ -818,11 +835,11 @@ textarea {
 }
 
 .edition-layout {
-  height: calc(95vh);
+  height: calc(95vh - 40vh);
 }
 
 .collapse {
-  height: calc(95vh - 70px);
+  height: calc(95vh - 40vh - 70px);
   overflow: auto;
 }
 
@@ -917,5 +934,25 @@ textarea {
 
 .margin-left-constraint {
   margin-left: 5px;
+}
+
+.padding-unit {
+  padding-left: 4px;
+  padding-right: 4px
+}
+
+.margin-unit {
+  margin-left: 0px;
+}
+
+textarea {
+  width: 100% !important;
+  margin-right: 5px;
+  height: 21px;
+  line-height: 1 !important;
+  font-family: "BiodivAR Roman";
+  font-variation-settings: "wght" 85, "ital" 0;
+  font-size: 13px;
+  letter-spacing: 0.02em;
 }
 </style>

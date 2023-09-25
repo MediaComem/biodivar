@@ -304,11 +304,11 @@
             </div>
         </div>
         <div v-if="mapAdmin && pathCoordinate.length > 0">
-          <BasePath :admin="true" :coordinate="pathCoordinate"/>
+          <BasePath :admin="true" :coordinate="pathCoordinate" :meter="metersInPixel"/>
         </div>
         <div v-if="mapAdmin">
             <div v-for="(path, index) of getPaths" :key="index">
-                <BasePath v-if="path.display" :admin="true" :coordinate="path.element.coordinate" :path="path.element" :editable="!isAllowedToEdit(getCurrentBioverId)" @update-path="openPathEdition"/>
+                <BasePath v-if="path.display" :admin="true" :coordinate="path.element.coordinate" :meter="metersInPixel" :path="path.element" :editable="!isAllowedToEdit(getCurrentBioverId)" @update-path="openPathEdition"/>
             </div>
         </div>
         <div v-if="mapAdmin">
