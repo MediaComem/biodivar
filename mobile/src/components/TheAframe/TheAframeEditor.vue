@@ -6,8 +6,11 @@
   import '../aframe/poi-animator.js';
   import '../aframe/arrow-helper.js';
   import '../aframe/camera-reset.js';
+  import '../aframe/grid-helper.js';
+  import '../aframe/emit-when-near';
 
-  import { onMounted, watch, ref } from '@vue/runtime-core';
+  import { onMounted } from '@vue/runtime-core';
+  import { previewMode, isInRadius, isInVisibility } from '../../store/aframe-store.js';
 
   const props = defineProps([
     'visibilityScope',
@@ -35,6 +38,19 @@
     if (button.length > 0) {
       button[0].appendChild(icon)
     }
+    // detecting change in preview mode
+    const sceneEl = document.querySelector('a-scene');
+    sceneEl.addEventListener('enter-vr', () => {
+      previewMode.value = true;
+    });
+    sceneEl.addEventListener('exit-vr', () => {
+      previewMode.value = false;
+    });
+
+    window.addEventListener('radius-enter', () => isInRadius.value = true);
+    window.addEventListener('radius-exit', () => isInRadius.value = false);
+    window.addEventListener('visibility-enter', () => isInVisibility.value = true);
+    window.addEventListener('visibility-exit', () => isInVisibility.value = false);
   })
 </script>
 
@@ -49,16 +65,20 @@
       arrow-helper__x="color: #FF0000; direction: 1 0 0;"
       arrow-helper__y="color: #00FF00; direction: 0 1 0;"
       arrow-helper__z="color: #0000FF; direction: 0 0 1;"
+      :visible="!previewMode"
+    ></a-entity>
+
+    <a-entity
+      grid-helper="color: #111;"
+      :visible="!previewMode"
     ></a-entity>
 
     <a-plane
-      wireframe="true"
-      rotation="90 0 0"
-      height="150"
-      width="150"
-      segments-height="150"
-      segments-width="150"
-      color="#444"
+      rotation="-90 0 0"
+      height="128"
+      width="128"
+      color="#567D46"
+      :visible="previewMode"
     ></a-plane>
 
     <!-- media slot-->
@@ -66,11 +86,18 @@
 
     <a-entity
       v-if="visibilityScope"
-      :ring="`radius: ${visibilityScope}; color: white;`"
+      :ring="`radius: ${visibilityScope}; color: red;`"
       position="0 0.1 0"
+      :visible="!previewMode"
+      :emit-when-near="`
+          distance: ${visibilityScope};
+          event: visibility-enter;
+          eventFar: visibility-exit;
+          poiId: 0;
+        `"
     ></a-entity>
 
-    <a-entity :rotation="`0 0 0`" position="0 0.05">
+    <a-entity rotation="0 0 0" position="0 0.05 0">
       <a-entity
         :poi-radius="`
           radius: ${shapeRadius};
@@ -83,12 +110,19 @@
           wireframe: ${shapeWireframe};
           extrude: ${shapeExtrusion};
         `"
+        :emit-when-near="`
+          distance: ${shapeRadius};
+          event: radius-enter;
+          eventFar: radius-exit;
+          poiId: 0;
+        `"
         :poi-animator="`
           amplitude: ${shapeAmplitude};
           scale: true;
           scaleAll: ${shapeType == 'circle' ? 'false' : 'true'};
         `"
         :position="`0 ${shapeY} 0`"
+        :visible="isInVisibility || !previewMode"
       ></a-entity>
     </a-entity>
 

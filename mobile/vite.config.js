@@ -16,19 +16,6 @@ export default defineConfig(({ command, mode }) => {
     base: ''
   };
 
-  // define specific env configuration
-  // if (mode === 'development') {
-  //   config.server = {
-  //     proxy : {
-  //       '/api/v1': {
-  //         target: 'https://inf.onivers.com/api/v1',
-  //         changeOrigin: true,
-  //         rewrite: path => path.replace(/^\/api\/v1/, '')
-  //       }
-  //     }
-  //   }
-  // }
-
   return config;
 
 });

@@ -2,6 +2,8 @@
   import { computed, watchEffect } from '@vue/runtime-core';
   import '../aframe/look-at-roll-yaw.js';
   import '../aframe/poi-animator.js';
+  import '../aframe/distance-to-volume';
+  import { previewMode, isInRadius, isInVisibility } from '../../store/aframe-store.js';
 
   const props = defineProps([
     'media',
@@ -14,8 +16,11 @@
     'positionOrientation',
     'facing',
     'isVisibleInRadius',
+    'isVisibleOutRadius',
+    'autoplay',
     'text',
     'amplitude',
+    'poiScope',
   ]);
 
   const mapMediaTypeToCateg = new Map([
@@ -43,7 +48,7 @@
   <a-assets>
     <img v-if="mediaCategory === 'image'" :id="`the-image-${uid}`" :src="media" crossorigin="anonymous">
   </a-assets>
-  <a-entity>
+  <a-entity v-if="(previewMode && isInVisibility) || !previewMode">
 
     <!-- GLTF -->
     <a-entity
@@ -58,6 +63,7 @@
         :rotation="`0 ${positionOrientation} 0`"
         :look-at-roll-yaw="`enabled: ${facing ? 'true' : 'false'}`"
         :poi-animator="`amplitude: ${amplitude}`"
+        :visible="(isVisibleInRadius && previewMode && isInRadius) || (isVisibleOutRadius && previewMode && !isInRadius) || !previewMode"
       ></a-entity>
     </a-entity>
 
@@ -74,31 +80,37 @@
         :look-at-roll-yaw="`enabled: ${facing ? 'true' : 'false'}`"
         material="transparent:true; opacity: 1; alphaTest: .1;"
         :poi-animator="`amplitude: ${amplitude}`"
+        :visible="(isVisibleInRadius && previewMode && isInRadius) || (isVisibleOutRadius && previewMode && !isInRadius) || !previewMode"
       ></a-image>
     </a-entity>
 
     <!-- AUDIO -->
     <a-entity
-      v-if="mediaCategory === 'audio'"
       :rotation="`0 ${positionRotation} 0`"
+      v-if="mediaCategory === 'audio' && ((isVisibleInRadius && previewMode && isInRadius) || (isVisibleOutRadius && previewMode && !isInRadius) || !previewMode)"
     >
       <a-entity
-        v-if="mediaLoop"
         :position="`${positionX} ${positionY} 0`"
-        :sound="`src: url(${media}); autoplay: true; loop: true; volume: ${scale}`"
-      ></a-entity>
-      <a-entity
-        v-else
-        :position="`${positionX} ${positionY} 0`"
-        :sound="`src: url(${media}); autoplay: true; loop: false; volume: ${scale}`"
+        :sound="`
+          src: url(${media});
+          autoplay: true;
+          loop: ${mediaLoop ? 'true' : 'false'};
+          volume: ${scale};
+          positional: false;
+        `"
+        :distance-to-volume="autoplay ? `
+          volume: ${scale};
+          distance: ${poiScope};
+        `: null"
       ></a-entity>
       <!-- audio marker -->
       <a-image
         src="assets/note.png"
-        scale="0.5 0.5 0.5"
         :position="`${positionX} ${positionY} 0`"
         material="transparent:true; opacity: 1; alphaTest: 0.1;"
         look-at-roll-yaw
+        :scale="`${scale/2} ${scale/2} ${scale/2}`"
+        :visible="!previewMode"
       ></a-image>
     </a-entity>
 
@@ -120,6 +132,7 @@
         material="transparent:true; opacity: 1; alphaTest: 0.1;"
         side="double"
         :poi-animator="`amplitude: ${amplitude}`"
+        :visible="(isVisibleInRadius && previewMode && isInRadius) || (isVisibleOutRadius && previewMode && !isInRadius) || !previewMode"
       ></a-text>
     </a-entity>
   </a-entity>

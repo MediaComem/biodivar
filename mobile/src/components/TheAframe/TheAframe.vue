@@ -281,8 +281,7 @@
                     src: url(${getMediaUrl(m)});
                     loop: ${m.loop ? 'true' : 'false'};
                     volume: ${m.scale};
-                    ${m.autoplay ? 'positional: true;' : 'positional: false;'}
-                    ${m.autoplay ? `refDistance: ${poi.scope};` : ''}
+                    positional: false;
                   `"
                   :distance-to-volume="m.autoplay ? `
                     volume: ${m.scale};

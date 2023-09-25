@@ -28,9 +28,12 @@
           :positionRotation="m.rotation"
           :positionOrientation="m.orientation"
           :isVisibleInRadius="m.is_visible_in_radius"
+          :isVisibleOutRadius="m.is_visible_out_radius"
+          :autoplay="m.autoplay"
           :facing="m.is_facing"
           :text="m.text"
           :amplitude="m.amplitude"
+          :poiScope="form.radius"
         ></aframe-media>
       </the-aframe-editor>
     </div>
