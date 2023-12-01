@@ -1,3 +1,5 @@
+import { importPois } from '../../utils/api';
+
 L.UploadControl = L.Control.extend({
   options: {
     position: 'topleft',
@@ -17,7 +19,7 @@ L.UploadControl = L.Control.extend({
     p.innerHTML = 'cloud_upload';
 
     input.type = 'file';
-    input.accept = '.json,.geojson';
+    input.accept = '.json,.geojson,.zip';
     input.style.display = 'none';
 
     p.appendChild(input);
@@ -29,14 +31,25 @@ L.UploadControl = L.Control.extend({
     L.DomEvent.addListener(input, 'change', (event) => {
       const reader = new FileReader();
 
-      reader.onload = function (event) {
-        const content = JSON.parse(event.target.result);
-        window.dispatchEvent(
-          new CustomEvent('custom-upload-control', { detail: content })
-        );
-      };
-
-      reader.readAsText(event.target.files[0]);
+      if (event.target.files[0].name.endsWith(".zip")) {
+        const formData = new FormData();
+        formData.append('file', event.target.files[0]); 
+        importPois(formData).then((success) => {
+          window.dispatchEvent(
+            new CustomEvent('custom-upload-control-from-zip', { detail: success.data })
+          );
+        }).catch((err) => {
+          console.error(err);
+        });
+      } else {
+        reader.onload = function (event) {
+          const content = JSON.parse(event.target.result);
+          window.dispatchEvent(
+            new CustomEvent('custom-upload-control', { detail: content })
+          );
+        };
+        reader.readAsText(event.target.files[0]);
+      }
     });
 
     window.addEventListener('close-poi-editor', () => {

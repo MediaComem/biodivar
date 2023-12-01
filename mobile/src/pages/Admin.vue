@@ -10,6 +10,7 @@
     </div>
     <div class="upload-layout">
       <GeoJsonImporter />
+      <ZipImporter />
     </div>
     <div>
       <BioversSelection />
@@ -27,6 +28,7 @@ import Return from '../components/app/UIElement/Return.vue';
 import BioversSelection from '../components/TheAdmin/biovers/Data/BioversSelection.vue';
 import BioversItem from '../components/app/BioversItem.vue';
 import GeoJsonImporter from '../components/TheAdmin/biovers/Import/GeoJsonImporter.vue';
+import ZipImporter from '../components/TheAdmin/biovers/Import/ZipImporter.vue';
 
 export default {
   components: {
@@ -36,6 +38,7 @@ export default {
     BioversSelection,
     GeoJsonImporter,
     BioversItem,
+    ZipImporter,
   },
   methods: {
     ...mapActions('biovers', ['getBiovers', 'resetBiovers', 'loadPoiColumns', 'loadPathColumns', 'loadTraceColumns', 'loadEventColumns']),

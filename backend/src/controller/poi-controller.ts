@@ -4,6 +4,10 @@ import { MediaModel, MediaModels } from '../types/media_model';
 import { PoiModel } from '../types/poi-model';
 
 import { updateMedia, createMedia, getMediasByPoi, deleteMedia, onlyInLeft, inTheTwoArrays } from './media-controller';
+import path from 'path';
+import fs from 'fs';
+import { fileExist } from '../utils/symbol-storing';
+import { CoordinateModel } from '../types/coordinate-model';
 
 export const createPoi = async (
   prisma: PrismaClient,
@@ -23,22 +27,22 @@ export const createPoi = async (
         creation_date: new Date(),
         last_contributor: poi.author,
         biovers: poi.biovers,
-        scope: poi.scope,
-        trigger_mode: poi.trigger_mode,
+        scope: +poi.scope,
+        trigger_mode: poi.trigger_mode || 'location',
         style_type: poi.style_type,
-        extrusion: poi.extrusion,
-        radius: poi.radius,
-        style_stroke_width: poi.style_stroke_width,
-        stroke_color: poi.stroke_color,
-        stroke_opacity: poi.stroke_opacity,
-        fill_type: poi.fill_type,
+        extrusion: +poi.extrusion,
+        radius: +poi.radius,
+        style_stroke_width: poi.style_stroke_width || 0.0,
+        stroke_color: poi.stroke_color || '',
+        stroke_opacity: +poi.stroke_opacity,
+        fill_type: poi.fill_type || false,
         fill_color: poi.fill_color,
-        fill_opacity: poi.fill_opacity,
-        amplitude: poi.amplitude,
+        fill_opacity: poi.fill_opacity || 0,
+        amplitude: +poi.amplitude,
         wireframe: poi.wireframe,  
         map_url: poi.map_url,
         map_media_type: poi.map_media_type,
-        elevation: poi.elevation,
+        elevation: poi.elevation || 0,
         metadata: poi.metadata && poi.metadata.length > 0 ? JSON.stringify(poi.metadata) : null,
         coordinate: {
           create: coordinate,
@@ -284,3 +288,65 @@ export const deletePoi = async (
     throw new Error('Cannot delete poi due to error');
   }
 };
+
+export const createPoiFromImport = async (features: Array<any>, pathToMedia: string, author: number, prisma: PrismaClient, logger: winston.Logger) => {
+  let n = 1;
+  const symbolPath = `${process.env.SYMBOL_PATH}/${author}`;
+  const resultData = [];
+  for (const feature of features) {
+    feature['properties']['author'] = author;
+    const coordiante = feature['geometry']['coordinates'];
+    if (coordiante) {
+      feature['properties']['coordinate'] = {long: coordiante[0] ? coordiante[0] : 0, lat: coordiante[1] ? coordiante[0] : 0, alt: coordiante[2] ? coordiante[2] : 0} as CoordinateModel;
+    }
+    const mapUrl = feature['properties']['map_url'];
+    if (mapUrl) {
+      const url = mapUrl.replaceAll('\\', '/');
+      try {
+        fs.mkdirSync(symbolPath, {recursive: true});
+        const filename = path.basename(url);
+        const finalPath = fileExist(filename, path.join(symbolPath, filename), 1);
+        fs.copyFileSync(path.join(pathToMedia, url), finalPath);
+        feature['properties']['map_url'] = finalPath;
+      } catch (error) {
+        logger.error(error);
+      }
+    }
+
+    const medias = feature['properties']['media'];
+    if (medias) {
+      for (const media of medias) {
+        let hasMissing = false;
+        const orientation = media['orientation'];
+          if (orientation == undefined) {
+            media['orientation'] = 360 / n;
+            hasMissing = true;
+          }
+          const rotation = media['rotation'];
+          
+          if (rotation == undefined) {
+            media['rotation'] = 360 / n;
+            hasMissing = true;
+          }
+
+          if (hasMissing) {
+            n += 1;
+          }
+        if (media['url'] && media['url'] != '') {
+          const url = media['url'].replaceAll('\\', '/');
+          try {
+            fs.mkdirSync(symbolPath, {recursive: true});
+            const filename = path.basename(url);
+            const finalPath = fileExist(filename, path.join(symbolPath, filename), 1);
+            fs.copyFileSync(path.join(pathToMedia, url), finalPath);
+            media['url'] = finalPath;
+          } catch (error) {
+            logger.error(error);
+          }
+        }
+      }
+    }
+    resultData.push(await createPoi(prisma, feature['properties'] as PoiModel, logger));
+  }
+  return resultData;
+}

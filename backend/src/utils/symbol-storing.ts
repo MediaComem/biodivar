@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import winston from 'winston';
 
-const fileExist = (origin: string, fullPath: string, next: number): string => {
+export const fileExist = (origin: string, fullPath: string, next: number): string => {
     if (fs.existsSync(fullPath)) {
         const directories = path.dirname(fullPath);
         const name = path.parse(origin).name;

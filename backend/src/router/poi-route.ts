@@ -1,7 +1,14 @@
 import { ServerRoute } from '@hapi/hapi';
 
+import AdmZip from 'adm-zip';
+
+import os from 'os';
+import fs from 'fs';
+import path from 'path';
+
 import {
   createPoi,
+  createPoiFromImport,
   deletePoi,
   getPoiById,
   getPoiByTitle,
@@ -148,6 +155,59 @@ poiRoutes.push({
       } else {
         return failureResponse(h, 'Mandatory fields are not provided');
       }
+    } catch (error) {
+      return errorResponse(h, error as string);
+    }
+  },
+});
+
+poiRoutes.push({
+  method: 'POST',
+  path: '/poi/import',
+  options: {
+    payload: {
+      maxBytes: 1000 * 1000 * 50,
+      parse: true,
+      allow: 'multipart/form-data',
+      multipart: { output: 'stream' },
+    }
+  },
+  handler: async function (request, h) {
+    let result;
+    try {
+      const payload: any = request.payload;
+      const file = payload.file;
+      let tmpDir: string = '';
+      try {
+        tmpDir = fs.mkdtempSync(path.join(os.tmpdir()));
+        const zip = new AdmZip(file._data);
+        zip.extractAllTo(tmpDir, true);
+        const files = fs.readdirSync(tmpDir);
+       for (const file of files) {
+          if (file != '__MACOSX') {
+            const zipFolder = fs.readdirSync(path.join(tmpDir, file));
+            for (const element of zipFolder) {
+              if (element.endsWith('.json')) {
+                const importedJson = JSON.parse(fs.readFileSync(path.join(tmpDir, file, element)).toString());
+                result = await createPoiFromImport(importedJson['features'], path.join(tmpDir, file), request.state.biodivar.id, request.server.app.prisma, request.server.app.logger);
+              }
+            }
+          }
+        }
+      }
+      catch (error) {
+        console.log(error);
+        throw new Error('Cannot store the image');
+      }
+      try {
+        if (tmpDir) {
+          fs.rmSync(tmpDir, { recursive: true });
+        }
+      }
+      catch (e) {
+        console.error(`An error has occurred while removing the temp folder at ${tmpDir}. Please remove it manually. Error: ${e}`);
+      }
+      return successResponse(h, 'Symbol creation done successfully', result);
     } catch (error) {
       return errorResponse(h, error as string);
     }

@@ -133,3 +133,8 @@ export function saveEvent(trace) {
 export function deleteEvent(trace) {
   return postJson(API + 'event/delete', trace);
 }
+
+// Import Pois from zip
+export function importPois(archive) {
+  return postJsonBinary(API + 'poi/import', archive, 'multipart/form-data');
+}
