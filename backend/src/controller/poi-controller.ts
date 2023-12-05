@@ -1,13 +1,17 @@
-import { PrismaClient, Prisma } from '@prisma/client';
+import { PrismaClient, Prisma, Poi } from '@prisma/client';
 import winston from 'winston';
 import { MediaModel, MediaModels } from '../types/media_model';
-import { PoiModel } from '../types/poi-model';
+import { PoiModel, PoiModels } from '../types/poi-model';
 
 import { updateMedia, createMedia, getMediasByPoi, deleteMedia, onlyInLeft, inTheTwoArrays } from './media-controller';
 import path from 'path';
 import fs from 'fs';
+import os from 'os';
 import { fileExist } from '../utils/symbol-storing';
 import { CoordinateModel } from '../types/coordinate-model';
+import AdmZip from 'adm-zip';
+import { computeGeoJSONFromPOIs } from '../utils/geojson';
+import { GeojsonPoisModel } from '../types/geojson-pois-model';
 
 export const createPoi = async (
   prisma: PrismaClient,
@@ -349,4 +353,98 @@ export const createPoiFromImport = async (features: Array<any>, pathToMedia: str
     resultData.push(await createPoi(prisma, feature['properties'] as PoiModel, logger));
   }
   return resultData;
+}
+
+export const importPoisFromZip = async (payload:any, userId: number, prisma: PrismaClient, logger: winston.Logger) => {
+  let tmpDir: string = '';
+  try {
+    let result;
+    const file = payload.file;
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir()));
+    const zip = new AdmZip(file._data);
+    zip.extractAllTo(tmpDir, true);
+    const files = fs.readdirSync(tmpDir);
+   for (const file of files) {
+      if (file != '__MACOSX') {
+        if (fs.lstatSync(path.join(tmpDir, file)).isDirectory()) {
+          const zipFolder = fs.readdirSync(path.join(tmpDir, file));
+          for (const element of zipFolder) {
+            if (element.endsWith('.json')) {
+              const importedJson = JSON.parse(fs.readFileSync(path.join(tmpDir, file, element)).toString());
+              result = await createPoiFromImport(importedJson['features'], path.join(tmpDir, file), userId, prisma, logger);
+            }
+          }
+        } else {
+          if (file.endsWith('.json')) {
+            const importedJson = JSON.parse(fs.readFileSync(path.join(tmpDir, file)).toString());
+            result = await createPoiFromImport(importedJson['features'], path.join(tmpDir), userId, prisma, logger);
+          }
+        }
+        
+      }
+    }
+    return result;
+  }
+  catch (error) {
+    console.log(error);
+    throw new Error('Cannot store the image');
+  } finally {
+    try {
+      if (tmpDir) {
+        fs.rmSync(tmpDir, { recursive: true });
+      }
+    }
+    catch (e) {
+      console.error(`An error has occurred while removing the temp folder at ${tmpDir}. Please remove it manually. Error: ${e}`);
+    }
+  }
+}
+
+export const extractPoisForZip = async (ids: string, prisma: PrismaClient) => {
+  const pois: Array<Poi> = [];
+    if (ids) {
+      for (const id of ids.split(',')) {
+        try {
+          const poi = await getPoiById(
+            prisma,
+            +id,
+          );
+          if (poi) {
+            pois.push(poi);
+          }
+        }
+        catch (error) {
+          console.log(error)
+        }
+      }
+    }
+    return pois;
+}
+
+export const exportPoisToZip = async (pois:Array<Poi>, userId: number) => {
+  let tmpDir: string = '';
+  const json = computeGeoJSONFromPOIs(pois as PoiModels)
+  tmpDir = path.join(process.env.EXPORT_PATH || '', userId.toString());
+  fs.mkdirSync(tmpDir, {recursive: true});
+  const zip = new AdmZip();
+  const jsonObject = JSON.parse(json);
+  if (jsonObject && jsonObject['features']) {
+    jsonObject['features'].forEach((feature:GeojsonPoisModel) => {
+      if (feature.properties.map_url) {
+        zip.addLocalFile(feature.properties.map_url);
+        feature.properties.map_url = path.basename(feature.properties.map_url);
+      }
+      if (feature.properties.media) {
+        feature.properties.media.forEach((media:MediaModel) => {
+          if (media.url) {
+            zip.addLocalFile(media.url);
+            media.url = path.basename(media.url);
+          }
+        })
+      } 
+    })
+  }
+  zip.addFile("export_pois.json", Buffer.from(JSON.stringify(jsonObject), "utf8"));
+  zip.writeZip(path.join(tmpDir, 'export_pois.zip'));
+  return path.join(tmpDir, 'export_pois.zip');
 }
