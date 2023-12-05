@@ -1,5 +1,7 @@
 import { ServerRoute } from '@hapi/hapi';
 
+import fs from 'fs';
+
 import {
   createPoi,
   deletePoi,
@@ -9,6 +11,8 @@ import {
   getPoiByTitle,
   importPoisFromZip,
   updatePoi,
+  checkIfAllowedToImport,
+  createPoiFromImport,
 } from '../controller/poi-controller';
 import { PoiModel, PoiModels } from '../types/poi-model';
 
@@ -17,6 +21,7 @@ import {
   errorResponse,
   successResponse,
   successWithoutContentResponse,
+  notAllowedResponse,
 } from '../utils/response';
 import { Poi } from '@prisma/client';
 
@@ -176,8 +181,19 @@ poiRoutes.push({
   handler: async function (request, h) {
     try {
       const payload: any = request.payload;
-      const result = await importPoisFromZip(payload, request.state.biodivar.id, request.server.app.prisma, request.server.app.logger)
-      return successResponse(h, 'Symbol creation done successfully', result);
+      const json = await importPoisFromZip(payload, request.state.biodivar.id, request.server.app.prisma, request.server.app.logger)
+      if (json != null) {
+        const couldImport = await checkIfAllowedToImport(json.json['features'], request.state.biodivar.id, request.server.app.prisma, request.server.app.logger)
+        if (couldImport) {
+          const result = await createPoiFromImport(json.json['features'], json.tmp, request.state.biodivar.id, request.server.app.prisma, request.server.app.logger);
+          fs.rmSync(json.tmp, { recursive: true });
+          return successResponse(h, 'Pois creation done successfully', result);
+        }
+        else {
+          fs.rmSync(json.tmp, { recursive: true });
+          return notAllowedResponse(h, 'Cannot store pois');
+        }  
+      } 
     } catch (error) {
       request.server.app.logger.error(error);
       return errorResponse(h, error as string);

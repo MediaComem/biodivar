@@ -12,6 +12,7 @@ import { CoordinateModel } from '../types/coordinate-model';
 import AdmZip from 'adm-zip';
 import { computeGeoJSONFromPOIs } from '../utils/geojson';
 import { GeojsonPoisModel } from '../types/geojson-pois-model';
+import { getBioversById } from './biovers-controller';
 
 export const createPoi = async (
   prisma: PrismaClient,
@@ -293,6 +294,16 @@ export const deletePoi = async (
   }
 };
 
+export const checkIfAllowedToImport = async(features: Array<any>, author: number, prisma: PrismaClient, logger: winston.Logger) => {
+  for(const feature of features) {
+    const currentBiovers = await getBioversById(prisma, feature['properties']['biovers'], author, logger);
+    if (currentBiovers == null || (currentBiovers.owner != author && !currentBiovers.is_editable)) {
+      return false;
+    }
+  }
+  return true;
+}
+
 export const createPoiFromImport = async (features: Array<any>, pathToMedia: string, author: number, prisma: PrismaClient, logger: winston.Logger) => {
   let n = 1;
   const symbolPath = `${process.env.SYMBOL_PATH}/${author}`;
@@ -358,7 +369,6 @@ export const createPoiFromImport = async (features: Array<any>, pathToMedia: str
 export const importPoisFromZip = async (payload:any, userId: number, prisma: PrismaClient, logger: winston.Logger) => {
   let tmpDir: string = '';
   try {
-    let result;
     const file = payload.file;
     tmpDir = fs.mkdtempSync(path.join(os.tmpdir()));
     const zip = new AdmZip(file._data);
@@ -370,33 +380,21 @@ export const importPoisFromZip = async (payload:any, userId: number, prisma: Pri
           const zipFolder = fs.readdirSync(path.join(tmpDir, file));
           for (const element of zipFolder) {
             if (element.endsWith('.json')) {
-              const importedJson = JSON.parse(fs.readFileSync(path.join(tmpDir, file, element)).toString());
-              result = await createPoiFromImport(importedJson['features'], path.join(tmpDir, file), userId, prisma, logger);
+              return {json: JSON.parse(fs.readFileSync(path.join(tmpDir, file, element)).toString()), tmp: path.join(tmpDir, file)};
             }
           }
         } else {
           if (file.endsWith('.json')) {
-            const importedJson = JSON.parse(fs.readFileSync(path.join(tmpDir, file)).toString());
-            result = await createPoiFromImport(importedJson['features'], path.join(tmpDir), userId, prisma, logger);
+            return {json: JSON.parse(fs.readFileSync(path.join(tmpDir, file)).toString()), tmp: tmpDir};
           }
         }
-        
       }
     }
-    return result;
+    return null;
   }
   catch (error) {
     console.log(error);
     throw new Error('Cannot store the image');
-  } finally {
-    try {
-      if (tmpDir) {
-        fs.rmSync(tmpDir, { recursive: true });
-      }
-    }
-    catch (e) {
-      console.error(`An error has occurred while removing the temp folder at ${tmpDir}. Please remove it manually. Error: ${e}`);
-    }
   }
 }
 

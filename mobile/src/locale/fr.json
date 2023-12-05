@@ -186,7 +186,8 @@
         "select": "Sélectionner un fichier",
         "upload": "Importer dans la vue",
         "save": "Sauvegarder sur le serveur",
-        "result": "Les données ont été sauvegardées avec succès"
+        "result": "Les données ont été sauvegardées avec succès",
+        "failure": "L'upload n'a pas pu être effectué"
     },
     "biover": {
         "create": "Créer un biover",

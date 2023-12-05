@@ -36,9 +36,11 @@ L.UploadControl = L.Control.extend({
         formData.append('file', event.target.files[0]); 
         importPois(formData).then((success) => {
           window.dispatchEvent(
-            new CustomEvent('custom-upload-control-from-zip', { detail: success.data })
+            new CustomEvent('custom-upload-control-from-zip', { detail: success })
           );
+          input.value = null
         }).catch((err) => {
+          input.value = null
           console.error(err);
         });
       } else {
@@ -47,6 +49,7 @@ L.UploadControl = L.Control.extend({
           window.dispatchEvent(
             new CustomEvent('custom-upload-control', { detail: content })
           );
+          input.value = null
         };
         reader.readAsText(event.target.files[0]);
       }

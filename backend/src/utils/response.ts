@@ -34,6 +34,22 @@ export const successWithoutContentResponse = (
       .code(204);
   };
 
+export const notAllowedResponse = (
+    responseToolkit: ResponseToolkit,
+    message: string
+  ) => {
+    return responseToolkit
+      .response(
+        Response.create({
+          statusCode: 403,
+          error: 'Forbidden',
+          message: message,
+        })
+      )
+      .type('application/json')
+      .code(403);
+  };
+
 export const failureResponse = (
   responseToolkit: ResponseToolkit,
   message: string
