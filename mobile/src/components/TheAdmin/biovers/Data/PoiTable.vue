@@ -167,7 +167,7 @@
                 <div class="menu-element" :class="{'disable': !globalChecked }" @click="copies()"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">file_copy</p><p>Copier les points</p></div>
                 <div class="menu-element" :class="{'disable': couldPaste }" @click="paste()"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">content_paste_go</p><p>Coller les points</p></div>
                 <div class="menu-element" :class="{'disable': !globalChecked }" @click="downloadPois"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">cloud_download</p><p style="margin: 0px;">Exporter les points</p></div>
-                <div class="menu-element" :class="{'disable': !globalChecked }" @click="openDeletionDialog()"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">wrong_location</p><p>Supprimer les points</p></div>
+                <div class="menu-element" :class="{'disable': !globalChecked || isAllowedToEdit() }" @click="openDeletionDialog()"><p class="material-symbols-sharp font-icon" style="padding-left: 0.5rem;padding-right: 0.5rem;">wrong_location</p><p>Supprimer les points</p></div>
              </div>
              <div v-if="menuState" class="overlay" @click="menuState = undefined" />
           </th>
