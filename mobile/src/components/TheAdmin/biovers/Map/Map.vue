@@ -5,7 +5,6 @@
   import { store } from '../../../../store/store.js';
   import { savePath } from '../../../../utils/path-management.js';
   import { savePoi } from '../../../../utils/poi-management.js';
-  import { computeGeoJSONFromPOIs } from '../../../../utils/geojson.js';
 
   import ThePoiEditor from '../Dialog/ThePoiEditor.vue';
   import ThePathEditor from '../Dialog/ThePathEditor.vue';
@@ -13,6 +12,8 @@
   import BasePath from '../../../TheMap/BasePath.vue';
   import BaseEvent from '../../../TheMap/BaseEvent.vue';
   import BaseTrace from '../../../TheMap/BaseTrace.vue';
+
+  import { exportPois } from '../../../../utils/api.js';
 
   const KEY = import.meta.env.VITE_APP_MAP_KEY;
 
@@ -180,11 +181,15 @@
     }
 
     function download(file) {
-      const anchor = document.createElement('a');
-      anchor.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(file);
-      anchor.target = '_blank';
-      anchor.download = 'export_poi.json';
-      anchor.click();
+      const url = window.URL.createObjectURL(file);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = 'export_pois.zip';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
     }
 
     function prepareTracesToDisplay(traces) {
@@ -227,7 +232,10 @@
         const coordinate = poi.element.coordinate;
         return coordinate.lat > minLat && coordinate.lat < maxLat && coordinate.long > minLong && coordinate.long < maxLong;
       })*/
-      download(computeGeoJSONFromPOIs(getPois.value))
+      // download(computeGeoJSONFromPOIs(getPois.value)) // Old way, keep it if need
+      exportPois(getPois.value.map(poi => poi.element.id)).then(response => {
+        download(response);
+      });
     }
 
     watch(() => pois, () => {

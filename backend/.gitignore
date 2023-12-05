@@ -12,3 +12,4 @@ prisma/biodivar.db-journal
 build
 coverage
 images
+export

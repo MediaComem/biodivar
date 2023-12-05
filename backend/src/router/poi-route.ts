@@ -22,6 +22,10 @@ import {
   successResponse,
   successWithoutContentResponse,
 } from '../utils/response';
+import { computeGeoJSONFromPOIs } from '../utils/geojson';
+import { Poi } from '@prisma/client';
+import { GeojsonPoisModel } from '../types/geojson-pois-model';
+import { MediaModel } from '../types/media_model';
 
 export const poiRoutes: ServerRoute[] = [];
 
@@ -185,13 +189,21 @@ poiRoutes.push({
         const files = fs.readdirSync(tmpDir);
        for (const file of files) {
           if (file != '__MACOSX') {
-            const zipFolder = fs.readdirSync(path.join(tmpDir, file));
-            for (const element of zipFolder) {
-              if (element.endsWith('.json')) {
-                const importedJson = JSON.parse(fs.readFileSync(path.join(tmpDir, file, element)).toString());
-                result = await createPoiFromImport(importedJson['features'], path.join(tmpDir, file), request.state.biodivar.id, request.server.app.prisma, request.server.app.logger);
+            if (fs.lstatSync(path.join(tmpDir, file)).isDirectory()) {
+              const zipFolder = fs.readdirSync(path.join(tmpDir, file));
+              for (const element of zipFolder) {
+                if (element.endsWith('.json')) {
+                  const importedJson = JSON.parse(fs.readFileSync(path.join(tmpDir, file, element)).toString());
+                  result = await createPoiFromImport(importedJson['features'], path.join(tmpDir, file), request.state.biodivar.id, request.server.app.prisma, request.server.app.logger);
+                }
+              }
+            } else {
+              if (file.endsWith('.json')) {
+                const importedJson = JSON.parse(fs.readFileSync(path.join(tmpDir, file)).toString());
+                result = await createPoiFromImport(importedJson['features'], path.join(tmpDir), request.state.biodivar.id, request.server.app.prisma, request.server.app.logger);
               }
             }
+            
           }
         }
       }
@@ -211,5 +223,61 @@ poiRoutes.push({
     } catch (error) {
       return errorResponse(h, error as string);
     }
+  },
+});
+
+poiRoutes.push({
+  method: 'GET',
+  path: '/poi/export',
+  handler: async function (request, h) {
+    const ids = request.query.ids;
+    const pois: Array<Poi> = [];
+    if (ids) {
+      for (const id of ids.split(',')) {
+        try {
+          const poi = await getPoiById(
+            request.server.app.prisma,
+            +id,
+          );
+          if (poi) {
+            pois.push(poi);
+          }
+        }
+        catch (error) {
+          console.log(error)
+        }
+      }
+    }
+    const json = computeGeoJSONFromPOIs(pois as PoiModels)
+    let tmpDir: string = '';
+    try {
+      tmpDir = path.join(process.env.EXPORT_PATH || '', request.state.biodivar.id.toString());
+      fs.mkdirSync(tmpDir, {recursive: true});
+      const zip = new AdmZip();
+      console.log(json);
+      const jsonObject = JSON.parse(json);
+      if (jsonObject && jsonObject['features']) {
+        jsonObject['features'].forEach((feature:GeojsonPoisModel) => {
+          if (feature.properties.map_url) {
+            zip.addLocalFile(feature.properties.map_url);
+            feature.properties.map_url = path.basename(feature.properties.map_url);
+          }
+          if (feature.properties.media) {
+            feature.properties.media.forEach((media:MediaModel) => {
+              if (media.url) {
+                zip.addLocalFile(media.url);
+                media.url = path.basename(media.url);
+              }
+            })
+          } 
+        })
+      }
+      zip.addFile("export_pois.json", Buffer.from(JSON.stringify(jsonObject), "utf8"));
+      zip.writeZip(path.join(tmpDir, 'export_pois.zip'));
+      return h.file(path.join(tmpDir, 'export_pois.zip'));
+    } catch (error) {
+      console.log(error);
+    }
+    return errorResponse(h, 'Cannot create zip, please contact and administrator');
   },
 });

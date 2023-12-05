@@ -26,7 +26,7 @@ export const createPoi = async (
         author: poi.author,
         creation_date: new Date(),
         last_contributor: poi.author,
-        biovers: poi.biovers,
+        biovers: +poi.biovers,
         scope: +poi.scope,
         trigger_mode: poi.trigger_mode || 'location',
         style_type: poi.style_type,

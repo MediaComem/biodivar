@@ -20,6 +20,16 @@ export async function fetchJson(url) {
   return data;
 }
 
+export async function fetchBlob(url) {
+  let resp;
+  let data;
+  // silently return null if something wrong wit the fetch (timeout, cors, ...)
+  try {
+    resp = await fetch(url, {credentials: 'include',})
+  } catch (e) { return null }
+  return resp.blob();
+}
+
 export async function postJson(url, payload = null) {
   let resp;
   let data;

@@ -1,4 +1,4 @@
-import {fetchContent, fetchJson, postJson, postJsonBinary} from './fetch.js';
+import {fetchContent, fetchJson, fetchBlob, postJson, postJsonBinary} from './fetch.js';
 
 const API = import.meta.env.VITE_API_ROOT;
 
@@ -137,4 +137,9 @@ export function deleteEvent(trace) {
 // Import Pois from zip
 export function importPois(archive) {
   return postJsonBinary(API + 'poi/import', archive, 'multipart/form-data');
+}
+
+// Export Pois as zip
+export function exportPois(poiIds) {
+  return fetchBlob(API + 'poi/export?ids=' + poiIds);
 }
