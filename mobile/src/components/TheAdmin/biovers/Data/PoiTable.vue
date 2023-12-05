@@ -229,11 +229,10 @@ import SearchBar from '../../../app/UIElement/SearchBar.vue';
 
 import { fullDateFormatter } from '../../../../utils/formatter.js';
 import sort from '../../../../utils/sort';
-import { computeGeoJSONFromPOI, computeGeoJSONFromPOIs } from '../../../../utils/geojson.js';
 
 import { useStore } from '../../../../composables/store.js';
 
-import { savePoi, deletePoi } from '../../../../utils/api.js';
+import { savePoi, deletePoi, exportPois } from '../../../../utils/api.js';
 
 export default {
   components: { PoiColumnsSelection, DeleteConfirmation, ThePoiEditor, SearchBar },
@@ -398,19 +397,27 @@ export default {
       this.menuState = {id: rowId, state: true};
     },
     download(file) {
-      const anchor = document.createElement('a');
-      anchor.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(file);
-      anchor.target = '_blank';
-      anchor.download = 'export_poi.json';
-      anchor.click();
+      const url = window.URL.createObjectURL(file);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = 'export_pois.zip';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
     },
     downloadPoi(poi) {
-      this.download(computeGeoJSONFromPOI(poi));
+      exportPois([poi].map(poi => poi.element.id)).then(response => {
+        this.download(response);
+      });
       this.menuState = undefined;
     },
     downloadPois() {
       if (!this.globalChecked) return;
-      this.download(computeGeoJSONFromPOIs(this.getPoisByBiover(this.bioverId)))
+      exportPois(this.getPoisByBiover(this.bioverId).map(poi => poi.element.id)).then(response => {
+        this.download(response);
+      });
       this.menuState = undefined;
     },
     async setupCopyPoi(poi) {
