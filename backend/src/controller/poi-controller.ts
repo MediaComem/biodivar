@@ -7,6 +7,7 @@ import { updateMedia, createMedia, getMediasByPoi, deleteMedia, onlyInLeft, inTh
 import path from 'path';
 import fs from 'fs';
 import os from 'os';
+import axios from 'axios';
 import { fileExist } from '../utils/symbol-storing';
 import { CoordinateModel } from '../types/coordinate-model';
 import AdmZip from 'adm-zip';
@@ -316,13 +317,8 @@ export const createPoiFromImport = async (features: Array<any>, pathToMedia: str
     }
     const mapUrl = feature['properties']['map_url'];
     if (mapUrl) {
-      const url = mapUrl.replaceAll('\\', '/');
       try {
-        fs.mkdirSync(symbolPath, {recursive: true});
-        const filename = path.basename(url);
-        const finalPath = fileExist(filename, path.join(symbolPath, filename), 1);
-        fs.copyFileSync(path.join(pathToMedia, url), finalPath);
-        feature['properties']['map_url'] = finalPath;
+        feature['properties']['map_url'] = await importImageFromUrl(mapUrl, symbolPath, pathToMedia);
       } catch (error) {
         logger.error(error);
       }
@@ -348,13 +344,8 @@ export const createPoiFromImport = async (features: Array<any>, pathToMedia: str
             n += 1;
           }
         if (media['url'] && media['url'] != '') {
-          const url = media['url'].replaceAll('\\', '/');
           try {
-            fs.mkdirSync(symbolPath, {recursive: true});
-            const filename = path.basename(url);
-            const finalPath = fileExist(filename, path.join(symbolPath, filename), 1);
-            fs.copyFileSync(path.join(pathToMedia, url), finalPath);
-            media['url'] = finalPath;
+            media['url'] = await importImageFromUrl(media['url'], symbolPath, pathToMedia);
           } catch (error) {
             logger.error(error);
           }
@@ -445,4 +436,22 @@ export const exportPoisToZip = async (pois:Array<Poi>, userId: number) => {
   zip.addFile("export_pois.json", Buffer.from(JSON.stringify(jsonObject), "utf8"));
   zip.writeZip(path.join(tmpDir, 'export_pois.zip'));
   return path.join(tmpDir, 'export_pois.zip');
+}
+
+const importImageFromUrl = async (url: string, symbolPath: string, pathToMedia: string) => {
+  if (url.startsWith('http')) {
+    fs.mkdirSync(symbolPath, {recursive: true});
+    const response = await axios.get(url, {responseType: 'stream'});
+    const filename = path.basename(response.request.path);
+    const finalPath = fileExist(filename, path.join(symbolPath, filename), 1);
+    response.data.pipe(fs.createWriteStream(finalPath));
+    return finalPath;
+  } else {
+    url = url.replaceAll('\\', '/');
+    fs.mkdirSync(symbolPath, {recursive: true});
+    const filename = path.basename(url);
+    const finalPath = fileExist(filename, path.join(symbolPath, filename), 1);
+    fs.copyFileSync(path.join(pathToMedia, url), finalPath);
+    return finalPath;
+  }
 }
