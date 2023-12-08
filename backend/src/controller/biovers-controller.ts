@@ -452,3 +452,30 @@ export const deleteBiovers = async (
     throw new Error('Cannot delete biovers due to error');
   }
 };
+
+
+export const updateBioversIfNeeded = async (features: Array<any>, author: number, prisma: PrismaClient, logger: winston.Logger) => {
+  for (const feature of features) {
+    const biovers = await prisma.biovers.findFirst({
+      where: {
+        OR: [
+          {
+            id: Number.isNaN(+feature['properties']['biovers']) ? -1 : +feature['properties']['biovers'],
+            deleted_date: null,
+          },
+          {
+            name: feature['properties']['biovers'].toString(),
+            deleted_date: null,
+          },
+        ],
+      }
+    });
+    if (biovers) {
+      feature['properties']['biovers'] = biovers.id; 
+    }
+    else {
+      throw new Error('Cannot find biovers');
+    }
+  }
+  return features;
+}

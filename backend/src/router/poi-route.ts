@@ -24,6 +24,7 @@ import {
   notAllowedResponse,
 } from '../utils/response';
 import { Poi } from '@prisma/client';
+import { updateBioversIfNeeded } from '../controller/biovers-controller';
 
 export const poiRoutes: ServerRoute[] = [];
 
@@ -183,9 +184,10 @@ poiRoutes.push({
       const payload: any = request.payload;
       const json = await importPoisFromZip(payload, request.state.biodivar.id, request.server.app.prisma, request.server.app.logger)
       if (json != null) {
-        const couldImport = await checkIfAllowedToImport(json.json['features'], request.state.biodivar.id, request.server.app.prisma, request.server.app.logger)
+        const features = await updateBioversIfNeeded(json.json['features'], request.state.biodivar.id, request.server.app.prisma, request.server.app.logger) 
+        const couldImport = await checkIfAllowedToImport(features, request.state.biodivar.id, request.server.app.prisma, request.server.app.logger)
         if (couldImport) {
-          const result = await createPoiFromImport(json.json['features'], json.tmp, request.state.biodivar.id, request.server.app.prisma, request.server.app.logger);
+          const result = await createPoiFromImport(features, json.tmp, request.state.biodivar.id, request.server.app.prisma, request.server.app.logger);
           fs.rmSync(json.tmp, { recursive: true });
           return successResponse(h, 'Pois creation done successfully', result);
         }
