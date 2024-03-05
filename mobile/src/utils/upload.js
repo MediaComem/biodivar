@@ -11,7 +11,7 @@ export function uploadJson(file) {
         }).catch((err) => {
           console.error(err);
         });
-      } else {
+      } else if (file.name.endsWith(".json")) {
         const reader = new FileReader();
         reader.onload = function (event) {
           const content = JSON.parse(event.target.result);
