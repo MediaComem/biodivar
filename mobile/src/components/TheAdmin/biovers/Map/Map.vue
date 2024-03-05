@@ -14,6 +14,7 @@
   import BaseTrace from '../../../TheMap/BaseTrace.vue';
 
   import { exportPois } from '../../../../utils/api.js';
+  import { uploadJson } from '../../../../utils/upload.js';
 
   const KEY = import.meta.env.VITE_APP_MAP_KEY;
 
@@ -277,6 +278,17 @@
     L.uploadControl().addTo(mapAdmin.value);
     L.downloadControl().addTo(mapAdmin.value);
     L.customTilesController().addTo(mapAdmin.value);
+
+    const target = document.getElementById("map")
+    target.ondragover = function (e) {
+      e.preventDefault()
+      e.dataTransfer.dropEffect = "move"
+    }
+
+    target.ondrop = function (event) {
+      event.preventDefault()
+      uploadJson(event.dataTransfer.files[0]);
+    }
 
     mapAdmin.value.on('click', getPosition);
     mapAdmin.value.on('contextmenu', clearPathCreation)

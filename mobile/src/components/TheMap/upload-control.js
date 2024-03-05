@@ -1,4 +1,5 @@
 import { importPois } from '../../utils/api';
+import { uploadJson } from '../../utils/upload';
 
 L.UploadControl = L.Control.extend({
   options: {
@@ -29,30 +30,8 @@ L.UploadControl = L.Control.extend({
     });
 
     L.DomEvent.addListener(input, 'change', (event) => {
-      const reader = new FileReader();
-
-      if (event.target.files[0].name.endsWith(".zip")) {
-        const formData = new FormData();
-        formData.append('file', event.target.files[0]); 
-        importPois(formData).then((success) => {
-          window.dispatchEvent(
-            new CustomEvent('custom-upload-control-from-zip', { detail: success })
-          );
-          input.value = null
-        }).catch((err) => {
-          input.value = null
-          console.error(err);
-        });
-      } else {
-        reader.onload = function (event) {
-          const content = JSON.parse(event.target.result);
-          window.dispatchEvent(
-            new CustomEvent('custom-upload-control', { detail: content })
-          );
-          input.value = null
-        };
-        reader.readAsText(event.target.files[0]);
-      }
+      uploadJson(event.target.files[0])
+      input.value = null
     });
 
     window.addEventListener('close-poi-editor', () => {
