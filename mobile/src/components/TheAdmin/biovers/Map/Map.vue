@@ -48,6 +48,7 @@
   const tiles = ref(null);
   const currentAttributions = ref('');
   const pathCoordinate = ref([]);
+  const map = ref(null);
 
   function closeEditor() {
     showEditionDialog.value = false;
@@ -260,8 +261,7 @@
     window.addEventListener('path-creator-control', pathCreatorController);
     window.addEventListener('custom-download-control', downloadAvailablePois);
     window.addEventListener('custom-tiles-control', changeTiles);
-
-    mapAdmin.value = L.map('map', {zoomAnimation: true, zoomControl: false}).setView([0, 0], 7);
+    mapAdmin.value = L.map(map.value, {zoomAnimation: true, zoomControl: false}).setView([0, 0], 7);
     currentAttributions.value = "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OSM contributors\u003c/a\u003e \u003ca href=\"https://www.swisstopo.admin.ch/en/home.html\" target=\"_blank\"\u003e\u0026copy; swisstopo\u003c/a\u003e";
     tiles.value = L.tileLayer(`https://api.maptiler.com/maps/ch-swisstopo-lbm-dark/{z}/{x}/{y}.png?key=${KEY}`, {
         minZoom: 3,
@@ -305,7 +305,7 @@
 
 <template>
   <div ref="mapAdminContainer" class="content">
-    <div id="map">
+    <div id="map" ref="map">
         <div v-if="mapAdmin">
             <div v-for="(poi, index) of getPois" :key="index">
                 <BasePoi v-if="poi.display" :admin="true" :poi="poi.element" :meter="metersInPixel" :selected="clickPoi" :editable="!isAllowedToEdit(getCurrentBioverId)" @update-poi="openPoiEdition" @open-popup="clickPoi = $event"/>
