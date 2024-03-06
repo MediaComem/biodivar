@@ -57,8 +57,8 @@ export const createUser = async (
     let errorMessage: string = '';
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === 'P2002') {
-        const meta = error.meta as PrismaError;
-        if (meta.target.length === 1) {
+        const meta = error.meta as PrismaError | undefined;
+        if (meta?.target.length === 1) {
           errorMessage = `The ${meta.target[0]} is already used`;
         } else {
           errorMessage = 'The username and email are already used';
