@@ -6,13 +6,13 @@
 
   const { isMobileOrTablet, section, username, isInFavori, isInPins } = useStore();
 
-  const editableRight = ref(couldEdit(props.biover));
-  const isOwner = ref(isCurrentOwner(props.biover));
-
   const props = defineProps({
     enabled: Boolean,
     biover: Object ,
   });
+
+  const editableRight = ref(couldEdit(props.biover));
+  const isOwner = ref(isCurrentOwner(props.biover));
 
   const emit = defineEmits(['edit', 'duplicate', 'delete', 'visibility', 'editable', 'favori', 'pin', 'close'])
 

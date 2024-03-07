@@ -28,6 +28,7 @@
   const mapContainer = ref(null);
   const observer = ref(null);
   const clickPoi = ref(0);
+  const mapElement = ref(null);
 
   const ownOrPublic = computed(() => store.getters['biovers/ownOrPublic'])
   const bioverIsEditable = computed(() => store.getters['biovers/bioverIsEditable'])
@@ -82,7 +83,7 @@
 
   onMounted(() => {
     window.addEventListener('poi-creator-control-ra', poiCreatorController);
-    map.value = L.map('map', {zoomControl: false}).setView(position.value, 18);
+    map.value = L.map(mapElement.value, {zoomControl: false}).setView(position.value, 18);
     const dark = L.tileLayer(`https://api.maptiler.com/maps/ch-swisstopo-lbm-dark/{z}/{x}/{y}.png?key=${KEY}`, {
         minZoom: 3,
         maxZoom: 22,
@@ -111,7 +112,7 @@
 
 <template>
   <div ref="mapContainer" class="content" :class="{'transition': !couldMove}" :style="{'height': maxHeightMap - mapYPosition + 'px', 'top': mapYPosition + 25 + 'px'}">
-    <div id="map" >
+    <div id="map" ref="mapElement">
         <BaseUserMarker v-if="map" />
         <div v-if="map">
             <div v-for="(poi, index) of selectedBiovers.Poi" :key="index">
