@@ -361,7 +361,7 @@ export const importPoisFromZip = async (payload:any, userId: number, prisma: Pri
   let tmpDir: string = '';
   try {
     const file = payload.file;
-    tmpDir = fs.mkdtempSync(path.join(os.tmpdir()));
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), '/'));
     const zip = new AdmZip(file._data);
     zip.extractAllTo(tmpDir, true);
     const files = fs.readdirSync(tmpDir);
